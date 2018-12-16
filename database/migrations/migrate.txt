@@ -1,0 +1,15 @@
+php artisan help make:migration
+php artisan make:migration create_projects_table
+
+'create' does Schema::create
+
+...................................................
+
+php artisan migrate
+
+php artisan migrate:rollback
+- undoes migrate.
+- migrate:reset will revert ALL migrations ever
+
+php artisan migrate:fresh
+- this drops all of the tables and reruns them from scratch
