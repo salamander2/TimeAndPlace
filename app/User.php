@@ -15,9 +15,14 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    //MH. changed email to username, added other fields. isAdmin should not be fillable. It must be set via SQL / phpMyAdmin
+    // 'viewAll','defaultPWD' are set to default values
     protected $fillable = [
-        'name', 'email', 'password',
+        'fullname', 'username', 'password'
     ];
+
+    //MH - don't use this when you're using fillable: 	protected $guarded = ['isAdmin'];
 
     /**
      * The attributes that should be hidden for arrays.

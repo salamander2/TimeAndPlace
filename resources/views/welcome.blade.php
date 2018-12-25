@@ -83,7 +83,7 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
-
+<a href="http://localhost:4080/phpmyadmin" target="_blank">PHP MY ADMIN</a> (new window)
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
