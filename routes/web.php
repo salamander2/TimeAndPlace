@@ -49,3 +49,5 @@ Route::get('/userMaint', function() {
 	return view('userMaint');
 });
 */
+Route::get('/changePassword','HomeController@showChangePasswordForm');
+Route::post('/changePassword','HomeController@changePassword')->name('changePassword');

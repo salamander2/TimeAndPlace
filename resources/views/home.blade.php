@@ -26,7 +26,7 @@
         <div class="links">
 	<ul>
 	    <li><a href="https://laravel.com/docs">Admin Options</a></li>
-            <li><a href="password/change">Change password</a></li>
+            <li><a href="/changePassword">Change password</a></li>
             <li><a href="/userMaint">List users</a></li>
 	</ul>
         </div>
