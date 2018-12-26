@@ -48,6 +48,7 @@ class HomeController extends Controller
 		//Change Password
 		$user = Auth::user();
 		$user->password = bcrypt($request->get('new-password'));
+		$user->defaultPWD = 0;
 		$user->save();
 		return redirect()->back()->with("success","Password changed successfully !");
 	}
