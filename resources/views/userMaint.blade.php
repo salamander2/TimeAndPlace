@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2>Main page after logging in</h2>
+    <h2>USER MAINT (list users)</h2>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -14,20 +14,28 @@
                             {{ session('status') }}
                         </div>
                     @endif
+<table>
+		@foreach($users as $user) 
+			</li>
+<tr>
+	<td style="color:black;" >{{ $user->username }}</td>
+	<td style="color:black;" >{{ $user->fullname }}</td>
+	<td style="color:black;"><input id="isTeam_row1" type="checkbox" value="isTeam"></td>
+	<td><button type="submit" onclick="updateRow(1,'akirkham')">Update</button></td>
+	<td><a href="deleteUser.php?ID=akirkham"><button type="submit" name="delete" style="color:red;" onclick="return confirm('Are you sure?');" >Delete</button></a></td>
+	<td><a href="resetPWD.php?ID=akirkham"><button type="submit" name="changePWD" onclick="return confirm('Are you sure?');" >Reset Password</button></a></td>
+	<td style="color:black;">{{ $user->defaultPWD }}</td></tr>
 
-                    You are logged in!
+		@endforeach
+</table>
                 </div>
             </div>
         </div>
     </div>
-        <div class="title m-b-md">
-                    Laravel
-        </div>
         <div class="links">
 	<ul>
 	    <li><a href="https://laravel.com/docs">Admin Options</a></li>
             <li><a href="https://laravel.com/docs">Change password</a></li>
-            <li><a href="/userMaint">List users</a></li>
 	</ul>
         </div>
 </div>
