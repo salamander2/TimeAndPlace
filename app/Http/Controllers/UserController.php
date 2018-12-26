@@ -26,7 +26,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::select('SELECT * FROM users ORDER BY username');
+//        $users = DB::select('SELECT * FROM users ORDER BY username');
+        $users = DB::table('users')
+                ->orderBy('username', 'asc')
+                ->get();
 
         return view('admin.userMaint', ['users' => $users]);
         //return view('userMaint');
