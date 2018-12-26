@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 //use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+//        $this->middleware('admin');
     }
 
     /**
@@ -25,7 +26,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users');
+        $users = DB::select('SELECT * FROM users ORDER BY username');
+
+        return view('admin.userMaint', ['users' => $users]);
+        //return view('userMaint');
+        //return view('admin.users');
     }
 
     /**

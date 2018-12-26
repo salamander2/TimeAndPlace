@@ -43,4 +43,9 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/userMaint', 'UserController@index');
+/*
+Route::get('/userMaint', function() {
+	return view('userMaint');
+});
+*/
