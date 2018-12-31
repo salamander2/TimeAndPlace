@@ -21,5 +21,8 @@ app/storage/
 Homestead.yaml
 Homestead.json
 
+# VIM
+*.swp
+
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
