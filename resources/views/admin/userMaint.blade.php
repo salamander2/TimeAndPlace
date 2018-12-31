@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">User Maintenance</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -35,7 +35,7 @@
         <div class="links">
 	<ul>
 	    <li><a href="https://laravel.com/docs">Admin Options</a></li>
-            <li><a href="https://laravel.com/docs">Change password</a></li>
+            <li><a href="/changePassword">Change password</a></li>
 	</ul>
         </div>
 </div>

@@ -1,0 +1,5 @@
+0: TimeAndPlace* (1 panes) [184x47] [layout ca7f,184x47,0,0,2] @2 (active)  : ~/TimeAndPlace
+1: views- (1 panes) [184x47] [layout ca80,184x47,0,0,3] @3	~/TimeAndPlace/resources/views
+2: routes (1 panes) [184x47] [layout ca81,184x47,0,0,4] @4	~/TimeAndPlace/routes
+3: controllers (1 panes) [184x47] [layout ca82,184x47,0,0,5] @5	~/TimeAndPlace/app/Http/Controllers
+4: BluePanel (1 panes) [184x47] [layout ca83,184x47,0,0,6] @6	~/BluePanel

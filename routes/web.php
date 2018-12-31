@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,10 +12,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//   return view('welcome');
+//});
 
+/*-------------Default to login page -----------------*/
+
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+
+Auth::routes(['register' => false]);
+//Auth::routes();
 /* Auth is a "facade" defined in config/app.php
 Auth::routes() is just a helper class that helps you generate all the routes required for user authentication.
 
@@ -40,14 +47,26 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 
 */
 
-Auth::routes();
-
+/*-----------------User Routes------------------*/
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@index')->name('home');
+Route::get('/changePassword','HomeController@showChangePasswordForm');
+Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
+
+/*----------------Admin Routes------------------*/
 Route::get('/userMaint', 'UserController@index');
 /*
 Route::get('/userMaint', function() {
 	return view('userMaint');
 });
 */
-Route::get('/changePassword','HomeController@showChangePasswordForm');
-Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
+
+/*----------------Admin Routes------------------*/
+
+
+/*----------------Attendance Routes-------------*/
+
+/*----------------Report Routes-----------------*/
+
+
+
