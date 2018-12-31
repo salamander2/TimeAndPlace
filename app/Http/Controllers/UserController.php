@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-<<<<<<< HEAD
 	/**
 	 * Create a new controller instance.
 	 */
@@ -67,44 +66,8 @@ class UserController extends Controller
 //		return redirect('home')->with("success","Password changed successfully !");
 		return redirect()->route('home')->with("success","Password changed successfully !");
 	}
-=======
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-//        $this->middleware('admin');
-    }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-//        $users = DB::select('SELECT * FROM users ORDER BY username');
-        $users = DB::table('users')
-                ->orderBy('username', 'asc')
-                ->get();
-
-        return view('admin.userMaint', ['users' => $users]);
-        //return view('userMaint');
-        //return view('admin.users');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('admin.createuser');
-    }
-
+//================================================================
 /**
      * Store a newly created resource in storage.
      *
@@ -125,30 +88,7 @@ class UserController extends Controller
         return redirect('/users');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show(User $user)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function edit(User $user)
-    {
-        return view('admin.edituser')->with('user', $user);
-    }
-
-    /**
+	 /**
      * Update the specified resource in storage.
      *
      * @param int $id
@@ -190,5 +130,4 @@ class UserController extends Controller
 
         return view('admin.users');
     }
->>>>>>> 7885efdddf39269534c25c07c45ff4cc5c10d115
 }
