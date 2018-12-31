@@ -59,22 +59,21 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 
 */
 
-/*-----------------User Routes------------------*/
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@index')->name('home');
-Route::get('/changePassword','HomeController@showChangePasswordForm');
-Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
+
+/*-----------------User Routes------------------*/
+Route::get('/changePassword','UserController@showChangePasswordForm');
+Route::post('/changePassword','UserController@changePassword')->name('changePassword');
 
 /*----------------Admin Routes------------------*/
-Route::get('/userMaint', 'UserController@index');
+Route::get('/userMaint', 'AdminController@index');
+Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
 /*
 Route::get('/userMaint', function() {
 	return view('userMaint');
 });
 */
-
-/*----------------Admin Routes------------------*/
-
 
 /*----------------Attendance Routes-------------*/
 

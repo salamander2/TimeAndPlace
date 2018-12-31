@@ -16,29 +16,8 @@ class UserController extends Controller
 	 */
 	public function __construct()
 	{
-		//TODO: what is middleware('admin') ?
 		$this->middleware('auth');
 	}
-
-	/**
-	 * Show the application dashboard.
-	 */
-//	public function index()
-//	{
-//		return view('admin.users');
-//		#return view('home');
-//	}
-    public function index()
-    {
-//        $users = DB::select('SELECT * FROM users ORDER BY username');
-        $users = DB::table('users')
-                ->orderBy('username', 'asc')
-                ->get();
-
-        return view('admin.userMaint', ['users' => $users]);
-        //return view('userMaint');
-        //return view('admin.users');
-    }
 
 	public function showChangePasswordForm(){
 		return view('user.changePassword');
@@ -46,11 +25,11 @@ class UserController extends Controller
 
 	public function changePassword(Request $request){
 		if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
-			// The passwords matches
-			return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
+			// The password does not match
+			return redirect()->back()->with("error","Your current password does not match with the password you provided. Please try again.");
 		}
 		if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
-			//Current password and new password are same
+			//Current password and new password are NOT the same
 			return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
 		}
 		$validatedData = $request->validate([
@@ -67,67 +46,4 @@ class UserController extends Controller
 		return redirect()->route('home')->with("success","Password changed successfully !");
 	}
 
-//================================================================
-/**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        $request->merge(['password' => Hash::make($request->password)]);
-        $validatedRequest = $request->validate([
-            'name_first'=> 'required|string|max:15',
-            'name_last' => 'required|string|max:15',
-            'email'     => 'required|email|unique:users|',
-            'username'  => 'required|string|unique:users|min:5',
-            'password'  => 'string|required',
-        ]);
-        User::create($validatedRequest);
-
-        return redirect('/users');
-    }
-
-	 /**
-     * Update the specified resource in storage.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function update(Request $request, User $user)
-    {
-        $validatedRequest = $request->validate([
-            'name_first'=> 'required|string|max:15',
-            'name_last' => 'required|string|max:15',
-            'email'     => 'required|email',
-            'username'  => 'required|string|unique:users|min:5',
-            'isadmin'   => 'required|integer',
-        ]);
-        //If there is a password change request
-        $password = $request->input('password');
-        if (isset($password)) {
-            $user->update($validatedRequest);
-            $user->password = Hash::make($password);
-            $user->save();
-        } else {
-            $user->update($validatedRequest);
-        }
-
-        return view('admin.edituser')->with('user', $user);
-    }
-
-   /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function destroy(User $user)
-    {
-        $user->delete();
-
-        return view('admin.users');
-    }
 }

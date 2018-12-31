@@ -38,7 +38,12 @@
 					</table>
 				</div>
 				<div class="links">
-					<p>Show default password </p>
+					<p><a href="{{ route('showDefaultPWD') }}">Show default password:</a></p>
+					@if (session('error'))
+					<div class="alert alert-danger" role="alert">
+						<p>Default password: {{ session('error') }} </p>
+					</div>
+					@endif
 				</div>
 			</div>
 		</div>

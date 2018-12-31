@@ -29,7 +29,8 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('admin');
+        $this->middleware('admin');
+        $this->middleware('auth');
     }
 
     /**
@@ -39,14 +40,21 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = DB::select('SELECT * FROM users ORDER BY username');
+//      $users = DB::select('SELECT * FROM users ORDER BY username');
+        $users = DB::table('users')
+                ->orderBy('username', 'asc')
+                ->get();
 
         return view('admin.userMaint', ['users' => $users]);
         //return view('userMaint');
         //return view('admin.users');
     }
 
-{{--
+	public function showDefaultPWD () {
+			return redirect()->back()->with("error",env('DEFAULT_PWD','--none--'));
+	}
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -128,7 +136,7 @@ class AdminController extends Controller
 
         return view('admin.edituser')->with('user', $user);
     }
---}}
+
    /**
      * Remove the specified resource from storage.
      *
