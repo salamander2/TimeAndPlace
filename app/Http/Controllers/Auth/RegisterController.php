@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/userMaint';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,9 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+//        $this->middleware('guest');
+        $this->middleware('admin');
+        $this->middleware('auth');
     }
 
     /**
@@ -64,13 +66,25 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
+    //protected function store(array $data)
     {
-	$defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
-        return User::create([
+		$defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
+        User::create([
             'fullname' => $data['fullname'],
             /*'email' => $data['email'],*/
             'username' => $data['username'],
             'password' => Hash::make($defaultPWD),
         ]);
+
+		//		$data = null; //this should clear the fields in the /userMaint page.
+		//no it doesn't! for some reason it clears $user as well.
+
+		//TODO: clear the fields when we return to the page.
+
+		//we don't want to return the new user that we just created, because that logs in the user!
+		return $user; //return Auth::user(); does not work.
+
+		//$user = User::create($request->all());
+		//return redirect('/userMaint');
     }
 }

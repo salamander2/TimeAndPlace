@@ -34,6 +34,8 @@ class User extends Authenticatable
 	];
 
 
+	//MH. A function here can be called from MiddleWare
+	//but what's the difference between public and protected?
 	public function isAdministrator()
 	{
 		return (bool) $this->isadmin;

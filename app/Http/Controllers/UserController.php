@@ -9,6 +9,15 @@ use App\User;
 //use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
+/*
+|--------------------------------------------------------------------------
+| User Controller
+|--------------------------------------------------------------------------
+|
+| Controller to handle any user functions
+| * change user's password
+| 
+*/
 class UserController extends Controller
 {
 	/**

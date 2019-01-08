@@ -31,6 +31,10 @@ class AdminController extends Controller
     {
         $this->middleware('admin');
         $this->middleware('auth');
+		/* Why is the following in the standard RegisterController?
+        $this->middleware('guest');
+		It goes to Middleware/RedirectIfAuthenticated
+		*/
     }
 
     /**
@@ -54,6 +58,24 @@ class AdminController extends Controller
 			return redirect()->back()->with("error",env('DEFAULT_PWD','--none--'));
 	}
 
+
+	// >>> this function is just for testing. RegisterController.php is actually used <<<<
+	/**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store(CreateOrEditUserRequest $request)
+    {
+		$defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
+        $request->merge(['password' => $defaultPWD]);
+        
+        $user = User::create($request->all());
+
+        return redirect('/admin/users');
+	}
+//==========================================================================
+//			OLD STUFF BELOW HERE --- NOT USED
 
     /**
      * Show the form for creating a new resource.

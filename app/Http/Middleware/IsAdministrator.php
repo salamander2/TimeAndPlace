@@ -1,16 +1,18 @@
 <?php
+
 namespace App\Http\Middleware;
-use Closure;
 use Illuminate\Support\Facades\Auth;
+use Closure;
 
 class IsAdministrator
 {
     /**
-     * Handle an incoming request.
+     * This Middleware class is to check if someone is an administrator (ie. the isAdmin variable is TRUE)
+     * It technically shouldn't be necessary as the Admin options should only be visible to isAdmin users, but it's a good
+     * failsafe. (There are also roles in Laravel and I could learn how to use those).
      *
-     * @param Request $request
-     * @param Closure $next
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -21,7 +23,10 @@ class IsAdministrator
             return redirect('/'); // go to the login page
         }
 
-        if (!Auth::user()->isAdministrator()) {
+		//TODO: add a redirect.
+        if (!Auth::user()->isAdmin) {
+		//TODO: this following line does not work and I don't know why)
+        //if (!Auth::user()->isAdministrator()) {
             return response('Sorry but you aren\'t an admin :P', 403);
         }
 

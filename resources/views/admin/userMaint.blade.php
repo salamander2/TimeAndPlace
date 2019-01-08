@@ -15,14 +15,59 @@
 			<div class="card">
 				<div class="card-header">User Maintenance</div>
 
+			{{-- ************************** section to display status alert (from where?)  ***************************** --}}
 				<div class="card-body">
 					@if (session('status'))
 					<div class="alert alert-success" role="alert">
 						{{ session('status') }}
 					</div>
 					@endif
-					Add user here:
+
+
+			{{-- ************************** START section to add a new user ***************************** --}}
+                    <form method="POST" action="{{ route('addUser') }}">
+                        @csrf
+						<!-- MH. Changed to use username instead of email address -->
+                        <div class="form-group row">
+                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('UserName') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
+
+                                @if ($errors->has('username'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="fullname" class="col-md-4 col-form-label text-md-right">{{ __(' Full Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="fullname" type="text" class="form-control{{ $errors->has('fullname') ? ' is-invalid' : '' }}" name="fullname" value="{{ old('fullname') }}" required>
+
+                                @if ($errors->has('fullname'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('fullname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Register') }}
+                                </button>
+                            </div>
+                        </div>
+			{{-- ************************* END section to add a new user ***************************** --}}
+
+
 					<hr>
+			{{-- ************************** START section to display, modify, delete all users ***************************** --}}
 					<table>
 					@foreach($users as $user) 
 						<tr>

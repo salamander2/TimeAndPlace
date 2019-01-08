@@ -60,7 +60,7 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 */
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home', 'HomeController@index')->name('home');
+//Route::post('/home', 'HomeController@index')->name('home');
 
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');
@@ -69,6 +69,8 @@ Route::post('/changePassword','UserController@changePassword')->name('changePass
 /*----------------Admin Routes------------------*/
 Route::get('/userMaint', 'AdminController@index');
 Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
+//Route::post('addUser', 'AdminController@addUser')->name('addUser');
+Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');
 /*
 Route::get('/userMaint', function() {
 	return view('userMaint');

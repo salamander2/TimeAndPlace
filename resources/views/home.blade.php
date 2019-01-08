@@ -33,6 +33,7 @@
 	    <li><a href="https://laravel.com/docs">Admin Options</a></li>
             <li><a href="/changePassword">Change password</a></li>
             <li><a href="/userMaint">List users</a></li>
+            <li><a href="http://localhost:4080/phpmyadmin/">phpMyAdmin</a></li>
 	</ul>
         </div>
 </div>

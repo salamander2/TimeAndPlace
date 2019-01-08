@@ -14,18 +14,19 @@ class CreateKiosksTable extends Migration
 	public function up()
 	{
 	  Schema::create('kiosks', function (Blueprint $table) {
-			  $table->increments('id');
-			  $table->string('name');
-			  $table->string('room');
-			  $table->string('secretURL');
-			  $table->boolean('showPhoto');
-			  $table->boolean('showSchedule');
-			  $table->boolean('requireConf');
-			  $table->boolean('publicViewable');
-			  $table->boolean('signInOnly');
-			  $table->boolean('autoSignout');
-			  $table->string('adminName');
-			  $table->string('defaultFreq');
+			  $table->increments('id');				// primary key
+			  $table->string('name');				// kiosk name
+			  $table->string('room');				// location
+			  $table->string('secretURL');			// for autologging in a kiosk
+			  $table->boolean('showPhoto');			// show photo of student when logging in/out
+			  $table->boolean('showSchedule'); 		// show student timetable
+			  $table->boolean('requireConf');		// require confirmation for login (i.e. name and photo remains until Y is pressed)
+			  $table->boolean('publicViewable');	// can this kiosk be viewed by the generic "teacher" login?
+			  $table->boolean('signInOnly');		// sign in or sign in AND sign out
+			  $table->boolean('autoSignout');		// does this kiosk hav autosignout at certain times?
+													// *** the following item should be moved to a separate table
+			  $table->string('adminName');			// who is the name of the administrator(s) for this kiosk
+			  $table->string('defaultFreq');		// what is the default timespan for reporting
 			  $table->timestamps();
 			  });
   }
