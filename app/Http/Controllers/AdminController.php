@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 | * add, delete, change users
 | * reset default password
 | * show default password
-*/
+ */
 
 
 class AdminController extends Controller
@@ -34,7 +34,7 @@ class AdminController extends Controller
 		/* Why is the following in the standard RegisterController?
         $this->middleware('guest');
 		It goes to Middleware/RedirectIfAuthenticated
-		*/
+         */
     }
 
     /**
@@ -46,34 +46,39 @@ class AdminController extends Controller
     {
 //      $users = DB::select('SELECT * FROM users ORDER BY username');
         $users = DB::table('users')
-                ->orderBy('username', 'asc')
-                ->get();
+            ->orderBy('username', 'asc')
+            ->get();
 
         return view('admin.userMaint', ['users' => $users]);
         //return view('userMaint');
         //return view('admin.users');
     }
 
-	public function showDefaultPWD () {
-			return redirect()->back()->with("error",env('DEFAULT_PWD','--none--'));
-	}
+    public function showDefaultPWD()
+    {
+        return redirect()->back()->with("error", env('DEFAULT_PWD', '--none--'));
+    }
 
 
 	// >>> this function is just for testing. RegisterController.php is actually used <<<<
-	/**
+    /**
      * Store a newly created resource in storage.
      *
      * @return Response
      */
     public function store(CreateOrEditUserRequest $request)
     {
-		$defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
+        $defaultPWD = env('DEFAULT_PWD', 'G0^W$#SS54lhx');
         $request->merge(['password' => $defaultPWD]);
-        
+
         $user = User::create($request->all());
 
         return redirect('/admin/users');
-	}
+    }
+
+    public function addKiosk() {
+        return view('admin.createkiosk');
+    }
 //==========================================================================
 //			OLD STUFF BELOW HERE --- NOT USED
 
@@ -87,20 +92,20 @@ class AdminController extends Controller
         return view('admin.createuser');
     }
 
-	/**
+    /**
      * Store a newly created resource in storage.
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store_old(Request $request)
     {
         $request->merge(['password' => Hash::make($request->password)]);
         $validatedRequest = $request->validate([
-            'name_first'=> 'required|string|max:15',
+            'name_first' => 'required|string|max:15',
             'name_last' => 'required|string|max:15',
-            'email'     => 'required|email|unique:users|',
-            'username'  => 'required|string|unique:users|min:5',
-            'password'  => 'string|required',
+            'email' => 'required|email|unique:users|',
+            'username' => 'required|string|unique:users|min:5',
+            'password' => 'string|required',
         ]);
         User::create($validatedRequest);
 
@@ -140,11 +145,11 @@ class AdminController extends Controller
     public function update(Request $request, User $user)
     {
         $validatedRequest = $request->validate([
-            'name_first'=> 'required|string|max:15',
+            'name_first' => 'required|string|max:15',
             'name_last' => 'required|string|max:15',
-            'email'     => 'required|email',
-            'username'  => 'required|string|unique:users|min:5',
-            'isadmin'   => 'required|integer',
+            'email' => 'required|email',
+            'username' => 'required|string|unique:users|min:5',
+            'isadmin' => 'required|integer',
         ]);
         //If there is a password change request
         $password = $request->input('password');
@@ -159,7 +164,7 @@ class AdminController extends Controller
         return view('admin.edituser')->with('user', $user);
     }
 
-   /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param int $id

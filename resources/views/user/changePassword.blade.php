@@ -61,6 +61,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         Change Password
                                     </button>
+                                    <a href="/home"><button type="button" class="btn btn-secondary">
+                                        Cancel
+                                    </button></a>
                                 </div>
                             </div>
                         </form>

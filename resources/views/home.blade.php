@@ -1,40 +1,31 @@
-@extends('layouts.app')
-
+@extends('layouts.app') 
 @section('content')
 <div class="container">
     <h2>Main page after logging in</h2>
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-					@if (session('success'))
-						<div class="alert alert-success">
-							{{ session('success') }}
-						</div>
-					@endif
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
+        @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
+        @endif @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+        @endif
+
+
     </div>
-        <div class="title m-b-md">
-                    Laravel
-        </div>
-        <div class="links">
-	<ul>
-	    <li><a href="https://laravel.com/docs">Admin Options</a></li>
-            <li><a href="/changePassword">Change password</a></li>
-            <li><a href="/userMaint">List users</a></li>
-            <li><a href="http://localhost:4080/phpmyadmin/">phpMyAdmin</a></li>
-	</ul>
-        </div>
+    <div class="title m-b-md">
+        Laravel
+    </div>
+    <div class="links">
+        <ul>
+            <li><a href="/userMaint">UserMaint: List users</a></li>
+            <li><a href="/addKiosk">Create Kisoks</a></li>
+            
+        </ul>
+    </div>
+    <a href="http://localhost:4080/phpmyadmin/">start phpMyAdmin</a>
 </div>
 @endsection
