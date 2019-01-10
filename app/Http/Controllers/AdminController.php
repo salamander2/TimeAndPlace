@@ -31,10 +31,7 @@ class AdminController extends Controller
     {
         $this->middleware('admin');
         $this->middleware('auth');
-		/* Why is the following in the standard RegisterController?
-        $this->middleware('guest');
-		It goes to Middleware/RedirectIfAuthenticated
-         */
+		
     }
 
     /**
@@ -49,7 +46,8 @@ class AdminController extends Controller
             ->orderBy('username', 'asc')
             ->get();
 
-        return view('admin.userMaint', ['users' => $users]);
+        // return view('admin.userMaint', ['users' => $users]);
+        return view('admin.userMaint') -> withUsers($users);
         //return view('userMaint');
         //return view('admin.users');
     }
