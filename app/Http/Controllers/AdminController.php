@@ -49,7 +49,8 @@ class AdminController extends Controller
             ->orderBy('username', 'asc')
             ->get();
 
-        return view('admin.userMaint', ['users' => $users]);
+        // return view('admin.userMaint', ['users' => $users]);
+        return view('admin.userMaint') -> withUsers($users);
         //return view('userMaint');
         //return view('admin.users');
     }
