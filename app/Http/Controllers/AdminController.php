@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-//use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\Validator;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,13 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/userMaint';
+    
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -34,6 +43,7 @@ class AdminController extends Controller
 		
     }
 
+  
     /**
      * Display a listing of the resource.
      *
@@ -51,6 +61,41 @@ class AdminController extends Controller
         //return view('userMaint');
         //return view('admin.users');
     }
+
+    /**
+    * Create a new user instance after a valid registration.
+    *
+    * @param  array  $data
+    * @return \App\User
+    */
+   protected function create(Request $request)
+   //protected function store(array $data)
+   {
+        $validatedData = $request->validate([
+            'username' => ['required', 'string', 'alpha-dash', 'max:20', 'unique:users'], 
+            'fullname' => ['required', 'string', 'alpha-dash', 'max:255']     	    
+        ]);
+    
+       $defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
+
+       User::create([
+           'fullname' => $validatedData['fullname'],
+           /*'email' => $data['email'],*/
+           'username' => $validatedData['username'],
+           'password' => Hash::make($defaultPWD),
+       ]);
+
+       //		$data = null; //this should clear the fields in the /userMaint page.
+       //no it doesn't! for some reason it clears $user as well.
+
+       //TODO: clear the fields when we return to the page.
+
+       //we don't want to return the new user that we just created, because that logs in the user!
+       //return $user; //return Auth::user(); does not work.
+
+       //$user = User::create($request->all());
+       return redirect('/userMaint');
+   }
 
     public function showDefaultPWD()
     {
@@ -77,6 +122,20 @@ class AdminController extends Controller
     public function addKiosk() {
         return view('admin.createkiosk');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return view('admin.users');
+    }
 //==========================================================================
 //			OLD STUFF BELOW HERE --- NOT USED
 
@@ -85,7 +144,7 @@ class AdminController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create_old()
     {
         return view('admin.createuser');
     }
@@ -117,7 +176,7 @@ class AdminController extends Controller
      *
      * @return Response
      */
-    public function show(User $user)
+    public function show_old(User $user)
     {
     }
 
@@ -128,7 +187,7 @@ class AdminController extends Controller
      *
      * @return Response
      */
-    public function edit(User $user)
+    public function edit_old(User $user)
     {
         return view('admin.edituser')->with('user', $user);
     }
@@ -140,7 +199,7 @@ class AdminController extends Controller
      *
      * @return Response
      */
-    public function update(Request $request, User $user)
+    public function update_old(Request $request, User $user)
     {
         $validatedRequest = $request->validate([
             'name_first' => 'required|string|max:15',
@@ -162,18 +221,5 @@ class AdminController extends Controller
         return view('admin.edituser')->with('user', $user);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function destroy(User $user)
-    {
-        $user->delete();
-
-        return view('admin.users');
-    }
 }
 

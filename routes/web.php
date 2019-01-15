@@ -68,10 +68,13 @@ Route::post('/changePassword','UserController@changePassword')->name('changePass
 
 /*----------------Admin Routes------------------*/
 Route::get('/addKiosk', 'AdminController@addKiosk');
+
+
 Route::get('/userMaint', 'AdminController@index');
 Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
-Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');
+//Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
+Route::post('addUser', 'AdminController@create')->name('addUser');
 
 /*
 Route::get('/userMaint', function() {
