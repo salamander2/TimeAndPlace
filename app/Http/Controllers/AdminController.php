@@ -31,10 +31,7 @@ class AdminController extends Controller
     {
         $this->middleware('admin');
         $this->middleware('auth');
-		/* Why is the following in the standard RegisterController?
-        $this->middleware('guest');
-		It goes to Middleware/RedirectIfAuthenticated
-         */
+		
     }
 
     /**
