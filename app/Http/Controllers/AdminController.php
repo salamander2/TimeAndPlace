@@ -49,7 +49,7 @@ class AdminController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function userIndex()
     {
 //      $users = DB::select('SELECT * FROM users ORDER BY username');
         $users = DB::table('users')
