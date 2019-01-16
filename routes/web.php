@@ -24,43 +24,23 @@
 |
 */
 
+/**** How to return a view right away:    */
 //Route::get('/', function () {
 //   return view('welcome');
 //});
+/*
+Route::get('/userMaint', function() {
+	return view('userMaint');
+});
+*/
+
 
 /*-------------Default to login page -----------------*/
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 
-Auth::routes(['register' => false]);
-//Auth::routes();
-/* Auth is a "facade" defined in config/app.php
-Auth::routes() is just a helper class that helps you generate all the routes required for user authentication.
-
-// Authentication Routes...
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
-// Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
-
-// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
-
-// Email Verification Routes...
-Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
-Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
-Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
-
-*/
 
 Route::get('/home', 'HomeController@index')->name('home');
-//Route::post('/home', 'HomeController@index')->name('home');
 
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');
@@ -69,18 +49,12 @@ Route::post('/changePassword','UserController@changePassword')->name('changePass
 /*----------------Admin Routes------------------*/
 Route::get('/addKiosk', 'AdminController@addKiosk');
 
-
 Route::get('/userMaint', 'AdminController@index');
-Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
-//Route::post('addUser', 'AdminController@addUser')->name('addUser');
-//Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
-Route::post('addUser', 'AdminController@create')->name('addUser');
 
-/*
-Route::get('/userMaint', function() {
-	return view('userMaint');
-});
-*/
+Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
+Route::post('addUser', 'AdminController@create')->name('addUser');
+Route::post('delUser', 'AdminController@destroy')->name('delUser');
+
 
 /*----------------Attendance Routes-------------*/
 
