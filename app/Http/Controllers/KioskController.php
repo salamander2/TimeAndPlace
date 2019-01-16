@@ -17,26 +17,7 @@ class KioskController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new kiosk.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created kiosk in database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+   // NOTE: CREATE, STORE, DESTROY moved to AdminController
 
     /**
      * Display the specified kiosk
@@ -72,14 +53,5 @@ class KioskController extends Controller
         //
     }
 
-    /**
-     * Delete the specified kiosk
-     *
-     * @param  \App\Models\Kiosk  $kiosk
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Kiosk $kiosk)
-    {
-        //
-    }
+   
 }

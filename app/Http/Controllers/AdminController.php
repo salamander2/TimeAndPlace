@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use App\Models\Kiosk;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-//use Illuminate\Support\Facades\Validator;
 
 
 /*
@@ -43,9 +44,10 @@ class AdminController extends Controller
 		
     }
 
-  
+    /***************************** USER HANDLING  **************************************/
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of all users.
      *
      * @return Response
      */
@@ -68,12 +70,18 @@ class AdminController extends Controller
     * @param  array  $data
     * @return \App\User
     */
-   protected function create(Request $request)
+   protected function createUser(Request $request)
    //protected function store(array $data)
    {
         $validatedData = $request->validate([
             'username' => ['required', 'string', 'alpha-dash', 'max:20', 'unique:users'], 
-            'fullname' => ['required', 'string', 'alpha-dash', 'max:255']     	    
+            'username' => ['required', 'string', 'required',  'max:20', 'unique:users'], 
+            'fullname' => ['required', 'string', 'regex:/^[\pL\s\-]+$/u', 'max:255']
+            //regex:  ^ start with    \s = matches whitespace \d = digit  \w = alphanumeric+underscore
+            //          [] OR stuff inside   + means one or more of whatever is in the []   
+            //          \pL means single codepoint in category letter (same as A-z , but for international letters)
+            //          /u means treat string as UTF-8
+            //          why does it start with a / (it always does)?
         ]);
     
        $defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
@@ -102,6 +110,19 @@ class AdminController extends Controller
         return redirect()->back()->with("error", env('DEFAULT_PWD', '--none--'));
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function destroyUser(User $user)
+    {
+        $user->delete();
+
+        return view('admin.users');
+    }
 
 	// >>> this function is just for testing. RegisterController.php is actually used <<<<
     /**
@@ -119,107 +140,45 @@ class AdminController extends Controller
         return redirect('/admin/users');
     }
 
+    /***************************** KIOSK HANDLING  **************************************/
     public function addKiosk() {
         return view('admin.createkiosk');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show the form for creating a new kiosk.
      *
-     * @param int $id
-     *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function createKiosk()
     {
-        $user->delete();
-
-        return view('admin.users');
-    }
-//==========================================================================
-//			OLD STUFF BELOW HERE --- NOT USED
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create_old()
-    {
-        return view('admin.createuser');
+        //
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created kiosk in database.
      *
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store_old(Request $request)
+    public function storeKiosk(Request $request)
     {
-        $request->merge(['password' => Hash::make($request->password)]);
-        $validatedRequest = $request->validate([
-            'name_first' => 'required|string|max:15',
-            'name_last' => 'required|string|max:15',
-            'email' => 'required|email|unique:users|',
-            'username' => 'required|string|unique:users|min:5',
-            'password' => 'string|required',
-        ]);
-        User::create($validatedRequest);
-
-        return redirect('/users');
+        //
     }
 
-    /**
-     * Display the specified resource.
+     /**
+     * Delete the specified kiosk
      *
-     * @param int $id
-     *
-     * @return Response
+     * @param  \App\Models\Kiosk  $kiosk
+     * @return \Illuminate\Http\Response
      */
-    public function show_old(User $user)
+    public function destroyKiosk(Kiosk $kiosk)
     {
+        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function edit_old(User $user)
-    {
-        return view('admin.edituser')->with('user', $user);
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function update_old(Request $request, User $user)
-    {
-        $validatedRequest = $request->validate([
-            'name_first' => 'required|string|max:15',
-            'name_last' => 'required|string|max:15',
-            'email' => 'required|email',
-            'username' => 'required|string|unique:users|min:5',
-            'isadmin' => 'required|integer',
-        ]);
-        //If there is a password change request
-        $password = $request->input('password');
-        if (isset($password)) {
-            $user->update($validatedRequest);
-            $user->password = Hash::make($password);
-            $user->save();
-        } else {
-            $user->update($validatedRequest);
-        }
 
-        return view('admin.edituser')->with('user', $user);
-    }
 
 }
 
