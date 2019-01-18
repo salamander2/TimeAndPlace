@@ -58,6 +58,7 @@
                                 </button>
 							</div>
 						</div>
+					</form>
 						{{-- ************************* END section to add a new user ***************************** --}}
 				</div>
 				<div class="card-header">User Listing</div>

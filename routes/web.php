@@ -25,9 +25,16 @@
 |  References: https://laracasts.com/discuss/channels/laravel/routehas
 */
 
+/**** How to return a view right away:    */
 //Route::get('/', function () {
 //   return view('welcome');
 //});
+/*
+Route::get('/userMaint', function() {
+	return view('userMaint');
+});
+*/
+
 
 /*-------------Auth routes  (Authentication Routes...) -----------------*/
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
@@ -36,7 +43,6 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 /*-------------Default routes  -----------------*/
 Route::get('/home', 'HomeController@index')->name('home');
-//Route::post('/home', 'HomeController@index')->name('home');
 
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');
@@ -47,19 +53,14 @@ Route::post('/changePassword','UserController@changePassword')->name('changePass
 Route::get('/addKiosk', 'AdminController@addKiosk');
 Route::delete('','AdminController@deleteKiosk');
 
-
 /*........ user handling routes ................*/
 Route::get('/userMaint', 'AdminController@userIndex');
 Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
 Route::post('addUser', 'AdminController@createUser')->name('addUser');
+Route::post('delUser', 'AdminController@destroy')->name('delUser');
 
-/*
-Route::get('/userMaint', function() {
-	return view('userMaint');
-});
-*/
 
 /*----------------Kiosk Routes-------------*/
 // add, delete are in Admin
