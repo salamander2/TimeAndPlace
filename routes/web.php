@@ -25,11 +25,11 @@
 |  References: https://laracasts.com/discuss/channels/laravel/routehas
 */
 
-/**** How to return a view right away:    */
-//Route::get('/', function () {
-//   return view('welcome');
-//});
-/*
+/**** How to return a view right away:    
+Route::get('/', function () {
+   return view('welcome');
+});
+
 Route::get('/userMaint', function() {
 	return view('userMaint');
 });
@@ -38,8 +38,10 @@ Route::get('/userMaint', function() {
 
 /*-------------Auth routes  (Authentication Routes...) -----------------*/
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Auth::routes(['register' => false]);
+//Don't try and replicate these. 
+//Route::post('login', 'Auth\LoginController@login');
+//Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 /*-------------Default routes  -----------------*/
 Route::get('/home', 'HomeController@index')->name('home');
@@ -51,7 +53,7 @@ Route::post('/changePassword','UserController@changePassword')->name('changePass
 /*----------------Admin Routes------------------*/
 /*........ kiosk handling routes ................*/
 Route::get('/addKiosk', 'AdminController@addKiosk');
-Route::delete('','AdminController@deleteKiosk');
+//Route::delete('/delKiosk','AdminController@deleteKiosk');
 
 /*........ user handling routes ................*/
 Route::get('/userMaint', 'AdminController@userIndex');
