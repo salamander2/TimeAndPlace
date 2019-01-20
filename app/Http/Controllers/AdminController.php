@@ -74,8 +74,7 @@ class AdminController extends Controller
    //protected function store(array $data)
    {
         $validatedData = $request->validate([
-            'username' => ['required', 'string', 'alpha-dash', 'max:20', 'unique:users'], 
-            'username' => ['required', 'string', 'required',  'max:20', 'unique:users'], 
+            'username' => ['required', 'string', 'alpha-dash', 'max:20', 'unique:users'],
             'fullname' => ['required', 'string', 'regex:/^[\pL\s\-]+$/u', 'max:255']
             //regex:  ^ start with    \s = matches whitespace \d = digit  \w = alphanumeric+underscore
             //          [] OR stuff inside   + means one or more of whatever is in the []   
@@ -87,9 +86,9 @@ class AdminController extends Controller
        $defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
 
        User::create([
-           'fullname' => $validatedData['fullname'],           
+           'fullname' => $validatedData['fullname'],
            'username' => $validatedData['username'],
-           'password' => Hash::make($defaultPWD),
+           'password' => Hash::make($defaultPWD)
        ]);
 
        //		$data = null; //this should clear the fields in the /userMaint page.
@@ -133,6 +132,7 @@ class AdminController extends Controller
      *
      * @return Response
      */
+    /*
     public function store(CreateOrEditUserRequest $request)
     {
         $defaultPWD = env('DEFAULT_PWD', 'G0^W$#SS54lhx');
@@ -142,6 +142,7 @@ class AdminController extends Controller
 
         return redirect('/admin/users');
     }
+    */
 
     /***************************** KIOSK HANDLING  **************************************/
     /**
@@ -161,7 +162,27 @@ class AdminController extends Controller
      */
     public function createKiosk(Request $request)
     {
-        //
+        
+        $validatedKiosk = $request->validate([
+            'name' => ['required', 'string', 'max:30', 'min:3'],
+            'room' => ['required', 'string', 'max:20']            
+        ]);
+
+        Kiosk::create([
+            'room' => $validatedKiosk['room'],
+            'name' => $validatedKiosk['name'],
+            'showPhoto' => $request->has('showPhoto') ? 1 : 0,            
+            'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
+            //'showSchedule' => $request['showSchedule'],
+            'secretURL' => '12345',
+
+        ]);
+        
+        //$kiosk = new Kiosk();
+        //$kiosk->save();
+        //dd($validatedKiosk->all());
+        //change this to list of kiosks
+        return redirect('/home');
     }
 
      /**

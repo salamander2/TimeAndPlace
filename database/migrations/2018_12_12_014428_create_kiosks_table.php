@@ -18,15 +18,15 @@ class CreateKiosksTable extends Migration
 			  $table->string('name');				// kiosk name
 			  $table->string('room');				// location
 			  $table->string('secretURL');			// for autologging in a kiosk
-			  $table->boolean('showPhoto');			// show photo of student when logging in/out
-			  $table->boolean('showSchedule'); 		// show student timetable
-			  $table->boolean('requireConf');		// require confirmation for login (i.e. name and photo remains until Y is pressed)
-			  $table->boolean('publicViewable');	// can this kiosk be viewed by the generic "teacher" login?
-			  $table->boolean('signInOnly');		// sign in or sign in AND sign out
-			  $table->boolean('autoSignout');		// does this kiosk hav autosignout at certain times?
+			  $table->boolean('showPhoto')->default(0);			// show photo of student when logging in/out
+			  $table->boolean('showSchedule')->default(0); 		// show student timetable
+			  $table->boolean('requireConf')->default(0);		// require confirmation for login (i.e. name and photo remains until Y is pressed)
+			  $table->boolean('publicViewable')->default(0);	// can this kiosk be viewed by the generic "teacher" login?
+			  $table->boolean('signInOnly')->default(0);		// sign in or sign in AND sign out
+			  $table->boolean('autoSignout')->default(0);		// does this kiosk hav autosignout at certain times?
 													// *** the following item should be moved to a separate table
-			  $table->string('adminName');			// who is the name of the administrator(s) for this kiosk
-			  $table->string('defaultFreq');		// what is the default timespan for reporting
+			  $table->string('adminName')->default('-');			// who is the name of the administrator(s) for this kiosk
+			  $table->string('defaultFreq')->default('Day');		// what is the default timespan for reporting
 			  $table->timestamps();
 			  });
   }

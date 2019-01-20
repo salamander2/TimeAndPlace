@@ -17,13 +17,18 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/kiosks" method="post">
+        <form role="form" action="/addKiosk" method="post">
             <div class="box-body">
                 <div class="form-group">
                     <label for="name">Group / Team Name</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <input type="text" class="form-control" id="name" name="name" value= "{{ old('name') }}">
+                    @if ($errors->has('name'))
+                        <span class="is-invalid" role="alert">
+                            <strong>{{ $errors->first('name') }}</strong><br>
+                        </span>
+                    @endif
                     <label for="room">Room Number / Location</label>
-                    <input type="text" class="form-control" id="room" name="room">
+                    <input type="text" class="form-control" id="room" name="room" value= "{{ old('room') }}">
                     <!-- all checkboxes -->
                     <label for="showPhoto">Show Photo</label>                    
                     <input type="checkbox" id="showPhoto" name="showPhoto">
@@ -46,7 +51,17 @@
                 </div>
 
             </div>
+            @if($errors-> any())
+                <div class="notification is-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error) 
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
+            
             <!-- /.box-body -->
 
             <div class="box-footer">

@@ -54,7 +54,7 @@ Route::post('/changePassword','UserController@changePassword')->name('changePass
 			/* kiosk handling routes */
 Route::get('/addKiosk', 'AdminController@addKiosk');
 Route::post('/addKiosk', 'AdminController@createKiosk');
-Route::delete('/delKiosk','AdminController@deleteKiosk');
+//Route::delete('/delKiosk','AdminController@deleteKiosk');
 
 			/* user handling routes */
 Route::get('/userMaint', 'AdminController@userIndex');
