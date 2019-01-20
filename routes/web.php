@@ -51,17 +51,19 @@ Route::get('/changePassword','UserController@showChangePasswordForm');
 Route::post('/changePassword','UserController@changePassword')->name('changePassword');
 
 /*----------------Admin Routes------------------*/
-/*........ kiosk handling routes ................*/
+			/* kiosk handling routes */
 Route::get('/addKiosk', 'AdminController@addKiosk');
-//Route::delete('/delKiosk','AdminController@deleteKiosk');
+Route::post('/addKiosk', 'AdminController@createKiosk');
+Route::delete('/delKiosk','AdminController@deleteKiosk');
 
-/*........ user handling routes ................*/
+			/* user handling routes */
 Route::get('/userMaint', 'AdminController@userIndex');
 Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
+Route::get('hideDefaultPWD', 'AdminController@hideDefaultPWD')->name('hideDefaultPWD');
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
 Route::post('addUser', 'AdminController@createUser')->name('addUser');
-Route::post('delUser', 'AdminController@destroy')->name('delUser');
+Route::post('delUser', 'AdminController@deleteUser')->name('delUser');
 
 
 /*----------------Kiosk Routes-------------*/

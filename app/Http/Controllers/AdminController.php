@@ -87,8 +87,7 @@ class AdminController extends Controller
        $defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
 
        User::create([
-           'fullname' => $validatedData['fullname'],
-           /*'email' => $data['email'],*/
+           'fullname' => $validatedData['fullname'],           
            'username' => $validatedData['username'],
            'password' => Hash::make($defaultPWD),
        ]);
@@ -109,6 +108,10 @@ class AdminController extends Controller
     {
         return redirect()->back()->with("error", env('DEFAULT_PWD', '--none--'));
     }
+    public function hideDefaultPWD()
+    {
+        return redirect()->back();
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -117,7 +120,7 @@ class AdminController extends Controller
      *
      * @return Response
      */
-    public function destroyUser(User $user)
+    public function deleteUser(User $user)
     {
         $user->delete();
 
@@ -141,18 +144,13 @@ class AdminController extends Controller
     }
 
     /***************************** KIOSK HANDLING  **************************************/
-    public function addKiosk() {
-        return view('admin.createkiosk');
-    }
-
     /**
      * Show the form for creating a new kiosk.
      *
      * @return \Illuminate\Http\Response
      */
-    public function createKiosk()
-    {
-        //
+    public function addKiosk() {
+        return view('admin.createkiosk');
     }
 
     /**
@@ -161,7 +159,7 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeKiosk(Request $request)
+    public function createKiosk(Request $request)
     {
         //
     }
@@ -172,12 +170,12 @@ class AdminController extends Controller
      * @param  \App\Models\Kiosk  $kiosk
      * @return \Illuminate\Http\Response
      */
-    public function destroyKiosk(Kiosk $kiosk)
+    public function deleteKiosk(Kiosk $kiosk)
     {
         //
     }
 
-
+    /**********************************************************************************/
 
 
 }

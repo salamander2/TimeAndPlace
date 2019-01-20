@@ -89,11 +89,14 @@
 					</table>
 				</div>
 				<div class="links">
-					<p><a href="{{ route('showDefaultPWD') }}"><b>Show default password</b></a></p>
+					
 					@if (session('error'))
+					<p><a href="{{ route('hideDefaultPWD') }}"><b>Hide default password</b></a></p>
 					<div class="alert alert-danger" role="alert">
 						<p>Default password: {{ session('error') }} </p>
 					</div>
+					@else 
+					<p><a href="{{ route('showDefaultPWD') }}"><b>Show default password</b></a></p>
 					@endif
 				</div>
 			</div>
