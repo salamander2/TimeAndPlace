@@ -23,6 +23,7 @@
         <ul>
             <li><a href="/userMaint">UserMaint: List users</a></li>
             <li><a href="/addKiosk">Create Kisoks</a></li>
+            <li><a href="/kiosks">List all Kisoks</a></li>
             
         </ul>
     </div>

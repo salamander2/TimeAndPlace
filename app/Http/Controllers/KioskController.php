@@ -14,7 +14,8 @@ class KioskController extends Controller
      */
     public function index()
     {
-        //
+        $kiosks = Kiosk::all();
+        return view('kiosks.index', compact('kiosks'));  //NOTE: not $kiosks ?!
     }
 
    // NOTE: CREATE, STORE, DESTROY moved to AdminController
@@ -38,7 +39,7 @@ class KioskController extends Controller
      */
     public function edit(Kiosk $kiosk)
     {
-        //
+        return view('kiosks.edit', compact('kiosk'));
     }
 
     /**

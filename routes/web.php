@@ -25,13 +25,9 @@
 |  References: https://laracasts.com/discuss/channels/laravel/routehas
 */
 
-/**** How to return a view right away:    
+/**** How to return a view right away: DO NOT DO THIS! You need middleware to authenticate everything.
 Route::get('/', function () {
    return view('welcome');
-});
-
-Route::get('/userMaint', function() {
-	return view('userMaint');
 });
 */
 
@@ -68,7 +64,7 @@ Route::post('delUser', 'AdminController@deleteUser')->name('delUser');
 
 /*----------------Kiosk Routes-------------*/
 // add, delete are in Admin
-
+Route::get('/kiosks', 'KioskController@index');
 
 /*----------------Attendance Routes-------------*/
 

@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kiosk extends Model
 {
-    protected $fillable = ['room', 'name', 'secretURL', 'showPhoto','showSchedule'];
+    protected $fillable = [
+        'room', 'name', 
+        'secretURL', 'showPhoto',
+        'showSchedule', 'requireConf',
+        'publicViewable', 'signInOnly',
+        'autoSignOut', 'defaultFreq'
+    ];
+
     public $timestamps = true;
     
     public function users()
