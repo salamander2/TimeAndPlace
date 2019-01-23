@@ -6,6 +6,7 @@ php artisan make:migration create_projects_table
 ...................................................
 
 php artisan migrate
+- this will migrate any new changes to tables
 
 php artisan migrate:rollback
 - undoes migrate.

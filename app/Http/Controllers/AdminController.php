@@ -173,11 +173,13 @@ class AdminController extends Controller
             'name' => $validatedKiosk['name'],
             'showPhoto' => $request->has('showPhoto') ? 1 : 0,            
             'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
-            //'showSchedule' => $request['showSchedule'],
-            'secretURL' => '12345',
-
+            'requireConf' => $request->has('requireConf') ? 1 : 0,            
+            'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
+            'signInOnly' => $request->has('signInOnly') ? 1 : 0,            
+            'audoSignOut' => $request->has('autoSignOut') ? 1 : 0,            
+            'secretURL' => '12345'
         ]);
-        
+    
         //$kiosk = new Kiosk();
         //$kiosk->save();
         //dd($validatedKiosk->all());
