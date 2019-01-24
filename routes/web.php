@@ -65,6 +65,8 @@ Route::post('delUser', 'AdminController@deleteUser')->name('delUser');
 /*----------------Kiosk Routes-------------*/
 // add, delete are in Admin
 Route::get('/kiosks', 'KioskController@index');
+Route::get('/kiosks/{kiosk}/edit', 'KioskController@edit');
+Route::patch('/kiosks/{kiosk}', 'KioskController@update');
 
 /*----------------Attendance Routes-------------*/
 

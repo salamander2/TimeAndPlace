@@ -15,7 +15,7 @@
     <ul>
         @foreach ($kiosks as $kiosk)
         <li>
-           <a href="/kiosks/edit"> {{ $kiosk-> name }} ... {{ $kiosk-> room }} </a>
+           <a href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} ... {{ $kiosk-> room }} </a>
         </li>
         @endforeach
     </ul>

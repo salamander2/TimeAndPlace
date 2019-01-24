@@ -39,6 +39,7 @@ class KioskController extends Controller
      */
     public function edit(Kiosk $kiosk)
     {
+        // dd($kiosk);
         return view('kiosks.edit', compact('kiosk'));
     }
 
@@ -51,7 +52,22 @@ class KioskController extends Controller
      */
     public function update(Request $request, Kiosk $kiosk)
     {
-        //
+        $validatedKiosk = $request->validate([
+            'name' => ['required', 'string', 'max:30', 'min:3'],
+            'room' => ['required', 'string', 'max:20']            
+        ]);
+        
+        $kiosk -> update([
+            'room' => $validatedKiosk['room'],
+            'showPhoto' => $request->has('showPhoto') ? 1 : 0,            
+            'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
+            'requireConf' => $request->has('requireConf') ? 1 : 0,            
+            'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
+            'signInOnly' => $request->has('signInOnly') ? 1 : 0,            
+            'autoSignOut' => $request->has('autoSignOut') ? 1 : 0            
+           
+        ]);
+        return back();
     }
 
    
