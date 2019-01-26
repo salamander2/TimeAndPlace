@@ -19,5 +19,6 @@
         </li>
         @endforeach
     </ul>
+            <a href="/addKiosk">Create a new Kisok</a>
 </div>
 @endsection

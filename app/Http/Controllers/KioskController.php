@@ -28,7 +28,7 @@ class KioskController extends Controller
      */
     public function show(Kiosk $kiosk)
     {
-        //
+        return view('kiosks.show', compact('kiosk'));
     }
 
     /**

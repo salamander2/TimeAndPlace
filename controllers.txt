@@ -1,12 +1,13 @@
-Verb		Path		Action		Route Name	Role
+Verb        Path            Action   Route          Name Role
 ----------------------------------------------------------------------------------
-GET			/my 		index		my.index	list all records
+GET         /my             index    my.index       list all records
 
-GET			/my/create	create		my.create	show create form
-POST		/my			store		my.store	save new record
-GET			/my/{my} 	show		my.show		get one record
-GET			/my/{my}/edit 	edit	my.edit		show edit form
-PUT/PATCH 	/my/{my} 	update		my.update	save edited record
+GET         /my/create      create   my.create      show create form
+POST        /my             store    my.store       save new record
+GET         /my/{my}        show     my.show        get one record
+GET         /my/{my}/edit   edit     my.edit        show edit form
+PUT/PATCH   /my/{my}        update   my.update      save edited record
+DELETE      /my/{my}        destroy  my.destroy     delete record
+
 {{ method_field('PATCH') }}
-DELETE		/my/{my} 	destroy		my.destroy	delete record
 {{ method_field('DELETE') }}

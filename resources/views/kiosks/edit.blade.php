@@ -49,5 +49,12 @@
 		</div>
 	</form>
 	<!-- form end -->
+
+	<form role="form" action="/kiosks/{{ $kiosk->id }}" method="post">
+		{{ method_field('DELETE')}}
+		{{csrf_field()}}
+		<button type="submit" class="btn btn-secondary">Delete</button>
+		
+	</form>
 </div>
 @endsection

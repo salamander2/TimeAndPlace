@@ -195,7 +195,8 @@ class AdminController extends Controller
      */
     public function deleteKiosk(Kiosk $kiosk)
     {
-        //
+        $kiosk->delete();
+        return redirect('/kiosks');
     }
 
     /**********************************************************************************/

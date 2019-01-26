@@ -22,11 +22,10 @@
     <div class="links">
         <ul>
             <li><a href="/userMaint">UserMaint: List users</a></li>
-            <li><a href="/addKiosk">Create Kisoks</a></li>
             <li><a href="/kiosks">List all Kisoks</a></li>
             
         </ul>
     </div>
-    <a href="http://localhost:4080/phpmyadmin/">start phpMyAdmin</a>
+    <a href="http://localhost:4080/phpmyadmin/" target="_blank">start phpMyAdmin</a>
 </div>
 @endsection

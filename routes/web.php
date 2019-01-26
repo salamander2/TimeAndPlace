@@ -50,7 +50,7 @@ Route::post('/changePassword','UserController@changePassword')->name('changePass
 			/* kiosk handling routes */
 Route::get('/addKiosk', 'AdminController@addKiosk');
 Route::post('/addKiosk', 'AdminController@createKiosk');
-//Route::delete('/delKiosk','AdminController@deleteKiosk');
+Route::delete('/kiosks/{kiosk}','AdminController@deleteKiosk');
 
 			/* user handling routes */
 Route::get('/userMaint', 'AdminController@userIndex');
@@ -65,6 +65,7 @@ Route::post('delUser', 'AdminController@deleteUser')->name('delUser');
 /*----------------Kiosk Routes-------------*/
 // add, delete are in Admin
 Route::get('/kiosks', 'KioskController@index');
+Route::get('/kiosks/{kiosk}/show', 'KioskController@show');
 Route::get('/kiosks/{kiosk}/edit', 'KioskController@edit');
 Route::patch('/kiosks/{kiosk}', 'KioskController@update');
 

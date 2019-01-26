@@ -1,0 +1,46 @@
+Multiple database connections:
+
+1. Migrations:
+
+
+public function up()
+{
+    Schema::connection('mysql2')->create('types', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('code')->index();
+        $table->string('name');
+        $table->timestamps();
+    });
+}
+
+2. In Eloquent Model
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Type extends Model
+{
+    protected $connection = 'mysql2';
+}
+
+
+3. put in 'App/User.php  --NO! This is probably for the main DB connection, not the secondary one
+
+protected $connection = 'mysql2';
+
+4. So, we have a connection named mysql2 which has the credentials provided, now we can actually use it. So in your code, where you need to take the data from that external database, you just call DB::connection() method and assign the result to the variable. Then we can use that variable to make any queries.
+
+class TestController extends Controller
+{
+
+    public function getTest()
+    {
+        $db_ext = \DB::connection('mysql2');
+        $countries = $db_ext->table('countries')->get();
+        print_r($countries);
+    }
+
+}

@@ -2,3 +2,9 @@
 12 Jan 2019
  php artisan make:model Models/Kiosk
  php artisan migrate --path="database/migrations/2019_01_11_031013_create_kiosk_users_table.php" 
+
+23 Jan - other migrations made:
+ php artisan migrate
+
+25 Jan
+GRANT SELECT ON schoolDB.* TO 'timeandplace'@'localhost';
