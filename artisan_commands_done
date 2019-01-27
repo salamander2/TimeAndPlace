@@ -9,3 +9,6 @@
 
 25 Jan
 GRANT SELECT ON schoolDB.* TO 'timeandplace'@'localhost';
+
+
+php artisan make:controller KioskAdminController

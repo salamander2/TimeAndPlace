@@ -17,7 +17,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/addKiosk" method="post">
+        <form role="form" action="/kiosks" method="post">
             <div class="box-body">
                 <div class="form-group">
                     <label for="name">Group / Team Name</label>

@@ -27,7 +27,8 @@ class IsAdministrator
         if (!Auth::user()->isAdmin) {
 		//TODO: this following line does not work and I don't know why)
         //if (!Auth::user()->isAdministrator()) {
-            return response('Sorry but you aren\'t an admin :P', 403);
+            abort(403);
+            //return response('Sorry but you aren\'t an admin :P', 403);
         }
 
         return $next($request);

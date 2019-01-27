@@ -20,7 +20,7 @@
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('username') }}</strong>
-                                        {{ dd($errors) }}
+                                        {{-- dd($errors) --}}
                                     </span>
                                 @endif
                             </div>
