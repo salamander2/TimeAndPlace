@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\Kiosk;
+use App\Kiosk;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -105,6 +105,7 @@ class AdminController extends Controller
 
     public function showDefaultPWD()
     {
+        //this is a session variable. I'm calling it 'error'. It is not the same as the $errors array that Validate returns
         return redirect()->back()->with("error", env('DEFAULT_PWD', '--none--'));
     }
     public function hideDefaultPWD()
@@ -164,13 +165,13 @@ class AdminController extends Controller
     {
         
         $validatedKiosk = $request->validate([
-            'name' => ['required', 'string', 'max:30', 'min:3'],
+            'name' => ['unique:kiosks', 'required', 'string', 'max:30', 'min:3'],
             'room' => ['required', 'string', 'max:20']            
         ]);
 
         Kiosk::create([
-            'room' => $validatedKiosk['room'],
             'name' => $validatedKiosk['name'],
+            'room' => $validatedKiosk['room'],
             'showPhoto' => $request->has('showPhoto') ? 1 : 0,            
             'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
             'requireConf' => $request->has('requireConf') ? 1 : 0,            
@@ -183,14 +184,13 @@ class AdminController extends Controller
         //$kiosk = new Kiosk();
         //$kiosk->save();
         //dd($validatedKiosk->all());
-        //change this to list of kiosks
-        return redirect('/home');
+        return redirect('/kiosks');
     }
 
      /**
      * Delete the specified kiosk
      *
-     * @param  \App\Models\Kiosk  $kiosk
+     * @param  \App\Kiosk  $kiosk
      * @return \Illuminate\Http\Response
      */
     public function deleteKiosk(Kiosk $kiosk)

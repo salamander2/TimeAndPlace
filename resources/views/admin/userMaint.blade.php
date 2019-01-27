@@ -90,6 +90,7 @@
 				</div>
 				<div class="links">
 					
+					<!-- check the session variable that was created by the controller -->
 					@if (session('error'))
 					<p><a href="{{ route('hideDefaultPWD') }}"><b>Hide default password</b></a></p>
 					<div class="alert alert-danger" role="alert">

@@ -40,4 +40,9 @@ class User extends Authenticatable
 	{
 		return (bool) $this->isadmin;
 	} 
+
+	public function kiosks() 
+	{
+		return $this->belongsTo(Kiosk::class);
+	}
 }

@@ -17,13 +17,13 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/kiosks" method="post">
+        <form role="form" action="/addKiosk" method="post">
             <div class="box-body">
                 <div class="form-group">
                     <label for="name">Group / Team Name</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required autofocus>
                     <label for="room">Room Number / Location</label>
-                    <input type="text" class="form-control" id="room" name="room">
+                    <input type="text" class="form-control" id="room" name="room" value="{{ old('room') }}" required>
                     <!-- all checkboxes -->
                     <label for="showPhoto">Show Photo</label>                    
                     <input type="checkbox" id="showPhoto" name="showPhoto">
@@ -47,7 +47,25 @@
 
             </div>
 
+
             <!-- /.box-body -->
+            <!---******* ERROR HANDLING ********** -->
+            <!-- This prints a 1 (for true) if there is an error in the name -->
+                {{-- $errors->has('name') --}} 
+        
+            <!-- this prints out all of the errors -->
+            @foreach ($errors -> all() as $error)
+                {{ $error }}
+            @endforeach                             	
+        
+            <!-- this prints out any errors, split up by fields. You can add formatting inside the @ IF so that it only 
+                shows up when there are errors -->
+            @if ($errors->any())
+                {{-- dd($errors) --}}
+                
+                {{ $errors->first('name') }}<br>                
+                {{ $errors->first('room') }}
+            @endif
 
             <div class="box-footer">
                 {{csrf_field()}}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,11 +18,12 @@ class Kiosk extends Model
     
     public function users()
     {
-        return $this->belongsToMany('App\User')->withTimestamps();
+        //return $this->belongsToMany('App\User')->withTimestamps();
+        return $this->hasMany(User::class);
     }
 
-    public function schedule()
-    {
-        return $this->hasMany('App\Model\KioskSchedule');
-    }
+    // public function schedule()
+    // {
+    //     return $this->hasMany('App\KioskSchedule');
+    // }
 }
