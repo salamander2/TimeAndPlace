@@ -11,4 +11,8 @@
 GRANT SELECT ON schoolDB.* TO 'timeandplace'@'localhost';
 
 
-php artisan make:controller KioskAdminController
+XXXX php artisan make:controller KioskAdminController
+
+php artisan make:policy KioskPolicy
+
+

@@ -42,21 +42,18 @@ Auth::routes(['register' => false]);
 /*-------------Default routes  -----------------*/
 Route::get('/home', 'HomeController@index')->name('home');
 
-/*-----------------User Routes------------------*/
-Route::get('/changePassword','UserController@showChangePasswordForm');
-Route::post('/changePassword','UserController@changePassword')->name('changePassword');
-
 /*----------------Admin Routes------------------*/
-
-			/* user handling routes */
 Route::get('/userMaint', 'AdminController@userIndex');
 Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
 Route::get('hideDefaultPWD', 'AdminController@hideDefaultPWD')->name('hideDefaultPWD');
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
 Route::post('addUser', 'AdminController@createUser')->name('addUser');
-Route::post('delUser', 'AdminController@deleteUser')->name('delUser');
+Route::post('delUser/{id}', 'AdminController@deleteUser')->name('delUser');
 
+/*-----------------User Routes------------------*/
+Route::get('/changePassword','UserController@showChangePasswordForm');
+Route::post('/changePassword','UserController@changePassword')->name('changePassword');
 
 /*----------------Kiosk Routes-------------*/
 Route::get(   '/kiosks', 'KioskController@index');
