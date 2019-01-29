@@ -64,6 +64,10 @@ Route::get(   '/kiosks/{kiosk}/edit', 'KioskController@edit');
 Route::patch( '/kiosks/{kiosk}', 'KioskController@update');
 Route::delete('/kiosks/{kiosk}','KioskController@destroy');
 
+/*----------------Student Routes-------------*/
+Route::get(   '/students', 'StudentController@index');
+Route::get(   '/students/{id}', 'StudentController@show');
+
 /*----------------Attendance Routes-------------*/
 
 /*----------------Report Routes-----------------*/

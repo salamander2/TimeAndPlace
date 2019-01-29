@@ -35,6 +35,10 @@ class KioskController extends Controller
     public function index()
     {
         $kiosks = Kiosk::all();
+        // foreach($kiosks as $kiosk) {
+        //     print_r($kiosk);
+        // }
+        // dd('x');
         return view('kiosks.index', compact('kiosks'));  //NOTE: not $kiosks ?!
     }
 

@@ -40,7 +40,7 @@ class HomeController extends Controller
 		$record = $student->find(302808019);
 		// $record = $student->first();
 		
-		//getTest();
+		//this->getTest();
 		dd($record);
 		
 	}
