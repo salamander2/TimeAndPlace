@@ -86,8 +86,7 @@
 					<option value="{{$user->id}}">{{ $user->fullname }}</option>
 				</td>
 				<td align="center">
-					{{ $user->isKioskAdmin }}					
-					{{-- <input type="checkbox" {{ $user->isKioskAdmin ? 'checked' :''}}> --}}
+					<input type="checkbox" {{ $user->pivot->isKioskAdmin ? 'checked' :''}}> 
 				</td><td>
 					<button onclick="removeUserFromKiosk({{$user->id}})"
 							class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Revoke

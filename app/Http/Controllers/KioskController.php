@@ -23,7 +23,7 @@ class KioskController extends Controller
     public function __construct()
     {
         $this->middleware('admin')->only(['create','store','delete']);
-        $this->middleware('auth');	
+        $this->middleware('auth');
     }
 
 
@@ -118,7 +118,7 @@ class KioskController extends Controller
      */
     public function edit(Kiosk $kiosk)
     {
-        // dd($kiosk);
+        //dd($kiosk->users);
         return view('kiosks.edit', compact('kiosk'));
     }
 

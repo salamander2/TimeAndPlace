@@ -42,6 +42,6 @@ class User extends Authenticatable
 
 	public function kiosks() 
 	{
-		return $this->belongsToMany(Kiosk::class);
+		return $this->belongsToMany(Kiosk::class)->withPivot('isKioskAdmin');
 	}
 }
