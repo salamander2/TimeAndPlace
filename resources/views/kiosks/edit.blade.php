@@ -77,6 +77,26 @@
 				<input type="text" class="form-control" id="adminName" name="adminName">
 			</div>
 
+			@if($kiosk->users->count())
+			<table>
+			<tr><th>Name</th><th>Kiosk Admin?</th></tr>
+			@foreach($kiosk->users as $user)
+			{{-- make as a <label> .mylabel {  width:100px;  display: inline-block;} --}}
+				<tr><td>
+					<option value="{{$user->id}}">{{ $user->fullname }}</option>
+				</td>
+				<td align="center">
+					{{ $user->isKioskAdmin }}					
+					{{-- <input type="checkbox" {{ $user->isKioskAdmin ? 'checked' :''}}> --}}
+				</td><td>
+					<button onclick="removeUserFromKiosk({{$user->id}})"
+							class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Revoke
+					</button>
+				</td></tr>
+			@endforeach
+		</table>
+		@endif
+
 		</div>
 
 		<div class="box box-default">

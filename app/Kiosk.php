@@ -19,7 +19,7 @@ class Kiosk extends Model
     public function users()
     {
         //return $this->belongsToMany('App\User')->withTimestamps();
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 
     // public function schedule()
