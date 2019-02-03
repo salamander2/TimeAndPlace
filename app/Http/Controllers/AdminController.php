@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\Kiosk;
+use App\Kiosk;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -38,9 +38,9 @@ class AdminController extends Controller
      * @return void
      */
     public function __construct()
-    {
-        $this->middleware('admin');
+    {       
         $this->middleware('auth');
+        $this->middleware('admin');
 		
     }
 
@@ -105,6 +105,7 @@ class AdminController extends Controller
 
     public function showDefaultPWD()
     {
+        //this is a session variable. I'm calling it 'error'. It is not the same as the $errors array that Validate returns
         return redirect()->back()->with("error", env('DEFAULT_PWD', '--none--'));
     }
     public function hideDefaultPWD()
@@ -144,63 +145,6 @@ class AdminController extends Controller
     }
     */
 
-    /***************************** KIOSK HANDLING  **************************************/
-    /**
-     * Show the form for creating a new kiosk.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function addKiosk() {
-        return view('admin.createkiosk');
-    }
-
-    /**
-     * Store a newly created kiosk in database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function createKiosk(Request $request)
-    {
-        
-        $validatedKiosk = $request->validate([
-            'name' => ['required', 'string', 'max:30', 'min:3'],
-            'room' => ['required', 'string', 'max:20']            
-        ]);
-
-        Kiosk::create([
-            'room' => $validatedKiosk['room'],
-            'name' => $validatedKiosk['name'],
-            'showPhoto' => $request->has('showPhoto') ? 1 : 0,            
-            'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
-            'requireConf' => $request->has('requireConf') ? 1 : 0,            
-            'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
-            'signInOnly' => $request->has('signInOnly') ? 1 : 0,            
-            'autoSignOut' => $request->has('autoSignOut') ? 1 : 0,            
-            'secretURL' => '12345'
-        ]);
     
-        //$kiosk = new Kiosk();
-        //$kiosk->save();
-        //dd($validatedKiosk->all());
-        //change this to list of kiosks
-        return redirect('/home');
-    }
-
-     /**
-     * Delete the specified kiosk
-     *
-     * @param  \App\Models\Kiosk  $kiosk
-     * @return \Illuminate\Http\Response
-     */
-    public function deleteKiosk(Kiosk $kiosk)
-    {
-        $kiosk->delete();
-        return redirect('/kiosks');
-    }
-
-    /**********************************************************************************/
-
-
 }
 

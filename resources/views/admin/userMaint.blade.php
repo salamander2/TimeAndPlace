@@ -4,7 +4,20 @@
 	<li class="active"> Users</li>
 </ol>
 
+{{-- @push('scripts') --}}
+{{-- this does nothing yet. Need @stack('scripts') in header.blade.php --}}
+<script>
+	//TODO: figure out how to stop someone from injecting into this to delete the wrong user.
+	//Everything needs the auth and admin middleware. Also do not allow deleting of isAdmin accounts.
+	function resetPWD(userID){
+		alert('reset password ' + userID);
+	}
+	function deleteUser(userID){
+		alert('Delete ' + userID);
+	}
 
+</script>
+{{-- @endpush --}}
 
 @section('content')
 <div class="container">
@@ -70,19 +83,24 @@
 							<th>Username ...</th>
 							<th> Full Name</th>
 							<!-- <th>isAdmin</th> -->
-							<th colspan="2">&nbsp;</th>
+							<th>&nbsp;</th>
 							<th>Default PWD</th>
 						</tr>
 						@foreach($users as $user)
 						<tr>
 							<td style="color:black;">{{ $user->username }}</td>
 							<td style="color:black;">{{ $user->fullname }}</td>
-							<!-- <td style="color:black;"><input id="isTeam_row1" type="checkbox" value="isTeam"></td>
-							<td><button type="submit" onclick="updateRow(1,akirkham')">Update</button></td> -->
-							<td><a href="deleteUser.php?ID=akirkham"><button type="submit" name="delete" style="color:red;" onclick="return confirm('Are you sure?');" >Delete</button></a></td>
-							<td><a href="resetPWD.php?ID=akirkham"><button type="submit" name="changePWD" onclick="return confirm('Are you sure?');" >Reset Password</button></a></td>
+
+							<td><button type="button" name="resetPWD"
+								onclick="if(confirm('Are you sure?')) resetPWD({{ $user->id }});">Reset Password</button>
+							</td>
 							<td style="color:black;text-align:center">@if ($user->defaultPWD == 1) * @endif
 							</td>
+							<td><button type="button" name="delete" style="color:red;" 
+								onclick="if(confirm('Are you sure?')) deleteUser({{ $user->id }});">Delete</button>
+							</td>
+							
+							
 						</tr>
 
 						@endforeach
@@ -90,6 +108,7 @@
 				</div>
 				<div class="links">
 					
+					<!-- check the session variable that was created by the controller -->
 					@if (session('error'))
 					<p><a href="{{ route('hideDefaultPWD') }}"><b>Hide default password</b></a></p>
 					<div class="alert alert-danger" role="alert">

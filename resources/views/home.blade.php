@@ -23,6 +23,8 @@
         <ul>
             <li><a href="/userMaint">UserMaint: List users</a></li>
             <li><a href="/kiosks">List all Kisoks</a></li>
+            <li><a href="/students">Go to Student index page</a></li>
+            <li><a href="/students/1">Go to Student show page</a></li>
             
         </ul>
     </div>

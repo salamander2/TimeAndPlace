@@ -42,32 +42,31 @@ Auth::routes(['register' => false]);
 /*-------------Default routes  -----------------*/
 Route::get('/home', 'HomeController@index')->name('home');
 
-/*-----------------User Routes------------------*/
-Route::get('/changePassword','UserController@showChangePasswordForm');
-Route::post('/changePassword','UserController@changePassword')->name('changePassword');
-
 /*----------------Admin Routes------------------*/
-			/* kiosk handling routes */
-Route::get('/addKiosk', 'AdminController@addKiosk');
-Route::post('/addKiosk', 'AdminController@createKiosk');
-Route::delete('/kiosks/{kiosk}','AdminController@deleteKiosk');
-
-			/* user handling routes */
 Route::get('/userMaint', 'AdminController@userIndex');
 Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
 Route::get('hideDefaultPWD', 'AdminController@hideDefaultPWD')->name('hideDefaultPWD');
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
 Route::post('addUser', 'AdminController@createUser')->name('addUser');
-Route::post('delUser', 'AdminController@deleteUser')->name('delUser');
+Route::post('delUser/{id}', 'AdminController@deleteUser')->name('delUser');
 
+/*-----------------User Routes------------------*/
+Route::get('/changePassword','UserController@showChangePasswordForm');
+Route::post('/changePassword','UserController@changePassword')->name('changePassword');
 
 /*----------------Kiosk Routes-------------*/
-// add, delete are in Admin
-Route::get('/kiosks', 'KioskController@index');
-Route::get('/kiosks/{kiosk}/show', 'KioskController@show');
-Route::get('/kiosks/{kiosk}/edit', 'KioskController@edit');
-Route::patch('/kiosks/{kiosk}', 'KioskController@update');
+Route::get(   '/kiosks', 'KioskController@index');
+Route::get(   '/kiosks/create', 'KioskController@create');
+Route::post(  '/kiosks', 'KioskController@store');
+Route::get(   '/kiosks/{kiosk}/show', 'KioskController@show');
+Route::get(   '/kiosks/{kiosk}/edit', 'KioskController@edit');
+Route::patch( '/kiosks/{kiosk}', 'KioskController@update');
+Route::delete('/kiosks/{kiosk}','KioskController@destroy');
+
+/*----------------Student Routes-------------*/
+Route::get(   '/students', 'StudentController@index');
+Route::get(   '/students/{id}', 'StudentController@show');
 
 /*----------------Attendance Routes-------------*/
 

@@ -1,16 +1,55 @@
-@extends('layouts.app')
+@extends('layouts.app') 
 
+@push('scripts')
+<script>
+	function removeUserFromKiosk(userid) {
 
+			var url = "/kiosks/{{$kiosk->id}}/detach/" + userid;
+			$.ajax({
+				url: url,
+				type: "DELETE",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				success: function (result) {
+					location.reload();
+				}
+			});
+		}
+
+	function addUserToKiosk() {
+		var userArray = $("#addUserSelector").val();
+		var i = 0;
+		userArray.forEach(function (val) {
+			i++;
+			var url = "/kiosks/{{$kiosk->id}}/attach/" + val;
+			$.ajax({
+				url: url,
+				type: "POST",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				success: function () {
+					if (i = userArray.length) {
+						location.reload();
+					}
+				}
+
+			});
+
+		});
+	}
+</script>
+<script>
+	var addUserBox = $('.user-add-box').select2();
+</script>
+@endpush 
 
 
 @section('content')
 <div class="container">
-	<h1>		
+	<h1>
 		Edit Kiosk
 	</h1>
 
-     <!-- form start -->
-	 <form role="form" action="/kiosks/{{ $kiosk->id }}" method="post">
+	<!-- form start -->
+	<form role="form" action="/kiosks/{{ $kiosk->id }}" method="post">
 		{{ method_field('PATCH') }}
 		<div class="box-body">
 			<div class="form-group">
@@ -19,27 +58,73 @@
 				<label for="room">Room Number / Location</label>
 				<input type="text" class="form-control" id="room" name="room" value="{{ $kiosk->room}}">
 				<!-- all checkboxes -->
-				<label for="showPhoto">Show Photo</label>                    
+				<label for="showPhoto">Show Photo</label>
 				<input type="checkbox" id="showPhoto" name="showPhoto" {{ $kiosk->showPhoto ? 'checked' :''}}>
-				<label for="showSchedule">Show Schedule</label>                    
+				<label for="showSchedule">Show Schedule</label>
 				<input type="checkbox" id="showSchedule" name="showSchedule" {{ $kiosk->showSchedule ? 'checked' :''}}>
-				<label for="requireConf">Require Confirmation</label>                    
+				<label for="requireConf">Require Confirmation</label>
 				<input type="checkbox" id="requireConf" name="requireConf" {{ $kiosk->requireConf ? 'checked' :''}}>
-				<label for="publicViewable">Publically Viewable</label>                    
+				<label for="publicViewable">Publically Viewable</label>
 				<input type="checkbox" id="publicViewable" name="publicViewable" {{ $kiosk->publicViewable ? 'checked' :''}}>
-				<label for="signInOnly">Sign in only</label>                    
+				<label for="signInOnly">Sign in only</label>
 				<input type="checkbox" id="signInOnly" name="signInOnly" {{ $kiosk->signInOnly ? 'checked' :''}}>
-				<label for="autoSignout">Auto Signout</label>                    
+				<label for="autoSignout">Auto Signout</label>
 				<input type="checkbox" id="autoSignout" name="autoSignout" {{ $kiosk->autoSignout ? 'checked' :''}}>
-				
-				
+
+
 			</div>
 			<div class="form-group">
-					<label for="adminName">Admin / users?</label>
-					<input type="text" class="form-control" id="adminName" name="adminName">
+				<label for="adminName">Admin / users?</label>
+				<input type="text" class="form-control" id="adminName" name="adminName">
+			</div>
+
+			@if($kiosk->users->count())
+				
+				<h3><label class="userlabel">Name</label><label>Kiosk Admin?</label></h3>
+				@foreach($kiosk->users as $user)
+					<label class="userlabel" value="{{$user->id}}">{{ $user->fullname }}</label>
+					<input type="checkbox" {{ $user->pivot->isKioskAdmin ? 'checked' :''}}> 
+					<button onclick="removeUserFromKiosk({{$user->id}})"
+							class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Revoke
+					</button>
+					<br>
+				@endforeach
+			
+			@endif
+
+		</div>
+
+		<div class="box box-default">
+			<div class="box-header with-border">
+				<h3 class="box-title">Add User</h3>
+
+
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Select a user and click add</label><br>
+							<select class="user-add-box" style="width: 100%;" id="addUserSelector" multiple="multiple">
+
+								@foreach(\App\User::all() as $user)
+									<option value="{{$user->id}}">{{ucfirst($user->fullname)}}</option>
+								@endforeach
+							</select>
+						</div>
+						<button type="button" class="btn btn-block btn-success" onClick="addUserToKiosk()">Add User	to Kiosk
+						</button>
+
+
+					</div>
+				</div>
 			</div>
 
 		</div>
+
+
+
 
 		<!-- /.box-body -->
 
@@ -51,10 +136,9 @@
 	<!-- form end -->
 
 	<form role="form" action="/kiosks/{{ $kiosk->id }}" method="post">
-		{{ method_field('DELETE')}}
-		{{csrf_field()}}
+		{{ method_field('DELETE')}} {{csrf_field()}}
 		<button type="submit" class="btn btn-secondary">Delete</button>
-		
+
 	</form>
 </div>
 @endsection

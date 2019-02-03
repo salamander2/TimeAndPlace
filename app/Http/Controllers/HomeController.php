@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
-use App\Models\Student;
+use App\Student;
 
 class HomeController extends Controller
 {
@@ -40,7 +40,7 @@ class HomeController extends Controller
 		$record = $student->find(302808019);
 		// $record = $student->first();
 		
-		//getTest();
+		//this->getTest();
 		dd($record);
 		
 	}

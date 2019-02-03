@@ -20,6 +20,7 @@
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('username') }}</strong>
+                                        {{-- dd($errors) --}}
                                     </span>
                                 @endif
                             </div>
@@ -32,7 +33,7 @@
                                 <input id="password" type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                                 @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">                                        
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
