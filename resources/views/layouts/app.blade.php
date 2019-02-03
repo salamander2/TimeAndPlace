@@ -18,6 +18,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .userlabel {
+            /* used for userMaint page to get table like effect using labels */
+            width:20%;  display: inline-block;
+        }
+    </style>
+    
 </head>
 <body>
     <div id="app">
