@@ -64,6 +64,11 @@ Route::get(   '/kiosks/{kiosk}/edit', 'KioskController@edit');
 Route::patch( '/kiosks/{kiosk}', 'KioskController@update');
 Route::delete('/kiosks/{kiosk}','KioskController@destroy');
 
+/*----------------Kiosk-User Routes-------------*/
+Route::patch('/kiosks/{kiosk}/users/{user}', 'KioskUserController@update');
+// Route::patch('/kiosks/{kiosk}/users/{user}', 'HomeController@index');
+//Route::post('/kiosks/{kiosk}/users', 'KioskUsersController@store');
+
 /*----------------Student Routes-------------*/
 Route::get(   '/students', 'StudentController@index');
 Route::get(   '/students/{id}', 'StudentController@show');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Kiosk;
+use App\User;
+
 use Illuminate\Http\Request;
 
 class KioskController extends Controller
@@ -150,6 +152,10 @@ class KioskController extends Controller
     }
 
     /************************** OTHER ********************************/
+    public function update2(Kiosk $kiosk, User $user) {
+        dd("here2");
+    }
+
     public function attach(Kiosk $kiosk, User $user)
     {   
         if (!$user->kiosks->contains($kiosk->id)) {

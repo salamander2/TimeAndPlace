@@ -14,7 +14,7 @@ class DropKiosksTable extends Migration
     public function up()
     {
 		//This drops the kiosks table so that it can be recreated with proper defaults.
-		Schema::drop('kiosks');        
+		//  Schema::drop('kiosks');        
     }
 
     /**

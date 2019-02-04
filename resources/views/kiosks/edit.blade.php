@@ -1,6 +1,4 @@
-@extends('layouts.app') 
-
-@push('scripts')
+@extends('layouts.app') @push('scripts')
 <script>
 	function removeUserFromKiosk(userid) {
 
@@ -35,13 +33,16 @@
 
 		});
 	}
+
 </script>
 <script>
 	var addUserBox = $('.user-add-box').select2();
+
 </script>
+
+
+
 @endpush 
-
-
 @section('content')
 <div class="container">
 	<h1>
@@ -73,67 +74,75 @@
 
 
 			</div>
-			<div class="form-group">
-				<label for="adminName">Admin / users?</label>
-				<input type="text" class="form-control" id="adminName" name="adminName">
-			</div>
-
-			@if($kiosk->users->count())
-				
-				<h3><label class="userlabel">Name</label><label>Kiosk Admin?</label></h3>
-				@foreach($kiosk->users as $user)
-					<label class="userlabel" value="{{$user->id}}">{{ $user->fullname }}</label>
-					<input type="checkbox" {{ $user->pivot->isKioskAdmin ? 'checked' :''}}> 
-					<button onclick="removeUserFromKiosk({{$user->id}})"
-							class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Revoke
-					</button>
-					<br>
-				@endforeach
 			
-			@endif
+			<div class="box-footer">
+				{{csrf_field()}}
+				<button type="submit" class="btn btn-primary">Update</button>
+			</div>
+	</form>
+	<!-- form end -->
+
+	<!-- List kiosk users -->
+
+	@if($kiosk->users->count())
+	<hr>
+	<h3>Users</h3>
+	<h5 style="border-bottom:solid black 1px;"><label class="userlabel">Name</label><label>Kiosk Admin?</label></h5>
+	
+	@foreach($kiosk->users as $user)
+
+
+
+	<form action="/kiosks/{{ $kiosk->id }}/users/{{ $user->id }}" method="POST" style=" display:inline!important;">
+		@csrf @method('PATCH')
+		<label class="userlabel" for="user-checkbox-{{ $user->id }}" value="{{$user->id}}">{{ $user->fullname }}</label>
+		<input type="checkbox" name="completed" id="user-checkbox-{{ $user->id }}" onChange="this.form.submit()" {{ $user->pivot->isKioskAdmin
+		? 'checked' :''}}>
+
+	</form>
+	<button onclick="removeUserFromKiosk({{$user->id}})" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Revoke	</button>
+	<br>
+	 @endforeach 
+	
+	@endif
+
+	</div>
+	<hr>
+	<div class="box box-default">
+		<div class="box-header with-border">
+			<h3 class="box-title">Add User</h3>
+
 
 		</div>
-
-		<div class="box box-default">
-			<div class="box-header with-border">
-				<h3 class="box-title">Add User</h3>
-
-
-			</div>
-			<!-- /.box-header -->
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label>Select a user and click add</label><br>
-							<select class="user-add-box" style="width: 100%;" id="addUserSelector" multiple="multiple">
+		<!-- /.box-header -->
+		<div class="box-body">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label>Select a user and click add</label><br>
+						<select class="user-add-box" style="width: 100%;" id="addUserSelector" multiple="multiple">
 
 								@foreach(\App\User::all() as $user)
 									<option value="{{$user->id}}">{{ucfirst($user->fullname)}}</option>
 								@endforeach
 							</select>
-						</div>
-						<button type="button" class="btn btn-block btn-success" onClick="addUserToKiosk()">Add User	to Kiosk
+					</div>
+					<button type="button" class="btn btn-block btn-success" onClick="addUserToKiosk()">Add User	to Kiosk
 						</button>
 
 
-					</div>
 				</div>
 			</div>
-
 		</div>
 
+	</div>
 
 
 
-		<!-- /.box-body -->
 
-		<div class="box-footer">
-			{{csrf_field()}}
-			<button type="submit" class="btn btn-primary">Update</button>
-		</div>
-	</form>
-	<!-- form end -->
+	<!-- /.box-body -->
+
+
 
 	<form role="form" action="/kiosks/{{ $kiosk->id }}" method="post">
 		{{ method_field('DELETE')}} {{csrf_field()}}
