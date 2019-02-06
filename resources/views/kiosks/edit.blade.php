@@ -1,46 +1,4 @@
-@extends('layouts.app') 
-
-@push('scripts')
-<script>
-	function removeUserFromKiosk(userid) {
-
-			var url = "/kiosks/{{$kiosk->id}}/detach/" + userid;
-			$.ajax({
-				url: url,
-				type: "DELETE",
-				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-				success: function (result) {
-					location.reload();
-				}
-			});
-		}
-
-	function addUserToKiosk() {
-		var userArray = $("#addUserSelector").val();
-		var i = 0;
-		userArray.forEach(function (val) {
-			i++;
-			var url = "/kiosks/{{$kiosk->id}}/attach/" + val;
-			$.ajax({
-				url: url,
-				type: "POST",
-				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-				success: function () {
-					if (i = userArray.length) {
-						location.reload();
-					}
-				}
-
-			});
-
-		});
-	}
-</script>
-<script>
-	var addUserBox = $('.user-add-box').select2();
-</script>
-@endpush 
-
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -76,73 +34,63 @@
 				{{csrf_field()}}
 				<button type="submit" class="btn btn-primary">Update</button>
 			</div>
-		</form>
-		<!-- form end -->
-
-			@if($kiosk->users->count())
-				<hr>
-				<h3>Users</h3>
-				<h5 style="border-bottom:solid black 1px;">
-					<label class="userlabel">Name</label><label>Kiosk Admin?</label></h5>
-
-				@foreach($kiosk->users as $user)
-					<label class="userlabel" for="user-checkbox-{{ $user->id }}" value="{{$user->id}}">{{ $user->fullname }}</label>
-					<input type="checkbox" onchange="window.location.href='/kiosks/{{ $kiosk->id }}/users/{{ $user->id }}'" 
-						{{ $user->pivot->isKioskAdmin ? 'checked' :''}}>
-					<!-- ** NOTE: do not bother with CRSF for this -->
-					<label class="userlabel">&nbsp;</label>
-					<input type="button" onclick="window.location.href='/kiosks/{{ $kiosk->id }}/detach/{{ $user->id }}'" 
-						class="btn btn-xs btn-danger" value="Revoke">					
-					<br>
-				@endforeach
-			
-			@endif
-
 		</div>
+	</form>
+	<!-- form end -->
 
-		
-		<div class="box box-default">
-			<div class="box-header with-border">
-				<h3 class="box-title">Add User</h3>
-				<!--<p>** NOTE: do not bother with CRSF for this</p> -->
+	@if($kiosk->users->count())
+		<hr>
+		<h3>Users</h3>
+		<h5 style="border-bottom:solid black 1px;">
+			<label class="userlabel">Name</label><label>Kiosk Admin?</label></h5>
 
-			</div>
-			<!-- /.box-header -->
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label>Select a user and click add</label><br>
-							<select onchange="if (this.value) window.location.href=this.value" size="8">
-							{{--  <select onchange="if (this.value) alert(this.value)" size="8">  --}}
-								<option style="border-bottom:1px solid black;" value="">Select user to add to kiosk</option>
-								
-								@foreach(\App\User::all() as $user)
-									{{-- @foreach($detachedUsers as $user) --}}
-									{{-- {{$user->notThisKiosk($kiosk->id) }} --}}
-									<option value="/kiosks/{{ $kiosk->id }}/attach/{{ $user->id }}">{{ucfirst($user->fullname)}}</option>
-								@endforeach
-								
-							</select>
+		@foreach($kiosk->users as $user)
+			<label class="userlabel" for="user-checkbox-{{ $user->id }}" value="{{$user->id}}">{{ $user->fullname }}</label>
+			<input type="checkbox" onchange="window.location.href='/kiosks/{{ $kiosk->id }}/users/{{ $user->id }}'" 
+				{{ $user->pivot->isKioskAdmin ? 'checked' :''}}>
+			<!-- ** NOTE: do not bother with CRSF for this -->
+			<label class="userlabel">&nbsp;</label>
+			<input type="button" onclick="window.location.href='/kiosks/{{ $kiosk->id }}/detach/{{ $user->id }}'" 
+				class="btn btn-xs btn-danger" value="Revoke">					
+			<br>
+		@endforeach
+	
+	@endif
+
+	<div class="box box-default">
+		<div class="box-header with-border">
+			<h3 class="box-title">Add User</h3>
+			<!--<p>** NOTE: do not bother with CRSF for this</p> -->
+		</div>
+		<div class="box-body">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label>Select a user and click add</label><br>
+						<select onchange="if (this.value) window.location.href=this.value" size="8">
+						{{--  <select onchange="if (this.value) alert(this.value)" size="8">  --}}
+							<option style="border-bottom:1px solid black;" value="">Select user to add to kiosk</option>
 							
-						</div>
-
+							@foreach(\App\User::all() as $user)
+								{{-- @foreach($detachedUsers as $user) --}}
+								{{-- {{$user->notThisKiosk($kiosk->id) }} --}}
+								<option value="/kiosks/{{ $kiosk->id }}/attach/{{ $user->id }}">{{ucfirst($user->fullname)}}</option>
+							@endforeach
+							
+						</select>
+						
 					</div>
+
 				</div>
 			</div>
-			@if (session('error'))
-				<div class="alert alert-success" role="alert">
-					{{ session('error') }}
-				</div>
-			@endif
 		</div>
-
-		
-
-
-
-		<!-- /.box-body -->
-
+		@if (session('error'))
+			<div class="alert alert-success" role="alert">
+				{{ session('error') }}
+			</div>
+		@endif
+	</div>
+	
 	<h2>&nbsp;</h2>
 
 	<form role="form" action="/kiosks/{{ $kiosk->id }}" method="post">
