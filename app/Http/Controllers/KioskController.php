@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Kiosk;
+use App\User;
+
 use Illuminate\Http\Request;
 
 class KioskController extends Controller
@@ -93,6 +95,7 @@ class KioskController extends Controller
      */
     public function destroy(Kiosk $kiosk)
     {
+        dd("deleting kiosk " . $kiosk->id);
         $kiosk->delete();
         return redirect('/kiosks');
     }
@@ -119,6 +122,21 @@ class KioskController extends Controller
     public function edit(Kiosk $kiosk)
     {
         //dd($kiosk->users);
+
+        // @foreach(\App\User::all() as $user) 
+
+        // @endforeach
+
+        //also select all users who are not on THIS kiosk
+        //and pass it to the view (for the lower portion)
+        
+        // $detachedUsers = User::doesntHave('kiosks')->get();  //this finds all users with NO kiosk
+        //$detachedUsers = User::all();
+        //$aaa = $detachedUsers->notThisKiosk($kiosk->id);
+       // $detachedUsers = $detachedUsers->notThisKiosk(1);
+
+        //$kioskuser = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();
+        //return view('kiosks.edit', compact('kiosk', 'detachedUsers'));
         return view('kiosks.edit', compact('kiosk'));
     }
 
@@ -148,32 +166,4 @@ class KioskController extends Controller
         ]);
         return back();
     }
-
-    /************************** OTHER ********************************/
-    public function attach(Kiosk $kiosk, User $user)
-    {   
-        if (!$user->kiosks->contains($kiosk->id)) {
-            $user->kiosks()->attach($kiosk->id);
-
-            return response()->json(['status' => 'ok']);
-        } else {
-            return response()->json(['status' => 'exists']);
-        }
-    }   
-
-    /** 
-     * Delete a user from the selected kiosk.
-     *
-     * @param $kiosk
-     * @param User $user
-     *
-     * @return bool
-     */
-    public function detach(Kiosk $kiosk, User $user)
-    {   
-        $user->kiosks()->detach($kiosk->id);
-
-        return response()->json(['status' => 'ok']);
-    }
-
 }

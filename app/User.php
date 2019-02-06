@@ -44,4 +44,9 @@ class User extends Authenticatable
 	{
 		return $this->belongsToMany(Kiosk::class)->withPivot('isKioskAdmin');
 	}
+
+	public function notThisKiosk($id) {
+		return $this->belongsToMany(Kiosk::class)->wherePivot('kiosk_id', '!=', $id);
+	}
+
 }

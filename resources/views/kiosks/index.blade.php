@@ -1,12 +1,16 @@
 @extends('layouts.app')
+
+
+
+
+@section('content')
+
 <ol class="breadcrumb">
 	<li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home</a> </li>
 	<li class="active"> Users</li>
 </ol>
 
 
-
-@section('content')
 <div class="container">
 	<h1>		
 		All Kiosks

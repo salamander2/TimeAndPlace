@@ -64,6 +64,16 @@ Route::get(   '/kiosks/{kiosk}/edit', 'KioskController@edit');
 Route::patch( '/kiosks/{kiosk}', 'KioskController@update');
 Route::delete('/kiosks/{kiosk}','KioskController@destroy');
 
+/*----------------Kiosk-User Routes-------------*/
+// Route::patch('/kiosks/{kiosk}/users/{user}', 'HomeController@index');
+//Route::patch('/kiosks/{kiosk}/users/{user}', 'KioskUserController@update');
+// Route::post('/kiosks/{kiosk}/attach/{user}', 'KioskUsersController@attach');
+// Route::post('/kiosks/{kiosk}/detach/{id}', 'KioskUsersController@detach');
+//The following is being done with simple URL redirects .: get method and not CSRF 
+Route::get('/kiosks/{kiosk}/users/{user}', 'KioskUserController@toggleKioskAdmin');
+Route::get('/kiosks/{kiosk}/attach/{user}', 'KioskUserController@attach');
+Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
+
 /*----------------Student Routes-------------*/
 Route::get(   '/students', 'StudentController@index');
 Route::get(   '/students/{id}', 'StudentController@show');
@@ -74,3 +84,7 @@ Route::get(   '/students/{id}', 'StudentController@show');
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
