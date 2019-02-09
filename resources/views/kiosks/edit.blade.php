@@ -70,11 +70,16 @@
 						<select onchange="if (this.value) window.location.href=this.value" size="8">
 						{{--  <select onchange="if (this.value) alert(this.value)" size="8">  --}}
 							<option style="border-bottom:1px solid black;" value="">Select user to add to kiosk</option>
+							{{--  $kioskusers = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();  --}}
+							{{--  $detachedUsers = Kiosk::where(id, '=', $kiosk->id);  --}}
+							@foreach ( $detachedUsers as $user)
+								
 							
-							@foreach(\App\User::all() as $user)
-								{{-- @foreach($detachedUsers as $user) --}}
-								{{-- {{$user->notThisKiosk($kiosk->id) }} --}}
-								<option value="/kiosks/{{ $kiosk->id }}/attach/{{ $user->id }}">{{ucfirst($user->fullname)}}</option>
+							{{--  @foreach(\App\User::all() as $user)  --}}
+									{{-- @foreach($detachedUsers as $user) --}}
+									{{-- {{$user->notThisKiosk($kiosk->id) }} --}}
+									<option value="/kiosks/{{ $kiosk->id }}/attach/{{ $user->id }}">{{ucfirst($user->fullname)}}</option>
+								
 							@endforeach
 							
 						</select>

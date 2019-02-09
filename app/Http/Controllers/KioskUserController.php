@@ -13,9 +13,9 @@ class KioskUserController extends Controller
    
     public function toggleKioskAdmin(Kiosk $kiosk, User $user)
     {
-        $kioskuser = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();
+        $kioskusers = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();
         
-        $record = $kioskuser->first();
+        $record = $kioskusers->first();
         $record->isKioskAdmin = !$record->isKioskAdmin;
         $record->save();
         

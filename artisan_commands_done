@@ -15,4 +15,7 @@ XXXX php artisan make:controller KioskAdminController
 
 php artisan make:policy KioskPolicy
 
-
+php artisan route:clear
+php artisan view:clear
+php artisan config:clear
+php artisan cache:clear

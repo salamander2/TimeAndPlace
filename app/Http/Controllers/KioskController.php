@@ -130,14 +130,25 @@ class KioskController extends Controller
         //also select all users who are not on THIS kiosk
         //and pass it to the view (for the lower portion)
         
-        // $detachedUsers = User::doesntHave('kiosks')->get();  //this finds all users with NO kiosk
-        //$detachedUsers = User::all();
-        //$aaa = $detachedUsers->notThisKiosk($kiosk->id);
-       // $detachedUsers = $detachedUsers->notThisKiosk(1);
+        $detachedUsers = User::doesntHave('kiosks')->get();  //this finds all users with NO kiosk
+               
+        foreach ( User::all() as $user) {
+            
+            if ($user->kiosks->first() == null) continue; //already added above
+            
+            if ($user->kiosks->first()->id != $kiosk->id) {
+                $detachedUsers[] = $user;
+            }
+        }
+        return view('kiosks.edit', compact('kiosk','detachedUsers'));
+        //$detachedUSers = User::where('user->kiosks->kiosk_id','!=',1)->get();
+        // dd($detachedUsers);
 
         //$kioskuser = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();
         //return view('kiosks.edit', compact('kiosk', 'detachedUsers'));
-        return view('kiosks.edit', compact('kiosk'));
+        //$detachedUsers = Kiosk::where('id', '!=', $kiosk->id)->get();  //all kiosks except for the current one
+        
+        return view('kiosks.edit', compact('kiosk','detachedUsers'));
     }
 
     /** UPDATE

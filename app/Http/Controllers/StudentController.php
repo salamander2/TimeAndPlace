@@ -20,6 +20,22 @@ class StudentController extends Controller
      */
     public function index()
     {
+        $students = Student::all();
+        // dd($students->first());
+        foreach ($students as $student) {
+            print_r($student->studentID ." ... " . $student->firstname . "<br>");
+            
+        }  
+    }
+
+   /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
         //$db2 = \DB::connection('mysql2');
         //$courses = $db2->table('students')->find(1);
         //print_r($courses . '\n');
@@ -30,11 +46,9 @@ class StudentController extends Controller
         $record = $student->first();
         $age = $this->getAge($record->dob);
         return view('student')->withRecord($record)->withAge($age);
+    
         //dd($record);
     }
-
-   
-   
 
     /**
      * Display the specified resource.
@@ -42,18 +56,18 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showCourse()
     {
         
         // $db2 = \DB::connection('mysql2');
         // $courses = $db2->table('courses')::all();//->find(1);
         
         $courses = Course::all();
-        //$course = $courses->first();
-        //dd($course->teacher);
+        $course = $courses->first();
+       // dd($course->coursecode);
 
         foreach ($courses as $course) {
-            print_r($course->teacher);
+            print_r($course->coursecode ." ... " . $course->teacher . "<br>");
             // dd($course->first());
         }   
         
@@ -65,6 +79,7 @@ class StudentController extends Controller
         // dd('x');
     }
 
+    //This method works
     private function getAge($then) {
         $then = date('Ymd', strtotime($then));
         $diff = date('Ymd') - $then;
@@ -74,6 +89,14 @@ class StudentController extends Controller
         return $age;
     }
     
+    //changes course name to look like this ESLAO1-01 (adds in hyphen)
+    private function formatCourse($course) {
+        if (strlen($course) != 8) return $course;
+
+        $temp = substr($course,0,6) . "-" . substr($course,6);
+        return $temp;
+    }
+
     /* get courses .... 
     //get timetable
     $sql = "SELECT courses.coursecode, teacher, period, room FROM courses INNER JOIN student_course ON courses.coursecode = student_course.coursecode WHERE studentID = ? ORDER BY period";
@@ -98,11 +121,5 @@ class StudentController extends Controller
     }
 
 */
-    //changes course name to look like this ESLAO1-01 (adds in hyphen)
-    private function formatCourse($course) {
-        if (strlen($course) != 8) return $course;
-
-        $temp = substr($course,0,6) . "-" . substr($course,6);
-        return $temp;
-    }
+    
 }

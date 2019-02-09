@@ -77,6 +77,7 @@ Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
+Route::get('/students2/', 'StudentController@showCourse');
 
 /*----------------Attendance Routes-------------*/
 

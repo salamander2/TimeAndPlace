@@ -25,6 +25,8 @@
             <li><a href="/kiosks">List all Kisoks</a></li>
             <li><a href="/students">Go to Student index page</a></li>
             <li><a href="/students/1">Go to Student show page</a></li>
+            <li><a href="/students2">Debug Course stuff</a></li>
+            
             
         </ul>
     </div>
