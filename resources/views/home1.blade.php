@@ -26,10 +26,23 @@
             <li><a href="/students">Go to Student index page</a></li>
             <li><a href="/students/1">Go to Student show page</a></li>
             <li><a href="/students2">Debug Course stuff</a></li>
+            <li><a href="/home2">Go to AdminLTE home page</a></li>
             
             
         </ul>
     </div>
     <a href="http://localhost:4080/phpmyadmin/" target="_blank">start phpMyAdmin</a>
+<hr style="color:black; background-color:navy;">
+    <div class="box">
+	<h1>Things to ask Ethan</h1>
+	<p>1. How to compile SASS<br>
+	2. 'npm run watch' does now work, neither does 'npm run prod' or 'npm run dev'<br>
+	3. How to install SweetAlert?<br>
+	4. How to link to CSS and JS files<br>
+
+	</p>
+    </div>
+<hr style="background-color:navy;">
+** Make an Admin have an 'enable remote access' to SSH -r to AWS. If other schools want to use this then I can administer it remotely.
 </div>
 @endsection

@@ -41,6 +41,7 @@ Auth::routes(['register' => false]);
 
 /*-------------Default routes  -----------------*/
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home2', 'HomeController@home2');
 
 /*----------------Admin Routes------------------*/
 Route::get('/userMaint', 'AdminController@userIndex');
@@ -73,6 +74,9 @@ Route::delete('/kiosks/{kiosk}','KioskController@destroy');
 Route::get('/kiosks/{kiosk}/users/{user}', 'KioskUserController@toggleKioskAdmin');
 Route::get('/kiosks/{kiosk}/attach/{user}', 'KioskUserController@attach');
 Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
+
+/*----------------Terminal Routes-------------*/
+Route::get('/terminals/{kiosk}', 'TerminalController@launch');
 
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');

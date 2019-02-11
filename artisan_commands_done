@@ -19,3 +19,9 @@ php artisan route:clear
 php artisan view:clear
 php artisan config:clear
 php artisan cache:clear
+
+copy .env and config/database.php so that I can access schoolDB too
+
+php artisan make:Controller TerminalController
+
+npm install sweetalert --save

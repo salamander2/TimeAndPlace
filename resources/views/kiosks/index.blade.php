@@ -19,7 +19,8 @@
     <ul>
         @foreach ($kiosks as $kiosk)
         <li>
-           <a href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} ... {{ $kiosk-> room }} </a>
+           <a href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a> <label>- - - -</label> 
+           <a href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
         </li>
         @endforeach
     </ul>
