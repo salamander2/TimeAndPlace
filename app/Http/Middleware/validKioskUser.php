@@ -28,8 +28,13 @@ class validKioskUser
         //if the user is not valid, then it returns a null
         $validUser = $users->where('id', '=', $user->id)->first();
 
+        //user is not attached to that kiosk
         abort_if( $validUser==null, 403, "Unauthorised access. Only administrators and valid users can edit kiosks");
         
+        //user is not kiosk admin
+        abort_unless( $validUser->pivot->isKioskAdmin, 403, "Unauthorised access. Only administrators and valid users can edit kiosks");
+        
+
         return $next($request);
     }
 }
