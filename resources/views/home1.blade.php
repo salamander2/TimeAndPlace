@@ -24,7 +24,7 @@
             <li><a href="/userMaint">UserMaint: List users</a></li>
             <li><a href="/kiosks">List all Kisoks</a></li>
             <li><a href="/students">Go to Student index page</a></li>
-            <li><a href="/students/1">Go to Student show page</a></li>
+            <li><a href="/students/339654014">Go to Student show page</a></li>
             <li><a href="/students2">Debug Course stuff</a></li>
             <li><a href="/home2">Go to AdminLTE home page</a></li>
             
