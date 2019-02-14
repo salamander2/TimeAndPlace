@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Kiosk;
+use App\User;
+
 use Illuminate\Http\Request;
 
 class KioskController extends Controller
@@ -23,6 +25,7 @@ class KioskController extends Controller
     public function __construct()
     {
         $this->middleware('admin')->only(['create','store','delete']);
+        $this->middleware('kioskUser')->only(['show', 'edit']);
         $this->middleware('auth');
     }
 
@@ -39,7 +42,7 @@ class KioskController extends Controller
         //     print_r($kiosk);
         // }
         // dd('x');
-        return view('kiosks.index', compact('kiosks'));  //NOTE: not $kiosks ?!
+        return view('kiosks.index', compact('kiosks'));  //NOTE: not $kiosks
     }
 
     /***************************** KIOSK -- admin only  **************************************/
@@ -93,11 +96,11 @@ class KioskController extends Controller
      */
     public function destroy(Kiosk $kiosk)
     {
+        dd("deleting kiosk " . $kiosk->id);
         $kiosk->delete();
         return redirect('/kiosks');
     }
 
-    /**********************************************************************************/
 
     /** SHOW
      * Display the specified kiosk
@@ -118,8 +121,28 @@ class KioskController extends Controller
      */
     public function edit(Kiosk $kiosk)
     {
-        //dd($kiosk->users);
-        return view('kiosks.edit', compact('kiosk'));
+        //Select all users who are not on THIS kiosk
+        //and pass it to the view (for the lower portion of the kiosk)
+        
+        $detachedUsers = User::doesntHave('kiosks')->get();  //this finds all users with NO kiosk
+               
+        foreach ( User::all() as $user) {
+            
+            if ($user->kiosks->first() == null) continue; //already added above
+            
+            //if the user has a kiosk, but not this kiosk, then add it to $detachedUSers
+            if ($user->kiosks->first()->id != $kiosk->id) {
+                $detachedUsers[] = $user;
+            }
+        }
+
+        return view('kiosks.edit', compact('kiosk','detachedUsers'));
+        
+        //$detachedUSers = User::where('user->kiosks->kiosk_id','!=',1)->get();
+        
+        //$kioskuser = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();
+        
+        //$detachedUsers = Kiosk::where('id', '!=', $kiosk->id)->get();  //all kiosks except for the current one
     }
 
     /** UPDATE
@@ -148,32 +171,4 @@ class KioskController extends Controller
         ]);
         return back();
     }
-
-    /************************** OTHER ********************************/
-    public function attach(Kiosk $kiosk, User $user)
-    {   
-        if (!$user->kiosks->contains($kiosk->id)) {
-            $user->kiosks()->attach($kiosk->id);
-
-            return response()->json(['status' => 'ok']);
-        } else {
-            return response()->json(['status' => 'exists']);
-        }
-    }   
-
-    /** 
-     * Delete a user from the selected kiosk.
-     *
-     * @param $kiosk
-     * @param User $user
-     *
-     * @return bool
-     */
-    public function detach(Kiosk $kiosk, User $user)
-    {   
-        $user->kiosks()->detach($kiosk->id);
-
-        return response()->json(['status' => 'ok']);
-    }
-
 }

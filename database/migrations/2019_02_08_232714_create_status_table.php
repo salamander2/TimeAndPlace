@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropKiosksTable extends Migration
+class CreateStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class DropKiosksTable extends Migration
      */
     public function up()
     {
-		//This drops the kiosks table so that it can be recreated with proper defaults.
-		Schema::drop('kiosks');        
+        Schema::create('status', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+	    $table->string('code');
+	    $table->string('text');
+	    $table->string('description');
+        });
     }
 
     /**
@@ -24,6 +29,6 @@ class DropKiosksTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('status');
     }
 }

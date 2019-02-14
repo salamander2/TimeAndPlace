@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Course;
@@ -20,23 +21,15 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //$db2 = \DB::connection('mysql2');
-        //$courses = $db2->table('students')->find(1);
-        //print_r($courses . '\n');
-
-        $student = new Student();
-		$student ->setConnection('mysql2');
-		//$record = $student->find(362872029);
-        $record = $student->first();
-        $age = $this->getAge($record->dob);
-        return view('student')->withRecord($record)->withAge($age);
-        //dd($record);
+        $students = Student::all();
+        // dd($students->first());
+        foreach ($students as $student) {
+            print_r($student->studentID ." ... " . $student->firstname . "<br>");
+            
+        }  
     }
 
-   
-   
-
-    /**
+   /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -44,16 +37,57 @@ class StudentController extends Controller
      */
     public function show($id)
     {
+        //$db2 = \DB::connection('mysql2');
+        //$courses = $db2->table('students')->find(1);
+        //print_r($courses . '\n');
+
+        //$image = Storage::disk('public')->get('user_blank.png');        
+        $imageURL = Storage::disk('public')->url('photos/'.$id.'.jpg');        
+        $image = Storage::disk('public')->exists('photos/'.$id.'.jpg');
+        if ($image == null) {
+            $imageURL = Storage::disk('public')->url('photos/user_blank.png');
+        }
+         // The imageURL is wrong: "http://localhost/storage/user_blank.png"  
+        // it should be http://localhost:8888/storage/user_blank.png
+        //so now it will be "/storage/user_blank.png"
+        $strpos = strpos($imageURL,'/storage');
+        $imageURL = substr($imageURL, $strpos);
+        //dd($imageURL);
+
+        $student = new Student();
+        $student ->setConnection('mysql2');
+        
+       
+        $record = $student->find($id) ??  abort(403,'Student ' .$id. ' not found.');
+        
+
+		//$record = $student->find($id);
+        //$record = $student->first();
+        $age = $this->getAge($record->dob);
+        //return view('student')->withRecord($record)->withAge($age);
+        return view('student', compact('record','age','imageURL'));
+    
+        //dd($record);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showCourse()
+    {
         
         // $db2 = \DB::connection('mysql2');
         // $courses = $db2->table('courses')::all();//->find(1);
         
         $courses = Course::all();
-        //$course = $courses->first();
-        //dd($course->teacher);
+        $course = $courses->first();
+       // dd($course->coursecode);
 
         foreach ($courses as $course) {
-            print_r($course->teacher);
+            print_r($course->coursecode ." ... " . $course->teacher . "<br>");
             // dd($course->first());
         }   
         
@@ -65,6 +99,7 @@ class StudentController extends Controller
         // dd('x');
     }
 
+    //This method works
     private function getAge($then) {
         $then = date('Ymd', strtotime($then));
         $diff = date('Ymd') - $then;
@@ -74,6 +109,14 @@ class StudentController extends Controller
         return $age;
     }
     
+    //changes course name to look like this ESLAO1-01 (adds in hyphen)
+    private function formatCourse($course) {
+        if (strlen($course) != 8) return $course;
+
+        $temp = substr($course,0,6) . "-" . substr($course,6);
+        return $temp;
+    }
+
     /* get courses .... 
     //get timetable
     $sql = "SELECT courses.coursecode, teacher, period, room FROM courses INNER JOIN student_course ON courses.coursecode = student_course.coursecode WHERE studentID = ? ORDER BY period";
@@ -98,11 +141,32 @@ class StudentController extends Controller
     }
 
 */
-    //changes course name to look like this ESLAO1-01 (adds in hyphen)
-    private function formatCourse($course) {
-        if (strlen($course) != 8) return $course;
 
-        $temp = substr($course,0,6) . "-" . substr($course,6);
-        return $temp;
+// #### From BLUEPANEL --> put into a TerminalController probably
+public function toggleStudent(Kiosk $kiosk, Student $student)
+{
+    $present = $student->kiosks->contains($kiosk->id);
+    if ($present) {
+        //Add entry to logs
+        //$kiosk->logs()->attach($student->id, ['type' => 'Kiosk Sign Out']);
+        $kiosk->logs()->attach($student->id, ['type' => 'Sign Out']);
+
+        //log the student in
+        $student->kiosks()->detach($kiosk->id);
+
+        //Return info for AJAX to display on the kiosk
+        return response()->json(['status' => 'detached', 'student' => $student->toArray()]);
+    } else {
+        //Add entry to logs
+        //$kiosk->logs()->attach($student->id, ['type' => 'Kiosk Sign In']);
+        $kiosk->logs()->attach($student->id, ['type' => 'Sign In']);
+
+        //log the student in
+        $student->kiosks()->attach($kiosk->id);
+
+        return response()->json(['status' => 'attached', 'student' => $student->toArray()]);
     }
+}
+
+    
 }
