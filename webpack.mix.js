@@ -13,3 +13,8 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
+
+//mix.copy('vendor/bootstrap-calendar/css', 'public/bootstrap-calendar/css');
+mix.scripts('node_modules/sweetalert/dist/sweetalert.min.js', 'public/js/sweetalert.min.js');
+
+//then run "npm run dev"
