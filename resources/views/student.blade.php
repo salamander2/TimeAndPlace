@@ -23,7 +23,12 @@
                 <h1 class="centered">{{$record->lastname}}, {{$record->firstname}} </h1>
             
             <!-- **************** Begin insert photo ***************** -->
-                <img class="student-img" src="/~benson/photos/USER_BLANK.PNG"><!-- end insert photo -->
+                <a href="{{$imageURL}}">
+                    <img class="student-img" src="{{ $imageURL }}" width="170" height="200">
+                </a>
+            <!-- end insert photo. ** This cannot retrieve the photo from ~benson: 
+                <img class="student-img" src="/~benson/photos/user_blank.png">
+            -->
             
             <!-- **************** Begin markbook section [left box in main-top section] ***************** -->
             <div class="box2">       

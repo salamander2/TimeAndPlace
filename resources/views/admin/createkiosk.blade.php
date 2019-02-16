@@ -24,6 +24,7 @@
                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required autofocus>
                     <label for="room">Room Number / Location</label>
                     <input type="text" class="form-control" id="room" name="room" value="{{ old('room') }}" required>
+                    <br><br>
                     <!-- all checkboxes -->
                     <label for="showPhoto">Show Photo</label>                    
                     <input type="checkbox" id="showPhoto" name="showPhoto">
@@ -40,10 +41,7 @@
                     
                     
                 </div>
-                <div class="form-group">
-                        <label for="adminName">Admin / users?</label>
-                        <input type="text" class="form-control" id="adminName" name="adminName">
-                </div>
+              
 
             </div>
 

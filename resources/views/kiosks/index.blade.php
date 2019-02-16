@@ -1,12 +1,16 @@
 @extends('layouts.app')
+
+
+
+
+@section('content')
+
 <ol class="breadcrumb">
 	<li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home</a> </li>
 	<li class="active"> Users</li>
 </ol>
 
 
-
-@section('content')
 <div class="container">
 	<h1>		
 		All Kiosks
@@ -15,7 +19,8 @@
     <ul>
         @foreach ($kiosks as $kiosk)
         <li>
-           <a href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} ... {{ $kiosk-> room }} </a>
+           <a href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a> <label>- - - -</label> 
+           <a href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
         </li>
         @endforeach
     </ul>

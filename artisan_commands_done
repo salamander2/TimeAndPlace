@@ -15,4 +15,19 @@ XXXX php artisan make:controller KioskAdminController
 
 php artisan make:policy KioskPolicy
 
+php artisan route:clear
+php artisan view:clear
+php artisan config:clear
+php artisan cache:clear
 
+copy .env and config/database.php so that I can access schoolDB too
+
+php artisan make:Controller TerminalController
+
+npm install sweetalert --save
+
+#link public_storage
+php artisan storage:link
+
+cd storage/public
+ln -s /home/benson/public_html/photos photos
