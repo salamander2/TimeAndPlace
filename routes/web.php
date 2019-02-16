@@ -41,7 +41,7 @@ Auth::routes(['register' => false]);
 
 /*-------------Default routes  -----------------*/
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home2', 'HomeController@home2');
+Route::get('/home1', 'HomeController@home1');
 
 /*----------------Admin Routes------------------*/
 Route::get('/userMaint', 'AdminController@userIndex');
