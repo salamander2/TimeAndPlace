@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="{{ asset('/vendor/sweetalert/sweetalert.min.css') }}">
     <script src="{{asset('/js/sweetalert.min.js') }}"></script> 
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 <!-- None of this works
     <script src="{{ asset('/vendor/js/jquery.js') }}"></script>
@@ -15,7 +16,7 @@
     <script src="{{ asset('/vendor/js/bootstrap.min.js') }}"></script>
 -->
 
-    <title>BluePanel Kiosk</title>
+    <title>Checkin/out Terminal</title>
     
     <style>
         body {
@@ -40,16 +41,56 @@
         
     </style>
 
+
+    <script>
+        function signin(student) {
+            swal({
+                title: "Welcome " + student['first'] + " " + student['last'],
+                text: "You are signed into room {{$kiosk->room}}",
+                icon: "success",
+                type:"success",
+ 		timer:6000
+            }).then(
+		function() { $('#input').focus() }
+	);
+        }
+        function signout(student) {
+            swal({
+                title: "Goodbye " + student['first'] + " " + student['last'],
+                text: "You are signed out of room {{$kiosk->room}}",
+                icon: "success",
+                type:"success",
+ 		timer:6000
+            
+		}).then(
+		function() { $('#input').focus() }
+		);
+        }
+        function errormsg() {
+            swal({
+                title: "ERROR!",
+                icon: "error",
+                text: "The student was not found or there was an unexpected database error.",
+                type:"error",
+ 		timer:6000
+            }).then(
+	
+ 	    function() { $('#input').focus() }
+        	)};
+    </script>
 </head>
 <body>
 <div class="text-center">
         
     <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" alt="HB Beal" height="400vh"><br>
-    <h2 class="text-center">{{$kiosk->name}}</h2>
+    <h1 class="text-center">{{$kiosk->name}}</h1>
     <input type="text" style="text-align: center" id="input" onkeydown="if (event.keyCode === 13)
-                        document.getElementById('button').click()" autofocus><br>
-    <button type="button" id="button" onclick="swal('Hello World!')">Sign in/out</button>
-
+                        document.getElementById('button').click()" autofocus>
+    <button type="button" id="button1" onclick="swal('Hello World!')">Sign in/out</button>
+<br>
+    <input type="text" style="text-align: center" id="input" onkeydown="if (event.keyCode === 13)
+    document.getElementById('button').click()" autofocus><br>
+<button type="button" id="button">Sign in/out</button>
 </div>
 
 

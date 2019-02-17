@@ -27,6 +27,7 @@
             <li><a href="/students/339654014">Go to Student show page</a></li>
             <li><a href="/students2">Debug Course stuff</a></li>
             <li><a href="/home1">Go to AdminLTE home page</a></li>
+            <li><a href="/bpterminal/1"> Launch BluePanel terminal</a></li>
             
             
         </ul>

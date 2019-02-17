@@ -13,4 +13,8 @@ class TerminalController extends Controller
     {
         return view('terminal', compact('kiosk'));
     }
+    public function launchbp(Kiosk $kiosk)
+    {
+        return view('bp_terminal', compact('kiosk'));
+    }
 }
