@@ -29,5 +29,20 @@ npm install sweetalert --save
 #link public_storage
 php artisan storage:link
 
-cd storage/public
+cd storage/app/public
 ln -s /home/benson/public_html/photos photos
+
+
+php artisan make:seeder StatusTableSeeder
+>>> now edit both the DatabaseSeeder.php and the one that you just made.
+php artisan db:seed
+
+
+#trying to get JQuery to work:
+
+npm install @types/jquery
+# this did nothing.
+
+#Add to webpack.mix: (from https://www.tobiasroessler.com/use-jquery-and-jquery-ui-in-your-laravel-application/)
+mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js');
+npm run dev

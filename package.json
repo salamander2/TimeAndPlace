@@ -24,8 +24,10 @@
         "vue-template-compiler": "^2.6.6"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.7.2",
+        "@types/jquery": "^3.3.29",
+        "admin-lte": "^3.0.0-alpha.2",
         "browserslist": "^4.1.1",
-        "sweetalert": "^2.1.2",
-        "admin-lte": "^3.0.0-alpha.2"
+        "sweetalert": "^2.1.2"
     }
 }

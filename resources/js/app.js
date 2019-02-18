@@ -29,7 +29,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+//MH: This shows up in the Terminal page from some reason. I needed to add an id="app" to the main wrapper
 const app = new Vue({
     el: '#app'
 });

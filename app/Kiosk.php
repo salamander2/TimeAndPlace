@@ -21,6 +21,11 @@ class Kiosk extends Model
         return $this->belongsToMany(User::class)->withPivot('isKioskAdmin');
     }
 
+    public function students()
+    {
+        return $this->belongsToMany(Student::class)->withPivot('status_id');
+    }
+    
     // public function schedule()
     // {
     //     return $this->hasMany('App\KioskSchedule');

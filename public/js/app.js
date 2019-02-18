@@ -48971,6 +48971,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+//MH: This shows up in the Terminal page from some reason. I needed to add an id="app" to the main wrapper
 
 var app = new Vue({
   el: '#app'

@@ -36,10 +36,8 @@
 <hr style="color:black; background-color:navy;">
     <div class="box">
 	<h1>Things to ask Ethan</h1>
-	<p>1. How to compile SASS<br>
-	2. 'npm run watch' does now work, neither does 'npm run prod' or 'npm run dev'<br>
-	3. How to install SweetAlert?<br>
-	4. How to link to CSS and JS files<br>
+    1. How to link to CSS and JS files<br>
+    2. How to make foreign keys (e.g. for log table)<br>
 
 	</p>
     </div>
