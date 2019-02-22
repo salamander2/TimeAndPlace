@@ -76,11 +76,12 @@ Route::get('/kiosks/{kiosk}/attach/{user}', 'KioskUserController@attach');
 Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
 
 /*----------------Terminal Routes-------------*/
-Route::get('/terminals/{kiosk}', 'TerminalController@launch');
+Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
 Route::get('/bpterminal/{kiosk}', 'TerminalController@launchbp');
 
 /*----------------Log file routes-------------*/
 Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
+Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
 
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');

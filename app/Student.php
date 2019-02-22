@@ -11,6 +11,6 @@ class Student extends Model
 
     public function kiosks()
     {
-        return $this->belongsToMany(Kiosk::class)->withPivot('status_id');
+        return $this->belongsToMany(Kiosk::class,'mysql.kiosks')->withPivot('status_id');
     }
 }
