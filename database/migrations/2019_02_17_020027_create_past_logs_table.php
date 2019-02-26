@@ -18,7 +18,7 @@ class CreatePastLogsTable extends Migration
             $table->timestamps();
             $table->integer('studentID')->unsigned();
             $table->integer('kiosk_id')->unsigned();
-            $table->integer('status_id')->unsigned();
+            $table->string('status',30);
         });
     }
 

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PastLog extends Model
 {
-    //
+    public $timestamps = true;
 }

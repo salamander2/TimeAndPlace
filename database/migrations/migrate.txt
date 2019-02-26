@@ -9,7 +9,7 @@ php artisan migrate
 - this will migrate any new changes to tables
 
 php artisan migrate:rollback
-- undoes migrate.
+- undoes most recent migrate(s)
 - migrate:reset will revert ALL migrations ever
 
 php artisan migrate:fresh

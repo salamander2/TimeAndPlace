@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
 	use Notifiable;
-
+	public $timestamps = true;
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -42,7 +42,7 @@ class User extends Authenticatable
 
 	public function kiosks() 
 	{
-		return $this->belongsToMany(Kiosk::class)->withPivot('isKioskAdmin');
+		return $this->belongsToMany(Kiosk::class)->withPivot('isKioskAdmin')->withTimestamps();
 	}
 
 	public function notThisKiosk($id) {
