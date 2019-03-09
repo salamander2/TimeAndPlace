@@ -41,6 +41,7 @@ Auth::routes(['register' => false]);
 
 /*-------------Default routes  -----------------*/
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home1', 'HomeController@home1');
 
 /*----------------Admin Routes------------------*/
 Route::get('/userMaint', 'AdminController@userIndex');
@@ -64,13 +65,30 @@ Route::get(   '/kiosks/{kiosk}/edit', 'KioskController@edit');
 Route::patch( '/kiosks/{kiosk}', 'KioskController@update');
 Route::delete('/kiosks/{kiosk}','KioskController@destroy');
 
+/*----------------Kiosk-User Routes-------------*/
+// Route::patch('/kiosks/{kiosk}/users/{user}', 'HomeController@index');
+// Route::patch('/kiosks/{kiosk}/users/{user}', 'KioskUserController@update');
+// Route::post('/kiosks/{kiosk}/attach/{user}', 'KioskUsersController@attach');
+// Route::post('/kiosks/{kiosk}/detach/{id}', 'KioskUsersController@detach');
+//The following is being done with simple URL redirects .: get method and not CSRF 
+Route::get('/kiosks/{kiosk}/users/{user}', 'KioskUserController@toggleKioskAdmin');
+Route::get('/kiosks/{kiosk}/attach/{user}', 'KioskUserController@attach');
+Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
+
+/*----------------Terminal Routes-------------*/
+Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
+Route::get('/bpterminal/{kiosk}', 'TerminalController@launchbp');
+
+/*----------------Log file routes-------------*/
+Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
+Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
+
 /*----------------Student Routes-------------*/
-Route::get(   '/students', 'StudentController@index');
-Route::get(   '/students/{id}', 'StudentController@show');
+Route::get('/students', 'StudentController@index');
+Route::get('/students/{id}', 'StudentController@show');
+Route::get('/students2/', 'StudentController@showCourse');
 
 /*----------------Attendance Routes-------------*/
 
 /*----------------Report Routes-----------------*/
-
-
 

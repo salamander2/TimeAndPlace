@@ -15,4 +15,34 @@ XXXX php artisan make:controller KioskAdminController
 
 php artisan make:policy KioskPolicy
 
+php artisan route:clear
+php artisan view:clear
+php artisan config:clear
+php artisan cache:clear
 
+copy .env and config/database.php so that I can access schoolDB too
+
+php artisan make:Controller TerminalController
+
+npm install sweetalert --save
+
+#link public_storage
+php artisan storage:link
+
+cd storage/app/public
+ln -s /home/benson/public_html/photos photos
+
+
+php artisan make:seeder StatusTableSeeder
+>>> now edit both the DatabaseSeeder.php and the one that you just made.
+php artisan db:seed
+
+
+#trying to get JQuery to work:
+
+npm install @types/jquery
+# this did nothing.
+
+#Add to webpack.mix: (from https://www.tobiasroessler.com/use-jquery-and-jquery-ui-in-your-laravel-application/)
+mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js');
+npm run dev

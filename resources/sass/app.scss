@@ -4,9 +4,22 @@
 
 // Variables
 @import 'variables';
+//$fa-font-path: "web-fonts";
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// AdminLTE
+@import '~admin-lte/build/scss/AdminLTE-raw';
+//was @import '~admin-lte/dist/css/adminlte.css';
+
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+//This should work too, but it's CSS not SCSS
+//@import '~font-awesome/css/font-awesome.min';
 
 .navbar-laravel {
   background-color: #fff;
