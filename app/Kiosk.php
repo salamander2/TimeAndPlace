@@ -21,6 +21,12 @@ class Kiosk extends Model
         return $this->belongsToMany(User::class)->withPivot('isKioskAdmin');
     }
 
+    public function signedIn()
+    {
+        return $this->belongsToMany(Student::class,'loggerDB.students_signed_in','kiosk_id','studentID')->withTimestamps();
+    }
+
+    //This is the LOGS file!
     public function students()
     {
         // return $this->belongsToMany(Student::class,'mysql2.students')->withPivot('status_id');
@@ -28,7 +34,7 @@ class Kiosk extends Model
         // return $this->belongsToMany(Student::class,'KioskStudent')->withPivot('status_id');
         // return $this->belongsToMany(Student::class,'mysql.logs')->withPivot('status_id');
         //return $this->belongsToMany(Student::class,'loggerDB.logs','kiosk_id','studentID')->withPivot('status_id');
-        return $this->belongsToMany(Student::class,'loggerDB.logs','kiosk_id','studentID')->withPivot('status')->withTimestamps();
+        return $this->belongsToMany(Student::class,'loggerDB.logs','kiosk_id','studentID')->withTimestamps();
         // return $this->belongsToMany(Student::class,'loggerDB.logs','studentID','kiosk_id')->withPivot('status_id');
     }
     

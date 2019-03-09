@@ -77,7 +77,7 @@ Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
 
 /*----------------Terminal Routes-------------*/
 Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
-Route::get('/bpterminal/{kiosk}', 'TerminalController@launchbp');
+Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
 
 /*----------------Log file routes-------------*/
 Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');

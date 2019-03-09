@@ -20,7 +20,7 @@ class TerminalController extends Controller
     }
     
     //Debugging only: Launch BluePanel terminal
-    public function launchbp(Kiosk $kiosk)
+    public function launchBP(Kiosk $kiosk)
     {
         return view('bp_terminal', compact('kiosk'));
     }
@@ -51,12 +51,13 @@ class TerminalController extends Controller
     public function toggleStudent_v2(Kiosk $kiosk, Request $request)
     {       
        //dd($kiosk->students); //this gets all the students connected to that kiosk in the logs table.
-
+        
         $studentID = $request->get('studentID');        
         //the student record is not needed: 
         $student = Student::where('studentID',$studentID) ->first();
                 
-        $present = $kiosk->students->contains('studentID',$studentID);
+        // $present = $kiosk->students->contains('studentID',$studentID);
+        $present = $kiosk->signedIn->contains('studentID',$studentID);
         //dd($kiosk->id . "_" . $present);
     
         /* Problems signing the student in and out:
@@ -69,20 +70,27 @@ class TerminalController extends Controller
         */
 
         if ($present) {
-            // ** We need to make a logged out record.  
-
+ 
             // $kiosk->students()->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); 
             //dd(  $kiosk->students()->where('status','=','SIGNIN'));
+
+            //Deleted the SignedIn record
+            $kiosk->signedIn()->detach($studentID);
+
+            //FIXME: do I need the following line?
+            $kiosk->students()->where('status_code','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
             
-            $kiosk->students()->where('status','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
-            $kiosk->students()->attach($studentID, ['deleted_at'=> Carbon::now(), 'status' => 'SIGNOUT']);
+            //Add a "SIGNOUT" record for the student the LOG file
+            $kiosk->students()->attach($studentID, ['deleted_at'=> Carbon::now(), 'status_code' => 'SIGNOUT']);
             
             //Return info for AJAX to display on the kiosk
             return response()->json(['status' => 'detached', 'student' => $student->toArray()]);
         } else {           
            
             //Sign in student            
-            $kiosk->students()->attach($studentID, ['status' => 'SIGNIN']);            
+            $kiosk->students()->attach($studentID, ['status_code' => 'SIGNIN']);            
+            
+            $kiosk->signedIn()->attach($studentID, ['status_code' => 'SIGNIN']);
             // $student->kiosks()->attach($kiosk->id);
            // $kiosk->students()->attach($studentID); //this is redundant
             return response()->json(['status' => 'attached', 'student' => $student->toArray()]);
@@ -92,7 +100,6 @@ class TerminalController extends Controller
     }
 
     public function listStudents(String $q) {
-        //see child.terminal.blade.php
-     
+        //see child.terminal.blade.php    
     }
 }

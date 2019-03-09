@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KioskStudent extends Model
 {    
-    protected $table = 'logs';
+    //protected $table = 'logs';    //students_signed_in
     public $timestamps = true;
     use SoftDeletes;
 

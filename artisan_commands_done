@@ -46,3 +46,12 @@ npm install @types/jquery
 #Add to webpack.mix: (from https://www.tobiasroessler.com/use-jquery-and-jquery-ui-in-your-laravel-application/)
 mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js');
 npm run dev
+
+
+--------------------
+sudo apt install php7.1-bcmath
+composer require laravel/telescope --dev
+(this should probably have a --dev flag at the end so that it is only used in the development nevironment and not production)
+
+php artisan telescope:install
+php artisan migrate
