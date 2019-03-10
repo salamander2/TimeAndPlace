@@ -48,7 +48,7 @@
 
         #studentSearch {
             width: 70%;
-            height: 85%;
+
             top: 8%;
             left: 15%;
             position: absolute;
@@ -58,7 +58,7 @@
             -moz-border-radius: 8px;
             font-size: 16px;
             background-color: rgba(0, 0, 0, 0.7);
-            /*display: none;*/
+            display: none;
         }
 
         #studentSearch input {
@@ -66,9 +66,10 @@
             font-size: 20px;
         }
 
-        #studentList {            
-            width: 66%;
+        #studentList {
+            margin: 0 5% 5% 5%;
             color: #22264B;
+            box-sizing: border-box;
         }
 
         .pure-form {
@@ -106,7 +107,7 @@
             box-shadow: #666 0px 2px 3px;
             behavior: url(Include/PIE.htc);
             overflow: hidden;
-            width: 80%;
+            width: 100%;
         }
 
         .table-canvas td {
@@ -162,6 +163,25 @@
             background-color: white;
         }
 
+        .pure-table tr:hover td {
+            color: #DDD;
+            background-color: #666;
+        }
+
+        .pure-table tr:hover td a {
+            color: #DDD;
+        }
+
+        .pure-table a {
+            color: #333;
+        }
+
+        .pure-table a:hover {
+            text-decoration: none;
+            color: #DDD;
+        }
+
+
         .pure-table-odd td {
             background-color: #f2f2f2;
         }
@@ -179,15 +199,31 @@
         }
     </style>
 
+    {{-- script to detect if student name is being typed in --}}
+    <script type="text/javascript">
+        function parseInput(str) {
+        
+        if(!isNaN(str)) return;
+            
+        document.getElementById("inputID").value = "";
+        document.getElementById("inputID").autofocus = "false";
+        document.getElementById("studentSearch").style.display = "block";      
+        document.getElementById("inputName").focus();
+        document.getElementById("inputName").value = str;
+    }
+    </script>
+
+
+
     {{-- Script to load student info --}}
     <script type="text/javascript">
         $(document).ready(function () {
             $('#button').click(function (e) {
                 //if there are any hyphens, remove them.
-                var inputvalue =  parseInt($("#input").val().replace(/-/g, ""));
+                var inputvalue =  parseInt($("#inputID").val().replace(/-/g, ""));
                 alert(inputvalue);
-                $("#input").val('');
-                $('#input').focus();
+                $("#inputID").val('');
+                $('#inputID').focus();
 
                 jQuery.post('/terminals/1/toggleStudent/333444555');
                 
@@ -224,6 +260,7 @@
         });
     </script>
 
+    {{-- Scrip to test if JQuery is working (it isn't) --}}
     <script>
         $(document).ready(function(){
           $("p").click(function(){
@@ -262,22 +299,19 @@
                 text: "You are signed into room {{$kiosk->room}}",
                 icon: "success",
                 type:"success",
- 		timer:6000
-            }).then(
-		function() { $('#input').focus() }
-	    );
-        }
+ 		        timer:6000,
+            }).then( function() { $('#input').focus() }
+	        );
+        } //end
         function signout(student) {
             swal({
                 title: "Goodbye " + student['first'] + " " + student['last'],
                 text: "You are signed out of room {{$kiosk->room}}",
-                icon: "success",
-                type:"success",
- 		timer:6000
-            
-		}).then(
-		function() { $('#input').focus() }
-		);
+                icon: "success",              
+                animation:"false",
+ 		        timer:6000,            
+		    }).then( function() { $('#inputID').focus() }
+		    );
         }
         function errormsg() {
             swal({
@@ -285,11 +319,21 @@
                 icon: "error",
                 text: "The student was not found or there was an unexpected database error.",
                 type:"error",
- 		timer:6000
-            }).then(
-	
- 	    function() { $('#input').focus() }
-        	)};
+ 		        timer:6000,
+            }).then(  function() { $('#inputID').focus() }
+        	);
+        } 
+        function confirmSignin(student) {
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            });
+        }         
     </script>
 </head>
 
@@ -301,23 +345,24 @@
             <form class="pure-form">
                 <span class="text-light hide">Enter First Name, Last Name, or Student Number...</span>
                 <fieldset>
-                    <input class="pure-input-2-3" autofocus="" type="text" onkeyup="findStudents(this.value)" placeholder="Enter First Name, Last Name, or Student Number...">
-                </fieldset>
+                    <input class="pure-input-2-3" autofocus="" id="inputName" type="text" onkeyup="findStudents(this.value)" placeholder="Enter First Name, Last Name, or Student Number...">
 
-                <!-- the student table is created here at "studentList". There is also formatting for this in the css  -->
-                <div style="text-align: center;">
-                    <div id="studentList"></div>
-                </div>
+                </fieldset>
             </form>
+            <!-- the student table is created here at "studentList". There is also formatting for this in the css  -->
+            <div id="studentList" class="text-center"></div>
+
+
         </div>
 
-        <button id="button1" onclick="signout(333444555)">Test of swal()</button><br>
+        {{-- <button id="button1" onclick="signout(333444555)">Test of swal()</button><br> --}}
+        <button id="button1" onclick="confirmSignin(333444555)">Test of swal()</button><br>
 
         <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" alt="HB Beal" height="400vh"><br>
 
         <h1 class="text-center">{{$kiosk->name}}</h1>
 
-        <input type="text" style="text-align: center" id="input" onkeydown="if (event.keyCode === 13) document.getElementById('button').click()"
+        <input type="text" style="text-align: center" id="inputID" onkeyup="parseInput(this.value)" onkeydown="if (event.keyCode === 13) document.getElementById('button').click()"
             autofocus><br>
         <button type="button" id="button">Sign in/out</button>
 
@@ -325,8 +370,8 @@
 
         <form role="form" action="/terminals/{{ $kiosk->id }}/toggleStudent" method="post">
             <input type="text" style="text-align: center" id="studentID" name="studentID" autofocus><br> {{ csrf_field()
-            }}
-            <button type="submit">submit - to TerminalController</button>
+            }} {{-- add onclick to prevent empty input field --}}
+            <button type="submit" onclick="">submit - to TerminalController</button>
         </form>
 
 
