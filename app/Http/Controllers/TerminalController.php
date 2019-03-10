@@ -24,7 +24,7 @@ class TerminalController extends Controller
     {
         return view('bp_terminal', compact('kiosk'));
     }
-/*
+
     public function toggleStudent(Kiosk $kiosk, Student $student)
     {        
         dd($student);
@@ -46,17 +46,23 @@ class TerminalController extends Controller
         }
   
     }
-*/
+
     /* The Request object is the Student ID */
     public function toggleStudent_v2(Kiosk $kiosk, Request $request)
     {       
-       //dd($kiosk->students); //this gets all the students connected to that kiosk in the logs table.
-        
+        /*
+        $q = 'Hari';
+        $students = Student::where('firstname','like', '%'.$q.'%')->get();
+        //return $students;
+         return view('child.childterminal', compact('students'));
+        return view('child.childterminal') -> withStudents($students);
+        dd($students->toArray());
+        */
+
         $studentID = $request->get('studentID');        
         //the student record is not needed: 
         $student = Student::where('studentID',$studentID) ->first();
                 
-        // $present = $kiosk->students->contains('studentID',$studentID);
         $present = $kiosk->signedIn->contains('studentID',$studentID);
         //dd($kiosk->id . "_" . $present);
     
@@ -69,15 +75,12 @@ class TerminalController extends Controller
             However, this updates the DELETED AT stamp on ALL records that this student has in this kiosk
         */
 
-        if ($present) {
- 
-            // $kiosk->students()->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); 
-            //dd(  $kiosk->students()->where('status','=','SIGNIN'));
-
+        if ($present) { 
+            
             //Deleted the SignedIn record
             $kiosk->signedIn()->detach($studentID);
 
-            //FIXME: do I need the following line?
+            //add a 'deleted at' timestamp to the signin record. (This is probably never needed)
             $kiosk->students()->where('status_code','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
             
             //Add a "SIGNOUT" record for the student the LOG file
@@ -87,12 +90,11 @@ class TerminalController extends Controller
             return response()->json(['status' => 'detached', 'student' => $student->toArray()]);
         } else {           
            
-            //Sign in student            
+            //create a SIGNIN log file entry         
             $kiosk->students()->attach($studentID, ['status_code' => 'SIGNIN']);            
-            
+            //create a signedIn entry
             $kiosk->signedIn()->attach($studentID, ['status_code' => 'SIGNIN']);
-            // $student->kiosks()->attach($kiosk->id);
-           // $kiosk->students()->attach($studentID); //this is redundant
+           
             return response()->json(['status' => 'attached', 'student' => $student->toArray()]);
         }
 
@@ -100,6 +102,15 @@ class TerminalController extends Controller
     }
 
     public function listStudents(String $q) {
-        //see child.terminal.blade.php    
+        //see child.terminal.blade.php 
+       // $query = "SELECT students.studentID, students.firstname, students.lastname FROM students WHERE firstname LIKE '$q%' or lastname LIKE '$q%' or studentID LIKE '$q%' ORDER BY lastname, firstname";
+        // dd($q);
+        // return("YOLO");
+        
+        $students = Student::where('firstname','like', '%'.$q.'%')->orWhere('lastname','like', '%'.$q.'%')->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->get();
+        return view('child.childterminal', compact('students'));
+       // return($students);
+       // dd($students);
+
     }
 }

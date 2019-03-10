@@ -83,10 +83,14 @@ Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
 Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
 
+// Route::get('/terminals/studentFind/{q}', 'StudentController@showCourse');
+Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
+
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
-Route::get('/students2/', 'StudentController@showCourse');
+Route::get('/courses/', 'StudentController@showCourse');
+
 
 /*----------------Attendance Routes-------------*/
 
