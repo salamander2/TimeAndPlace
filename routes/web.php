@@ -80,10 +80,10 @@ Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTermi
 Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
 
 /*----------------Log file routes-------------*/
+Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
 
-// Route::get('/terminals/studentFind/{q}', 'StudentController@showCourse');
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 
 /*----------------Student Routes-------------*/

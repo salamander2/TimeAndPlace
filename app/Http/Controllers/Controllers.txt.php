@@ -4,6 +4,8 @@
  snippets of code from other controllers that are not longer being used, but that might be useful in figureing out how things work
 */
 
+return response()->with()  XXX There is no WITH() for a Response()
+
 //Terminal controller
  dd($kiosk->students); //this gets all the students connected to that kiosk in the logs table.
       

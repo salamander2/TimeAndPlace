@@ -199,7 +199,7 @@
         }
     </style>
 
-    {{-- script to detect if student name is being typed in --}}
+    {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
     <script type="text/javascript">
         function parseInput(str) {
         
@@ -211,11 +211,17 @@
         document.getElementById("inputName").focus();
         document.getElementById("inputName").value = str;
     }
+    function resetTerminal() {
+        document.getElementById("studentSearch").style.display = "none";                  
+        document.getElementById("inputName").value = "";
+        document.getElementById("inputID").value = "";
+        document.getElementById("inputID").focus();            
+    }
     </script>
 
 
 
-    {{-- Script to load student info --}}
+    {{-- Script to load student info. JQUERY / AJAX not working --}}
     <script type="text/javascript">
         $(document).ready(function () {
             $('#button').click(function (e) {
@@ -278,14 +284,43 @@
             } else {
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
-                    // if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    if (xmlhttp.status == 200) {
-                        document.getElementById("studentList").innerHTML = xmlhttp.responseText;
-                       // document.getElementById("studentList").innerHTML = "Abacus";
+                   if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        document.getElementById("studentList").innerHTML = xmlhttp.responseText;                       
                     }
                 }
-                // xmlhttp.open("GET", "studentFind.php?q=" + str, true);
                 xmlhttp.open("GET", "studentFind/" + str, true);
+                xmlhttp.send();
+            }
+        }
+        
+        function getOneStudent(str) { 
+            
+            if (str.length == 0) { 
+                document.getElementById("studentList").innerHTML = "";
+                return;
+            } else {         
+                             
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                   if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {                       
+                        // parse JSON input to display in SweetAlerts                     
+                        //alert(xmlhttp.responseText);
+                        $response = JSON.parse(xmlhttp.responseText);
+                       if ($response.status === 'attached') {
+                           confirmSignin($response.student);
+                       } else if($response.status === "detached"){
+                            signout($response.student);
+                        }
+                        else{
+                            errormsg();
+                        }
+                      //  alert($response.status);
+                      // alert($response.student.firstname);
+                      // document.write("123" + $response.student['studentID']);
+                    }
+                }
+               
+                xmlhttp.open("GET", "{{$kiosk->id}}/toggleStudent/" + str, true);
                 xmlhttp.send();
             }
         }
@@ -294,19 +329,20 @@
     {{-- Script to pop up sweetalerts --}}
     <script>
         function signin(student) {
+            resetTerminal();                         
             swal({
-                title: "Welcome " + student['first'] + " " + student['last'],
-                text: "You are signed into room {{$kiosk->room}}",
+                title: "Welcome " + student['firstname'] + " " + student['lastname'],
+                text: "You are signed into {{$kiosk->name }} ({{$kiosk->room}})",
                 icon: "success",
-                type:"success",
- 		        timer:6000,
+                timer:6000,
             }).then( function() { $('#input').focus() }
 	        );
         } //end
         function signout(student) {
+            resetTerminal();                         
             swal({
-                title: "Goodbye " + student['first'] + " " + student['last'],
-                text: "You are signed out of room {{$kiosk->room}}",
+                title: "Goodbye " + student['firstname'] + " " + student['lastname'],
+                text: "You are signed out of {{$kiosk->name }} ({{$kiosk->room}})",
                 icon: "success",              
                 animation:"false",
  		        timer:6000,            
@@ -317,23 +353,25 @@
             swal({
                 title: "ERROR!",
                 icon: "error",
-                text: "The student was not found or there was an unexpected database error.",
-                type:"error",
+                text: "The student was not found or there was an unexpected database error.",               
  		        timer:6000,
             }).then(  function() { $('#inputID').focus() }
         	);
         } 
         function confirmSignin(student) {
             swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            });
-        }         
+                title: "Confirm Signing",
+                text: "Please confirm that this is the correct student being signed in",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((confirmed) => {
+                if (confirmed) {
+                    signin(student);
+                } 
+                });
+        }
     </script>
 </head>
 
@@ -345,8 +383,8 @@
             <form class="pure-form">
                 <span class="text-light hide">Enter First Name, Last Name, or Student Number...</span>
                 <fieldset>
-                    <input class="pure-input-2-3" autofocus="" id="inputName" type="text" onkeyup="findStudents(this.value)" placeholder="Enter First Name, Last Name, or Student Number...">
-
+                    <input class="pure-input-2-3" autofocus="" id="inputName" type="text" onkeyup="findStudents(this.value)" onkeydown="if (event.keyCode === 27) resetTerminal();"
+                        placeholder="Enter First Name, Last Name, or Student Number...">
                 </fieldset>
             </form>
             <!-- the student table is created here at "studentList". There is also formatting for this in the css  -->
@@ -356,8 +394,7 @@
         </div>
 
         {{-- <button id="button1" onclick="signout(333444555)">Test of swal()</button><br> --}}
-        <button id="button1" onclick="confirmSignin(333444555)">Test of swal()</button><br>
-
+      
         <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" alt="HB Beal" height="400vh"><br>
 
         <h1 class="text-center">{{$kiosk->name}}</h1>

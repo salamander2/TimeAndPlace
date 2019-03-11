@@ -27,38 +27,38 @@ class TerminalController extends Controller
 
     public function toggleStudent(Kiosk $kiosk, Student $student)
     {        
-        dd($student);
-        $present = $student->kiosks->contains($kiosk->id);
-
-        dd($kiosk->id . " " . $present);
+        $studentID = $student->studentID;
+        $present = $kiosk->signedIn->contains('studentID',$studentID);
 
         if ($present) {
-            //Signout Student
-            $kiosk->logs()->attach($student->id, ['type' => 'Sign Out']);            
-            $student->kiosks()->detach($kiosk->id);
-            //Return info for AJAX to display on the kiosk
-            return response()->json(['status' => 'detached', 'student' => $student->toArray()]);
+             //Deleted the SignedIn record
+             $kiosk->signedIn()->detach($studentID);
+
+             //add a 'deleted at' timestamp to the signin record. (This is probably never needed)
+             $kiosk->students()->where('status_code','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
+             
+             //Add a "SIGNOUT" record for the student the LOG file
+             $kiosk->students()->attach($studentID, ['deleted_at'=> Carbon::now(), 'status_code' => 'SIGNOUT']);
+             
+             //Return info for AJAX to display on the kiosk
+            return response()->json(['status' => 'detached', 'student' => $student->toArray()]);            
+            //return response([$student,'status' => 'detached']);
         } else {
-            //Sign in student            
-            $kiosk->logs()->attach($student->id, ['type' => 'Sign In']);            
-            $student->kiosks()->attach($kiosk->id);
+            //create a SIGNIN log file entry         
+            $kiosk->students()->attach($studentID, ['status_code' => 'SIGNIN']);            
+            //create a signedIn entry
+            $kiosk->signedIn()->attach($studentID, ['status_code' => 'SIGNIN']);
+           
             return response()->json(['status' => 'attached', 'student' => $student->toArray()]);
+            //return response([$student,'status' => 'attached']); 
+            
         }
   
     }
 
     /* The Request object is the Student ID */
     public function toggleStudent_v2(Kiosk $kiosk, Request $request)
-    {       
-        /*
-        $q = 'Hari';
-        $students = Student::where('firstname','like', '%'.$q.'%')->get();
-        //return $students;
-         return view('child.childterminal', compact('students'));
-        return view('child.childterminal') -> withStudents($students);
-        dd($students->toArray());
-        */
-
+    {
         $studentID = $request->get('studentID');        
         //the student record is not needed: 
         $student = Student::where('studentID',$studentID) ->first();

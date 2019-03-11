@@ -9,8 +9,8 @@
 
       @foreach ($students as $student)
       <tr>
-         <td> <a href="">{{$student->lastname }}, {{$student->firstname}}</a></td>
-         <td><a href="">{{$student->studentID}}</a></td>
+         <td onclick="getOneStudent({{$student->studentID}})">{{$student->lastname }}, {{$student->firstname}}</a></td>
+         <td onclick="getOneStudent({{$student->studentID}})"><a href="">{{$student->studentID}}</a></td>
       </tr>
       @endforeach
 
