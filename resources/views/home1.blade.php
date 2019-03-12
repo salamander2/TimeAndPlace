@@ -296,7 +296,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
-    <div class="p-3">
+    <div class="p-3" style="background-color: blueviolet;">
       <h5>Title</h5>
       <p>Sidebar content</p>
     </div>

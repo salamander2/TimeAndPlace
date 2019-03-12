@@ -1,7 +1,7 @@
 @extends('layouts.app')
 <ol class="breadcrumb">
-	<li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home</a> </li>
-	<li class="active"> Users</li>
+	<li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home </a> </li>
+	<li class="active"> Users </li>
 </ol>
 
 {{-- @push('scripts') --}}

@@ -42,6 +42,8 @@
             text-decoration: none;
             margin: 3px 2px;
             cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
         }
 
         /* BootStrap CSS is included. Use that instead of recreating everything */
@@ -223,6 +225,7 @@
 
     {{-- Script to load student info. JQUERY / AJAX not working --}}
     <script type="text/javascript">
+    /*
         $(document).ready(function () {
             $('#button').click(function (e) {
                 //if there are any hyphens, remove them.
@@ -264,6 +267,7 @@
                 });
             });
         });
+    */
     </script>
 
     {{-- Scrip to test if JQuery is working (it isn't) --}}
@@ -273,6 +277,21 @@
             $(this).hide();
           });
         });
+    </script>
+
+    <script type="text/javascript">
+    
+        $(document).ready(function () {
+            $('#buttonIO').click(function (e) {
+                //if there are any hyphens, remove them.
+                var inputvalue =  parseInt($("#inputID").val().replace(/-/g, ""));               
+                $("#inputID").val('');
+                $('#inputID').focus();
+                getOneStudent(inputvalue,false);
+            }
+            );  
+        }
+        );
     </script>
 
     {{-- Script to search for students by name --}}
@@ -293,7 +312,7 @@
             }
         }
         
-        function getOneStudent(str) { 
+        function getOneStudent(str,confirm=true) { 
             
             if (str.length == 0) { 
                 document.getElementById("studentList").innerHTML = "";
@@ -307,7 +326,10 @@
                         //alert(xmlhttp.responseText);
                         $response = JSON.parse(xmlhttp.responseText);
                        if ($response.status === 'attached') {
-                           confirmSignin($response.student);
+                           if (confirm)
+                               confirmSignin($response.student);
+                            else 
+                               signin($response.student);
                        } else if($response.status === "detached"){
                             signout($response.student);
                         }
@@ -399,21 +421,25 @@
 
         <h1 class="text-center">{{$kiosk->name}}</h1>
 
-        <input type="text" style="text-align: center" id="inputID" onkeyup="parseInput(this.value)" onkeydown="if (event.keyCode === 13) document.getElementById('button').click()"
-            autofocus><br>
-        <button type="button" id="button">Sign in/out</button>
+        <input type="text" style="text-align: center" id="inputID" 
+            onkeyup="parseInput(this.value)" 
+            onkeydown="if (event.keyCode === 13) document.getElementById('buttonIO').click()"
+            autofocus><br><br>
+        <button type="button" id="buttonIO">Sign in/out</button>
 
-
-
+        
+        <!-- This uses toggleStudent_v2 . It would work fine, but was never finished as I needed to get the XMLHttp working.
         <form role="form" action="/terminals/{{ $kiosk->id }}/toggleStudent" method="post">
             <input type="text" style="text-align: center" id="studentID" name="studentID" autofocus><br> {{ csrf_field()
             }} {{-- add onclick to prevent empty input field --}}
             <button type="submit" onclick="">submit - to TerminalController</button>
         </form>
-
+        -->
 
     </div>
-
+    <br>
+    <br>
+    <br>
 
 </body>
 
