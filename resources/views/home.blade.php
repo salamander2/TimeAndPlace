@@ -1,47 +1,56 @@
-@extends('layouts.app') 
-@section('content')
-<div class="container">
-    <h2>Main page after logging in</h2>
-    <div class="row justify-content-center">
+@extends('layouts.app')
 
-        @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        @endif @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-        </div>
-        @endif
+@section('content-header')
+{{--  From BluePanel  --}}
+<div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Starter Page</h1>
+        </div><!-- /.col -->
+        
+        {{--  <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Starter Page</li>
+          </ol>
+        </div><!-- /.col -->  --}}
 
-
-    </div>
-    <div class="title m-b-md">
-        Laravel
-    </div>
-    <div class="links">
-        <ul>
-            <li><a href="/userMaint">UserMaint: List users</a></li>
-            <li><a href="/kiosks">List all Kisoks</a></li>
-            <li><a href="/students">Go to Student index page</a></li>
-            <li><a href="/students/339654014">Go to Student show page</a></li>
-            <li><a href="/courses">Debug Course stuff</a></li>
-            <li><a href="/home1">Go to AdminLTE home page</a></li>
-            <li><a href="/bpterminal/1"> Launch BluePanel terminal</a></li>
-            
-            
-        </ul>
-    </div>
-    <a href="http://localhost:4080/phpmyadmin/" target="_blank">start phpMyAdmin</a>
-<hr style="color:black; background-color:navy;">
-    <div class="box">
-	<h1>Things to ask Ethan</h1>
-    1. How to link to CSS and JS files<br>
-    2. How to make foreign keys (e.g. for log table)<br>
-
-	</p>
-    </div>
-<hr style="background-color:navy;">
-** Make an Admin have an 'enable remote access' to SSH -r to AWS. If other schools want to use this then I can administer it remotely.
-</div>
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
 @endsection
+
+@section('content')
+
+        <div class="callout callout-info">
+            <h4>Tip!</h4>
+
+            <p>Add the fixed class to the body tag to get this layout. The fixed layout is your best option if your sidebar
+                is bigger than your content because it prevents extra unwanted scrolling.</p>
+        </div>
+        <table class="table table-hover">
+        @foreach (\App\Kiosk::all() as $kiosk)
+        <tr>           
+            <td>{{$kiosk->name}}</td>
+            <td>{{$kiosk->room}}</td>
+            <td><a href="{{'kiosks/'.$kiosk->id.'/edit'}}">
+                    <button type="button" style="max-width: 5vw;"
+                            class="btn center-block btn-block btn-info">Edit
+                    </button>
+                </a></td>
+
+        </tr>
+        @endforeach
+    </table>
+
+            
+
+        
+
+@endsection
+
+
+
+
+
