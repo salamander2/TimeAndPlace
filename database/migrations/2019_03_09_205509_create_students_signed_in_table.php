@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLogsTable extends Migration
+class CreateStudentsSignedInTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('students_signed_in', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
-            $table->integer('studentID')->unsigned();
+            $table->integer('studentID')->unsigned();            
             $table->integer('kiosk_id')->unsigned();
-            $table->string('status_code',30);
-            $table->softDeletes();
+            $table->string('status_code',30)->nullable(); //probably not going to be used
+            $table->timestamps();
         });
     }
 
@@ -30,6 +29,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('students_signed_in');
     }
 }

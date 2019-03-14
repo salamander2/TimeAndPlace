@@ -46,3 +46,26 @@ npm install @types/jquery
 #Add to webpack.mix: (from https://www.tobiasroessler.com/use-jquery-and-jquery-ui-in-your-laravel-application/)
 mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js');
 npm run dev
+
+
+--------------------
+sudo apt install php7.1-bcmath
+composer require laravel/telescope --dev
+(this should probably have a --dev flag at the end so that it is only used in the development nevironment and not production)
+
+php artisan telescope:install
+php artisan migrate
+
+FIX TELESCOPE:
+Undefined property: Illuminate\Cache\Events\KeyWritten::$seconds 
+
+vi ./vendor/laravel/telescope/src/Watchers/CacheWatcher.php
+ 79         Telescope::recordCache(IncomingEntry::make([
+ 80             'type' => 'set',
+ 81             'key' => $event->key,
+ 82             'value' => $event->value,
+ 83         //MH
+ 84          //   'expiration' => $event->seconds,
+ 85             'expiration' => optional($event)->seconds ?? $event->minutes * 60,
+ 86         ]));
+

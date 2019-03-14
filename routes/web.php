@@ -77,16 +77,20 @@ Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
 
 /*----------------Terminal Routes-------------*/
 Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
-Route::get('/bpterminal/{kiosk}', 'TerminalController@launchbp');
+Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
 
 /*----------------Log file routes-------------*/
+Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
+
+Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
-Route::get('/students2/', 'StudentController@showCourse');
+Route::get('/courses/', 'StudentController@showCourse');
+
 
 /*----------------Attendance Routes-------------*/
 
