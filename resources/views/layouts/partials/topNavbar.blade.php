@@ -37,13 +37,13 @@
                 </li>
             @endif  --}}
         @else
-            <li class="nav-item dropdown bg-info rounded">
+            <li class="nav-item dropdown bg-secondary rounded">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ Auth::user()->username }} : {{ Auth::user()->fullname }}<span class="caret"></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right alert alert-dark" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item alert-link text-primary" href="{{ route('changePassword') }}">
+                    <a class="dropdown-item" href="{{ route('changePassword') }}">
                     Change Password
                     </a>
                     <a class="dropdown-item alert-link" href="{{ route('logout') }}"

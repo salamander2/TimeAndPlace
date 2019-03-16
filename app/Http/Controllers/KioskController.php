@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Kiosk;
 use App\User;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class KioskController extends Controller
@@ -37,12 +37,26 @@ class KioskController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        
         $kiosks = Kiosk::all();
-        // foreach($kiosks as $kiosk) {
-        //     print_r($kiosk);
-        // }
-        // dd('x');
-        return view('kiosks.index', compact('kiosks'));  //NOTE: not $kiosks
+        $my_kiosks = collect();
+        $other_kiosks = collect();
+
+        foreach($kiosks as $kiosk) {
+            //this gets all users for that kiosk
+            $users = $kiosk->users()->get();
+
+            //if the user is not valid, then it returns a null
+            $validUser = $users->where('id', '=', $user->id)->first();
+            if ($validUser != null || $user->isAdministrator()) {
+                $my_kiosks->push($kiosk);
+            } else {
+                $other_kiosks->push($kiosk);                
+            }
+        }
+        
+        return view('kiosks.index', compact('my_kiosks', 'other_kiosks'));  //NOTE: not $kiosks
     }
 
     /***************************** KIOSK -- admin only  **************************************/
@@ -160,6 +174,7 @@ class KioskController extends Controller
         ]);
         
         $kiosk -> update([
+            'name' => $validatedKiosk['name'],
             'room' => $validatedKiosk['room'],
             'showPhoto' => $request->has('showPhoto') ? 1 : 0,            
             'showSchedule' => $request->has('showSchedule') ? 1 : 0,            

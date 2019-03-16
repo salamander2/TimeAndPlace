@@ -6,24 +6,49 @@
 @section('content')
 
 <ol class="breadcrumb">
-	<li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home</a> </li>
-	<li class="active"> Users</li>
+	<li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home </a> </li>
+	<li class="active"> Kiosks</li>
 </ol>
 
 
 <div class="container">
-	<h1>		
-		All Kiosks
-	</h1>
-
-    <ul>
-        @foreach ($kiosks as $kiosk)
+        <h1>My Kiosks</h1>
+        <p> -- {{ Auth::user()->id }} set to edit if isKioskAdmin else set to show only. All have launch terminal though</p>
+        @foreach ($my_kiosks as $kiosk)
+            <div class="row align-middle">
+               
+           
+                <div class="col-md-4">
+                   <a class="btn btn-info elevation-2" href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a> 
+                </div>
+                <div class="col-md-2">                   
+                   <a class="my-1 btn btn-success elevation-2" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
+                </div>
+                
+            </div>
+        @endforeach
+    @if($other_kiosks->count())            
+    <h1>&nbsp;</h1>
+    <h1>All Other Kiosks</h1>
+    <p>-- set to show only --</p>
+    @endif
+    
+        {{--  @foreach ($kiosks as $kiosk)
         <li>
            <a href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a> <label>- - - -</label> 
            <a href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
         </li>
+        @endforeach  --}}
+
+        @foreach ($other_kiosks as $kiosk)
+        <div class="row align-middle">
+            <div class="col">
+                <a class="my-1 btn btn-secondary elevation-2" href="/kiosks/{{ $kiosk->id }}/show"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
+            </div>
+        </div>
+        
         @endforeach
-    </ul>
-            <a href="/kiosks/create">Create a new Kisok</a>
+    
+            {{--  <a href="/kiosks/create">Create a new Kisok</a>  --}}
 </div>
 @endsection
