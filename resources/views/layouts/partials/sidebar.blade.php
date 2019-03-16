@@ -25,8 +25,9 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview menu-open">
-              <a href="#" class="nav-link active">
+          @if (auth()->check() && auth()->user()->isAdministrator()) 
+          <li class="nav-item has-treeview menu-closed">
+              <a href="#" class="nav-link alert alert-warning">
                 <i class="nav-icon fa fa-dashboard"></i>
                 <p>
                   Administrator Tasks
@@ -35,16 +36,15 @@
                 
               </a>
               <ul class="nav nav-treeview">
-                  @if (auth()->check() && auth()->user()->isAdministrator()) 
+                
                   
                   <li class="nav-item"><a href="/userMaint" class="nav-link alert alert-warning"><i class="icon fa fa-warning"></i> User Maintenance</a></li>                  
                   <li class="nav-item"><a href="/kiosks/create" class="nav-link alert alert-warning"><i class="icon fa fa-warning"></i> Create a new Kisok</a></li>
-                  @endif      
-                
                 
               </ul>
+              
             </li>
-          
+            @endif      
           <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info">List all Kisoks</a></li>
           <li class="nav-item"><a href="/students" class="nav-link alert alert-success">Go to Student index page</a></li>
           <li class="nav-item"><a href="/students/339654014" class="nav-link alert alert-success">Go to Student show page</a></li>

@@ -25,12 +25,13 @@
         <section class="content">
             @yield('content')
         </section>
+
+        
     </div>
-
-
+    @include('layouts.partials.footer')
 
 </div>
-@include('layouts.partials.footer')
+
 <!-- Scripts -->
 @stack('scripts')
 

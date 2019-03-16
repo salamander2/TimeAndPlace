@@ -59,13 +59,13 @@
 @endforeach
   </div>
 </div>
-
+{{--  
 <div class="callout callout-info">
   <h4>Tip!</h4>
 
   <p>Add the fixed class to the body tag to get this layout. The fixed layout is your best option if your sidebar
       is bigger than your content because it prevents extra unwanted scrolling.</p>
-</div>
+</div>  --}}
 
 {{--  <div class="alert alert-danger"><p>hi</p></div>
 <button type="button" class="btn btn-success">hi</button>  --}}
