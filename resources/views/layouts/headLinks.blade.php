@@ -28,6 +28,16 @@
         /* used for userMaint page to get table like effect using labels */
         width:20%;  display: inline-block;
     }
+    #showKiosk input[type="checkbox"]:disabled:checked  {
+        outline:2px solid blue;
+        outline-offset: -2px;
+        color:black;
+    }
+     
+
+
+    
+    
 </style>
 {{--  
 <!-- Bootstrap 3.3.7 -->

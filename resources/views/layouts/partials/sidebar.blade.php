@@ -16,15 +16,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-th"></i>
-              <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
+         
           @if (auth()->check() && auth()->user()->isAdministrator()) 
           <li class="nav-item has-treeview menu-closed">
               <a href="#" class="nav-link alert alert-warning">
@@ -35,26 +27,28 @@
                 </p>
                 
               </a>
-              <ul class="nav nav-treeview">
-                
-                  
-                  <li class="nav-item"><a href="/userMaint" class="nav-link alert alert-warning"><i class="icon fa fa-warning"></i> User Maintenance</a></li>                  
-                  <li class="nav-item"><a href="/kiosks/create" class="nav-link alert alert-warning"><i class="icon fa fa-warning"></i> Create a new Kisok</a></li>
+              <ul class="nav nav-treeview">                  
+                  <li class="nav-item">
+                    <a href="/userMaint" class="nav-link ">
+                      <i class="nav-icon fa fa-bezier-curve text-warning"></i><p>User Maintenance</p></a></li>                  
+                  <li class="nav-item"><a href="/kiosks/create" class="nav-link">
+                    <i class="nav-icon far fa-circle text-warning"></i> Create a new Kisok</a></li>
+                    <li class="nav-item"><a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
+                      <i class="nav-icon far fa-circle text-info"></i> Go to phpMyadmin</a></li>
                 
               </ul>
               
             </li>
             @endif      
           <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info">List all Kisoks</a></li>
-          <li class="nav-item"><a href="/students" class="nav-link alert alert-success">Go to Student index page</a></li>
-          <li class="nav-item"><a href="/students/339654014" class="nav-link alert alert-success">Go to Student show page</a></li>
+          <li class="nav-item"><a href="/students" class="nav-link alert ">Go to Student index page</a></li>
+          <li class="nav-item"><a href="/students/339654014" class="nav-link alert ">Go to Student show page</a></li>
           <li class="nav-item"><a href="/courses" class="nav-link alert alert-black">Debug Course stuff</a></li>
-          <li class="nav-item"><a href="/home1" class="nav-link alert alert-gray">Go to AdminLTE home page</a></li>
-          <li class="nav-item"><a href="/bpterminal/1" class="nav-link alert alert-success"> Launch BluePanel terminal</a></li>
+                    
           
           <li class="nav-item has-treeview menu-closed">
               <a href="#" class="nav-link active">
-                <i class="nav-icon fa fa-dashboard"></i>
+                <i class="nav-icon fas fa-tachometer-alt "></i>
                 <p>
                   Kiosks (all)
                   <i class="right fa fa-angle-left"></i>
@@ -74,7 +68,7 @@
 
             <li class="nav-item has-treeview menu-closed">
               <a href="#" class="nav-link active">
-                <i class="nav-icon fa fa-dashboard"></i>
+                <i class="nav-icon fa fa-tachometer-alt "></i>
                 <p>
                   Logs
                   <i class="right fa fa-angle-left"></i>

@@ -37,16 +37,15 @@
                 </li>
             @endif  --}}
         @else
-            <li class="nav-item dropdown bg-secondary rounded">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link bg-info rounded dropdown-toggle" href="#" role="button" data-toggle="dropdown" v-pre>
                     {{ Auth::user()->username }} : {{ Auth::user()->fullname }}<span class="caret"></span>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right alert alert-dark" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('changePassword') }}">
-                    Change Password
-                    </a>
-                    <a class="dropdown-item alert-link" href="{{ route('logout') }}"
+                <div class="dropdown-menu dropdown-menu-right alert alert-info" >
+                    <div class="dropdown-item alert alert-danger"><a href="{{ route('changePassword') }}">Change Password</a>
+                    </div>
+                    <a class="dropdown-item alert bg-dark" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}

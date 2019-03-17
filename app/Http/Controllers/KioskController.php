@@ -24,8 +24,9 @@ class KioskController extends Controller
      */
     public function __construct()
     {
+        //TODO: is this kioskAdmin or Admin? 
         $this->middleware('admin')->only(['create','store','delete']);
-        $this->middleware('kioskUser')->only(['show', 'edit']);
+        $this->middleware('kioskUser')->only(['edit']);
         $this->middleware('auth');
     }
 

@@ -23,6 +23,13 @@
 
 @section('content')
 
+{{--   Listing of all students who are currently signed in to public kiosks.
+      1. Divided up by kiosk
+      2. Sorted by lastname
+      3. Should also include public "PRESENT" status? -- no
+    
+  --}}
+
     <div class="container-fluid">
       <div class="row">        
     @foreach(App\Kiosk::all()->where('publicViewable','=','1') as $kiosk)
@@ -37,16 +44,15 @@
                     <tbody>
                     <tr>
                         <th>Student Number</th>
-                        <th>Student First</th>
-                        <th>Student Last</th>
+                        <th>Student Name</th>                        
                         <th>TimeStamp</th>
                     </tr>
-                    @foreach($kiosk->signedIn as $student)                     
+                    @foreach($kiosk->signedIn->sortBy('lastname') as $student)                     
                       
                         <tr>
                             <td>{{$student->studentID}}</td>
-                            <td>{{$student->firstname}}</td>
-                            <td>{{$student->lastname}}</td>
+                            
+                            <td>{{$student->lastname}}, {{$student->firstname}}</td>
                             <td>{{$student->pivot->created_at}}</td>
                         </tr>
                     @endforeach

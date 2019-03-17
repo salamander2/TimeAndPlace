@@ -6,14 +6,14 @@
 @section('content')
 
 <ol class="breadcrumb">
-	<li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> Home </a> </li>
-	<li class="active"> Kiosks</li>
+	<li><a href="{{route('home')}}"><i class="fa fa-tachometer-alt"></i> Home </a> </li>
+	<li class="active"> Kiosks List</li>
 </ol>
 
 
 <div class="container">
         <h1>My Kiosks</h1>
-        <p> -- {{ Auth::user()->id }} set to edit if isKioskAdmin else set to show only. All have launch terminal though</p>
+        <p> UserID: {{ Auth::user()->id }}. Set to edit if isKioskAdmin ELSE set to show only. All have launch terminal though</p>
         @foreach ($my_kiosks as $kiosk)
             <div class="row align-middle">
                
@@ -30,7 +30,7 @@
     @if($other_kiosks->count())            
     <h1>&nbsp;</h1>
     <h1>All Other Kiosks</h1>
-    <p>-- set to show only --</p>
+   
     @endif
     
         {{--  @foreach ($kiosks as $kiosk)

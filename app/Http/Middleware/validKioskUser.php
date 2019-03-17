@@ -32,7 +32,7 @@ class validKioskUser
         abort_if( $validUser==null, 403, "Unauthorised access. Only administrators and valid users can edit kiosks");
         
         //user is not kiosk admin
-        abort_unless( $validUser->pivot->isKioskAdmin, 403, "Unauthorised access. Only administrators and valid users can edit kiosks");
+        abort_unless( $validUser->pivot->isKioskAdmin, 403, "Unauthorised access. Only administrators and kiosk admins can edit kiosks");
         
 
         return $next($request);

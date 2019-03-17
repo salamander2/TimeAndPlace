@@ -55,3 +55,18 @@ composer require laravel/telescope --dev
 
 php artisan telescope:install
 php artisan migrate
+
+FIX TELESCOPE:
+Undefined property: Illuminate\Cache\Events\KeyWritten::$seconds 
+
+vi ./vendor/laravel/telescope/src/Watchers/CacheWatcher.php
+line 79         Telescope::recordCache(IncomingEntry::make([
+             'type' => 'set',
+             'key' => $event->key,
+             'value' => $event->value,
+         //MH
+          //   'expiration' => $event->seconds,
+             'expiration' => optional($event)->seconds ?? $event->minutes * 60,
+]));
+
+
