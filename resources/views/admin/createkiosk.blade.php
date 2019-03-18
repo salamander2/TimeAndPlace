@@ -68,6 +68,8 @@
             <div class="box-footer">
                 {{csrf_field()}}
                 <button type="submit" class="btn btn-primary">Create</button>
+                &nbsp;&nbsp;&nbsp;
+                <a href="/home" class="btn btn-success">Cancel</a>
             </div>
         </form>
         <!-- form end -->

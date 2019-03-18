@@ -5,10 +5,10 @@
 
 @section('content')
 
-<ol class="breadcrumb">
-	<li><a href="{{route('home')}}"><i class="fa fa-tachometer-alt"></i> Home </a> </li>
+{{--  <ol class="breadcrumb">
+	<li><a href="{{route('home')}}"><i class="fas fa-home"></i> Home </a> </li>
 	<li class="active"> Kiosks List</li>
-</ol>
+</ol>  --}}
 
 
 <div class="container">

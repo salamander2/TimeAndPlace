@@ -94,6 +94,7 @@ Route::get('/courses/', 'StudentController@showCourse');
 
 
 /*----------------Attendance Routes-------------*/
+Route::get('/logs/{id}/', 'LogController@show');
 
 /*----------------Report Routes-----------------*/
 
