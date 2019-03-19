@@ -69,4 +69,6 @@ line 79         Telescope::recordCache(IncomingEntry::make([
              'expiration' => optional($event)->seconds ?? $event->minutes * 60,
 ]));
 
-
+npm install daterangepicker
+npm install moment
+npm ls
