@@ -24,7 +24,7 @@ class StudentController extends Controller
         $students = Student::all();
         // dd($students->first());
         foreach ($students as $student) {
-            print_r($student->studentID ." ... " . $student->firstname . "<br>");
+            print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . "<br>");
             
         }  
     }
@@ -55,7 +55,7 @@ class StudentController extends Controller
         //dd($imageURL);
 
         $student = new Student();
-        $student ->setConnection('mysql2');
+//        $student ->setConnection('mysql2');
         
        
         $record = $student->find($id) ??  abort(403,'Student ' .$id. ' not found.');

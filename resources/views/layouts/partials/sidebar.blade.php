@@ -1,7 +1,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="home" class="brand-link bg-primary">
+    <a href="/home" class="brand-link bg-primary">
       <img src="/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
@@ -44,7 +44,7 @@
               
             </li>
             @endif      
-          <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info"> <i class="nav-icon far fa-folder-open "></i>List all Kisoks</a></li>
+          <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info"><i class="nav-icon far fa-folder-open "></i>&nbsp; List all Kisoks</a></li>
           <li class="nav-item"><a href="/students" class="nav-link alert ">Go to Student index page</a></li>
           <li class="nav-item"><a href="/students/339654014" class="nav-link alert ">Go to Student show page</a></li>
           <li class="nav-item"><a href="/courses" class="nav-link alert alert-black">Debug Course stuff</a></li>
@@ -55,7 +55,7 @@
             <li class="nav-item has-treeview menu-closed">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fa fa-tachometer-alt "></i>
-                <p>Logs<i class="right fa fa-angle-left"></i></p>
+                <p> Logs<i class="right fa fa-angle-left"></i></p>
               </a>
               <ul class="nav nav-treeview">
                   @foreach (\App\Kiosk::all() as $kiosk)                  

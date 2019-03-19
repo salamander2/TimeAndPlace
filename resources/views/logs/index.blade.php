@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        alert("hi");
+    });
+</script>
 
 @section('content')
 
@@ -10,8 +14,21 @@
 	<li class="active"> Kiosks List</li>
 </ol>  --}}
 
+ 
+
 
 <div class="container">
+<div class="card-body">
+<div class="row ">
+<div class="col-md-2"> <button class="btn btn-outline-danger">Today</button> </div>
+<div class="col-md-2"> <button class="btn btn-outline-warning">Yesterday</button> </div>
+<div class="col-md-2"> <button class="btn btn-outline-success">This Week</button> </div>
+<div class="col-md-2"> <button class="btn btn-outline-info">This Month</button> </div>
+<div class="col-md-2"> <button class="btn btn-outline-primary">Last Month</button> </div>
+<div class="col-md-2"> <button class="btn btn-outline-secondary">All</button> </div>
+</div>
+
+</div>
     <h1>Logs for {{ $kiosk->name }} </h1>
     
     @foreach ($logs as $log)
