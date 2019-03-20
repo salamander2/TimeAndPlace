@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        alert("hi");
-    });
-</script>
-
 @section('content')
 
 {{--  <ol class="breadcrumb">
@@ -14,7 +8,6 @@
 	<li class="active"> Kiosks List</li>
 </ol>  --}}
 
- 
 
 
 <div class="container">
