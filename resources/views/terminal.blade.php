@@ -8,14 +8,10 @@
     <link rel="stylesheet" href="{{ asset('/vendor/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/sweetalert/sweetalert.min.css') }}"> --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{asset('/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('/js/jquery.min.js') }}"></script>
 
-    <!-- None of this works
-    <script src="{{ asset('/vendor/js/jquery.js') }}"></script>
-    <script src="{{ asset('/vendor/js/mask.js') }}"></script>
-    <script src="{{ asset('/vendor/js/bootstrap.min.js') }}"></script>
--->
+   
 
     <title>Checkin/out Terminal</title>
 
@@ -382,7 +378,7 @@
         } 
         function confirmSignin(student) {
             swal({
-                title: "Confirm Signing",
+                title: "Confirm Sign-in",
                 text: "Please confirm that this is the correct student being signed in",
                 icon: "warning",
                 buttons: true,

@@ -44,12 +44,14 @@ class TerminalController extends Controller
             return response()->json(['status' => 'detached', 'student' => $student->toArray()]);            
             //return response([$student,'status' => 'detached']);
         } else {
+
             //create a SIGNIN log file entry         
             $kiosk->students()->attach($studentID, ['status_code' => 'SIGNIN']);            
             //create a signedIn entry
             $kiosk->signedIn()->attach($studentID, ['status_code' => 'SIGNIN']);
-           
-            return response()->json(['status' => 'attached', 'student' => $student->toArray()]);
+
+            $photoURL = $student->getPhotoURL($studentID);
+            return response()->json(['status' => 'attached', 'student' => $student->toArray(), 'photoURL' => $photoURL]);
             //return response([$student,'status' => 'attached']); 
             
         }

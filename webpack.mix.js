@@ -12,7 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+   .sass('resources/sass/app.scss', 'public/css')
+  //  .extract('jquery')
+   ;
 
  /* Should I add this too? */  
 // webpack.mix.js
@@ -27,7 +29,7 @@ mix.scripts('node_modules/sweetalert/dist/sweetalert.min.js', 'public/js/sweetal
 //#mix.scripts('node_modules/jquery/dist/jquery.min.js', 'public/js/jquery.min.js');
 //mix.scripts('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js', 'public/js/bootstrap.bundle.min.js');
 
-mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js');
+//mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js');
 //mix.copy('node_modules/jquery-ui-dist/jquery-ui.min.js', 'public/js');
 //mix.copy('node_modules/jquery-ui-dist/jquery-ui.min.css', 'public/css');
 

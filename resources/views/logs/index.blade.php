@@ -18,7 +18,7 @@
 <div class="col-md-2"> <button class="btn btn-outline-success">This Week</button> </div>
 <div class="col-md-2"> <button class="btn btn-outline-info">This Month</button> </div>
 <div class="col-md-2"> <button class="btn btn-outline-primary">Last Month</button> </div>
-<div class="col-md-2"> <button class="btn btn-outline-secondary">All</button> </div>
+<div class="col-md-2"> <button class="btn btn-secondary">All</button> </div>
 </div>
 
 </div>

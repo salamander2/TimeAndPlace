@@ -41,18 +41,7 @@ class StudentController extends Controller
         //$courses = $db2->table('students')->find(1);
         //print_r($courses . '\n');
 
-        //$image = Storage::disk('public')->get('user_blank.png');        
-        $imageURL = Storage::disk('public')->url('photos/'.$id.'.jpg');        
-        $image = Storage::disk('public')->exists('photos/'.$id.'.jpg');
-        if ($image == null) {
-            $imageURL = Storage::disk('public')->url('photos/user_blank.png');
-        }
-         // The imageURL is wrong: "http://localhost/storage/user_blank.png"  
-        // it should be http://localhost:8888/storage/user_blank.png
-        //so now it will be "/storage/user_blank.png"
-        $strpos = strpos($imageURL,'/storage');
-        $imageURL = substr($imageURL, $strpos);
-        //dd($imageURL);
+     
 
         // $student = new Student();
         
@@ -60,14 +49,14 @@ class StudentController extends Controller
         // $record = $student->find($id) ??  abort(403,'Student ' .$id. ' not found.');
         $record = Student::find($id) ??  abort(403,'Student ' .$id. ' not found.');
         
-        
+        $photoURL = $record->getPhotoURL($id);
         $record->getTimeTable();
 
 		//$record = $student->find($id);
         //$record = $student->first();
         $age = $this->getAge($record->dob);
         //return view('student')->withRecord($record)->withAge($age);
-        return view('student', compact('record','age','imageURL'));
+        return view('student', compact('record','age','photoURL'));
     
         //dd($record);
     }
