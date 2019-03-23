@@ -19,16 +19,15 @@
     <p> UserID: {{ Auth::user()->id }}. Set to edit if isKioskAdmin ELSE set to show only. All have launch terminal though</p>
     @foreach ($my_kiosks as $kiosk)
 	    <div class="row align-middle">
-        <div class="col-md-4">
-            <a class="btn btn-info elevation-2" href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
+			<div class="col-md-4">
+				<a class="btn btn-info elevation-2" href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
+			</div>
+			<div class="col-md-2">
+				<a class="my-1 btn btn-success elevation-2" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
+			</div>
         </div>
-        <div class="col-md-2">
-            <a class="my-1 btn btn-success elevation-2" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
-        </div>
-        </div>
-
-    </div>
     @endforeach 
+
 	@if($other_kiosks->count())
 		<h1>&nbsp;</h1>
 		<h1>All Other Kiosks</h1>
@@ -43,9 +42,10 @@
 
 	@foreach ($other_kiosks as $kiosk)
 		<div class="row align-middle">
-        <div class="col">
-            <a class="my-1 btn btn-secondary elevation-2" href="/kiosks/{{ $kiosk->id }}/show"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
-        </div>
+			<div class="col">
+				<a class="my-1 btn btn-secondary elevation-2" href="/kiosks/{{ $kiosk->id }}/show"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
+			</div>
+		</div>
 	@endforeach
     
     {{-- Script to test if JQuery is working: it will hide the H1 that you click on
