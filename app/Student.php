@@ -5,6 +5,7 @@ namespace App;
 use App\Course;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Student extends Model
 {
@@ -16,7 +17,12 @@ class Student extends Model
         return $this->belongsToMany(Kiosk::class,'mysql.kiosks')->withPivot('status')->withTimestamps();
     }
 
-    
+    /** formatCourse
+     * Add - into the correct place in the course code
+     *
+     * @param  \App\Course  $course
+     * @return String
+     */    
     function formatCourse($course) {
         if (strlen($course) != 8) return $course;
      
@@ -24,6 +30,26 @@ class Student extends Model
         return $temp;
      }
      
+    /** getPhotoURL
+     * return the student photo URL based on the id
+     *
+     * @param  int $id
+     * @return String
+     */
+     public function getPhotoURL($id) {
+        $imageURL = Storage::disk('public')->url('photos/'.$id.'.jpg');        
+        $image = Storage::disk('public')->exists('photos/'.$id.'.jpg');
+        if ($image == null) {
+            $imageURL = Storage::disk('public')->url('photos/user_blank.png');
+        }
+         // The imageURL is wrong: "http://localhost/storage/user_blank.png"  
+        // it should be http://localhost:8888/storage/user_blank.png
+        //so now it will be "/storage/user_blank.png"
+        $strpos = strpos($imageURL,'/storage');
+        $imageURL = substr($imageURL, $strpos);
+
+        return $imageURL;
+     }
     
     public function getTimeTable() {
         //we don't want the timetable field. All of the info has already been processed and is in the student_course file

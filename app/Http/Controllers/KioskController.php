@@ -111,9 +111,11 @@ class KioskController extends Controller
      */
     public function destroy(Kiosk $kiosk)
     {
-        dd("deleting kiosk " . $kiosk->id);
-        $kiosk->delete();
-        return redirect('/kiosks');
+        $name=$kiosk->name;
+        //dd("deleting kiosk " . $kiosk->id);
+       // $kiosk->delete();
+
+        return redirect('/kiosks')->with("error","Kiosk \"$name\" has been deleted");;
     }
 
 

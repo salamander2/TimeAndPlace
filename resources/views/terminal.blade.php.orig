@@ -8,10 +8,14 @@
     <link rel="stylesheet" href="{{ asset('/vendor/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/sweetalert/sweetalert.min.css') }}"> --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('/js/sweetalert.min.js') }}"></script>
+    <script src="{{asset('/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('/js/jquery.min.js') }}"></script>
 
-   
+    <!-- None of this works
+    <script src="{{ asset('/vendor/js/jquery.js') }}"></script>
+    <script src="{{ asset('/vendor/js/mask.js') }}"></script>
+    <script src="{{ asset('/vendor/js/bootstrap.min.js') }}"></script>
+-->
 
     <title>Checkin/out Terminal</title>
 
@@ -269,8 +273,13 @@
     {{-- Script to test if JQuery is working: it will hide the H1 that you click on --}}
     <script>
         $(document).ready(function(){
+<<<<<<< HEAD
           $("h1").click(function(){
             $(this).hide();
+=======
+          $("p").click(function(){
+            $(this).show();
+>>>>>>> b8fb8e0c53a97bc6e6d4f435f2f9614b7964c4d8
           });
         });
     </script>
@@ -378,7 +387,7 @@
         } 
         function confirmSignin(student) {
             swal({
-                title: "Confirm Sign-in",
+                title: "Confirm Signing",
                 text: "Please confirm that this is the correct student being signed in",
                 icon: "warning",
                 buttons: true,
