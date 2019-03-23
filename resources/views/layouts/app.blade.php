@@ -15,8 +15,11 @@
     {{--  @if(Session::get('guest-url-auth') || Auth::check())  --}}
     {{--  <aside class="main-sidebar">  --}}
         @include('layouts.partials.sidebar')
+        @include('layouts.partials.controlSidebar')
     {{--  </aside>  --}}
     {{--  @endif  --}}
+
+
     <div class="content-wrapper">
         <section class="content-header">
             @yield('content-header')

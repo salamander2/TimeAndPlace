@@ -24,7 +24,7 @@ class StudentController extends Controller
         $students = Student::all();
         // dd($students->first());
         foreach ($students as $student) {
-            print_r($student->studentID ." ... " . $student->firstname . "<br>");
+            print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . "<br>");
             
         }  
     }
@@ -54,12 +54,14 @@ class StudentController extends Controller
         $imageURL = substr($imageURL, $strpos);
         //dd($imageURL);
 
-        $student = new Student();
-        $student ->setConnection('mysql2');
+        // $student = new Student();
         
-       
-        $record = $student->find($id) ??  abort(403,'Student ' .$id. ' not found.');
+       //Student record
+        // $record = $student->find($id) ??  abort(403,'Student ' .$id. ' not found.');
+        $record = Student::find($id) ??  abort(403,'Student ' .$id. ' not found.');
         
+        
+        $record->getTimeTable();
 
 		//$record = $student->find($id);
         //$record = $student->first();
@@ -83,7 +85,7 @@ class StudentController extends Controller
         // $courses = $db2->table('courses')::all();//->find(1);
         
         $courses = Course::all();
-        $course = $courses->first();
+       // $course = $courses->first();
        // dd($course->coursecode);
 
         foreach ($courses as $course) {
