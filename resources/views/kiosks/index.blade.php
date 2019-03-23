@@ -49,6 +49,16 @@
         
         @endforeach
     
-            {{--  <a href="/kiosks/create">Create a new Kisok</a>  --}}
-</div>
+    {{-- Script to test if JQuery is working: it will hide the H1 that you click on
+	type=application/javascript is needed otherwise vue.js croaks and stops it from running --}}
+    <script type="application/javascript">
+        $(document).ready(function(){
+          $("h1").click(function(){
+//            $(this).hide();
+		jqversion = $().jquery;
+		alert("jQuery is "+jqversion);
+          });
+        });
+    </script>
+	</div>
 @endsection

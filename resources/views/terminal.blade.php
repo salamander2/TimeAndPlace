@@ -270,10 +270,10 @@
     */
     </script>
 
-    {{-- Scrip to test if JQuery is working (it isn't) --}}
+    {{-- Script to test if JQuery is working: it will hide the H1 that you click on --}}
     <script>
         $(document).ready(function(){
-          $("p").click(function(){
+          $("h1").click(function(){
             $(this).hide();
           });
         });
