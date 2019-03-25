@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Kiosk;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -39,6 +40,22 @@ class User extends Authenticatable
 	{			
 		return ((bool) $this->isAdmin);
 	} 
+
+	public function isKioskAdmin(Kiosk $kiosk) {
+		
+		if ($this->isAdministrator()) return true;
+
+		//this gets all users for that kiosk
+        $users = $kiosk->users()->get();
+		
+        //if the user is not valid, then it returns a null
+        $validUser = $users->where('id', '=', $this->id)->first();
+
+        if( $validUser==null) return false;
+            
+		if ($validUser->pivot->isKioskAdmin == 1) return true;
+		return false;
+	}
 
 	public function kiosks() 
 	{

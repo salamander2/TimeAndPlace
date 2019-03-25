@@ -24,10 +24,11 @@ class KioskController extends Controller
      */
     public function __construct()
     {
-        //TODO: is this kioskAdmin or Admin? 
-        $this->middleware('admin')->only(['create','store','delete']);
-        $this->middleware('kioskUser')->only(['edit']);
         $this->middleware('auth');
+        //if user->isAdministrator  
+        $this->middleware('admin')->only(['create','store','delete']);
+
+       // $this->middleware('kioskAdmin')->only(['edit']);
     }
 
 
@@ -188,5 +189,9 @@ class KioskController extends Controller
            
         ]);
         return back();
+    }
+
+    public function garbage(Kiosk $kiosk) {
+        return view('kiosks.edit', compact('kiosk'));
     }
 }

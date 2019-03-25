@@ -32,7 +32,7 @@
                     <a href="/userMaint" class="nav-link ">
                       <i class="nav-icon fa fa-bezier-curve text-warning"></i><p>User Maintenance</p></a></li>                  
                   <li class="nav-item"><a href="/kiosks/create" class="nav-link">
-                    <i class="nav-icon far fa-circle text-warning"></i> Create a new Kisok</a></li>
+                    <i class="nav-icon fas fa-school text-warning"></i> Create a new Kisok</a></li>
                     <li class="nav-item"><a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
                       <i class="nav-icon fas fa-indent text-warning"></i> Go to phpMyadmin</a></li>
                       <li class="nav-item"><a href=""  class="nav-link alert-danger">
@@ -44,7 +44,7 @@
               
             </li>
             @endif      
-          <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info"><i class="nav-icon far fa-folder-open "></i>&nbsp; List all Kisoks</a></li>
+          <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info"><i class="nav-icon fab fa-korvue fa-2x"></i>&nbsp; List all Kisoks</a></li>
           <li class="nav-item"><a href="/students" class="nav-link alert ">Go to Student index page</a></li>
           <li class="nav-item"><a href="/students/339654014" class="nav-link alert ">Go to Student show page</a></li>
           <li class="nav-item"><a href="/courses" class="nav-link alert alert-black">Debug Course stuff</a></li>

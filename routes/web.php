@@ -61,8 +61,20 @@ Route::post('/changePassword','UserController@changePassword')->name('changePass
 Route::get(   '/kiosks', 'KioskController@index');
 Route::get(   '/kiosks/create', 'KioskController@create');
 Route::post(  '/kiosks', 'KioskController@store');
-Route::get(   '/kiosks/{kiosk}/show', 'KioskController@show');
-Route::get(   '/kiosks/{kiosk}/edit', 'KioskController@edit');
+Route::get(   '/kiosks/{kiosk}/show', 'KioskController@show')->name('showKiosk');
+Route::get(   '/kiosks/{kiosk}/edit', 'KioskController@edit')->name('editKiosk');
+Route::get(   '/kiosks/{kiosk}/showORedit', 
+    function($kiosk){        
+        $kioskObj=App\Kiosk::find($kiosk);         
+        if ( Auth::user()->isKioskAdmin($kioskObj) ) {
+            //return redirect()->action('KioskController@edit',[$kiosk]);
+            return redirect()->route('editKiosk',[$kiosk]);
+        } else {            
+            return redirect()->route('showKiosk',[$kiosk]);
+            //return redirect()->action('KioskController@show',[$kiosk]);
+        }        
+    }
+);
 Route::patch( '/kiosks/{kiosk}', 'KioskController@update');
 Route::delete('/kiosks/{kiosk}','KioskController@destroy');
 
@@ -98,3 +110,7 @@ Route::get('/logs/{id}/', 'LogController@show');
 
 /*----------------Report Routes-----------------*/
 
+
+Route::fallback(function () {
+    return redirect('home');
+});

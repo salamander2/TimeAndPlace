@@ -16,11 +16,11 @@
 
 <div class="container">
     <h1>My Kiosks</h1>
-    <p> UserID: {{ Auth::user()->id }}. Set to edit if isKioskAdmin ELSE set to show only. All have launch terminal though</p>
+  
     @foreach ($my_kiosks as $kiosk)
 	    <div class="row align-middle">
 			<div class="col-md-4">
-				<a class="btn btn-info elevation-2" href="/kiosks/{{ $kiosk->id }}/edit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
+				<a class="btn btn-info elevation-2" href="/kiosks/{{ $kiosk->id }}/showORedit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
 			</div>
 			<div class="col-md-2">
 				<a class="my-1 btn btn-success elevation-2" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
