@@ -42,17 +42,17 @@ class User extends Authenticatable
 	} 
 
 	public function isKioskAdmin(Kiosk $kiosk) {
-		
+		//all administrators can edit
 		if ($this->isAdministrator()) return true;
 
 		//this gets all users for that kiosk
-        $users = $kiosk->users()->get();
-		
-        //if the user is not valid, then it returns a null
-        $validUser = $users->where('id', '=', $this->id)->first();
+		$users = $kiosk->users()->get();
 
-        if( $validUser==null) return false;
-            
+		//if the user is not valid, then it returns a null
+		$validUser = $users->where('id', '=', $this->id)->first();
+
+		if( $validUser==null) return false;
+
 		if ($validUser->pivot->isKioskAdmin == 1) return true;
 		return false;
 	}

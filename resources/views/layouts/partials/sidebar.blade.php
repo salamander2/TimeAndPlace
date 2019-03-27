@@ -29,16 +29,17 @@
               </a>
               <ul class="nav nav-treeview">                  
                   <li class="nav-item">
-                    <a href="/userMaint" class="nav-link ">
-                      <i class="nav-icon fa fa-bezier-curve text-warning"></i><p>User Maintenance</p></a></li>                  
+                    <a href="/userMaint" class="nav-link "><i class="nav-icon fa fa-bezier-curve text-warning"></i>
+                      <p>User Maintenance</p></a></li>                  
                   <li class="nav-item"><a href="/kiosks/create" class="nav-link">
-                    <i class="nav-icon fas fa-school text-warning"></i> Create a new Kisok</a></li>
+                    <i class="nav-icon fas fa-school text-warning"></i>
+                    <p>Create a new Kisok</p></a></li>
                     <li class="nav-item"><a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
-                      <i class="nav-icon fas fa-indent text-warning"></i> Go to phpMyadmin</a></li>
+                      <i class="nav-icon fas fa-indent text-warning"></i><p>Go to phpMyadmin</p></a></li>
                       <li class="nav-item"><a href=""  class="nav-link alert-danger">
-                        <i class="nav-icon fas fa-indent "></i> A red button</a></li>
+                        <i class="nav-icon fas fa-indent "></i><p>A red button</p></a></li>
                         <li class="nav-item"><a href=""  class="nav-link alert-success">
-                            <i class="nav-icon fas fa-indent "></i> A green button</a></li>
+                        <i class="nav-icon fas fa-indent "></i><p>A green button</p></a></li>
                 
               </ul>
               
@@ -55,19 +56,20 @@
             <li class="nav-item has-treeview menu-closed">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fa fa-tachometer-alt "></i>
-                <p> Logs<i class="right fa fa-angle-left"></i></p>
+                <p>Logs<i class="right fa fa-angle-left"></i></p>
               </a>
               <ul class="nav nav-treeview">
                   @foreach (\App\Kiosk::all() as $kiosk)                  
                 <li class="nav-item">
                   <a href="{{'/logs/'.$kiosk->id}}" class="nav-link active">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p></p>{{$kiosk->name}}</p>
+                    <p>{{$kiosk->name}}</p>
                   </a>
                 </li>
                 @endforeach
               </ul>
             </li> <!-- end tree menu -->
+          <li class="nav-item "><a href="/help" class="nav-link alert border-secondary"><i class="nav-icon fa fa-question-circle"></i>Help</a></li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

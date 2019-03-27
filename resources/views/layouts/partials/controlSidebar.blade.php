@@ -1,6 +1,15 @@
  <!-- Control Sidebar -->
  <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
+    <div class="p-3 bg-warning">
+      <h5 class="text-dark">TERMINOLOGY
+      </h5>
+    </div>
+    <div class="p-3">
+	<p><b><u>Kiosk:</u></b> the team, club, group, department, ... that is tracking attendance</p>
+	<p><b><u>Terminal:</u></b> the screen where students log in/out</p>
+	
+    </div>
     <div class="p-3" style="background-color: green;">
       <h5>TO DO 
       <span class="badge badge-light "> 7</span>

@@ -28,6 +28,9 @@ class KioskController extends Controller
         //if user->isAdministrator  
         $this->middleware('admin')->only(['create','store','delete']);
 
+	/* This has now been moved two two different places: 1. re web.php routes file will decide whether the user can 'edit' or just 'show' the kiosk.
+	   And in this situation, I still need authentication to make sure that someone cannot edit the kiosk just by typing in the URL
+	*/
        // $this->middleware('kioskAdmin')->only(['edit']);
     }
 
@@ -139,6 +142,10 @@ class KioskController extends Controller
      */
     public function edit(Kiosk $kiosk)
     {
+
+        $user = Auth::user();
+	if (! $user->isKioskAdmin($kiosk) ) return view('kiosks.show', compact('kiosk'));
+	
         //Select all users who are not on THIS kiosk
         //and pass it to the view (for the lower portion of the kiosk)
         
