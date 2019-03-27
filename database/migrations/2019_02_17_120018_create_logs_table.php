@@ -19,7 +19,7 @@ class CreateLogsTable extends Migration
             $table->integer('studentID')->unsigned();
             $table->integer('kiosk_id')->unsigned();
             $table->string('status_code',30);
-            $table->softDeletes();
+            //$table->softDeletes();
         });
     }
 

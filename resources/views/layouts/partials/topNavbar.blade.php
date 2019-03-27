@@ -45,15 +45,16 @@
                 <div class="dropdown-menu dropdown-menu-right alert alert-info" >
                     <div class="dropdown-item alert alert-danger"><a href="{{ route('changePassword') }}">Change Password</a>
                     </div>
-                    <a class="dropdown-item alert bg-dark" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+		    <div class="dropdown-item alert bg-dark">
+			<i class="fa fa-power-off"></i>&nbsp;
+
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('Logout') }}
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
+		    </div>
                 </div>
             </li>
         @endguest

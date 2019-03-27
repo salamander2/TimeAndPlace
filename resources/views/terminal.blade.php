@@ -322,10 +322,11 @@
                         //alert(xmlhttp.responseText);
                         $response = JSON.parse(xmlhttp.responseText);
                        if ($response.status === 'attached') {
-                           if (confirm)
+                           if (confirm) {
                                confirmSignin($response.student);
-                            else 
+                            } else { 
                                signin($response.student);
+			    }
                        } else if($response.status === "detached"){
                             signout($response.student);
                         }
@@ -376,6 +377,9 @@
             }).then(  function() { $('#inputID').focus() }
         	);
         } 
+	//TODO: this still signs the student in if the screen is clicked outside the SWAL. Fix by printing the value and seeing what it is.
+	//How is the student being signed in when nothing is popping up on the screen?
+	//The CONFIRM SWeetAlert is only popping up AFTER the toggle has been done!!!
         function confirmSignin(student) {
             swal({
                 title: "Confirm Sign-in",
@@ -384,10 +388,11 @@
                 buttons: true,
                 dangerMode: true,
                 })
-                .then((confirmed) => {
-                if (confirmed) {
-                    signin(student);
-                } 
+                .then((proceed) => {
+			if (proceed) {
+				console.log("signing in");
+				signin(student);
+			} 
                 });
         }
     </script>
