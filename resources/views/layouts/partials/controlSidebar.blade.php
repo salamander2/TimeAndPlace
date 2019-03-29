@@ -8,8 +8,17 @@
     <div class="p-3">
 	<p><b><u>Kiosk:</u></b> the team, club, group, department, ... that is tracking attendance</p>
 	<p><b><u>Terminal:</u></b> the screen where students log in/out</p>
-	
+	<p>See help screen for more information</p>
     </div>
+    <div class="p-3 bg-info">
+      <h5>Version#
+      <span class="badge badge-light "> 1.0</span>
+      </h5>
+    </div>
+    <div class="p-3">
+      <p>1.0 Initial release (20190329)</p>
+    </div>
+
     <div class="p-3" style="background-color: green;">
       <h5>TO DO 
       <span class="badge badge-light "> 7</span>
