@@ -110,7 +110,8 @@ Route::get('/logs/{id}/', 'LogController@show');
 
 /*----------------Report Routes-----------------*/
 
-
+/*
 Route::fallback(function () {
     return redirect('home');
 });
+*/

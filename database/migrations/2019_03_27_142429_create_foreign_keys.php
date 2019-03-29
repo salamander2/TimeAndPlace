@@ -27,11 +27,12 @@ class CreateForeignKeys extends Migration
 
 
 	/********* students_signed_in *********/
-//        Schema::table('students_signed_in', function (Blueprint $table) {
-//            $table->foreign('student_id')->references('id')->on('schoolDB.students')
+        Schema::table('students_signed_in', function (Blueprint $table) {
+            $table->foreign('studentID')->references('studentID')->on('schoolDB.students')
 //                        ->onDelete('cascade')
 //                        ->onUpdate('cascade');
-//        });
+		;
+        });
         Schema::table('students_signed_in', function (Blueprint $table) {
             $table->foreign('kiosk_id')->references('id')->on('kiosks')
                         ->onDelete('cascade')
@@ -47,9 +48,9 @@ class CreateForeignKeys extends Migration
                         ->onDelete('cascade')
                         ->onUpdate('cascade');
         });
-//        Schema::table('logs', function (Blueprint $table) {
-//            $table->foreign('student_id')->references('id')->on('schoolDB.students');
-//        });
+        Schema::table('logs', function (Blueprint $table) {
+            $table->foreign('studentID')->references('studentID')->on('schoolDB.students');
+        });
         Schema::table('logs', function (Blueprint $table) {
             $table->foreign('status_code')->references('code')->on('status');
         });

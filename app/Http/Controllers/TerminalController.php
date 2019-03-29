@@ -28,17 +28,20 @@ class TerminalController extends Controller
     public function toggleStudent(Kiosk $kiosk, Student $student)
     {        
         $studentID = $student->studentID;
-        $present = $kiosk->signedIn->contains('studentID',$studentID);
+        //This works
+        // $present = $kiosk->signedIn->contains('studentID',$studentID);
+        //This also works (after adding foreign keys):
+        $present = \App\StudentSignedIn::isSignedIn($studentID, $kiosk->id);
 
         if ($present) {
              //Deleted the SignedIn record
              $kiosk->signedIn()->detach($studentID);
 
-             //add a 'deleted at' timestamp to the signin record. (This is probably never needed)
-             $kiosk->students()->where('status_code','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
+            //add a 'deleted at' timestamp to the signin record. (This is probably never needed)
+            // $kiosk->students()->where('status_code','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
              
              //Add a "SIGNOUT" record for the student the LOG file
-             $kiosk->students()->attach($studentID, ['deleted_at'=> Carbon::now(), 'status_code' => 'SIGNOUT']);
+             $kiosk->students()->attach($studentID, ['status_code' => 'SIGNOUT']);
              
              //Return info for AJAX to display on the kiosk
             return response()->json(['status' => 'detached', 'student' => $student->toArray()]);            

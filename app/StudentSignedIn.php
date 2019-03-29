@@ -10,13 +10,28 @@ class StudentSignedIn extends Model
     public $timestamps = true;
    
     /* 
-    This is a table than links kiosks and students. It is very similar to the 'logs' table, 
+    This is a table that links kiosks and students. It is very similar to the 'logs' table, 
     but that table is a permanent record of the day's logs.
     This table shows which students are SIGNED IN to a kiosk. 
-    If the kiosk does not have the "SignedIn" property, 
-    then all that happens is a Present record is created in the logs table.
+    // If the kiosk does not have the "SignedIn" property, 
+    //then all that happens is a Present record is created in the logs table.
 
+    Fields:  id (primary key)
+        kiosk_id
+        studentID
+        status_code
     */
+
+    public static function isSignedIn(int $studentID, int $kioskID) {
+        
+        $records = StudentSignedIn::where('studentID', '=', $studentID)->get();
+        if ($records-> count() == 0) return false;
+        // dd($records);
+        $present = $records->where('kiosk_id','=',$kioskID);
+        if ($present-> count() == 0) return false;
+        return true;
+        
+    }
 
     public function students()
     {

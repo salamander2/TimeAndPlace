@@ -14,7 +14,19 @@ class Student extends Model
 
     public function kiosks()
     {
-        return $this->belongsToMany(Kiosk::class,'mysql.kiosks')->withPivot('status')->withTimestamps();
+        dd("Student.php : do you mean the logs table or the student_signed_in table?");
+        // This line works, until I enable foreign keys
+        // return $this->belongsToMany(Kiosk::class,'mysql.kiosks')->withPivot('status')->withTimestamps();
+        return $this->belongsToMany(Kiosk::class,'mysql.kiosks')->withPivot('status_code')->withTimestamps();
+
+        /* public function belongsToMany($related, $table = null, $foreignPivotKey = null, $relatedPivotKey = null,
+                                 $parentKey = null, $relatedKey = null, $relation = null)
+            second parameter is table name if it is not like "product_shop" or "kiosk_sudent"
+            Next two parameters are the actual field names of that pivot table, if they are different than default product_id and shop_id.
+            Then just add two more parameters – first, the current model field, and then the field of the model being joined.
+        */
+                                
+
     }
 
     /** formatCourse

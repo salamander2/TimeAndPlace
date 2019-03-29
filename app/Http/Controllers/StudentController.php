@@ -133,16 +133,17 @@ class StudentController extends Controller
 
 */
 
-// #### From BLUEPANEL --> put into a TerminalController probably
+/*
 public function toggleStudent(Kiosk $kiosk, Student $student)
 {
-    $present = $student->kiosks->contains($kiosk->id);
+    $present = \App\StudentSignedIn::isSignedIn($student->studentID, $kiosk->id);
+    // $present = $student->kiosks->contains($kiosk->id);
     if ($present) {
         //Add entry to logs
         //$kiosk->logs()->attach($student->id, ['type' => 'Kiosk Sign Out']);
         $kiosk->logs()->attach($student->id, ['type' => 'Sign Out']);
 
-        //log the student in
+        //log the student out by deleting the record
         $student->kiosks()->detach($kiosk->id);
 
         //Return info for AJAX to display on the kiosk
@@ -158,6 +159,6 @@ public function toggleStudent(Kiosk $kiosk, Student $student)
         return response()->json(['status' => 'attached', 'student' => $student->toArray()]);
     }
 }
-
+*/
     
 }
