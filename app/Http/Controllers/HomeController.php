@@ -42,6 +42,11 @@ class HomeController extends Controller
         /********** End Testing Area ***********/
         return view('home');
     }
+
+    public function help() {
+        return view('help');
+    }
+
     public function home1()
     {
         return view('home1');

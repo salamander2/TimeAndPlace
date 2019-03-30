@@ -41,6 +41,7 @@ Auth::routes(['register' => false]);
 
 /*-------------Default routes  -----------------*/
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/help', 'HomeController@help');
 Route::get('/home1', 'HomeController@home1');
 Route::view('/home_orig', 'home_orig');
 
