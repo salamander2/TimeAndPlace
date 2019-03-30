@@ -23,8 +23,8 @@
                 <h1 class="centered">{{$record->lastname}}, {{$record->firstname}} </h1>
             
             <!-- **************** Begin insert photo ***************** -->
-                <a href="{{$imageURL}}">
-                    <img class="student-img" src="{{ $imageURL }}" width="170" height="200">
+                <a href="{{$photoURL}}">
+                    <img class="student-img" src="{{ $photoURL }}" width="170" height="200">
                 </a>
             <!-- end insert photo. ** This cannot retrieve the photo from ~benson: 
                 <img class="student-img" src="/~benson/photos/user_blank.png">

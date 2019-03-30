@@ -6,10 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class KioskStudent extends Model
 {    
-    //protected $table = 'logs';    //students_signed_in
+    protected $table = 'logs';    //OR students_signed_in
     public $timestamps = true;
-    use SoftDeletes;
+   // use SoftDeletes;
 
+    /*
+    Fields:  id (primary key)
+        kiosk_id
+        studentID
+        status_code
+    */
+    
     /**
      * The attributes that should be mutated to dates.
      *

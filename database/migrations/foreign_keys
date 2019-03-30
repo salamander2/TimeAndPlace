@@ -1,0 +1,61 @@
+USERS table:  'id'
+KIOSKS table: 'id'
+		'adminName' (String)
+
+KIOSK_USER table: 
+		user_id (unsigned int)
+		kiosk_id (unsigned int)
+LOGS table:
+		studentID (unsigned) -- DO NOT CASCADE OR USE FOREIGN KEY
+				We might want a log of a student who was deleted.
+		kiosk_id (unsingned int)
+		'status_code' (string, 30)
+		softdeletes !!
+STATUS table
+		'code' (string) (primary key)
+STUDENTS_SIGNED_IN table
+		'studentID' (unsigned int)
+		'kiosk_id' (unsingned int)
+		'status_code' (string, 30) nullable -- DO NOT USE FOREIGN KEY.
+			THIS RECORD WILL BE DELETED WHEN STUDENTS SIGN OUT OR AT THE END OF THE DAY
+
+		
+what does the 'restrict' keyword mean?
+ RESTRICT: Rejects the delete or update operation for the parent table. Specifying RESTRICT (or NO ACTION) is the same as omitting the ON DELETE or ON UPDATE clause.
+------------------------------------------------------------------
+ 
+	Schema::table('kiosk_user', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
+        });
+        Schema::table('kiosk_user', function (Blueprint $table) {
+            $table->foreign('kiosk_id')->references('id')->on('kiosks')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
+        });
+
+
+        Schema::table('kiosk_student', function (Blueprint $table) {
+            $table->foreign('student_id')->references('id')->on('students')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
+        });
+        Schema::table('kiosk_student', function (Blueprint $table) {
+            $table->foreign('kiosk_id')->references('id')->on('kiosks')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
+        });
+
+        Schema::table('kiosk_logs', function (Blueprint $table) {
+            $table->foreign('kiosk_id')->references('id')->on('kiosks')
+                        ->onDelete('restrict')
+                        ->onUpdate('restrict');
+        });
+        Schema::table('kiosk_logs', function (Blueprint $table) {
+            $table->foreign('student_id')->references('id')->on('students')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
+        });
+
+Also need status -- but no cascading

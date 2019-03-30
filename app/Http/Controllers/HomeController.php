@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Kiosk;
+use App\Student;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,21 @@ class HomeController extends Controller
      */
     public function index()
     {
+        /********** Testing Area here  ***************/
+        //   $studentID = 303210173;
+        //   $present = \App\StudentSignedIn::isSignedIn($studentID, '2');
+        //   dd($present);
+         
+         
+          // $student = Student::find($studentID);
+          //$kiosk = Kiosk::first(); 
+          
+          //check the StudentSignedIn table to see if there is a record with this kiosk and student
+          
+         // $present = $student->kiosks;//->contains($kiosk->id);
+          //dd($present);
+
+        /********** End Testing Area ***********/
         return view('home');
     }
     public function home1()

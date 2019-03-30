@@ -1,0 +1,57 @@
+
+
+You just need to make that the opposite way, @push is meant to be in the child view, which is pushing content to the parent @stash directive. 
+
+
+in layouts/app.blade.php
+
+@stack('scripts')
+
+ <!-- Scripts -->
+    <script src="{{ mix('/js/app.js') }}"></script>
+@stack('inline-scripts')
+</body>
+</html>
+
+So your app.blade.php should have a:
+
+@stack('custom-scripts')
+
+-------------
+in child views
+
+@push('scripts')
+    <script src="/example.js"></script>
+@endpush
+
+
+@push('custom-scripts')
+    <script type="text/javascript" src="{{ URL::asset ('js/custom-scripts.js') }}"></script>
+@endpush
+
+-------------------------
+Samples: 
+
+https://github.com/acacha/adminlte-laravel/blob/master/webpack.mix.js
+
+https://github.com/guillaumebriday/laravel-blog/blob/master/webpack.mix.js
+
+
+EXAMPLE
+npm install inputmask --save
+
+When you use npm to download packages, they will be downloaded in node_modules folder and they are not (directly) included/loaded into your project.
+
+You use Laravel Mix to handle the assets compilation. So in your scenario you could handle it as the following:
+
+First of all create a javascript file in resources/assets/js called app.js. Add the following code to be able to load the downloaded package
+
+require('inputmask');
+
+Then using Laravel mix you can compile app.js to produce for you one javasciript file. Modify webpack.mix.js in your Laravel root folder to the following
+
+mix.js('./resources/assets/js/app.js', 'public/js/app.js');
+
+Now in your view you could load the javascript file as the following
+
+<script src="{!! mix('js/app.js') !!}"></script>

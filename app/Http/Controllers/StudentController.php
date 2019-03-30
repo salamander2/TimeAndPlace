@@ -24,7 +24,7 @@ class StudentController extends Controller
         $students = Student::all();
         // dd($students->first());
         foreach ($students as $student) {
-            print_r($student->studentID ." ... " . $student->firstname . "<br>");
+            print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . "<br>");
             
         }  
     }
@@ -41,31 +41,22 @@ class StudentController extends Controller
         //$courses = $db2->table('students')->find(1);
         //print_r($courses . '\n');
 
-        //$image = Storage::disk('public')->get('user_blank.png');        
-        $imageURL = Storage::disk('public')->url('photos/'.$id.'.jpg');        
-        $image = Storage::disk('public')->exists('photos/'.$id.'.jpg');
-        if ($image == null) {
-            $imageURL = Storage::disk('public')->url('photos/user_blank.png');
-        }
-         // The imageURL is wrong: "http://localhost/storage/user_blank.png"  
-        // it should be http://localhost:8888/storage/user_blank.png
-        //so now it will be "/storage/user_blank.png"
-        $strpos = strpos($imageURL,'/storage');
-        $imageURL = substr($imageURL, $strpos);
-        //dd($imageURL);
+     
 
-        $student = new Student();
-        $student ->setConnection('mysql2');
+        // $student = new Student();
         
-       
-        $record = $student->find($id) ??  abort(403,'Student ' .$id. ' not found.');
+       //Student record
+        // $record = $student->find($id) ??  abort(403,'Student ' .$id. ' not found.');
+        $record = Student::find($id) ??  abort(403,'Student ' .$id. ' not found.');
         
+        $photoURL = $record->getPhotoURL($id);
+        $record->getTimeTable();
 
 		//$record = $student->find($id);
         //$record = $student->first();
         $age = $this->getAge($record->dob);
         //return view('student')->withRecord($record)->withAge($age);
-        return view('student', compact('record','age','imageURL'));
+        return view('student', compact('record','age','photoURL'));
     
         //dd($record);
     }
@@ -83,7 +74,7 @@ class StudentController extends Controller
         // $courses = $db2->table('courses')::all();//->find(1);
         
         $courses = Course::all();
-        $course = $courses->first();
+       // $course = $courses->first();
        // dd($course->coursecode);
 
         foreach ($courses as $course) {
@@ -142,16 +133,17 @@ class StudentController extends Controller
 
 */
 
-// #### From BLUEPANEL --> put into a TerminalController probably
+/*
 public function toggleStudent(Kiosk $kiosk, Student $student)
 {
-    $present = $student->kiosks->contains($kiosk->id);
+    $present = \App\StudentSignedIn::isSignedIn($student->studentID, $kiosk->id);
+    // $present = $student->kiosks->contains($kiosk->id);
     if ($present) {
         //Add entry to logs
         //$kiosk->logs()->attach($student->id, ['type' => 'Kiosk Sign Out']);
         $kiosk->logs()->attach($student->id, ['type' => 'Sign Out']);
 
-        //log the student in
+        //log the student out by deleting the record
         $student->kiosks()->detach($kiosk->id);
 
         //Return info for AJAX to display on the kiosk
@@ -167,6 +159,6 @@ public function toggleStudent(Kiosk $kiosk, Student $student)
         return response()->json(['status' => 'attached', 'student' => $student->toArray()]);
     }
 }
-
+*/
     
 }

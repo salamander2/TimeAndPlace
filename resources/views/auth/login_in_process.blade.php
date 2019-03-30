@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-        
+
     @include('layouts.headLinks')
 
     @stack('styles')
 </head>
-<body class="hold-transition login-page">
-        
-          
 <body class="hold-transition skin-blue fixed sidebar-mini">
-    
-    <div class="login-box bg-primary border border-dark rounded">
-        <div class="login-logo">
-            <img src="/img/AdminLTELogo.png" alt="AdminLTE Logo" 
-            class="brand-image img-circle elevation-3 my-3" style="opacity: .8">
-            <span class="brand-text font-weight-bold">{{ config('app.name', 'Laravel') }}</span>
-        </div>
-    </div>
-    <!-- /.login-logo -->
-
-    <div class="container col-md-6">
-        
-        <div class="card border-dark ">
-            <div class="card-header bg-dark text-center"><h3><i class="fa fa-tag"> </i> Sign in to start your session</h3>
-            </div>  
-
-
-        <div class="card-body login-card-body">
+    <div class="wrapper" id="app">    
+        <div class="content-wrapper"> 
+                <section class="content-header">
                         
+                </section>   
+            <section class="content">
+    
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+{{--                <div class="card-header">{{ __('Login') }}</div>    --}}
+
+                <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -76,7 +68,7 @@
 -->
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary elevation-4">
+                                <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
                             </div>

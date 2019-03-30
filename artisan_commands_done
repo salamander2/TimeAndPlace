@@ -1,3 +1,12 @@
+//You have to also add REFERENCES priviledges on the schoolDB.students table for the timeandplace user. This will allow foreign key links.
+
+Log in to user benson:
+mysql -u root -p
+use loggerDB;
+
+INSERT INTO `users` (`id`, `username`, `fullname`, `isAdmin`, `viewAll`, `password`, `defaultPWD`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'DB-admin', 'Database Admin', 1, 0, '$2y$10$.lnDaijmVTezHLBWQgf8n.1vHwPLFPGm7dwqmoa7ItmW11aWgYxa.', 0, 'tR1gzU3Wqg5pUZQ0sBzJzCrf7TDD1zlBVkehb8yiist4QKaQ6G4Yc8jabZ38', '2018-12-26 23:50:55', '2018-12-26 23:52:08'),
+(2, 'mharwood', 'Michael Harwood', 0, 0, '$2y$10$5J.gk1knNeM8NRJEpDpBqOsjZ8PN2Mc0R6l11u5WV/P2Gyz5sNSdy', 0, 'p9N99YRla9LN3loKZMLInqPQ0tvO4fGuZV2NjU91vQ1QEPt1j1z9jOkYAn0l', '2019-03-22 03:00:48', '2019-03-23 00:36:42');
 
 12 Jan 2019
  php artisan make:model Models/Kiosk
@@ -69,3 +78,7 @@ vi ./vendor/laravel/telescope/src/Watchers/CacheWatcher.php
  85             'expiration' => optional($event)->seconds ?? $event->minutes * 60,
  86         ]));
 
+cd ~/TimeAndPlace
+npm install daterangepicker
+npm install moment
+npm ls
