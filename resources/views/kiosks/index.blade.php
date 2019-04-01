@@ -19,10 +19,10 @@
   
     @foreach ($my_kiosks as $kiosk)
 	    <div class="row align-middle">
-			<div class="col-md-4">
+			<div class="col-sm-4 col-md-3">
 				<a class="btn btn-info elevation-2" href="/kiosks/{{ $kiosk->id }}/showORedit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
 			</div>
-			<div class="col-md-2">
+			<div class="col-sm-4 col-md-3">
 				<a class="my-1 btn btn-success elevation-2" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
 			</div>
         </div>
