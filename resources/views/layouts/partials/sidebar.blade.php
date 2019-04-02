@@ -40,7 +40,6 @@
 		  <li class="nav-item"><a href="/students" class="nav-link alert ">Go to Student index page</a></li>
 		  <li class="nav-item"><a href="/students/339654014" class="nav-link alert ">Go to Student show page</a></li>
 		  <li class="nav-item"><a href="/courses" class="nav-link alert alert-black">Debug Course stuff</a></li>
-		  <li class="nav-item"><a href="/autosignout" class="nav-link alert alert-black">Auto Signout Everyone</a></li>
               </ul>
               
             </li>
@@ -64,6 +63,7 @@
               </ul>
             </li> <!-- end tree menu -->
 
+	 <li class="nav-item"><a href="/autosignout" class="nav-link alert alert-danger">Auto Signout Everyone NOW</a></li>
           <li class="nav-item"><a href="/reports" class="nav-link alert border-success"><i class="nav-icon fa fa-folder-open"></i><p>Reports</p></a></li>
           <li class="nav-item "><a href="/help" class="nav-link alert border-white"><i class="nav-icon fa fa-question-circle fa-2x"></i><p>Help</p></a></li>
 
