@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Log;
 use App\Kiosk;
+use App\StudentSignedIn;
 use Illuminate\Http\Request;
 
 class LogController extends Controller
@@ -85,5 +86,20 @@ class LogController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function autosignout() {
+	$records = StudentSignedIn::all();
+
+	foreach($records as $record) {
+		$kioskID = $record->kiosk_id;
+		$studentID = $record->studentID;
+		$kiosk = Kiosk::find($kioskID);
+             
+		$kiosk->signedIn()->detach($studentID);
+
+             	$kiosk->students()->attach($studentID, ['status_code' => 'AUTOSIGNOUT']);
+	}
+	dd ($records->count() . " students signed out. Please hit BACK and RELOAD screen.");
     }
 }

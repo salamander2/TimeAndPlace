@@ -100,6 +100,7 @@ Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStuden
 
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 
+Route::get('/autosignout','LogController@autosignout');
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
