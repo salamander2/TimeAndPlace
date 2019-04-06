@@ -51,8 +51,8 @@ class Kiosk extends Model
         return $this->belongsToMany(Student::class,'loggerDB.logs','kiosk_id','studentID')->withTimestamps();
     }
     
-    // public function schedule()
-    // {
-    //     return $this->hasMany('App\KioskSchedule');
-    // }
+    public function schedule()
+    {
+        return $this->hasMany('App\KioskSchedule');
+    }
 }
