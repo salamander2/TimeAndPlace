@@ -20,6 +20,7 @@ class CreateLogsTable extends Migration
             $table->integer('kiosk_id')->unsigned();
             $table->string('status_code',30);
             //$table->softDeletes();
+            //NO DELETED AT COLUMN
         });
     }
 

@@ -29,6 +29,7 @@ class TerminalController extends Controller
         return view('bp_terminal', compact('kiosk'));
     }
 
+    /* This method assumes that the student record is present -- not null */
     public function toggleStudent(Kiosk $kiosk, Student $student)
     {        
         $studentID = $student->studentID;
@@ -64,15 +65,31 @@ class TerminalController extends Controller
         }
   
     }
+    
+    public function toggleStudentID(Kiosk $kiosk, String $loginID)
+    {     
+        $student = null;
+        
+        //return response()->json(['login' => $loginID, 'here' => 'here']);   //how to debug
 
-    /* The Request object is the Student ID */
-    public function toggleStudent_v2(Kiosk $kiosk, Request $request)
-    {
-        $studentID = $request->get('studentID');        
-        //the student record is not needed: 
-        $student = Student::where('studentID',$studentID) ->first();
-                
-        $present = $kiosk->signedIn->contains('studentID',$studentID);
+        /* First we check to see if it is a student id number : ie. all digits */
+        if (is_numeric($loginID)) {
+            
+            $student = Student::where('studentID',$loginID) ->first();   
+            if ($student == null) {
+                return response()->json(['status' => 'not found']);
+            }
+        } else {
+            /* Next we check to see if it is a student login id */
+            $student = Student::where('loginID',$loginID) ->first();
+            if ($student == null) {
+                return response()->json(['status' => 'not found']);
+            }
+        }
+
+        $studentID = $student->studentID;
+        
+        $present = \App\StudentSignedIn::isSignedIn($studentID, $kiosk->id);
         //dd($kiosk->id . "_" . $present);
     
         /* Problems signing the student in and out:
@@ -90,10 +107,12 @@ class TerminalController extends Controller
             $kiosk->signedIn()->detach($studentID);
 
             //add a 'deleted at' timestamp to the signin record. (This is probably never needed)
-            $kiosk->students()->where('status_code','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
+            //$kiosk->students()->where('status_code','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
             
-            //Add a "SIGNOUT" record for the student the LOG file
-            $kiosk->students()->attach($studentID, ['deleted_at'=> Carbon::now(), 'status_code' => 'SIGNOUT']);
+            //Add a new "SIGNOUT" record for the student the LOG file.  
+            // NO NO NO: the DeletedAt column has been deleted. It's no longer needed.
+            // $kiosk->students()->attach($studentID, ['deleted_at'=> Carbon::now(), 'status_code' => 'SIGNOUT']);
+            $kiosk->students()->attach($studentID, ['status_code' => 'SIGNOUT']);
             
             //Return info for AJAX to display on the kiosk
             return response()->json(['status' => 'detached', 'student' => $student->toArray()]);
