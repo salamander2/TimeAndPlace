@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Schedule;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +12,7 @@ class Kiosk extends Model
         'secretURL', 'showPhoto',
         'showSchedule', 'requireConf',
         'publicViewable', 'signInOnly',
-        'autoSignOut', 'defaultFreq'
+        'autoSignout', 'defaultFreq'
     ];
 
     public $timestamps = true;
@@ -54,5 +55,37 @@ class Kiosk extends Model
     public function schedule()
     {
         return $this->hasMany('App\KioskSchedule');
+    }
+
+    public function sched_periods() {
+        
+        $k_sched = $this->schedule()->get();
+        $periods = collect();
+        // dd($k_sched ->count());
+        foreach($k_sched as $record) {
+            $schedule = Schedule::where('id','=',$record->schedule_id)->first();
+            
+            if (strpos($schedule->code, ':') !== false) {
+                //print_r($schedule->code);                
+            } else {
+                $periods->push($schedule);                
+            }
+        }
+        return $periods;
+    }
+
+    public function sched_times() {
+        
+        $k_sched = $this->schedule()->get();
+        $times = collect();
+        // dd($k_sched ->count());
+        foreach($k_sched as $record) {
+            $schedule = Schedule::where('id','=',$record->schedule_id)->first();
+            
+            if (strpos($schedule->code, ':') !== false) {
+                $times->push($schedule);                
+            }
+        }
+        return $times;
     }
 }

@@ -161,7 +161,9 @@ class KioskController extends Controller
             }
         }
 
-        return view('kiosks.edit', compact('kiosk','detachedUsers'));
+        $periods = $kiosk->sched_periods();
+        $times = $kiosk->sched_times();
+        return view('kiosks.edit', compact('kiosk','detachedUsers','periods','times'));
         
         //$detachedUSers = User::where('user->kiosks->kiosk_id','!=',1)->get();
         
@@ -183,7 +185,7 @@ class KioskController extends Controller
             'name' => ['required', 'string', 'max:30', 'min:3'],
             'room' => ['required', 'string', 'max:20']            
         ]);
-        
+             
         $kiosk -> update([
             'name' => $validatedKiosk['name'],
             'room' => $validatedKiosk['room'],
@@ -192,8 +194,7 @@ class KioskController extends Controller
             'requireConf' => $request->has('requireConf') ? 1 : 0,            
             'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
             'signInOnly' => $request->has('signInOnly') ? 1 : 0,            
-            'autoSignOut' => $request->has('autoSignOut') ? 1 : 0            
-           
+            'autoSignout' => $request->has('autoSignout') ? 1 : 0                       
         ]);
         return back();
     }

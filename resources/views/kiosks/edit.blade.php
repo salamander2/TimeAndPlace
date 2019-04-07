@@ -7,7 +7,12 @@
         Edit Kiosk : {{ $kiosk->name }}
     </h1>
     {{-- top section of edit page --}}
-    @include('child.kioskedit')
+    @include('child.kioskedit1')
+
+    @if($kiosk->autoSignout == true)
+        @include('child.kioskedit3')
+    @endif
+
     {{-- bottom section of edit page --}}
     @include('child.kioskedit2')
 
@@ -29,7 +34,7 @@
             var data = $(this).serialize();
             swal({
                 title: "Confirm Deletion of Kiosk {{ $kiosk->name }}",
-                text: "Please confirm that you want to delete the \"{{ $kiosk->name }}\" kiosk.",                
+                text: "Please confirm that you want to delete this kiosk.",                
                 className: "bg-warning",
                 dangerMode:true,
                 buttons:true,                     

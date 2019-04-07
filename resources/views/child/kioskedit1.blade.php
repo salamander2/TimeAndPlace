@@ -2,8 +2,10 @@
     <div class="card-header">
         {{-- KIOSK SETTINGS : top part of Kiosk Edit page --}}
         <h3 class="card-title">Kiosk Settings</h3>
-    </div>
-    <!-- /.card-header -->
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
+        </div>
+    </div><!-- /.card-header -->
     <div class="card-body">
 
 
@@ -53,8 +55,7 @@
 
                         <div class="row my-1">
                                 <div class="col-md-auto">
-                                    <input type="checkbox" id="publicViewable" name="publicViewable" {{ $kiosk->publicViewable
-                                    ? 'checked' :''}}>
+                                    <input type="checkbox" id="publicViewable" name="publicViewable" {{ $kiosk->publicViewable ? 'checked' :''}}>
                                 </div>
                                 <div class="col-md-2 bg-primary"><label for="publicViewable">Publically Viewable</label></div>
                                 <div class="col border ">Kiosk logs are viewable by any logged in user</div>
@@ -64,8 +65,7 @@
 
                         <div class="row my-1">
                             <div class="col-md-auto">
-                                <input type="checkbox" id="autoSignout" name="autoSignout" {{ $kiosk->autoSignout ? 'checked'
-                                :''}}>
+                                <input type="checkbox" id="autoSignout" name="autoSignout" {{ $kiosk->autoSignout ? 'checked':''}}>
                             </div>
                             <div class="col-md-2 bg-primary"><label for="autoSignout">Auto Signout</label></div>
                             <div class="col border"> If checked, then times can be entered for system to automatically sign students out.<br> This
