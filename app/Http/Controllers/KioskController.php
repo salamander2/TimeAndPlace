@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Kiosk;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class KioskController extends Controller
@@ -98,7 +99,7 @@ class KioskController extends Controller
             'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
             'signInOnly' => $request->has('signInOnly') ? 1 : 0,            
             'autoSignOut' => $request->has('autoSignOut') ? 1 : 0,            
-            'secretURL' => '12345'
+            'secretURL' => Hash::make(str_random(8)),
         ]);
     
         //$kiosk = new Kiosk();

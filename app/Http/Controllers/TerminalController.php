@@ -19,6 +19,10 @@ class TerminalController extends Controller
         return view('terminal', compact('kiosk'));
     }
     
+    public function launchPrev(Kiosk $kiosk)
+    {
+        return view('terminalPrev', compact('kiosk'));
+    }
     //Debugging only: Launch BluePanel terminal
     public function launchBP(Kiosk $kiosk)
     {

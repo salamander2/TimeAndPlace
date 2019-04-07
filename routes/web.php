@@ -33,7 +33,7 @@ Route::get('/', function () {
 
 
 /*-------------Auth routes  (Authentication Routes...) -----------------*/
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+//Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Auth::routes(['register' => false]);
 //Don't try and replicate these. 
 //Route::post('login', 'Auth\LoginController@login');
@@ -91,6 +91,7 @@ Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
 
 /*----------------Terminal Routes-------------*/
 Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
+Route::get('/terminalsP/{kiosk}', 'TerminalController@launchPrev')->name('launchTerminal');
 Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
 
 /*----------------Log file routes-------------*/
@@ -112,8 +113,8 @@ Route::get('/logs/{id}/', 'LogController@show');
 
 /*----------------Report Routes-----------------*/
 
-/*
+
 Route::fallback(function () {
     return redirect('home');
 });
-*/
+

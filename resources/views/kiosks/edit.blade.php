@@ -5,7 +5,9 @@
     <h1>
         Edit Kiosk : {{ $kiosk->name }}
     </h1>
+    {{-- top section of edit page --}}
     @include('child.kioskedit')
+    {{-- bottom section of edit page --}}
     @include('child.kioskedit2')
 
     <div class="clearfix">

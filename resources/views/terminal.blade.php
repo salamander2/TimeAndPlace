@@ -14,26 +14,6 @@
 
     <title>Checkin/out Terminal</title>
 
-    
-    {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
-    <script type="text/javascript">
-        function parseInput(str) {
-        
-            if(!isNaN(str)) return;
-                
-            document.getElementById("inputID").value = "";
-            document.getElementById("inputID").autofocus = "false";
-            document.getElementById("studentSearch").style.display = "block";      
-            document.getElementById("inputName").focus();
-            document.getElementById("inputName").value = str;
-        }
-        function resetTerminal() {
-            document.getElementById("studentSearch").style.display = "none";                  
-            document.getElementById("inputName").value = "";
-            document.getElementById("inputID").value = "";
-            document.getElementById("inputID").focus();            
-        }
-    </script>
 
 
 
@@ -242,9 +222,10 @@
         <h1 class="text-center">{{$kiosk->name}}</h1>
 
         <input type="text" style="text-align: center" id="inputID" 
-            onkeyup="parseInput(this.value)" 
+            placeholder="Type in your computer login id" size=20            
             onkeydown="if (event.keyCode === 13) document.getElementById('buttonIO').click()"
-            autofocus><br><br>
+            autofocus>
+        <br><br>
         <button type="button" id="buttonIO">Sign in/out</button>
 
         
@@ -260,7 +241,10 @@
     <br>
     <br>
     <br>
-
+    <script type="text/javascript">
+        document.getElementById("inputID").focus();
+        document.getElementById("inputID").autofocus = "true";
+    </script>
 </body>
 
 </html>
