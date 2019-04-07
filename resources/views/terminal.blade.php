@@ -69,8 +69,7 @@
         });
     </script>
 
-    <script type="text/javascript">
-    
+    <script>    
         $(document).ready(function () {
             $('#buttonIO').click(function (e) {
                 loginID = $("#inputID").val()
