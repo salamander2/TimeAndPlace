@@ -15,7 +15,8 @@
       </h5>
     </div>
     <div class="p-3">
-      <p>1.0 Initial release (20190329)</p>
+        <p>1.1 Terminal sign in/out using loginID/studentID.<br>Kiosk deletion fixed. (20190407)</p>
+        <p>1.0 Initial release (20190329)</p>
     </div>
 
   </aside>
