@@ -10,13 +10,13 @@
 	<p>See help screen for more information</p>
     </div>
     <div class="p-3 bg-info">
-      <h5>Version# <span class="badge badge-light "> 1.0</span><br>
+      <h5>Version# <span class="badge badge-light "> 1.1</span><br><br>
 	<?php $branch = exec('git rev-parse --abbrev-ref HEAD'); echo "<p>(".$branch." branch)</p>"; ?>
       </h5>
     </div>
     <div class="p-3">
-        <p>1.1 Terminal sign in/out using loginID/studentID.<br>Kiosk deletion fixed. (20190407)</p>
-        <p>1.0 Initial release (20190329)</p>
+        <p>1.1 (20190407)<br>* Terminal sign in/out using loginID/studentID.<br>* Kiosk deletion fixed. </p>
+        <p>1.0 (20190329) Initial release </p>
     </div>
 
   </aside>

@@ -69,7 +69,7 @@ class TerminalController extends Controller
     public function toggleStudentID(Kiosk $kiosk, String $loginID)
     {     
         $student = null;
-        
+        $loginID= strtolower($loginID); 
         //return response()->json(['login' => $loginID, 'here' => 'here']);   //how to debug
 
         /* First we check to see if it is a student id number : ie. all digits */
