@@ -33,7 +33,7 @@ Route::get('/', function () {
 
 
 /*-------------Auth routes  (Authentication Routes...) -----------------*/
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+//Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Auth::routes(['register' => false]);
 //Don't try and replicate these. 
 //Route::post('login', 'Auth\LoginController@login');
@@ -91,15 +91,18 @@ Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
 
 /*----------------Terminal Routes-------------*/
 Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
+Route::get('/terminalsP/{kiosk}', 'TerminalController@launchPrev')->name('launchTerminal');
 Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
 
 /*----------------Log file routes-------------*/
 Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
+Route::get('/terminals/{kiosk}/toggleStudentID/{loginID}', 'TerminalController@toggleStudentID');
 Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
 
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 
+Route::get('/autosignout','LogController@autosignout');
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
@@ -111,8 +114,8 @@ Route::get('/logs/{id}/', 'LogController@show');
 
 /*----------------Report Routes-----------------*/
 
-/*
+
 Route::fallback(function () {
     return redirect('home');
 });
-*/
+

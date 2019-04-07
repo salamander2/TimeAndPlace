@@ -18,7 +18,7 @@ INSERT INTO `users` (`id`, `username`, `fullname`, `isAdmin`, `viewAll`, `passwo
 
 25 Jan
 GRANT SELECT ON schoolDB.* TO 'timeandplace'@'localhost';
-
+GRANT REFERENCES ON schoolDB.students TO 'timeandplace'@'localhost';
 
 XXXX php artisan make:controller KioskAdminController
 
@@ -44,6 +44,7 @@ ln -s /home/benson/public_html/photos photos
 
 php artisan make:seeder StatusTableSeeder
 >>> now edit both the DatabaseSeeder.php and the one that you just made.
+composer dump-autoload
 php artisan db:seed
 
 

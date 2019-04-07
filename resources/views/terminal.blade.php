@@ -14,36 +14,12 @@
 
     <title>Checkin/out Terminal</title>
 
-    
-    {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
-    <script type="text/javascript">
-        function parseInput(str) {
-        
-            if(!isNaN(str)) return;
-                
-            document.getElementById("inputID").value = "";
-            document.getElementById("inputID").autofocus = "false";
-            document.getElementById("studentSearch").style.display = "block";      
-            document.getElementById("inputName").focus();
-            document.getElementById("inputName").value = str;
-        }
-        function resetTerminal() {
-            document.getElementById("studentSearch").style.display = "none";                  
-            document.getElementById("inputName").value = "";
-            document.getElementById("inputID").value = "";
-            document.getElementById("inputID").focus();            
-        }
-    </script>
-
-
-
     {{-- Script to load student info. JQUERY / AJAX not working --}}
     <script type="text/javascript">
     /*
         $(document).ready(function () {
-            $('#button').click(function (e) {
-                //if there are any hyphens, remove them.
-                var inputvalue =  parseInt($("#inputID").val().replace(/-/g, ""));
+            $('#buttonIO').click(function (e) {
+                //if there are any hyphens, remove them.              
                 alert(inputvalue);
                 $("#inputID").val('');
                 $('#inputID').focus();
@@ -93,91 +69,72 @@
         });
     </script>
 
-    <script type="text/javascript">
-    
+    <script>    
         $(document).ready(function () {
             $('#buttonIO').click(function (e) {
-                //if there are any hyphens, remove them.
-                var inputvalue =  parseInt($("#inputID").val().replace(/-/g, ""));               
+                loginID = $("#inputID").val()
                 $("#inputID").val('');
                 $('#inputID').focus();
-                getOneStudent(inputvalue,false);
+                getOneStudent(loginID,false);
             }
             );  
         }
         );
     </script>
 
-    {{-- Script to search for students by name --}}
+    
     <script>
-        function findStudents(str) {  
-            if (str.length == 0) { 
-                document.getElementById("studentList").innerHTML = "";
-                return;
-            } else {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                   if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        //document.write(xmlhttp.responseText);
-                        document.getElementById("studentList").innerHTML = xmlhttp.responseText;                       
-                    }
-                }
-                xmlhttp.open("GET", "studentFind/" + str, true);
-                xmlhttp.send();
-            }
-        }
-        
         function getOneStudent(str,confirm=true) { 
             
-            if (str.length == 0) { 
-                document.getElementById("studentList").innerHTML = "";
-                return;
-            } else {         
-                             
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                   if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {                       
-                        // parse JSON input to display in SweetAlerts                     
-                        //alert(xmlhttp.responseText);
-                        $response = JSON.parse(xmlhttp.responseText);
-                       if ($response.status === 'attached') {
-                           if (confirm) {
-                               confirmSignin($response.student);
-                            } else { 
-                               signin($response.student);
-			    }
-                       } else if($response.status === "detached"){
-                            signout($response.student);
+            if (str.length == 0) return;
+            
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {                       
+                    // parse JSON input to display in SweetAlerts                     
+//                    alert(xmlhttp.responseText);  //DEBUG
+
+                    $response = JSON.parse(xmlhttp.responseText);
+                    if ($response.status === 'attached') {
+                        if (confirm) {
+                            confirmSignin($response.student);
+                        } else { 
+                            signin($response.student);
                         }
-                        else{
-                            errormsg();
-                        }
-                      //  alert($response.status);
-                      // alert($response.student.firstname);
-                      // document.write("123" + $response.student['studentID']);
+                    } else if($response.status === "detached"){
+                        signout($response.student);
+                    } else if($response.status === "not found"){
+                        errorID();
+                    } else{
+                        errormsg();
                     }
+                    //  alert($response.status);
+                    // alert($response.student.firstname);
+                    // document.write("123" + $response.student['studentID']);
+                    $('#inputID').focus()
                 }
-               
-                xmlhttp.open("GET", "{{$kiosk->id}}/toggleStudent/" + str, true);
-                xmlhttp.send();
             }
+            
+            xmlhttp.open("GET", "{{$kiosk->id}}/toggleStudentID/" + str, true);
+            xmlhttp.send();
+        
         }
     </script>
 
     {{-- Script to pop up sweetalerts --}}
     <script>
         function signin(student) {
-            resetTerminal();                         
+            //resetTerminal();                         
             swal({
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed into {{$kiosk->name }} ({{$kiosk->room}})",
                 icon: "success",
                 timer:6000,
-            }).then( function() { $('#input').focus() }
+            }).then( function() { $('#inputID').focus() }
 	        );
         } //end
         function signout(student) {
-            resetTerminal();                         
+            //resetTerminal();                         
             swal({
                 title: "Goodbye " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed out of {{$kiosk->name }} ({{$kiosk->room}})",
@@ -186,6 +143,19 @@
  		        timer:6000,            
 		    }).then( function() { $('#inputID').focus() }
 		    );
+        }
+        function errorID() {
+            swal({
+                title: "ERROR!",
+                icon: "error",                
+                content: {
+                    element: "p",
+                    attributes: {                        
+                        innerText: "Invalid Login ID"}},
+                text: "The student was not found or there was an unexpected database error.",               
+ 		        timer:6000,
+            }).then(  function() { $('#inputID').focus() }
+        	);
         }
         function errormsg() {
             swal({
@@ -220,47 +190,28 @@
 <body>
     <div class="text-center">
 
-        <!-- html to display student listing -->
-        <div id="studentSearch" class="shadow-lg">
-            <form class="pure-form">
-                <span class="text-light hide">Enter First Name, Last Name, or Student Number...</span>
-                <fieldset>
-                    <input class="pure-input-2-3" autofocus="" id="inputName" type="text" onkeyup="findStudents(this.value)" onkeydown="if (event.keyCode === 27) resetTerminal();"
-                        placeholder="Enter First Name, Last Name, or Student Number...">
-                </fieldset>
-            </form>
-            <!-- the student table is created here at "studentList". There is also formatting for this in the css  -->
-            <div id="studentList" class="text-center"></div>
-
-
-        </div>
-
         {{-- <button id="button1" onclick="signout(333444555)">Test of swal()</button><br> --}}
       
         <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" alt="HB Beal" height="400vh"><br>
 
         <h1 class="text-center">{{$kiosk->name}}</h1>
 
-        <input type="text" style="text-align: center" id="inputID" 
-            onkeyup="parseInput(this.value)" 
+        <input type="text" style="text-align: left" id="inputID" size=20
+            placeholder="" 
             onkeydown="if (event.keyCode === 13) document.getElementById('buttonIO').click()"
-            autofocus><br><br>
+            autofocus>
+        <p style="color:#333">Enter your computer login id or your student number</p>        
         <button type="button" id="buttonIO">Sign in/out</button>
-
         
-        <!-- This uses toggleStudent_v2 . It would work fine, but was never finished as I needed to get the XMLHttp working.
-        <form role="form" action="/terminals/{{ $kiosk->id }}/toggleStudent" method="post">
-            <input type="text" style="text-align: center" id="studentID" name="studentID" autofocus><br> {{ csrf_field()
-            }} {{-- add onclick to prevent empty input field --}}
-            <button type="submit" onclick="">submit - to TerminalController</button>
-        </form>
-        -->
-
     </div>
     <br>
     <br>
     <br>
-
+    <script type="text/javascript">
+        //always maintain focus
+        document.getElementById("inputID").focus();
+        document.getElementById("inputID").autofocus = "true";
+    </script>
 </body>
 
 </html>

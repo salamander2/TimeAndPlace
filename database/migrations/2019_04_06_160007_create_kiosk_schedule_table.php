@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLogsTable extends Migration
+class CreateKioskScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('kiosk_schedule', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
-            $table->integer('studentID')->unsigned();
             $table->integer('kiosk_id')->unsigned();
-            $table->string('status_code',30);
-            //$table->softDeletes();
-            //NO DELETED AT COLUMN
+			$table->foreign('kiosk_id')->references('id')->on('kiosks')->onDelete('cascade');
+			$table->integer('schedule_id')->unsigned();
+            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -31,6 +30,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('kiosk_schedule');
     }
 }

@@ -10,30 +10,32 @@
             <div class="col ">Kiosk Admin?</div>
         </div>
         @foreach($kiosk->users as $user)
-        <div class="row py-1">
-            <div class="col-md-2 bg-primary">
-                <label for="user-checkbox-{{ $user->id }}" value="{{$user->id}}">{{ $user->fullname }}</label></div>
-            <div class="col-md-2">
-                <input type="checkbox" onchange="window.location.href='/kiosks/{{ $kiosk->id }}/users/{{ $user->id }}'" {{ $user->pivot->isKioskAdmin
-                ? 'checked' :''}}>
-                <!-- ** NOTE: do not bother with CRSF for this -->
+            <div class="row py-1">
+                <div class="col-md-2 bg-primary">
+                    <label for="user-checkbox-{{ $user->id }}" value="{{$user->id}}">{{ $user->fullname }}</label></div>
+                <div class="col-md-2">
+                    <input type="checkbox" onchange="window.location.href='/kiosks/{{ $kiosk->id }}/users/{{ $user->id }}'" {{ $user->pivot->isKioskAdmin
+                    ? 'checked' :''}}>
+                    <!-- ** NOTE: do not bother with CRSF for this -->
+                </div>
+                <div class="col">
+                    <input type="button" onclick="window.location.href='/kiosks/{{ $kiosk->id }}/detach/{{ $user->id }}'" class="btn btn-outline-danger"
+                        value="Revoke">
+                </div>
             </div>
-            <div class="col">
-                <input type="button" onclick="window.location.href='/kiosks/{{ $kiosk->id }}/detach/{{ $user->id }}'" class="btn btn-outline-danger"
-                    value="Revoke">
-            </div>
-        </div>
-        <!-- end row -->
+            <!-- end row -->
 
 
-        {{-- <label class="userlabel" for="user-checkbox-{{ $user->id }}" value="{{$user->id}}">{{ $user->fullname }}</label>
-        <input type="checkbox" onchange="window.location.href='/kiosks/{{ $kiosk->id }}/users/{{ $user->id }}'" {{ $user->pivot->isKioskAdmin
-        ? 'checked' :''}}>
-        <!-- ** NOTE: do not bother with CRSF for this -->
-        <label class="userlabel">&nbsp;</label>
-        <input type="button" onclick="window.location.href='/kiosks/{{ $kiosk->id }}/detach/{{ $user->id }}'" class="btn btn-outline-danger"
-            value="Revoke">
-        <br> --}} @endforeach @endif
+            {{-- <label class="userlabel" for="user-checkbox-{{ $user->id }}" value="{{$user->id}}">{{ $user->fullname }}</label>
+            <input type="checkbox" onchange="window.location.href='/kiosks/{{ $kiosk->id }}/users/{{ $user->id }}'" {{ $user->pivot->isKioskAdmin
+            ? 'checked' :''}}>
+            <!-- ** NOTE: do not bother with CRSF for this -->
+            <label class="userlabel">&nbsp;</label>
+            <input type="button" onclick="window.location.href='/kiosks/{{ $kiosk->id }}/detach/{{ $user->id }}'" class="btn btn-outline-danger"
+                value="Revoke">
+            <br> --}} 
+        @endforeach 
+        @endif
 
         <br>
         <Br>

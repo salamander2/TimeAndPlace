@@ -48,9 +48,11 @@ class CreateForeignKeys extends Migration
                         ->onDelete('cascade')
                         ->onUpdate('cascade');
         });
-        Schema::table('logs', function (Blueprint $table) {
-            $table->foreign('studentID')->references('studentID')->on('schoolDB.students');
-        });
+	//Delete this: we don't need to enforce this. We could allow priviledges for schoolDB to delete the loggerDB:logs record, but, no.
+        //Schema::table('logs', function (Blueprint $table) {
+        //    $table->foreign('studentID')->references('studentID')->on('schoolDB.students');
+        //});
+
         Schema::table('logs', function (Blueprint $table) {
             $table->foreign('status_code')->references('code')->on('status');
         });
