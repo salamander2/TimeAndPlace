@@ -93,12 +93,12 @@ class KioskController extends Controller
         Kiosk::create([
             'name' => $validatedKiosk['name'],
             'room' => $validatedKiosk['room'],
-            'showPhoto' => $request->has('showPhoto') ? 1 : 0,            
-            'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
-            'requireConf' => $request->has('requireConf') ? 1 : 0,            
+            // 'showPhoto' => $request->has('showPhoto') ? 1 : 0,            
+            // 'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
+            // 'requireConf' => $request->has('requireConf') ? 1 : 0,            
             'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
-            'signInOnly' => $request->has('signInOnly') ? 1 : 0,            
-            'autoSignOut' => $request->has('autoSignOut') ? 1 : 0,            
+            'signInOnly' => ($request->signInOnly == "yes"),                        
+            'autoSignOut' => $request->has('autoSignout') ? 1 : 0,            
             'secretURL' => Hash::make(str_random(8)),
         ]);
     
@@ -143,8 +143,9 @@ class KioskController extends Controller
     public function edit(Kiosk $kiosk)
     {
 
+        //TODO: have two views. One that is simple -- for "SigninOnly", the other that has all of the scheduling stuff
         $user = Auth::user();
-	if (! $user->isKioskAdmin($kiosk) ) return view('kiosks.show', compact('kiosk'));
+	    if (! $user->isKioskAdmin($kiosk) ) return view('kiosks.show', compact('kiosk'));
 	
         //Select all users who are not on THIS kiosk
         //and pass it to the view (for the lower portion of the kiosk)
@@ -163,12 +164,11 @@ class KioskController extends Controller
 
         $periods = $kiosk->sched_periods();
         $times = $kiosk->sched_times();
+        
         return view('kiosks.edit', compact('kiosk','detachedUsers','periods','times'));
         
-        //$detachedUSers = User::where('user->kiosks->kiosk_id','!=',1)->get();
-        
-        //$kioskuser = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();
-        
+        //$detachedUSers = User::where('user->kiosks->kiosk_id','!=',1)->get();        
+        //$kioskuser = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();        
         //$detachedUsers = Kiosk::where('id', '!=', $kiosk->id)->get();  //all kiosks except for the current one
     }
 
@@ -193,11 +193,20 @@ class KioskController extends Controller
             'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
             'requireConf' => $request->has('requireConf') ? 1 : 0,            
             'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
-            'signInOnly' => $request->has('signInOnly') ? 1 : 0,            
+            // 'signInOnly' => $request->has('signInOnly') ? 1 : 0,            
             'autoSignout' => $request->has('autoSignout') ? 1 : 0                       
         ]);
         return back();
     }
+
+    public function delSchedule(Request $request, Kiosk $kiosk)
+    {
+        $kiosk->schedules()->detach($request->id);
+        
+        //Return with a status of removed
+        return response()->json(['status' => 'removed']);
+    }
+
 
     public function garbage(Kiosk $kiosk) {
         return view('kiosks.edit', compact('kiosk'));

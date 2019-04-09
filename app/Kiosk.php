@@ -52,14 +52,14 @@ class Kiosk extends Model
         return $this->belongsToMany(Student::class,'loggerDB.logs','kiosk_id','studentID')->withTimestamps();
     }
     
-    public function schedule()
+    public function schedules()
     {
         return $this->hasMany('App\KioskSchedule');
     }
 
     public function sched_periods() {
         
-        $k_sched = $this->schedule()->get();
+        $k_sched = $this->schedules()->get();
         $periods = collect();
         // dd($k_sched ->count());
         foreach($k_sched as $record) {
@@ -76,7 +76,7 @@ class Kiosk extends Model
 
     public function sched_times() {
         
-        $k_sched = $this->schedule()->get();
+        $k_sched = $this->schedules()->get();
         $times = collect();
         // dd($k_sched ->count());
         foreach($k_sched as $record) {

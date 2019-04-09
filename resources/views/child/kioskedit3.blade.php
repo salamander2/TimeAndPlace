@@ -1,12 +1,12 @@
-@push('scripts')
+{{--  @push('scripts')  --}}
 <script>
-    function removeTimeFromKiosk(time) {
+    function removeTimeFromKiosk(id) {
 
         var url = "/kiosks/{{$kiosk->id}}/schedule";
         $.ajax({
             url: url,
             data: {
-                time:time
+                id:id
             },
             type: "DELETE",
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -45,7 +45,7 @@
 <script>
     var addUserBox = $('.user-add-box').select2();
 </script>
-@endpush
+{{--  @endpush  --}}
 
 <div class="card card-dark">
     <div class="card-header">
@@ -68,7 +68,7 @@
                         <tr>                            
                             <th>Periods</th>
                             <th>Begin</th>
-                            <th>End</th>
+                            <th colspan=2>End</th>
                             
                         </tr>
                         @foreach($periods->sortBy('start') as $period)
@@ -77,7 +77,7 @@
                                 <td>{{ $period->start }}</td>
                                 <td>{{ $period->end }}</td>
                                 <td>
-                                    <button onclick="removeTimeFromKiosk('{{-- $schedule->time --}}')"
+                                    <button onclick="removeTimeFromKiosk('{{ $period->id}}')"
                                             class="btn btn-xs btn-outline-danger"><i class="fas fa-trash-alt"></i> Remove
                                     </button>
                                 </td>
@@ -91,8 +91,8 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tbody>
-                            <tr>             
-                                <th colspan=2>Sign out times:</th>               
+                            <tr class="alert">
+                                <th colspan=4>Sign out times:</th>               
                                 {{--  <th>End</th>  --}}
                             </tr>
                         @foreach($times->sortBy('end') as $time)
@@ -102,7 +102,7 @@
                                 <td style="visibility:hidden">{{ $time->end }}</td>                                
                                 <td>{{ $time->end }}</td>
                                 <td>
-                                    <button onclick="removeTimeFromKiosk('{{-- $schedule->time --}}')"
+                                    <button onclick="removeTimeFromKiosk('{{$time->id}}')"
                                             class="btn btn-xs btn-outline-danger"><i class="fas fa-trash-alt"></i> Remove
                                     </button>
                                 </td>
