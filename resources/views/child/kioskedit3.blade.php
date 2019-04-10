@@ -124,9 +124,13 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Times selected here will be auto-signout times</label><br>
-                                <select class="user-add-box" style="width: 100%;" id="timeSelectBox" name="times"
+                                <select class="user-add-box"  id="timeSelectBox" name="times" size=12
                                         multiple="multiple">
-                                    
+                                        @foreach($unused as $time)
+                                        <option value="{{$time}}">
+                                            {{$time->code}}
+                                        </option>
+                                        @endforeach
                                 </select>
                             </div>
 
@@ -148,6 +152,7 @@
             </div>
             
         </div>
+       
     </div>
 </div>
 <!-- end card -->

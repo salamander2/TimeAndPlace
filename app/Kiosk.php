@@ -54,17 +54,19 @@ class Kiosk extends Model
     
     public function schedules()
     {
-        return $this->hasMany('App\KioskSchedule');
+        return $this->belongsToMany(Schedule::class);
     }
 
     public function sched_periods() {
         
         $k_sched = $this->schedules()->get();
         $periods = collect();
-        // dd($k_sched ->count());
-        foreach($k_sched as $record) {
-            $schedule = Schedule::where('id','=',$record->schedule_id)->first();
-            
+        //dd($k_sched ->count());
+        foreach($k_sched as $schedule) {
+
+            //$schedule = Schedule::where('id','=',$record->schedule_id)->first();
+            //if ($schedule == null) continue;
+        
             if (strpos($schedule->code, ':') !== false) {
                 //print_r($schedule->code);                
             } else {
@@ -78,14 +80,26 @@ class Kiosk extends Model
         
         $k_sched = $this->schedules()->get();
         $times = collect();
-        // dd($k_sched ->count());
-        foreach($k_sched as $record) {
-            $schedule = Schedule::where('id','=',$record->schedule_id)->first();
-            
+        
+        foreach($k_sched as $schedule) {            
             if (strpos($schedule->code, ':') !== false) {
                 $times->push($schedule);                
             }
         }
         return $times;
     }
+
+    /* This method finds all of the schedule items that are NOT attached to the current kiosk.
+        It returns this collection, so that you can list them for the user to select and add to the auto signout schedule
+    */
+    public function notThisSchedule() {
+        // $k_sched = $this->belongsToMany(Schedule::class);
+        $k_sched = $this->schedules()->get();
+        $allSched = Schedule::all()->keyBy('id');
+        foreach ($k_sched as $sched) {            
+            $allSched->forget($sched->id);
+        }
+        return $allSched;
+        // dd($allSched->count());
+	}
 }

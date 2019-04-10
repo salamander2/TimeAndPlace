@@ -164,8 +164,9 @@ class KioskController extends Controller
 
         $periods = $kiosk->sched_periods();
         $times = $kiosk->sched_times();
-        
-        return view('kiosks.edit', compact('kiosk','detachedUsers','periods','times'));
+        $unused = $kiosk->notThisSchedule(1);
+        //dd($unused->count());
+        return view('kiosks.edit', compact('kiosk','detachedUsers','periods','times','unused'));
         
         //$detachedUSers = User::where('user->kiosks->kiosk_id','!=',1)->get();        
         //$kioskuser = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();        
