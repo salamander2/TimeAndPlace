@@ -19,8 +19,10 @@
     function addTimeToKiosk() {
         var timesArray = $("#timeSelectBox").val();
         var i = 0;
+        
         timesArray.forEach(function (val) {
             i++;
+            //alert('abc' + i);
             var url = "/kiosks/{{$kiosk->id}}/schedule";
             $.ajax({
                 url: url,
@@ -30,8 +32,9 @@
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 success: function (resp) {
-                    if (i = timesArray.length) {
-                        location.reload();
+                    console.log(resp);
+                    if (i == timesArray.length) {
+                      location.reload();
                     }
                 },
                 error: function (err) {
@@ -42,9 +45,7 @@
         });
     }
 </script>
-<script>
-    var addUserBox = $('.user-add-box').select2();
-</script>
+
 {{--  @endpush  --}}
 
 <div class="card card-dark">
@@ -63,7 +64,7 @@
                 </div>
 
                 <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
+                    <table class="table">
                         <tbody>
                         <tr>                            
                             <th>Periods</th>
@@ -89,7 +90,7 @@
                 </div>
 
                 <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
+                    <table class="table">
                         <tbody>
                             <tr class="alert">
                                 <th colspan=4>Sign out times:</th>               
@@ -119,12 +120,13 @@
                     <h3 class="box-title">Sign-out Times</h3>
                 </div>
                 <!-- /.box-header -->
+                {{--  TODO: 1. change BOX model to CARD model. 2. Do we want to use Select2 JQuery plugin here?  --}}
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Times selected here will be auto-signout times</label><br>
-                                <select class="user-add-box"  id="timeSelectBox" name="times" size=12
+                                <select id="timeSelectBox" name="times" size=12
                                         multiple="multiple">
                                         @foreach($unused as $time)
                                         <option value="{{$time}}">
@@ -140,7 +142,7 @@
 
                             <!-- /.form-group -->
 
-                            <!-- /.form-group -->
+                           
                         </div>
 
                         <!-- /.col -->

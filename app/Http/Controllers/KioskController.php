@@ -200,12 +200,27 @@ class KioskController extends Controller
         return back();
     }
 
+    //NOTE: how to troubleshoot functions like this which are called via AJAX. dd("here") does not work.
+    // return response ($request);  and then in Inspect / Network, look at the Response. 
+    //But make sure that you have turned off the page reload (ie. comment out location.reload();)
     public function delSchedule(Request $request, Kiosk $kiosk)
-    {
+    {        
         $kiosk->schedules()->detach($request->id);
         
         //Return with a status of removed
         return response()->json(['status' => 'removed']);
+    }
+
+    public function addSchedule(Request $request, Kiosk $kiosk)
+    {
+        $record = $request['time'];
+        $data = json_decode($record, true);
+        $timeID =  $data['id'];    
+       
+        $kiosk->schedules()->attach($timeID);
+        
+        //Return with a status of removed
+        return response()->json(['status' => 'added']);
     }
 
 
