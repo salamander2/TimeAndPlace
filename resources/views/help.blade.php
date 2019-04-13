@@ -29,9 +29,9 @@
 	<div class="card card-success">
 	<div class="card-header">
  	    <div class="card-title"><h3>Purpose</h3></div>
-            <div class="card-tools">
-               <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div>
+		<div class="card-tools">
+			<button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+		</div>
         </div>
 
 	<div class="card-body">

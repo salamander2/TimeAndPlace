@@ -37,6 +37,7 @@
                     <li class="nav-item"><a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
                       <i class="nav-icon fas fa-indent text-warning"></i><p>Go to phpMyadmin</p></a></li>
                 
+		  <li class="nav-item"><a href="/unknown" class="nav-link alert border-white">Set Assembly Day Schedule</a></li>
 		  <li class="nav-item"><a href="/students" class="nav-link alert ">Go to Student index page</a></li>
 		  <li class="nav-item"><a href="/students/339654014" class="nav-link alert ">Go to Student show page</a></li>
 		  <li class="nav-item"><a href="/courses" class="nav-link alert alert-black">Debug Course stuff</a></li>

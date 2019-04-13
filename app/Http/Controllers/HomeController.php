@@ -38,7 +38,9 @@ class HomeController extends Controller
           
          // $present = $student->kiosks;//->contains($kiosk->id);
           //dd($present);
-
+        // $kiosk = Kiosk::find('1');
+        // $kiosk->schedules()->detach('3');
+        // dd("done");
         /********** End Testing Area ***********/
         return view('home');
     }

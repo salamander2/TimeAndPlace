@@ -84,10 +84,16 @@ Route::delete('/kiosks/{kiosk}','KioskController@destroy');
 // Route::patch('/kiosks/{kiosk}/users/{user}', 'KioskUserController@update');
 // Route::post('/kiosks/{kiosk}/attach/{user}', 'KioskUsersController@attach');
 // Route::post('/kiosks/{kiosk}/detach/{id}', 'KioskUsersController@detach');
-//The following is being done with simple URL redirects .: get method and not CSRF 
+
+//The following is being done with simple URL redirects .: get method and no CSRF 
 Route::get('/kiosks/{kiosk}/users/{user}', 'KioskUserController@toggleKioskAdmin');
 Route::get('/kiosks/{kiosk}/attach/{user}', 'KioskUserController@attach');
 Route::get('/kiosks/{kiosk}/detach/{user}', 'KioskUserController@detach');
+
+/*----------------Kiosk-Schedule Routes-------------*/
+Route::post  ('/kiosks/{kiosk}/schedule', 'KioskController@addSchedule');
+Route::delete('/kiosks/{kiosk}/schedule', 'KioskController@delSchedule');
+    
 
 /*----------------Terminal Routes-------------*/
 Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
@@ -103,10 +109,12 @@ Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStuden
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 
 Route::get('/autosignout','LogController@autosignout');
+
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
 Route::get('/courses/', 'StudentController@showCourse');
+
 
 
 /*----------------Attendance Routes-------------*/

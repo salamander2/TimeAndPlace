@@ -1,6 +1,9 @@
 <div class="card card-dark">
     <div class="card-header">
         <h3 class="card-title">Kiosk Users</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
+        </div>
     </div>
     <div class="card-body">
         @if($kiosk->users->count())
