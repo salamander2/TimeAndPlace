@@ -222,9 +222,4 @@ class KioskController extends Controller
         //Return with a status of removed
         return response()->json(['status' => 'added']);
     }
-
-
-    public function garbage(Kiosk $kiosk) {
-        return view('kiosks.edit', compact('kiosk'));
-    }
 }

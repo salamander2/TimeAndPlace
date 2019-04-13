@@ -129,7 +129,7 @@
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed into {{$kiosk->name }} ({{$kiosk->room}})",
                 icon: "success",
-                timer:6000,
+                timer:2000,
             }).then( function() { $('#inputID').focus() }
 	        );
         } //end
@@ -140,7 +140,7 @@
                 text: "You are signed out of {{$kiosk->name }} ({{$kiosk->room}})",
                 icon: "success",              
                 animation:"false",
- 		        timer:6000,            
+ 		        timer:2000,            
 		    }).then( function() { $('#inputID').focus() }
 		    );
         }
@@ -153,7 +153,7 @@
                     attributes: {                        
                         innerText: "Invalid Login ID"}},
                 text: "The student was not found or there was an unexpected database error.",               
- 		        timer:6000,
+ 		        timer:4000,
             }).then(  function() { $('#inputID').focus() }
         	);
         }
@@ -162,7 +162,7 @@
                 title: "ERROR!",
                 icon: "error",
                 text: "The student was not found or there was an unexpected database error.",               
- 		        timer:6000,
+ 		        timer:4000,
             }).then(  function() { $('#inputID').focus() }
         	);
         } 
