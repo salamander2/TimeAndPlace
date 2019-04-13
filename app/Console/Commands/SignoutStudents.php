@@ -12,7 +12,7 @@ class SignoutStudents extends Command
      * @var string
      */
     #protected $signature = 'command:name';
-    protected $signature = 'kiosk:signoutstudents {kiosk}';
+    protected $signature = 'kiosk:signoutstudents {kiosk} {time}';
 
     /**
      * The console command description.
@@ -55,12 +55,19 @@ class SignoutStudents extends Command
 			return;
 
 		}
+
+        $time = $this->argument('time');
+
 		foreach ($kiosk->signedIn as $student) {
 			$studentID = $student->studentID;
-			$this->info(">".$studentID);
-			$kiosk->students()->attach($studentID, ['status_code' => 'AUTOSIGNOUT']);
+			//$this->info(">".$studentID); //for debugging
+			
+			//if kiosk has blackout window (?) then don't sign out the student
+			//get the signedIn record and check the time. If it is within 5 minutes earlier than $time, then "continue"
+
 			//Deleted the SignedIn record
 			$kiosk->signedIn()->detach($studentID);
+			$kiosk->students()->attach($studentID, ['status_code' => 'AUTOSIGNOUT']);
 		}
 		
 		$this->info('All students signed out of kiosk #'.$kioskid);

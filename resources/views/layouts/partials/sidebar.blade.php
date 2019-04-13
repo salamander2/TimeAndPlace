@@ -32,10 +32,10 @@
                     <a href="/userMaint" class="nav-link "><i class="nav-icon fa fa-bezier-curve text-warning"></i>
                       <p>User Maintenance</p></a></li>                  
                   <li class="nav-item"><a href="/kiosks/create" class="nav-link">
-                    <i class="nav-icon fas fa-school text-warning"></i>
+                    <i class="nav-icon fas fa-school text-success"></i>
                     <p>Create a new Kisok</p></a></li>
                     <li class="nav-item"><a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
-                      <i class="nav-icon fas fa-indent text-warning"></i><p>Go to phpMyadmin</p></a></li>
+                      <i class="nav-icon fas fa-indent text-primary"></i><p>Go to phpMyadmin</p></a></li>
                 
 		  <li class="nav-item"><a href="/unknown" class="nav-link alert border-white">Set Assembly Day Schedule</a></li>
 		  <li class="nav-item"><a href="/students" class="nav-link alert ">Go to Student index page</a></li>
@@ -48,7 +48,7 @@
           <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info"><i class="nav-icon fab fa-korvue fa-2x"></i><p>List all Kisoks</p></a></li>
 
             <li class="nav-item has-treeview menu-closed">
-              <a href="#" class="nav-link alert active"><!-- alert-primary does not exist -->
+              <a href="#" class="nav-link alert alert-info"><!-- alert-primary does not exist, so use 'active' -->
                 <i class="nav-icon fa fa-tachometer-alt "></i>
                 <p>Logs<i class="right fa fa-angle-left"></i></p>
               </a>
@@ -64,7 +64,6 @@
               </ul>
             </li> <!-- end tree menu -->
 
-	 <li class="nav-item"><a href="/autosignout" class="nav-link alert alert-danger">Auto Signout Everyone NOW</a></li>
           <li class="nav-item"><a href="/reports" class="nav-link alert border-success"><i class="nav-icon fa fa-folder-open"></i><p>Reports</p></a></li>
           <li class="nav-item "><a href="/help" class="nav-link alert border-white"><i class="nav-icon fa fa-question-circle fa-2x"></i><p>Help</p></a></li>
 
