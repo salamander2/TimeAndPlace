@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\SignoutStudents',
+        'App\Console\Commands\ScheduleList',
     ];
 
     /**
@@ -26,28 +27,42 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
 	 try {
             $kioskSched = [];
             if (Schema::hasTable('kiosk_schedule')) {
                 $kioskSched = DB::table('kiosk_schedule')->get();
             }
             if (Schema::hasTable('schedules')) {
-                $scheds = DB::table('schedule')->get();
+                $scheds = DB::table('schedules')->get();
 			}
+
+			//GET will return the 292nd item. For some reason it is not returning the item with id=292.
+			//	dd($scheds->get(292));
 
             foreach ($kioskSched as $entry) {
 				$schedID = $entry->schedule_id;
-				$time = $scheds->find($schedID)->end;
+				//echo $schedID.PHP_EOL;
+				$time = $scheds->where('id',$schedID)->first()->end;
+				//echo $time.PHP_EOL;
+
 				//TODO if on alternate schedule, the use 'altend' instead.
 				//	$time = $scheds->find($schedID)->altend;
 
 				//Also pass in the time so that the command can check if they have signed in 5 minutes before, and thus ignore them.
-                $schedule->command('kiosk:signoutstudents '.$entry->kiosk_id.' '.$time)->dailyAt($time);
+                $schedule->command('kiosk:signoutstudents '.$entry->kiosk_id.' '.$time)->at($time);
             }
+
+			//Debugging why this doesn't work. Can't use dailyAt(), use at() instead.
+			//$cmd = 'kiosk:signoutstudents 1 21:40';
+			//$schedule->command($cmd)->everyFiveMinutes();	//works
+			//$schedule->command($cmd)->at('17:00');		//works
+			//			dd("all commands scheduled successfully");
+			//--massive dump!			var_dump($schedule);
+			//			echo $schedule;
+
         } catch (\Exception $e) {
-				//TODO DIE!!! -- record error somewhere
+			//TODO DIE!!! -- record error somewhere
+			echo "SQL table open error in app/Console/Kernel.php";
 		}
     }
 
