@@ -10,11 +10,12 @@
 	<p>See help screen for more information</p>
     </div>
     <div class="p-3 bg-info">
-      <h5>Version# <span class="badge badge-light "> 1.1</span><br><br>
-	<?php $branch = exec('git rev-parse --abbrev-ref HEAD'); echo "<p>(".$branch." branch)</p>"; ?>
+      <h5>VERSION # <span class="badge badge-light "> 1.2</span><br><br>
+	<?php $branch = exec('git rev-parse --abbrev-ref HEAD'); echo "<p>(<u>".$branch."</u> branch)</p>"; ?>
       </h5>
     </div>
     <div class="p-3">
+        <p>1.2 (20190413)<br>* Schedules and autologout now working.<br></p>
         <p>1.1 (20190407)<br>* Terminal sign in/out using loginID/studentID.<br>* Kiosk deletion fixed. </p>
         <p>1.0 (20190329) Initial release </p>
     </div>
