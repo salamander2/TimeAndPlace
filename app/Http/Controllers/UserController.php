@@ -29,6 +29,8 @@ class UserController extends Controller
 	}
 
 	public function showChangePasswordForm(){
+		//prevent default user from changing password
+		if (Auth::user()->isDefaultUser) return redirect()->back();
 		return view('user.changePassword');
 	}
 

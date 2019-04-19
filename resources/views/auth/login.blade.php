@@ -24,6 +24,7 @@
         
         <div class="card border-dark ">
             <div class="card-header bg-dark text-center"><h3><i class="fa fa-tag"> </i> Sign in to start your session</h3>
+                <h5>Use Teacher login to view logs</h5>
             </div>  
 
 

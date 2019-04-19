@@ -41,21 +41,25 @@
                 <a id="navbarDropdown" class="nav-link bg-info rounded dropdown-toggle" href="#" role="button" data-toggle="dropdown" v-pre>
                     {{ Auth::user()->username }} : {{ Auth::user()->fullname }}<span class="caret"></span>
                 </a>
-
+            
                 <div class="dropdown-menu dropdown-menu-right alert alert-info" >
-                    <div class="dropdown-item alert alert-danger"><a href="{{ route('changePassword') }}">Change Password</a>
+                    {{--  Don't let default user change his password  --}}
+                    @if (!Auth::user()->isDefaultUser)
+                        <div class="dropdown-item alert alert-danger"><a href="{{ route('changePassword') }}">Change Password</a>
+                        </div>
+                    @endif
+                    <div class="dropdown-item alert bg-dark">
+                    <i class="fa fa-power-off"></i>&nbsp;
+
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                     </div>
-		    <div class="dropdown-item alert bg-dark">
-			<i class="fa fa-power-off"></i>&nbsp;
-
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('Logout') }}
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-		    </div>
                 </div>
+                
             </li>
         @endguest
         <!-- end Authentication Links -->

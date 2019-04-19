@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
 				//$table->string('email')->unique();
 				$table->string('password');
 				$table->boolean('defaultPWD')->default(1);	// is the user still using the default password?
+				$table->boolean('isDefaultUser')->default(0);	// is this the default user (there should only be one) - for view-only usage
 				$table->rememberToken();					// probably never used. Not clear about it.
 				$table->timestamps();
 				});
