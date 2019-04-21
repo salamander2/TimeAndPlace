@@ -14,6 +14,95 @@
 
     <title>Checkin/out Terminal</title>
 
+    {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
+    <script type="text/javascript">
+        function parseInput(str) {
+        
+            if(!isNaN(str)) return; //ignore this if it is a student number being typed in
+                
+            document.getElementById("inputID").value = "";
+            document.getElementById("inputID").autofocus = "false";
+            document.getElementById("studentSearch").style.display = "block";      
+            document.getElementById("inputName").focus();
+            document.getElementById("inputName").value = str;
+        }
+        function getPassword() {
+            swal({
+                title: "Enter teacher password",
+                text: "in order to login students by name",
+                icon: "warning",  
+                content: {                                
+                    element: "input",
+                    attributes: {
+                    placeholder: "password ...",
+                    type: "password",
+                    }
+                },                
+                }).then((password) => {
+                   // swal(`The returned value is: ${password}`);
+                   // pwd = {{ Hash::make('password') }}
+
+      
+            /*
+                TODO: 
+                1. make sure that the password is correct - cant put PHP in here, therefore either use JS -- a terrible idea
+                    or make a form to submit and verify the password
+                2. once this is done, then display the other stuff
+            */
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: "POST",
+                        async: true,
+                        url: '/verifyTeacher',
+                        data: {                            
+                            pwdin : password    //a data field cannot be named password!
+                        },
+                        dataType: "json",
+                        // contentType: "application/json",     //this totally messes up data transfer
+                        success: function (msg) {
+                            if(msg.status === "success"){
+                                showOverlay();
+                            }                            
+                            else{
+                                errormsg();
+                            }
+                        },
+                        error: function (err) {
+                            alert('no success ' + err);
+                            console.log(err);
+                            //errormsg();
+                        }
+                    });
+
+                   
+                }
+            );
+
+        }
+
+        function showOverlay() {            
+            document.getElementById("exitBtn").classList.remove('hide');
+            document.getElementById("inputID").value = "";
+            document.getElementById("inputID").autofocus = "false";
+            document.getElementById("studentSearch").style.display = "block";
+            document.getElementById("inputName").focus();
+        }
+
+        function resetTerminal() {
+            document.getElementById("exitBtn").classList.add('hide');
+            document.getElementById("studentSearch").style.display = "none";
+            document.getElementById("studentList").innerHTML = "";
+            document.getElementById("exitBtn").style.display = "hide";
+            document.getElementById("inputName").value = "";
+            document.getElementById("inputID").value = "";
+            document.getElementById("inputID").focus();            
+        }
+    </script>
+
+
     {{-- Script to load student info. JQUERY / AJAX not working --}}
     <script type="text/javascript">
     /*
@@ -69,6 +158,7 @@
         });
     </script>
 
+    {{-- Script that calls "getOneStudent" when you click on the sign in/out button--}}
     <script>    
         $(document).ready(function () {
             $('#buttonIO').click(function (e) {
@@ -80,10 +170,24 @@
             );  
         }
         );
-    </script>
-
-    
-    <script>
+   
+        function findStudents(str) {  
+            if (str.length == 0) { 
+                document.getElementById("studentList").innerHTML = "";
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        //document.write(xmlhttp.responseText);
+                        document.getElementById("studentList").innerHTML = xmlhttp.responseText;                       
+                    }
+                }
+                xmlhttp.open("GET", "studentFind/" + str, true);
+                xmlhttp.send();
+            }
+        }
+        
         function getOneStudent(str,confirm=true) { 
             
             if (str.length == 0) return;
@@ -188,21 +292,41 @@
 </head>
 
 <body>
-    <div class="text-center">
+
+        <div class="ml-3 my-3 hide" id="exitBtn">
+            {{-- TODO: this should work as soon as the user is no longer logged in --}}
+            <a href="{{ route('login') }}"><button type="button" class="btn btn-info border-dark">Exit Terminal</button></a>
+        </div>
+        <div class="text-center">
+
+        <!-- html to display student listing -->        
+        <div id="studentSearch" class="shadow-lg">
+            
+            <form class="pure-form">
+                <h3 class="text-light">Sign student in/out using first or last name</h3>
+                <fieldset>
+                    <input class="pure-input-2-3" autofocus="" id="inputName" type="text" onkeyup="findStudents(this.value)" onkeydown="if (event.keyCode === 27) resetTerminal();"
+                        placeholder="Enter First Name, Last Name, or Student Number...">
+                </fieldset>
+            </form>
+            <!-- the student table is created here at "studentList". There is also formatting for this in the css  -->
+            <div id="studentList" class="text-center"></div>
+        </div>
 
         {{-- <button id="button1" onclick="signout(333444555)">Test of swal()</button><br> --}}
       
-        <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" alt="HB Beal" height="400vh"><br>
+        <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" 
+        onclick="getPassword()" alt="HB Beal" height="400vh"><br>
 
         <h1 class="text-center">{{$kiosk->name}}</h1>
-
-        <input type="text" style="text-align: left" id="inputID" size=20
-            placeholder="" 
-            onkeydown="if (event.keyCode === 13) document.getElementById('buttonIO').click()"
-            autofocus>
-        <p style="color:#333">Enter your computer login id or your student number</p>        
-        <button type="button" id="buttonIO">Sign in/out</button>
-        
+        <div class="term">
+            <input type="text" style="text-align: left" id="inputID" size=20
+                placeholder="" 
+                onkeydown="if (event.keyCode === 13) document.getElementById('buttonIO').click()"
+                autofocus>
+            <p style="color:#333">Enter your computer login id or your student number</p>        
+            <button type="button" id="buttonIO">Sign in/out</button>
+        </div>
     </div>
     <br>
     <br>

@@ -57,6 +57,8 @@ Route::post('delUser/{id}', 'AdminController@deleteUser')->name('delUser');
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');
 Route::post('/changePassword','UserController@changePassword')->name('changePassword');
+Route::post('/verifyTeacher','UserController@verifyTeacherPWD');
+
 
 /*----------------Kiosk Routes-------------*/
 Route::get(   '/kiosks', 'KioskController@index');
@@ -99,6 +101,7 @@ Route::delete('/kiosks/{kiosk}/schedule', 'KioskController@delSchedule');
 Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
 Route::get('/terminalsP/{kiosk}', 'TerminalController@launchPrev')->name('launchTerminal');
 Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
+
 
 /*----------------Log file routes-------------*/
 Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');

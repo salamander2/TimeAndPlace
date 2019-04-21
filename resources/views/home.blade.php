@@ -28,7 +28,10 @@
       3. Should also include public "PRESENT" status? -- no
     
   --}}
-
+{{-- {!!$request->all() !!}
+{{$request->input('password') }}
+{{$request->json('password') }}
+<p>xxxxxxxxxxxxxxxxxxxxxx</p> --}}
     <div class="container-fluid">
       <div class="row">        
     @foreach(App\Kiosk::all()->where('publicViewable','=','1') as $kiosk)

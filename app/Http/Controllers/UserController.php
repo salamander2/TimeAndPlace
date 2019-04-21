@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Hash;
-use Illuminate\Http\Request;
 use App\User;
-//use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -55,6 +54,25 @@ class UserController extends Controller
 		//return redirect()->back()->with("success","Password changed successfully !");
 //		return redirect('home')->with("success","Password changed successfully !");
 		return redirect()->route('home')->with("success","Password changed successfully !");
+	}
+
+	/* This function is used by terminal.blade.php
+		It checks to see if the user has entered the default teacher password correctly
+		It returns a JSON response of success or fail.
+	*/
+	public function verifyTeacherPWD(Request $request) {
+		$password = $request->input('pwdin');
+		//print_r($password);
+        
+		$correct = \App\User::where('username','teacher')->first()->password;
+		//print_r($correct);
+		
+		if (Hash::check($password, $correct)) {
+			return response()->json(['status' => 'success']);
+		} else {
+			return response()->json(['status' => 'failure']);
+		}
+		
 	}
 
 }

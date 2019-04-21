@@ -3,9 +3,16 @@
 @section('content')
 
 <div class="container">
-    <h1>
-        Edit Kiosk : {{ $kiosk->name }}
-    </h1>
+    <div class="row align-middle">
+        <div class="col-sm-8">
+            <h1>
+                Edit Kiosk : {{ $kiosk->name }}
+            </h1>
+        </div>
+        <div class="col text-right">
+            <a class="my-1 btn btn-success elevation-2" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
+        </div>
+    </div>
     {{-- top section of edit page --}}
     @include('child.kioskedit1')
 

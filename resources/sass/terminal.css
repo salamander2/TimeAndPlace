@@ -10,9 +10,9 @@ input[type=text] {
     box-sizing: border-box;
 }
 
-button[type=button],
-input[type=submit],
-input[type=reset] {
+.term button[type=button],
+.term input[type=submit],
+.term input[type=reset] {
     background-color: #121117;
     border: none;
     color: white;
