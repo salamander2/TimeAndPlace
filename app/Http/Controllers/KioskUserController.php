@@ -42,7 +42,6 @@ class KioskUserController extends Controller
      */
     public function detach(Kiosk $kiosk, User $user)
     {         
-        //TODO: check isAdmin : do not detach administrators  
         $kioskuser = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();        
         $record = $kioskuser->first();
         if ($record->isKioskAdmin == 1) {

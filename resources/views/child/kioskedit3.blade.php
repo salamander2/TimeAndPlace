@@ -1,4 +1,5 @@
 {{--  @push('scripts')  --}}
+<!-- child view in edit kiosk to set autologout times -->
 <script>
     function removeTimeFromKiosk(id) {
 

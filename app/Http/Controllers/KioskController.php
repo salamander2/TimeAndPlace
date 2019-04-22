@@ -145,7 +145,7 @@ class KioskController extends Controller
 
         //TODO: have two views. One that is simple -- for "SigninOnly", the other that has all of the scheduling stuff
         $user = Auth::user();
-	    if (! $user->isKioskAdmin($kiosk) ) return view('kiosks.show', compact('kiosk'));
+	if (! $user->isKioskAdmin($kiosk) ) return view('kiosks.show', compact('kiosk'));
 	
         //Select all users who are not on THIS kiosk
         //and pass it to the view (for the lower portion of the kiosk)
@@ -161,6 +161,8 @@ class KioskController extends Controller
                 $detachedUsers[] = $user;
             }
         }
+	//must remove 'teacher' from $detachedUsers so that it can never be added as a kiosk user or kiosk admin
+	$detachedUsers = $detachedUsers->where('isDefaultUser',false);	//remove any isDefaultUser
 
         $periods = $kiosk->sched_periods();
         $times = $kiosk->sched_times();

@@ -42,13 +42,10 @@
                                       <input class="custom-control-input" id="defaultGroupExample2" name="signInOnly" {{ $kiosk->signInOnly ? 'checked':''}} type="radio">
                                       <label class="custom-control-label text-primary" for="defaultGroupExample2">&nbsp;Present Only</label>
                                     </div>
-                            
-                                   
                                 </div>
-
-           
-                            <div class="col border text-danger">If checked, then student is only marked present. There is no signout.<br>
-                                <b>Changing this will probably invalidate the existing logged data for this kiosk.</b></div>
+				    <div class="col border text-danger">Sign in and sign out times are recorded.<br>
+					Student is only marked present. There is no signout.<br>
+				    </div>
                         </div>
                         <!-- end row -->
 
