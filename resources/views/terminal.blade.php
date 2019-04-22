@@ -149,7 +149,7 @@
         });
     </script>
 
-    {{-- Script that calls "getOneStudent" when you click on the sign in/out button--}}
+    {{-- Script that calls "toggleOneStudent" when you click on the sign in/out button--}}
     <script>    
         $(document).ready(function () {
             $('#buttonIO').click(function (e) {
