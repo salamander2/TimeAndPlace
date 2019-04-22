@@ -168,21 +168,20 @@
         function findStudents(str) {  
             if (str.length == 0) { 
                 document.getElementById("studentList").innerHTML = "";
+                //TODO: should this just call "resetTerminal()" ?
                 return;
-            } else {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        //document.write(xmlhttp.responseText);
-                        document.getElementById("studentList").innerHTML = xmlhttp.responseText; 
-                        document.getElementById("inputName").focus();                     
-                    }
+            } 
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    //document.write(xmlhttp.responseText);
+                    document.getElementById("studentList").innerHTML = xmlhttp.responseText; 
+                    document.getElementById("inputName").focus();                     
                 }
-                xmlhttp.open("GET", "studentFind/" + str, true);
-                xmlhttp.send();
             }
-        }
-        
+            xmlhttp.open("GET", "studentFind/" + str, true);
+            xmlhttp.send();
+        }        
 
         /* This function gets a student based on their student ID (stored in 'str)
             It runs "toggleStudentID" which then logs them in or out.
