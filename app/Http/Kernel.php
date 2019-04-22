@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'kioskUser' => \App\Http\Middleware\validKioskUser::class,
         'kioskAdmin' => \App\Http\Middleware\isKioskAdmin::class,
+        'lockout' => \App\Http\Middleware\TerminalLockout::class,
     ];
 
     /**

@@ -29,7 +29,7 @@
         function getPassword() {
             swal({
                 title: "Enter teacher password",
-                text: "in order to login students by name",
+                text: "in order to login students by name or exit the Terminal",
                 icon: "warning",  
                 content: {                                
                     element: "input",
@@ -41,14 +41,6 @@
                 }).then((password) => {
                    // swal(`The returned value is: ${password}`);
                    // pwd = {{ Hash::make('password') }}
-
-      
-            /*
-                TODO: 
-                1. make sure that the password is correct - cant put PHP in here, therefore either use JS -- a terrible idea
-                    or make a form to submit and verify the password
-                2. once this is done, then display the other stuff
-            */
 
                     $.ajax({
                         headers: {
@@ -67,17 +59,15 @@
                                 showOverlay();
                             }                            
                             else{
-                                errormsg();
+                                errormsg("Invalid teacher password typed");
                             }
                         },
                         error: function (err) {
-                            alert('no success ' + err);
+                            alert('The ajax query did not run ' + err);
                             console.log(err);
                             //errormsg();
                         }
                     });
-
-                   
                 }
             );
 
@@ -103,7 +93,8 @@
     </script>
 
 
-    {{-- Script to load student info. JQUERY / AJAX not working --}}
+    {{-- Script to load student info. JQUERY / AJAX was not working but now it is.
+        However, I already rewrote this whole thing. --}}
     <script type="text/javascript">
     /*
         $(document).ready(function () {
@@ -165,12 +156,15 @@
                 loginID = $("#inputID").val()
                 $("#inputID").val('');
                 $('#inputID').focus();
-                getOneStudent(loginID,false);
+                toggleOneStudent(loginID,false);
             }
             );  
         }
         );
    
+        /* This function gets all of the students that match the string being typed: 
+            ie. their first name, last name, or student number 
+            The data is returned as a table in a child view. */
         function findStudents(str) {  
             if (str.length == 0) { 
                 document.getElementById("studentList").innerHTML = "";
@@ -180,7 +174,8 @@
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                         //document.write(xmlhttp.responseText);
-                        document.getElementById("studentList").innerHTML = xmlhttp.responseText;                       
+                        document.getElementById("studentList").innerHTML = xmlhttp.responseText; 
+                        document.getElementById("inputName").focus();                     
                     }
                 }
                 xmlhttp.open("GET", "studentFind/" + str, true);
@@ -188,7 +183,13 @@
             }
         }
         
-        function getOneStudent(str,confirm=true) { 
+
+        /* This function gets a student based on their student ID (stored in 'str)
+            It runs "toggleStudentID" which then logs them in or out.
+
+            TODO: rewrite as a POST method
+        */
+        function toggleOneStudent(str,confirm=true) { 
             
             if (str.length == 0) return;
             
@@ -261,11 +262,12 @@
             }).then(  function() { $('#inputID').focus() }
         	);
         }
-        function errormsg() {
+        function errormsg(str) {
+            if (str.length == 0) str = "The student was not found or there was an unexpected database error."
             swal({
                 title: "ERROR!",
                 icon: "error",
-                text: "The student was not found or there was an unexpected database error.",               
+                text: str,               
  		        timer:4000,
             }).then(  function() { $('#inputID').focus() }
         	);
@@ -286,7 +288,7 @@
 				console.log("signing in");
 				signin(student);
 			} 
-                });
+            });
         }
     </script>
 </head>
@@ -304,6 +306,7 @@
             
             <form class="pure-form">
                 <h3 class="text-light">Sign student in/out using first or last name</h3>
+                <h5  class="text-light">Press 'ESC' key to exit</h5>
                 <fieldset>
                     <input class="pure-input-2-3" autofocus="" id="inputName" type="text" onkeyup="findStudents(this.value)" onkeydown="if (event.keyCode === 27) resetTerminal();"
                         placeholder="Enter First Name, Last Name, or Student Number...">

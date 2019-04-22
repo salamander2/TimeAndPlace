@@ -99,15 +99,19 @@ Route::delete('/kiosks/{kiosk}/schedule', 'KioskController@delSchedule');
 
 /*----------------Terminal Routes-------------*/
 Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
-Route::get('/terminalsP/{kiosk}', 'TerminalController@launchPrev')->name('launchTerminal');
-Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
+//the following is not implemented yet
+Route::get('/terminalAuth/{token}', 'TerminalController@launchViaToken');
+
+//for debugging
+//Route::get('/terminalsP/{kiosk}', 'TerminalController@launchPrev');
+//Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
 
 
 /*----------------Log file routes-------------*/
-Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 Route::get('/terminals/{kiosk}/toggleStudentID/{loginID}', 'TerminalController@toggleStudentID');
-Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
-Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
+// Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
+//Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
+//Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
 
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 

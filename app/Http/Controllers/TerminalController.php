@@ -2,23 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Terminal;
 use App\Kiosk;
 use App\Student;
 use App\StudentKiosk;
 use App\Status;
-use Carbon\Carbon;
+//use Carbon\Carbon;
 // use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 //use Nexmo\Client\Exception\Request;
 
 class TerminalController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('lockout')->only(['launch', 'toggleStudent']);
+       // $this->middleware('lockout')->only(['launch']);
+    }
+
+    /* This displays a termnal, but logs out the user first  
+        There is a bunch of "lockout stuff and middleware, but I don't think that any of it is needed. */
+
+    // public function launch(Request $request, Kiosk $kiosk)
     public function launch(Kiosk $kiosk)
     {
+        if (Auth::check()) {
+            //$request->session()->put('lockout', true);
+            Auth::logout();
+        }
         return view('terminal', compact('kiosk'));
     }
     
+    /*This allows the terminal to be launched by typing in a token (or is it a URL?)
+    */
+    public function launchViaToken(Request $request, String $token)
+    {
+        $kiosk = App\Kiosk::where('secret', $token)->first();
+        if ($kiosk) {
+           //$request->session()->put('lockout', true);  
+           if (Auth::check()) {
+            //$request->session()->put('lockout', true);
+                Auth::logout();
+            }  
+           return view('terminal', compact('kiosk'));
+        } else {
+            return redirect('/login');
+        }
+
+        
+    }
+
+    
+    //DEBUG
     public function launchPrev(Kiosk $kiosk)
     {
         return view('terminalPrev', compact('kiosk'));
@@ -28,8 +69,10 @@ class TerminalController extends Controller
     {
         return view('bp_terminal', compact('kiosk'));
     }
+    
 
     /* This method assumes that the student record is present -- not null */
+    /* NO LONGER USED
     public function toggleStudent(Kiosk $kiosk, Student $student)
     {        
         $studentID = $student->studentID;
@@ -65,6 +108,8 @@ class TerminalController extends Controller
         }
   
     }
+    */
+
     
     public function toggleStudentID(Kiosk $kiosk, String $loginID)
     {     
