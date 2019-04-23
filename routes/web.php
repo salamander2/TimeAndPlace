@@ -114,6 +114,7 @@ Route::get('/terminals/{kiosk}/toggleStudentID/{loginID}', 'TerminalController@t
 //Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
 
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
+Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2');
 
 Route::get('/autosignout','LogController@autosignout');
 
@@ -125,7 +126,8 @@ Route::get('/courses/', 'StudentController@showCourse');
 
 
 /*----------------Attendance Routes-------------*/
-Route::get('/logs/{id}/', 'LogController@show');
+Route::get('/logs/{id}', 'LogController@tempshow');
+Route::get('/logs/showStudentLogs/{id}', 'LogController@show');
 
 /*----------------Report Routes-----------------*/
 

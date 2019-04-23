@@ -181,9 +181,13 @@ class TerminalController extends Controller
         // return("YOLO");
         
         $students = Student::where('firstname','like', '%'.$q.'%')->orWhere('lastname','like', '%'.$q.'%')->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->get();
-        return view('child.childterminal', compact('students'));
+        return view('child.studentListTerminal', compact('students'));
        // return($students);
        // dd($students);
+    }
 
+    public function listStudents2(String $q) {
+        $students = Student::where('firstname','like', '%'.$q.'%')->orWhere('lastname','like', '%'.$q.'%')->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->get();        
+        return view('child.studentListSearch', compact('students'));
     }
 }

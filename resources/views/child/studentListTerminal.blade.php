@@ -1,3 +1,4 @@
+{{--  This HTML is included in terminal.blade.php , used for finding students and then sign in/out  --}}
 <table class="pure-table pure-table-bordered table-canvas" style="border:none;">
    <thead>
       <tr>

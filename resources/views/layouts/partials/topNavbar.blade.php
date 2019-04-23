@@ -152,7 +152,7 @@
                 //    alert('inexplicable search failure');
                 }
             }
-            xmlhttp.open("GET", "/terminals/studentFind/" + str, true);
+            xmlhttp.open("GET", "/terminals/studentFind2/" + str, true);
             xmlhttp.send();
             
         }
