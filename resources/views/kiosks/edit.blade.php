@@ -10,9 +10,25 @@
             </h1>
         </div>
         <div class="col text-right">
-            <a class="my-1 btn btn-success elevation-2" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
+            <a class="my-1 mx-3 btn btn-warning elevation-3" href="/autosignout/{{ $kiosk->id }}"> Signout all now  </a>
+            <a class="my-1 btn btn-success elevation-3" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
         </div>
     </div>
+
+	@if (session('error'))
+		<script>
+			window.createNotification({
+				theme: 'warning',
+				positionClass: 'nfc-top-right',
+				displayCloseButton: true,
+				showDuration: 3500
+			})({            
+				title:'Success',
+				message: '{{ session('error') }}'
+			});
+		</script>
+	@endif
+
     {{-- top section of edit page --}}
     @include('child.kioskedit1')
 
@@ -24,12 +40,12 @@
     @include('child.kioskedit2')
 
     <div class="clearfix">
-        {{-- onsubmit="return false"  <<< this is needed in case jquery doesn't load.
+        {{-- onsubmit="return false"  <<< this is needed in case jquery doesnt load.
             Otherwise there is no confirmation and the form is submitted immediately.   --}}
         <form class="float-right" id="formDelete" role="form" onsubmit="return false"
             action="/kiosks/{{ $kiosk->id }}" method="post">
             {{ method_field('DELETE')}} {{csrf_field()}}
-            <button id="deleteBtn" type="submit" class="btn btn-danger">Delete this Kiosk</button>
+            <button id="deleteBtn" type="submit" class="btn btn-danger elevation-3">Delete this Kiosk</button>
         </form>
     </div>
 </div>
