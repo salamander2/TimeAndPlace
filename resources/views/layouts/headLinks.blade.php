@@ -13,7 +13,7 @@
 
 <!-- Scripts -->
 {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-<!-- adding defer means that it loads last and so jQuery won't be there for when the page first loads -->
+<!-- adding defer means that it loads last and so jQuery wont be there for when the page first loads -->
 <script src="{{ mix('js/app.js') }}" ></script>
 
 <!-- Fonts -->
@@ -21,8 +21,9 @@
 {{--  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">  --}}
 
 <!-- Styles -->
-
 <link href="/css/app.css" rel="stylesheet">
+<link href="/css/notifications.css" rel="stylesheet">
+
 <style>
     .userlabel {
         /* used for userMaint page to get table like effect using labels */

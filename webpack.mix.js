@@ -11,11 +11,17 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css')
-   .sourceMaps();	//needed to prevet bootstrap/popper.map.js warnings
+mix.js([
+        'resources/js/app.js',
+        'node_modules/styled-notifications/dist/notifications.js'
+    ], 'public/js/app.js')
+    .sass('resources/sass/app.scss', 'public/css')
+    .sourceMaps(); //needed to prevet bootstrap/popper.map.js warnings
 
- /* Should I add this too? */  
+mix.styles('node_modules/styled-notifications/dist/notifications.css', 'public/css/notifications.css');
+
+
+/* Should I add this too? */
 // webpack.mix.js
 //mix.js('./resources/js/bootstrap.js', './public/js/app.js')
 //  .sass('resources/assets/sass/vendor.scss', './public/css/vendor.css')

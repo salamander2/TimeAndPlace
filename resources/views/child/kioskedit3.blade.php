@@ -49,11 +49,11 @@
 
 {{--  @endpush  --}}
 
-<div class="card card-dark">
+<div class="card card-dark collapsed-card">
     <div class="card-header">
         <h3 class="card-title">Kiosk schedule</h3>
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
+            <button type="button" class="btn btn-tool" data-widget="expand"><i class="fa fa-arrows-alt-v"></i></button>
         </div>
     </div>
     <div class="card-body">

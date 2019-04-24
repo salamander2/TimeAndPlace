@@ -127,6 +127,17 @@ class AdminController extends Controller
         return view('admin.users');
     }
 
+    public function resetPWD(String $id) 
+    {
+        $defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
+        $user = User::find($id);
+        $user->password = Hash::make($defaultPWD);
+        $user->defaultPWD = 1;
+        $user->save();
+        return response()->json(['status' => 'success']);
+    }
+
+
 	// >>> this function is just for testing. RegisterController.php is actually used <<<<
     /**
      * Store a newly created resource in storage.

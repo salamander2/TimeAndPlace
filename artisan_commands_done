@@ -83,3 +83,13 @@ cd ~/TimeAndPlace
 npm install daterangepicker
 npm install moment
 npm ls
+
+
+vi package.json 
+	"dependencies": {
+	  "styled-notifications": "^1.0.1"
+	},
+npm run dev
+npm install
+npm audit
+npm install --save-dev laravel-mix@4.0.15  

@@ -1,6 +1,6 @@
 <!-- child view in kiosk edit to handle kiosk user adding and removing -->
 
-<div class="card card-dark">
+<div class="card card-dark collapsed-card">
     <div class="card-header">
         <h3 class="card-title">Kiosk Users</h3>
         <div class="card-tools">

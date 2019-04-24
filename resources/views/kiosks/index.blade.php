@@ -9,9 +9,19 @@
 
 <!-- display message when a kiosk has been deleted -->
 @if (session('error'))
-	<div class="alert alert-danger" role="alert">
+	<script>
+		window.createNotification({
+			theme: 'error',
+			positionClass: 'nfc-top-right',
+			displayCloseButton: true,
+			showDuration: 3500
+		})({		
+			message: '{{ session('error') }}'
+		});
+	</script>
+	 {{--  <div class="alert alert-danger" role="alert">
 	    {{ session('error') }}
-	</div>
+	</div>  --}}
 @endif
 
 <div class="container">

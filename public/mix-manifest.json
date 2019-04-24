@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/css/notifications.css": "/css/notifications.css",
     "/js/sweetalert.min.js": "/js/sweetalert.min.js",
     "/js/jquery.min.js": "/js/jquery.min.js"
 }

@@ -53,6 +53,7 @@ Route::get('hideDefaultPWD', 'AdminController@hideDefaultPWD')->name('hideDefaul
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
 Route::post('addUser', 'AdminController@createUser')->name('addUser');
 Route::post('delUser/{id}', 'AdminController@deleteUser')->name('delUser');
+Route::post('resetPWD/{id}', 'AdminController@resetPWD');
 
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');

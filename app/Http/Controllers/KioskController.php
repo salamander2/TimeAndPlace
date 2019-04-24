@@ -98,7 +98,7 @@ class KioskController extends Controller
             // 'requireConf' => $request->has('requireConf') ? 1 : 0,            
             'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
             'signInOnly' => ($request->signInOnly == "yes"),                        
-            'autoSignOut' => $request->has('autoSignout') ? 1 : 0,            
+            'autoSignout' => $request->has('autoSignout') ? 1 : 0,            
             'secretURL' => Hash::make(str_random(8)),
         ]);
     

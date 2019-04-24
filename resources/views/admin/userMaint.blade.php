@@ -6,8 +6,38 @@
 	//TODO: figure out how to stop someone from injecting into this to delete the wrong user.
 	//Everything needs the auth and admin middleware. Also do not allow deleting of isAdmin accounts.
 	function resetPWD(userID){
-		alert('reset password ' + userID);
-	}
+		//jQuery.post('/terminals/1/toggleStudent/333444555');
+		
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			type: "POST",
+			async: true,
+			url: 'resetPWD/' + userID,
+			dataType: "json",
+			success: function (msg) {
+				if(msg.status === "success"){
+					window.createNotification({
+						theme: 'success',
+						positionClass: 'nfc-bottom-right',
+						displayCloseButton: true,
+						showDuration: 3000
+					})({
+						title:'Success',
+						message: 'Password has been reset'
+					});
+				}	
+			},
+			error: function (err) {
+				alert('no success');
+				console.log(err);
+				errormsg();
+			}
+		});
+	};
+	
+
 	function deleteUser(userID){
 		alert('Delete ' + userID);
 	}
@@ -90,7 +120,7 @@
 							<td style="color:black;">{{ $user->fullname }}</td>
 
 							<td>&nbsp;&nbsp;<button type="button" name="resetPWD" class="btn btn-secondary"
-								onclick="if(confirm('Are you sure?')) resetPWD({{ $user->id }});">Reset Password</button>
+								onclick="if(confirm('Please confirm password reset ')) resetPWD({{ $user->id }});">Reset Password</button>
 							</td>
 							<td style="color:black;text-align:center">@if ($user->defaultPWD == 1) * @endif
 							</td>
