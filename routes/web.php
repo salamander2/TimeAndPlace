@@ -117,7 +117,9 @@ Route::get('/terminals/{kiosk}/toggleStudentID/{loginID}', 'TerminalController@t
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2');
 
+//TODO: these should be changed to POST for security
 Route::get('/autosignout','LogController@autosignout');
+Route::get('/autosignout/{kioskID}','LogController@autosignoutKiosk');
 
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');
