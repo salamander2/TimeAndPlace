@@ -21,26 +21,17 @@ class LogController extends Controller
 	{
 		$this->middleware('auth');
 	}
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index()
-	{
-		//
-	}
+	
+	// Route::get('/logs/byKiosk/{id}/{code}', 'LogController@kioskLogs');
+	// Route::get('/logs/byStudent/{id}/{code}', 'LogController@studentLogs');
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create()
-	{
-		//
-	}
+	//T = today, Y = yesterday, W = this week (last Sunday to today), M = this month, S = this semester, A / empty = All
 
+	function getDate(){
+		$today = DateTime::createFromFormat('!Y-m-d', date('Y-m-d'));
+		$yesterday = Carbon::yesterday()->toDateString();
+		$week = Carbon::startOfWeek()->toDateString();
+	}
 
 	/**
 	 * Display the specified resource.
@@ -89,16 +80,6 @@ class LogController extends Controller
 	}
 
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
 
 	/* This signs out all students for one kiosk */
 	public function autoSignoutKiosk(String $kioskID) {

@@ -117,6 +117,11 @@ Route::get('/terminals/{kiosk}/toggleStudentID/{loginID}', 'TerminalController@t
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2');
 
+Route::get('/logs/{id}', 'LogController@tempshow');
+Route::get('/logs/showStudentLogs/{id}', 'LogController@show');
+Route::get('/logs/byKiosk/{id}/{code}', 'LogController@kioskLogs');
+Route::get('/logs/byStudent/{id}/{code}', 'LogController@studentLogs');
+
 //TODO: these should be changed to POST for security
 Route::get('/autosignout','LogController@autosignout');
 Route::get('/autosignout/{kioskID}','LogController@autosignoutKiosk');
@@ -126,11 +131,6 @@ Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
 Route::get('/courses/', 'StudentController@showCourse');
 
-
-
-/*----------------Attendance Routes-------------*/
-Route::get('/logs/{id}', 'LogController@tempshow');
-Route::get('/logs/showStudentLogs/{id}', 'LogController@show');
 
 /*----------------Report Routes-----------------*/
 
