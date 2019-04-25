@@ -122,12 +122,14 @@
         function showOverlay() {           
             document.getElementById("studentSearch").style.display = "block";
             document.getElementById("inputName").focus();
+            $("body").addClass('sidebar-collapse').trigger('collapsed.pushMenu');            
         }
 
         function resetTerminal() {
             document.getElementById("studentSearch").style.display = "none";            
             document.getElementById("studentList").innerHTML = "";            
-            document.getElementById("inputName").value = "";            
+            document.getElementById("inputName").value = "";
+            $("body").removeClass('sidebar-collapse').trigger('expanded.pushMenu');
         }    
 
         /* This function gets all of the students that match the string being typed: 
@@ -231,7 +233,7 @@
   <!-- /.navbar -->
 
   <!-- html to display student listing -->        
-  <div id="studentSearch" class="shadow-lg modal">            
+  <div id="studentSearch" class="card-body shadow-lg modal">            
           <h5 class="text-light">Press 'ESC' key to exit</h5>          
       
       <!-- the student table is created here at "studentList". There is also formatting for this in the css  -->

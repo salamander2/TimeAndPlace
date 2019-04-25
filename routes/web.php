@@ -117,9 +117,12 @@ Route::get('/terminals/{kiosk}/toggleStudentID/{loginID}', 'TerminalController@t
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2');
 
-Route::get('/logs/{id}', 'LogController@tempshow');
-Route::get('/logs/showStudentLogs/{id}', 'LogController@show');
+Route::get('/logs/{id}', 'LogController@tempshow'); //DELETE THIS
+Route::get('/logs/showStudentLogs/{id}', 'LogController@show'); //DELETE THIS
+
+Route::get('/logs/byKiosk/{id}', 'LogController@kioskLogs');
 Route::get('/logs/byKiosk/{id}/{code}', 'LogController@kioskLogs');
+Route::get('/logs/byStudent/{id}', 'LogController@studentLogs');
 Route::get('/logs/byStudent/{id}/{code}', 'LogController@studentLogs');
 
 //TODO: these should be changed to POST for security
