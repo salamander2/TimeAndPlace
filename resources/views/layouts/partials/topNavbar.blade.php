@@ -194,7 +194,7 @@
                 </li>
             @endif  --}}
         @else
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown elevation-2">
                 <a id="navbarDropdown" class="nav-link bg-info rounded dropdown-toggle" href="#" role="button" data-toggle="dropdown" v-pre>
                     {{ Auth::user()->username }} : {{ Auth::user()->fullname }}<span class="caret"></span>
                 </a>
@@ -202,10 +202,10 @@
                 <div class="dropdown-menu dropdown-menu-right alert alert-info" >
                     {{--  Dont let default user change his password   --}}
                     @if (!Auth::user()->isDefaultUser)
-                        <div class="dropdown-item alert alert-danger"><a href="{{ route('changePassword') }}">Change Password</a>
+                        <div class="dropdown-item alert alert-danger elevation-3"><a href="{{ route('changePassword') }}">Change Password</a>
                         </div>
                     @endif
-                    <div class="dropdown-item alert bg-dark">
+                    <div class="dropdown-item alert bg-dark elevation-3">
                     <i class="fa fa-power-off"></i>&nbsp;
 
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('Logout') }}
