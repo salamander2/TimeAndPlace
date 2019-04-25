@@ -27,10 +27,60 @@ class LogController extends Controller
 
 	//T = today, Y = yesterday, W = this week (last Sunday to today), M = this month, S = this semester, A / empty = All
 
-	function getDate(){
-		$today = DateTime::createFromFormat('!Y-m-d', date('Y-m-d'));
+	/**
+	 * @param  int  $id		//the kiosk ID
+	 * @return \Illuminate\Http\Response
+	 */
+	public function kioskLogs($id, $code = 'A')
+	{			
+		//Set up date variables to use:
+		// $today = DateTime::createFromFormat('!Y-m-d', date('Y-m-d'));
+		$today = Carbon::today()->toDateString();
 		$yesterday = Carbon::yesterday()->toDateString();
-		$week = Carbon::startOfWeek()->toDateString();
+		// $month = new Carbon('first day of this month'); //this gives time to current time.
+		$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00
+		$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+		$lastmonth = Carbon::now()->startOfMonth()->subMonth();
+		
+		$logs = Log::all()->where('kiosk_id',$id);
+
+		switch($code) {
+			case 'T':
+				$logs = $logs->where('created_at', '>', $today);
+				break;
+			case 'Y':
+				$logs = $logs->where('created_at', '>', $yesterday)->where('created_at', '<', $today);
+				break;
+			case 'W':
+				$logs = $logs->where('created_at', '>', $week);
+				break;
+			case 'M':
+				$logs = $logs->where('created_at', '>', $month);
+				break;
+			case 'P':
+				$logs = $logs->where('created_at', '>', $lastmonth)->where('created_at', '<', $month);
+				break;
+			default:
+				//default or anything else is ALL (which was already selected)
+		}
+
+		$kiosk = Kiosk::all()->find($id);
+
+		return view('logs.indexK', compact('logs','kiosk', 'code'));
+	}
+
+
+	function getDate(){		
+
+		// $today = DateTime::createFromFormat('!Y-m-d', date('Y-m-d'));
+		$today = Carbon::today()->toDateString();
+		$yesterday = Carbon::yesterday()->toDateString();
+		// $month = new Carbon('first day of this month'); //this gives time to current time.
+		$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00
+		$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+		
+		// $week 
+		dd($week);
 	}
 
 	/**
@@ -72,7 +122,7 @@ class LogController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function tempshow($id)
-	{
+	{		
 		$logs = Log::all()->where('kiosk_id',$id);	//TODO: WHY A KIOSK ID ????
 		$kiosk = Kiosk::all()->find($id);
 

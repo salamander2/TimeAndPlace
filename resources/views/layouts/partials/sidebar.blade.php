@@ -56,7 +56,7 @@
               <ul class="nav nav-treeview">
                   @foreach (\App\Kiosk::all() as $kiosk)                  
                 <li class="nav-item">
-                  <a href="{{'/logs/'.$kiosk->id}}" class="nav-link active">
+                  <a href="{{'/logs/byKiosk/'.$kiosk->id}}" class="nav-link active">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>{{$kiosk->name}}</p>
                   </a>
