@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-{{--  view to display all logs by kiosk and by date range selected  --}}
+{{--  view to display all logs for one particular student and by date or kiosk  --}}
 @section('content')
 
 {{--  <ol class="breadcrumb">
@@ -12,7 +12,7 @@
 
 <div class="container">
 {{--  <div class="card">      --}}
-    <div class="card-header">
+    {{-- <div class="card-header">
         <div class="row">
             <div class="col-md-2"><form action="{{'/logs/byKiosk/'.$kiosk->id}}/T" method="get">
                 <button id="btnT" type="submit" class="btn btn-outline-danger">Today</button> </form></div>
@@ -28,29 +28,27 @@
             <div class="col-md-2"><form action="{{'/logs/byKiosk/'.$kiosk->id}}/A" method="get">
                 <button id="btnA" class="btn btn-secondary">All</button> </form></div>
         </div>
-    </div>
+    </div> --}}
     <div class="card-body">
-        <h1>Logs for {{ $kiosk->name }}</h1>
+        <h1>Logs for {{ $student->lastname }} . {{$student->firstname}}</h1>
         
         @foreach ($logs as $log)
-           {{-- @php 
+            {{-- @php 
                 $studentID = $log-> studentID;
                 $student = \App\Student::find($studentID);
-                // $student = $log->student();
-            @endphp  --}}
-		
+            @endphp --}}
             <div class="row align-middle">
                 
                 <div class="col-md-3">
-                    <p>{{ $log->studentID }}</p>
+                    <p>{{ $studentID }}</p>
                 </div>
                 <div class="col-md-3">
-                    <p>{{-- @if ($student != null) --}}
-                        {{ $log->student->lastname . ', ' . $log->student->firstname }}
-{{--                        @else
+                    <p>@if ($student != null)
+                        {{ $student->lastname . ', ' . $student->firstname }}
+                        @else
                         --missing record--
                         @endif
---}}                    </p>
+                    </p>
                 </div>
                 <div class="col-md-3">                   
                     <p>{{ $log-> status_code }}</p>
@@ -64,34 +62,4 @@
     </div>    
 {{--  </div>      --}}
 </div>
-<script>
-    var code = '{{$code}}';
-    document.getElementById("btnA").classList.remove('btn-secondary');
-    document.getElementById("btnA").classList.add('btn-outline-secondary');
-    switch(code) {
-        case 'T':
-            document.getElementById("btnT").classList.remove('btn-outline-danger');
-            document.getElementById("btnT").classList.add('btn-danger');
-            break;
-        case 'Y':
-            document.getElementById("btnY").classList.remove('btn-outline-warning');
-            document.getElementById("btnY").classList.add('btn-warning');
-            break;
-        case 'W':
-            document.getElementById("btnW").classList.remove('btn-outline-success');
-            document.getElementById("btnW").classList.add('btn-success');
-            break;
-        case 'M':
-            document.getElementById("btnM").classList.remove('btn-outline-info');
-            document.getElementById("btnM").classList.add('btn-info');
-            break;
-        case 'P':
-            document.getElementById("btnP").classList.remove('btn-outline-primary');
-            document.getElementById("btnP").classList.add('btn-primary');
-            break;
-        default:
-            document.getElementById("btnA").classList.remove('btn-outline-secondary');
-            document.getElementById("btnA").classList.add('btn-secondary');
-        } 
-</script>
 @endsection

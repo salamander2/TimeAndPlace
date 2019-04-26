@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DateTime;
 use App\Log;
 use App\Kiosk;
+use App\Student;
 use App\StudentSignedIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,45 +32,48 @@ class LogController extends Controller
 	 * @param  int  $id		//the kiosk ID
 	 * @return \Illuminate\Http\Response
 	 */
-	public function kioskLogs($id, $code = 'A')
+	public function kioskLogs($id, $code = 'W')
 	{			
-		//Set up date variables to use:
-		// $today = DateTime::createFromFormat('!Y-m-d', date('Y-m-d'));
-		$today = Carbon::today()->toDateString();
-		$yesterday = Carbon::yesterday()->toDateString();
-		// $month = new Carbon('first day of this month'); //this gives time to current time.
-		$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00
-		$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
-		$lastmonth = Carbon::now()->startOfMonth()->subMonth();
-		
-		$logs = Log::all()->where('kiosk_id',$id);
+		$logs = Log::where('kiosk_id',$id)->with('student');
 
 		switch($code) {
 			case 'T':
-				$logs = $logs->where('created_at', '>', $today);
+				$today = Carbon::today()->toDateString();
+				$logs = $logs->where('created_at', '>', $today)->get();
 				break;
 			case 'Y':
-				$logs = $logs->where('created_at', '>', $yesterday)->where('created_at', '<', $today);
+				$today = Carbon::today()->toDateString();
+				$yesterday = Carbon::yesterday()->toDateString();
+				$logs = $logs->where('created_at', '>', $yesterday)->where('created_at', '<', $today)->get();
 				break;
 			case 'W':
-				$logs = $logs->where('created_at', '>', $week);
+				$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00
+				$logs = $logs->where('created_at', '>', $week)->get();
 				break;
 			case 'M':
-				$logs = $logs->where('created_at', '>', $month);
+				$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+				$logs = $logs->where('created_at', '>', $month)->get();
 				break;
 			case 'P':
-				$logs = $logs->where('created_at', '>', $lastmonth)->where('created_at', '<', $month);
+				$lastmonth = Carbon::now()->startOfMonth()->subMonth();
+				$logs = $logs->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->get();
 				break;
 			default:
 				//default or anything else is ALL (which was already selected)
+				$logs = $logs->get();
 		}
 
 		$kiosk = Kiosk::all()->find($id);
+		//TODO: find some way of adding in the correct student informatin for each log so that you don't have to look it up in the blade template.
+
+		//$record = $logs->first();
+		//$student = $record->with('student')->get();
+//		dd($student);
 
 		return view('logs.indexK', compact('logs','kiosk', 'code'));
 	}
 
-
+	//For testing only
 	function getDate(){		
 
 		// $today = DateTime::createFromFormat('!Y-m-d', date('Y-m-d'));
@@ -83,6 +87,22 @@ class LogController extends Controller
 		dd($week);
 	}
 
+	/**
+	 * @param  int  $id		//the kiosk ID
+	 * @return \Illuminate\Http\Response
+	 */
+	public function studentLogs($id, $code = 'A')
+	{			
+		$student = Student::find($id);
+		
+		$logs = Log::all()->where('student_id',$id);
+		
+		dd($logs);
+
+		
+
+		return view('logs.indexS', compact('logs','student'));
+	}
 	/**
 	 * Display the specified resource.
 	 *
