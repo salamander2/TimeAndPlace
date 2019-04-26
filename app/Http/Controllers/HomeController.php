@@ -42,7 +42,21 @@ class HomeController extends Controller
         // $kiosk->schedules()->detach('3');
         // dd("done");
         /********** End Testing Area ***********/
-        return view('home');
+
+        $kiosks = Kiosk::all()->where('publicViewable','=','1');
+
+        //dd($kiosks);
+        return view('home', compact('kiosks'));
+    }
+
+    /* This is the same as the main home index view, but for only one kiosk. 
+    *  The blade template shows all students signed in, not just the most recent 10.
+    */
+    public function showKiosk(Kiosk $kiosk) {
+        
+        $tudent = $kiosk->signedIn->sortBy('pivot.created_at');
+        //dd($kiosk);
+        return view('studentsSignedIn', compact('kiosk','student'));
     }
 
     public function help() {

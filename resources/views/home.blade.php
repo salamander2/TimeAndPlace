@@ -34,11 +34,11 @@
 <p>xxxxxxxxxxxxxxxxxxxxxx</p> --}}
     <div class="container-fluid">
       <div class="row">        
-    @foreach(App\Kiosk::all()->where('publicViewable','=','1') as $kiosk)
+    @foreach($kiosks as $kiosk)
     <div class="col-lg-6">
       <div class="card card-success">
         <div class="card-header">
-          <h3 class="m-0">{{$kiosk->name }}</h3>
+          <h3 class="m-0"><a href="home/{{$kiosk->id}}">{{$kiosk->name }}</a></h3>
         </div>       
             
             <div class="card-body" style="padding:0;">
@@ -49,8 +49,11 @@
                         <th>Student Name</th>                        
                         <th>TimeStamp</th>
                     </tr>
-                    @foreach($kiosk->signedIn->sortBy('lastname') as $student)                     
-                      
+                    {{-- @foreach($kiosk->signedIn->sortBy('lastname') as $student) --}}
+                    @php
+                      $count = $kiosk->signedIn->count()
+                    @endphp
+                    @foreach($kiosk->signedIn->sortByDesc('pivot.created_at')->take(10) as $student)
                         <tr>
                             <td>{{$student->studentID}}</td>
                             
@@ -58,6 +61,9 @@
                             <td>{{$student->pivot->created_at}}</td>
                         </tr>
                     @endforeach
+                    @if ($count> 10) 
+                        <tr class="bg-dark"><td colspan=3 class="text-center"><a href="home/{{$kiosk->id}}"> &lt; more &gt; </a></td></tr>
+                    @endif
                     </tbody>
                 </table>
             </div>

@@ -10,8 +10,9 @@
 
       @foreach ($students as $student)
       <tr>
+		{{-- don't put <a href=""> around the TD</a> - it ends up going elsewhere rather than to the JS --}}
          <td onclick="toggleOneStudent({{$student->studentID}})">{{$student->lastname }}, {{$student->firstname}}</td>
-         <td onclick="toggleOneStudent({{$student->studentID}})"><a href="">{{$student->studentID}}</a></td>
+         <td onclick="toggleOneStudent({{$student->studentID}})">{{$student->studentID}}</td>
       </tr>
       @endforeach
 
