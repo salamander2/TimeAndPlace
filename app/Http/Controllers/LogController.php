@@ -55,6 +55,7 @@ class LogController extends Controller
 				$logs = $logs->where('created_at', '>', $month)->get();
 				break;
 			case 'P':
+				$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
 				$lastmonth = Carbon::now()->startOfMonth()->subMonth();
 				$logs = $logs->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->get();
 				break;
@@ -91,17 +92,28 @@ class LogController extends Controller
 	 * @param  int  $id		//the kiosk ID
 	 * @return \Illuminate\Http\Response
 	 */
-	public function studentLogs($id, $code = 'A')
+	public function studentLogs($id, $code = 'W')
 	{			
 		$student = Student::find($id);
+		$logs = Log::where('studentID',$id); //this returns a query
+		//sort by date first:
 		
-		$logs = Log::all()->where('student_id',$id);
-		
-		dd($logs);
+		//make dates
+		$today = Carbon::today()->toDateString();
+		$yesterday = Carbon::yesterday()->toDateString();
+		$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00
+		$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+		$lastmonth = Carbon::now()->startOfMonth()->subMonth();
 
-		
+		$todaylogs =  Log::where('studentID',$id)->where('created_at', '>', $today)->get();
+		$yesterlogs =  Log::where('studentID',$id)->where('created_at', '>', $yesterday)->where('created_at', '<', $today)->get();
+		$weeklogs =  Log::where('studentID',$id)->where('created_at', '>', $week)->get();
+		$monthlogs =  Log::where('studentID',$id)->where('created_at', '>', $month)->get();
+		$prevmonthlogs =  Log::where('studentID',$id)->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->get();
 
-		return view('logs.indexS', compact('logs','student'));
+		$logs =  Log::where('studentID',$id)->get();
+
+		return view('logs.indexS', compact('todaylogs','yesterlogs','weeklogs','monthlogs','prevmonthlogs','student'));
 	}
 	/**
 	 * Display the specified resource.

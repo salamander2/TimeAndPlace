@@ -3,7 +3,7 @@
    <thead>
       <tr>
          <th>Student Name</th>
-         <th>Student Number222</th>
+         <th>Student Number</th>
       </tr>
    </thead>
    <tbody>
