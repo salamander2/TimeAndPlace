@@ -35,10 +35,17 @@
     <div class="container-fluid">
       <div class="row">        
     @foreach($kiosks as $kiosk)
+      @php
+      $count = $kiosk->signedIn->count()
+      @endphp
     <div class="col-lg-6">
       <div class="card card-success">
         <div class="card-header">
-          <h3 class="m-0"><a href="home/{{$kiosk->id}}">{{$kiosk->name }}</a></h3>
+          @if ($count > 10) 
+            <h3 class="m-0"><a href="home/{{$kiosk->id}}">{{$kiosk->name }}</a></h3>
+          @else
+          <h3 class="m-0">{{$kiosk->name }}</h3>
+          @endif
         </div>       
             
             <div class="card-body" style="padding:0;">
@@ -50,9 +57,7 @@
                         <th>TimeStamp</th>
                     </tr>
                     {{-- @foreach($kiosk->signedIn->sortBy('lastname') as $student) --}}
-                    @php
-                      $count = $kiosk->signedIn->count()
-                    @endphp
+                   
                     @foreach($kiosk->signedIn->sortByDesc('pivot.created_at')->take(10) as $student)
                         <tr>
                             <td>{{$student->studentID}}</td>
@@ -61,7 +66,7 @@
                             <td>{{$student->pivot->created_at}}</td>
                         </tr>
                     @endforeach
-                    @if ($count> 10) 
+                    @if ($count > 10) 
                         <tr class="bg-dark"><td colspan=3 class="text-center"><a href="home/{{$kiosk->id}}"> &lt; more &gt; </a></td></tr>
                     @endif
                     </tbody>
