@@ -18,7 +18,8 @@ mix.js([
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps(); //needed to prevet bootstrap/popper.map.js warnings
 
-mix.styles('node_modules/styled-notifications/dist/notifications.css', 'public/css/notifications.css');
+// mix.styles('node_modules/styled-notifications/dist/notifications.css', 'public/css/notifications.css');
+mix.sass('resources/sass/style.scss', 'public/css/notifications.css');
 
 
 /* Should I add this too? */

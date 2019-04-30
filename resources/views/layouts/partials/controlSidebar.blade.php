@@ -19,6 +19,11 @@
         <p>1.1 (20190407)<br>* Terminal sign in/out using loginID/studentID.<br>* Kiosk deletion fixed. </p>
         <p>1.0 (20190329) Initial release </p>
     </div>
-
+     <ul>  
+	  <li><a href="/students" class="btn btn-outline-info">Go to Student index page</a></li>
+		  <li><a href="/students/339654014" class="btn btn-outline-info">Go to Student show page</a></li>
+      <li><a href="/courses" class="btn btn-outline-info">Debug Course stuff</a></li>
+    </ul>
+    <br><br><Br><br>
   </aside>
   <!-- /.control-sidebar -->

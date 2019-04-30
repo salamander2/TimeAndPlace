@@ -60,10 +60,9 @@
                    
                     @foreach($kiosk->signedIn->sortByDesc('pivot.created_at')->take(10) as $student)
                         <tr>
-                            <td>{{$student->studentID}}</td>
-                            
+                            <td>{{$student->studentID}}</td>                            
                             <td>{{$student->lastname}}, {{$student->firstname}}</td>
-                            <td>{{$student->pivot->created_at}}</td>
+                            <td>{{$student->pivot->created_at->format('D d M Y - h:i a')}}</td>
                         </tr>
                     @endforeach
                     @if ($count > 10) 
@@ -88,7 +87,6 @@
 
 {{--  <div class="alert alert-danger"><p>hi</p></div>
 <button type="button" class="btn btn-success">hi</button>  --}}
-
 
 @endsection
 
