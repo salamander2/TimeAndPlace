@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-{{--  view to display all logs for one particular student and by date or kiosk  --}}
+{{--  view to display all logs for one particular student and by date (or kiosk)  --}}
 @section('content')
 
 {{--  <ol class="breadcrumb">
@@ -14,7 +14,19 @@
 {{--  <div class="card">      --}}
     
     <div class="card-body">
-        <h1>Logs for {{ $student->lastname }}, {{$student->firstname}} : {{ $student->studentID }}</h1>
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <h1>
+                        Logs for {{ $student->lastname }}, 
+                        {{ $student->firstname }} : 
+                        {{ $student->studentID }}
+                    </h1>
+                </div>
+                <div class="col-auto alert alert-secondary elevation-3">
+                    <a class="text-dark" href="/logs/byStudentbyKiosk/{{ $student->studentID }}">Sort by Kiosk</a>
+                </div>
+            </div>
+        
     <hr>        
 
  <div class="col-md-2 alert alert-danger">Today</div>
@@ -37,7 +49,7 @@
                     <p>{{ $log-> status_code }}</p>
                 </div>
                 <div class="col-md-3">                   
-                        <p>{{ $log-> updated_at }}</p>
+                        <p>{{ $log-> created_at->format('D d M Y - h:i a') }}</p>
                     </div>
             </div>
         @endforeach
@@ -52,7 +64,7 @@
                     <p>{{ $log-> status_code }}</p>
                 </div>
                 <div class="col-md-3">                   
-                        <p>{{ $log-> updated_at }}</p>
+                        <p>{{ $log-> created_at->format('D d M Y - h:i a') }}</p>
                     </div>
             </div>
         @endforeach
@@ -68,7 +80,7 @@
                     <p>{{ $log-> status_code }}</p>
                 </div>
                 <div class="col-md-3">                   
-                        <p>{{ $log-> updated_at }}</p>
+                        <p>{{ $log-> created_at->format('D d M Y - h:i a') }}</p>
                     </div>
             </div>
         @endforeach
@@ -83,12 +95,12 @@
                         <p>{{ $log-> status_code }}</p>
                     </div>
                     <div class="col-md-3">                   
-                            <p>{{ $log-> updated_at }}</p>
+                            <p>{{ $log-> created_at->format('D d M Y - h:i a') }}</p>
                         </div>
                 </div>
             @endforeach
 
-            <div class="col-md-2 alert alert-primary">Last Month</div>
+            <div class="col-md-2 alert btn-primary">Last Month</div>
             @foreach ($prevmonthlogs as $log)
                 <div class="row align-middle">
                     <div class="col-md-3">
@@ -98,7 +110,7 @@
                         <p>{{ $log-> status_code }}</p>
                     </div>
                     <div class="col-md-3">                   
-                            <p>{{ $log-> updated_at }}</p>
+                            <p>{{ $log-> created_at->format('D d M Y - h:i a') }}</p>
                         </div>
                 </div>
             @endforeach
