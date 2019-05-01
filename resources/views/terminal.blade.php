@@ -16,6 +16,11 @@
 
     {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
     <script type="text/javascript">
+
+		function resetFocus(){
+             $('#inputID').focus();
+		}
+
         function parseInput(str) {
         
             if(!isNaN(str)) return; //ignore this if it is a student number being typed in
@@ -298,7 +303,9 @@
             {{-- TODO: this should work as soon as the user is no longer logged in --}}
             <a href="{{ route('login') }}"><button type="button" class="btn btn-info border-dark">Exit Terminal</button></a>
         </div>
-        <div class="text-center">
+
+		{{-- this resets the focus if the screen is clicked anywhere else (except at the very bottom) --}}
+        <div id="maincontent" class="text-center" onclick="resetFocus()">
 
         <!-- html to display student listing -->        
         <div id="studentSearch" class="shadow-lg">
@@ -315,8 +322,6 @@
             <div id="studentList" class="text-center"></div>
         </div>
 
-        {{-- <button id="button1" onclick="signout(333444555)">Test of swal()</button><br> --}}
-      
         <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" 
         onclick="getPassword()" alt="HB Beal" height="400vh"><br>
 
