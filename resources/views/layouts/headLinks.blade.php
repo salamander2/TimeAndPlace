@@ -34,10 +34,9 @@
         outline-offset: -2px;
         color:black;
     }
-     
-
-
-    
+    .login-card-body {
+	background-color:#EEE;
+    }
     
 </style>
 {{--  

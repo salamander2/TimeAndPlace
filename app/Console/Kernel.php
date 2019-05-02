@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
 	{
 		//Schedule the "signout all" command
 		$schedule->command('kiosk:signoutall')->at('23:45');
+
 		try {
 			$kioskSched = [];
 			if (Schema::hasTable('kiosk_schedule')) {
@@ -46,6 +47,7 @@ class Kernel extends ConsoleKernel
 				$schedID = $entry->schedule_id;
 				//echo $schedID.PHP_EOL;
 				$time = $scheds->where('id',$schedID)->first()->end;
+				$time = substr($time,0,5); //->format('h:m'); // You cannot schedule a time if there are seconds included!
 				//echo $time.PHP_EOL;
 
 				//TODO if on alternate schedule, the use 'altend' instead.

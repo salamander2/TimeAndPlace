@@ -305,7 +305,8 @@
         </div>
 
 		{{-- this resets the focus if the screen is clicked anywhere else (except at the very bottom) --}}
-        <div id="maincontent" class="text-center" onclick="resetFocus()">
+        {{-- <div id="maincontent" class="text-center" onclick="resetFocus()"> --}}
+        <div id="maincontent" class="text-center">
 
         <!-- html to display student listing -->        
         <div id="studentSearch" class="shadow-lg">
