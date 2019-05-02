@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
 	 * @var array
 	 */
 	protected $commands = [
+		'App\Console\Commands\SignoutAll',
 		'App\Console\Commands\SignoutStudents',
 		'App\Console\Commands\ScheduleList',
 	];
@@ -27,6 +28,8 @@ class Kernel extends ConsoleKernel
 	 */
 	protected function schedule(Schedule $schedule)
 	{
+		//Schedule the "signout all" command
+		$schedule->command('kiosk:signoutall')->at('23:45');
 		try {
 			$kioskSched = [];
 			if (Schema::hasTable('kiosk_schedule')) {
