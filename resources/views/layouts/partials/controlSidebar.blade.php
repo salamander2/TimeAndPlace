@@ -10,7 +10,7 @@
 	<p>See help screen for more information</p>
     </div>
     <div class="p-3 bg-info">
-      <h5>VERSION # <span class="badge badge-light "> 1.2</span><br><br>
+      <h5>VERSION # <span class="badge badge-light "> {{env('VERSION') }}</span><br><br>
 	<?php $branch = exec('git rev-parse --abbrev-ref HEAD'); echo "<p>(<u>".$branch."</u> branch)</p>"; ?>
       </h5>
     </div>
