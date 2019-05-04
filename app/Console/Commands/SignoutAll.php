@@ -48,11 +48,11 @@ class SignoutAll extends Command
 
 			/* do all tests before signing out students */
 			if ($kiosk == null) {
-				$this->info('Invalid kiosk id: '.$kioskid);
+				$this->info('Invalid kiosk id: '.$kioskID);
 				continue;
 			}
 			if ($kiosk->signInOnly == 1) {
-				$this->info('Skipping signin only kiosk #'.$kioskid);
+				$this->info('Skipping signin only kiosk #'.$kioskID);
 				continue;
 			}
 
