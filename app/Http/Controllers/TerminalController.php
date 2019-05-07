@@ -24,7 +24,8 @@ class TerminalController extends Controller
     {
         $this->middleware('lockout')->only(['launch']);
         // $this->middleware('lockout')->only(['launch', 'toggleStudent']);
-        $this->middleware('auth')->only(['listStudents','listStudents2']);
+	//Do not require AUTH middleware for listStudents.
+        $this->middleware('auth')->only(['listStudents2']);
         $this->middleware('guest')->only(['toggleStudentID']);
     }
 
@@ -187,6 +188,7 @@ class TerminalController extends Controller
         return redirect() -> route('launchTerminal',$kiosk->id);
     }
 
+    //called from terminal, teacher bypass
     public function listStudents(String $q) {
         //see child.terminal.blade.php 
        // $query = "SELECT students.studentID, students.firstname, students.lastname FROM students WHERE firstname LIKE '$q%' or lastname LIKE '$q%' or studentID LIKE '$q%' ORDER BY lastname, firstname";
@@ -199,6 +201,8 @@ class TerminalController extends Controller
        // dd($students);
     }
 
+    //This is the same as the above method, but it needs to return a different child view since clicking on a student here does a different thing.
+    //called from student search bar on top nav bar.
     public function listStudents2(String $q) {
         $students = Student::where('firstname','like', '%'.$q.'%')->orWhere('lastname','like', '%'.$q.'%')->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->get();        
         return view('child.studentListSearch', compact('students'));

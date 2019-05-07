@@ -16,10 +16,15 @@
 
     {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
     <script type="text/javascript">
+	var overlayOn = false;
 
-		function resetFocus(){
-             $('#inputID').focus();
-		}
+	function resetFocus(){
+	    if (overlayOn) {
+                $('#inputName').focus();
+	    } else {
+                $('#inputID').focus();
+	    }
+	}
 
         function parseInput(str) {
         
@@ -84,6 +89,7 @@
             document.getElementById("inputID").autofocus = "false";
             document.getElementById("studentSearch").style.display = "block";
             document.getElementById("inputName").focus();
+	    overlayOn = true;
         }
 
         function resetTerminal() {
@@ -94,6 +100,7 @@
             document.getElementById("inputName").value = "";
             document.getElementById("inputID").value = "";
             document.getElementById("inputID").focus();            
+	    overlayOn = false;
         }
     </script>
 

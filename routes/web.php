@@ -82,7 +82,7 @@ Route::get(   '/kiosks/{kiosk}/showORedit',
     }
 );
 Route::patch( '/kiosks/{kiosk}', 'KioskController@update');
-Route::delete('/kiosks/{kiosk}','KioskController@destroy');
+Route::delete('/kiosks/{kiosk}', 'KioskController@destroy');
 
 /*----------------Kiosk-User Routes-------------*/
 // Route::patch('/kiosks/{kiosk}/users/{user}', 'HomeController@index');
@@ -102,12 +102,7 @@ Route::delete('/kiosks/{kiosk}/schedule', 'KioskController@delSchedule');
 
 /*----------------Terminal Routes-------------*/
 Route::get('/terminals/{kiosk}', 'TerminalController@launch')->name('launchTerminal');
-//the following is not implemented yet
 Route::get('/terminalAuth/{token}', 'TerminalController@launchViaToken');
-
-//for debugging
-//Route::get('/terminalsP/{kiosk}', 'TerminalController@launchPrev');
-//Route::get('/bpterminal/{kiosk}', 'TerminalController@launchBP');
 
 
 /*----------------Log file routes-------------*/
@@ -118,7 +113,9 @@ Route::get('/terminalAuth/{kiosk}/toggleStudentID/{loginID}', 'TerminalControlle
 //Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
 
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
-Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2');
+Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents');
+Route::get('/terminalAuth/studentFind/{q}', 'TerminalController@listStudents');
+//Route::get('/terminalAuth/studentFind2/{q}', 'TerminalController@listStudents2');
 
 Route::get('/logs/byKiosk/{id}', 'LogController@kioskLogs');
 Route::get('/logs/byKiosk/{id}/{code}', 'LogController@kioskLogs');
