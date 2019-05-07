@@ -34,10 +34,11 @@
 		<div class="card">
 			<div class="card-header d-flex p-0">
 				<ul class="nav nav-pills p-2">
-					<li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Purpose</a></li>
-					<li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Roles</a></li>
-					<li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Kiosk Settings</a></li>
-					<li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Reports</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Overview</a></li>
+					<li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">User Roles</a></li>
+					<li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Terminal Screen</a></li>
+					<li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Kiosk Settings</a></li>
+					<li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab">Reports</a></li>
 				</ul>
 			</div><!-- /.card-header -->
 			<div class="card-body">
@@ -53,11 +54,11 @@
 								</div>
 							</div>
 							<div class="card-body">
-								<p><b><u>Kiosk:</u></b> the team, club, group, department, ... that is tracking attendance.
+								<h5><b><u>Kiosk:</u></b> the team, club, group, department, ... that is tracking attendance.
 									Because this is program flexible enough to encompass all of these different
 									groups/teams/classes/categories, "kiosk" is being used as the general term for them all.
-								</p>
-								<p><b><u>Terminal:</u></b> the screen that is used for students to log in and log out. </p>
+								</h5>
+								<h5><b><u>Terminal:</u></b> the screen that is used for students to log in and log out. </h5>
 								<h5><i class="icon fa fa-star"></i> The Home screen shows the students who are currently signed in to
 									all the public kiosks</h5>
 							</div>
@@ -72,8 +73,8 @@
 							</div>
 
 							<div class="card-body">
-								<h4>This program is designed to enable a variety of groups such as classes, teams, clubs, departments,
-									to track students' attendance/location.</h4>
+								<h5>This program is designed to enable a variety of groups such as classes, teams, clubs, departments,
+									to track students' attendance/location.</h5> {{-- ' --}}
 								<div class="alert alert-info col-md-6">
 									<h5><i class="icon fa fa-info"></i> There are two possible modes</h5>
 								</div>
@@ -180,10 +181,23 @@
 						</div>
 						<!-- /.tab-pane -->
 						<div class="tab-pane" id="tab_3">
+							<i>This tab needs to be rewritten properly</i><br>
+						The terminal screen is where students actually log in or out ...
+						<ul>
+							<li>include screen shot</li>
+							<li>Students log in by entering their computer login id, eg. smitjohn123.
+								The student id number can also be used. This would be for scanning in student cards</li>
+							<li>The next time that the student enters their login id they are logged out.</li>
+							<li>If the user (teacher) clicks on the Beal Logo, a prompt pops up for the teacher to enter 
+								the bypass password. After this is done, the teacher can then log a student in/out by typing his/her name.
+							</li>
+						</ul>
+						</div><!-- /.tab-pane -->
+						<div class="tab-pane" id="tab_4">
 						There are a number of settings for each kiosk.<br>
 						A detailed explanation of them will follow later....
 						</div><!-- /.tab-pane -->
-						<div class="tab-pane" id="tab_4">
+						<div class="tab-pane" id="tab_5">
 						<p>Users can view the logs for each kiosk based on time (day, week, month, ...). Click on the "Logs" button in the left navigation
 							panel to do this.</p>
 							<p>Users can view the logs for a particular student based on time (day, week, month) or based on kiosk.<br>

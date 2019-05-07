@@ -24,8 +24,7 @@
                 <p>
                   Administrator Tasks
                   <i class="right fa fa-angle-left"></i>
-                </p>
-                
+                </p>                
               </a>
               <ul class="nav nav-treeview">                  
                   <li class="nav-item">
@@ -47,15 +46,20 @@
           <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info"><i class="nav-icon fab fa-korvue fa-2x"></i><p>List all Kisoks</p></a></li>
 
             <li class="nav-item has-treeview menu-closed">
-              <a href="#" class="nav-link alert alert-info"><!-- alert-primary does not exist, so use 'active' -->
+              <a href="#" class="nav-link alert alert-info"> {{-- alert-primary does not exist, so use active --}}
                 <i class="nav-icon fa fa-tachometer-alt "></i>
                 <p>Logs<i class="right fa fa-angle-left"></i></p>
               </a>
               <ul class="nav nav-treeview">
-                  @foreach (\App\Kiosk::all() as $kiosk)                  
+                  @foreach (\App\Kiosk::all()->sortBy('name') as $kiosk)
+                  {{--  TODO allow the kiosk users to view the logs for their own private kiosks  --}}
+                  @if (!$kiosk->publicViewable) 
+                    @continue
+                  @endif
+
                 <li class="nav-item">
                   <a href="{{'/logs/byKiosk/'.$kiosk->id}}" class="nav-link active">
-                    <i class="fa fa-circle-o nav-icon"></i>
+                    <i class="text-dark far fa-sm fa-circle nav-icon"></i>
                     <p>{{$kiosk->name}}</p>
                   </a>
                 </li>

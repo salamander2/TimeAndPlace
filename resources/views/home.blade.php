@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('homeheader')
+    <meta http-equiv="refresh" content="600;url={{ route('home') }}" />
+@endpush
+
  @section('content-header')
 <div class="content-header">
     <div class="container-fluid">

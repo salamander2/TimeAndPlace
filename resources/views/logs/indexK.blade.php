@@ -45,12 +45,12 @@
                     <p>{{ $log->studentID }}</p>
                 </div>
                 <div class="col-md-3">
-                    <p>{{-- @if ($student != null) --}}
+                    <p>@if ($log->student != null)
                         {{ $log->student->lastname . ', ' . $log->student->firstname }}
-{{--                        @else
+                        @else
                         --missing record--
                         @endif
---}}                    </p>
+                    </p>
                 </div>
                 <div class="col-md-3">                   
                     <p>{{ $log-> status_code }}</p>
