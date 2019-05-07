@@ -28,7 +28,9 @@ class TerminalController extends Controller
         $this->middleware('guest')->only(['toggleStudentID']);
     }
 
-    /* This displays a termnal, but logs out the user first  */
+    /* This displays a termnal, but logs out the user first.
+	It MUST be called from a user who belongs to that kiosk. 
+	That's what the TerminalLockout middleware checks.  */
     public function launch(Request $request, Kiosk $kiosk)
     {
         // if (Auth::check()) {
@@ -45,10 +47,13 @@ class TerminalController extends Controller
         return view('terminal', compact('kiosk'));
     }
     
-    /*This allows the terminal to be launched by typing in a token (or is it a URL?)
+    /*This allows the terminal to be launched by typing in a secretURL.
+	It can be launched by a logged in user or when no one is logged in.
+	Therefore it must NOT run any middleware to verify anything.
     */
     public function launchViaToken(Request $request, String $token)
     {
+	//dd(url()->full());
         $kiosk = Kiosk::where('secretURL', $token)->first();
         if ($kiosk) {
            $request->session()->put('lockout', true);  
@@ -58,7 +63,8 @@ class TerminalController extends Controller
             }  
            return view('terminal', compact('kiosk'));
         } else {
-            return redirect('/login');
+		dd("launch via token error");
+	//       return redirect('/login');
         }
 
         

@@ -110,8 +110,8 @@
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-warning elevation-3">Update</button>
                     <span style="float:right">
-                        Terminal login URL: &rArr; <span style="opacity:0.3">
-                        <code><script>document.write(window.location.origin);</script>/terminalAuth/{{$kiosk->secretURL }}</code> </span> &lArr;<br>
+                        Terminal login URL: &rArr; <code><span style="background-color:#EEE;color:#AAA">
+                        <script>document.write(window.location.origin);</script>/terminalAuth/{{$kiosk->secretURL }} </span></code> &lArr;<br>
                     Copy the url and paste it into the browser in order to start the terminal for this kiosk without having to login first.</span>
                 </div>
             

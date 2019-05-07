@@ -238,9 +238,10 @@
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed into {{$kiosk->name }} ({{$kiosk->room}})",
                 icon: "success",
+		buttons: [""],
                 timer:2000,
             }).then( function() { $('#inputID').focus() }
-	        );
+	    );
         } //end
         function signout(student) {
             //resetTerminal();                         
@@ -249,9 +250,10 @@
                 text: "You are signed out of {{$kiosk->name }} ({{$kiosk->room}})",
                 icon: "success",              
                 animation:"false",
- 		        timer:2000,            
-		    }).then( function() { $('#inputID').focus() }
-		    );
+		buttons: [""],
+ 		timer:2000,            
+	    }).then( function() { $('#inputID').focus() }
+	    );
         }
         function errorID() {
             swal({
@@ -305,8 +307,8 @@
         </div>
 
 		{{-- this resets the focus if the screen is clicked anywhere else (except at the very bottom) --}}
-        {{-- <div id="maincontent" class="text-center" onclick="resetFocus()"> --}}
-        <div id="maincontent" class="text-center">
+        <div id="maincontent" class="text-center" onclick="resetFocus()">
+        {{-- <div id="maincontent" class="text-center"> --}}
 
         <!-- html to display student listing -->        
         <div id="studentSearch" class="shadow-lg">
@@ -333,7 +335,7 @@
                 onkeydown="if (event.keyCode === 13) document.getElementById('buttonIO').click()"
                 autofocus>
             <p style="color:#333">Enter your computer login id or your student number</p>        
-            <button type="button" id="buttonIO">Sign in/out</button>
+            <button type="button" id="buttonIO">Sign In/Out</button>
         </div>
     </div>
     <br>

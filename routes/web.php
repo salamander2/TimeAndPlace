@@ -112,6 +112,7 @@ Route::get('/terminalAuth/{token}', 'TerminalController@launchViaToken');
 
 /*----------------Log file routes-------------*/
 Route::get('/terminals/{kiosk}/toggleStudentID/{loginID}', 'TerminalController@toggleStudentID');
+Route::get('/terminalAuth/{kiosk}/toggleStudentID/{loginID}', 'TerminalController@toggleStudentID');
 // Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 //Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 //Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
