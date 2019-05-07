@@ -57,11 +57,29 @@ class User extends Authenticatable
 		return false;
 	}
 
+
+	/* Called from middleware/validkioskUser, middleware/TerminalLockout */
+	public function isKioskUser(Kiosk $kiosk) {
+		if ($this->isAdministrator()) return true;
+		//this gets all users for that kiosk
+		$users = $kiosk->users()->get();
+
+		//if the user is not valid, then it returns a null
+		$validUser = $users->where('id', '=', $this->id)->first();
+		if( $validUser==null) return false;
+		else return true;
+	}
+
+
+	/* does the user belong to the kiosk? */
+	//called from kiosk controller? and kioskusercontroller: many-to-many / attach and detach
 	public function kiosks() 
 	{
 		return $this->belongsToMany(Kiosk::class)->withPivot('isKioskAdmin')->withTimestamps();
 	}
 
+
+	//might be called from child.kioskedit2.blade.php
 	public function notThisKiosk($id) {
 		return $this->belongsToMany(Kiosk::class)->wherePivot('kiosk_id', '!=', $id);
 	}

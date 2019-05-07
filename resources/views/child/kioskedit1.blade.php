@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
 				    <div class="col border text-danger">Sign in and sign out times are recorded.<br>
-					Student is only marked present. There is no signout.<br>
+					Student is only marked present. Time is recorded. There is no signout.<br>
 				    </div>
                         </div>
                         <!-- end row -->
@@ -109,10 +109,15 @@
                 <div class="box-footer">
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-warning elevation-3">Update</button>
+                    <span style="float:right">
+                        Terminal login URL: &rArr; <span style="opacity:0.3">
+                        <code><script>document.write(window.location.origin);</script>/terminalAuth/{{$kiosk->secretURL }}</code> </span> &lArr;<br>
+                    Copy the url and paste it into the browser in order to start the terminal for this kiosk without having to login first.</span>
                 </div>
             
         </form>
         <!-- form end -->
+       
     </div>
     <!-- /.card-body -->
 </div>

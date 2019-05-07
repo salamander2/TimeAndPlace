@@ -21,10 +21,21 @@ class TerminalLockout
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) { //if you are logged in set lockout flag (for some reason?)
-            $request->session()->put('lockout', true);  
+        // dd(Auth::user());
+        // dd($request->kiosk);
+        $user = Auth::user();
+        $kiosk = $request->kiosk;
+        
+        if (Auth::check()) { //if you are logged in set lockout flag to allow terminal to launch
+            
+            //but first you have to be one of the kiosk_users
+            if ($user->isKioskUser($kiosk) ) {
+                $request->session()->put('lockout', true);  
+            } else {
+                abort(403, "Unauthorised access. Only users assigned to this kiosk can start the Terminal");
+            }
         } else {
-            return redirect('/login');
+            return redirect('/login'); //you're not logged in
         }
         return $next($request);
    }

@@ -16,7 +16,7 @@
 			displayCloseButton: true,
 			showDuration: 3500
 		})({		
-			message: '{{ session('error') }}'
+			message: '{!! session('error') !!}'
 		});
 	</script>
 	 {{--  <div class="alert alert-danger" role="alert">

@@ -22,19 +22,25 @@ class TerminalController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('lockout')->only(['launch']);
         // $this->middleware('lockout')->only(['launch', 'toggleStudent']);
-       // $this->middleware('lockout')->only(['launch']);
+        $this->middleware('auth')->only(['listStudents','listStudents2']);
+        $this->middleware('guest')->only(['toggleStudentID']);
     }
 
-    /* This displays a termnal, but logs out the user first  
-        There is a bunch of "lockout stuff and middleware, but I don't think that any of it is needed. */
-
-    // public function launch(Request $request, Kiosk $kiosk)
-    public function launch(Kiosk $kiosk)
+    /* This displays a termnal, but logs out the user first  */
+    public function launch(Request $request, Kiosk $kiosk)
     {
-        if (Auth::check()) {
-            //$request->session()->put('lockout', true);
+        // if (Auth::check()) {
+        //     $request->session()->put('lockout', true);
+        //     Auth::logout();
+        // } else {
+        //     abort(403,'Unauthorized access. You must be a logged in user to start a terminal.');
+        // }
+        if ($request->session()->get('lockout')) {
             Auth::logout();
+        } else {
+            abort(403,'Unauthorized access. You must be a logged in user to start a terminal.');
         }
         return view('terminal', compact('kiosk'));
     }
@@ -43,11 +49,11 @@ class TerminalController extends Controller
     */
     public function launchViaToken(Request $request, String $token)
     {
-        $kiosk = App\Kiosk::where('secret', $token)->first();
+        $kiosk = Kiosk::where('secretURL', $token)->first();
         if ($kiosk) {
-           //$request->session()->put('lockout', true);  
+           $request->session()->put('lockout', true);  
            if (Auth::check()) {
-            //$request->session()->put('lockout', true);
+                //$request->session()->put('lockout', true); //already done above
                 Auth::logout();
             }  
            return view('terminal', compact('kiosk'));
@@ -110,7 +116,8 @@ class TerminalController extends Controller
     }
     */
 
-    
+    /* Toggle student in/out using their login ID to idnetify them
+        OR their student number */
     public function toggleStudentID(Kiosk $kiosk, String $loginID)
     {     
         $student = null;
