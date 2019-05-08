@@ -62,6 +62,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Kiosk Sign-Out Times</h3>
+		    <h5><i>When periods are selected, the signout is at the END of the period/lunch.</i></h5>
                 </div>
 
                 <div class="box-body table-responsive no-padding">

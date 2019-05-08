@@ -70,6 +70,8 @@ class LogController extends Controller
 		//$record = $logs->first();
 		//$student = $record->with('student')->get();
 //		dd($student);
+	
+		$logs = $logs->sortByDesc('created_at');
 
 		return view('logs.indexK', compact('logs','kiosk', 'code'));
 	}
@@ -124,7 +126,7 @@ class LogController extends Controller
 	{			
 		$student = Student::find($id);
 		
-		$logs = Log::where('studentID',$id)->orderBy('kiosk_id')->with('kiosk'); //this returns a query
+		$logs = Log::where('studentID',$id)->orderBy('kiosk_id')->orderByDesc('created_at')->with('kiosk'); //this returns a query
 		
 		$logs = $logs->get();
 		//dd($logs);

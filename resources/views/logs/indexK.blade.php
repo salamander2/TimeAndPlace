@@ -56,7 +56,7 @@
                     <p>{{ $log-> status_code }}</p>
                 </div>
                 <div class="col-md-3">
-                        <p>{{ $log->created_at->format('D d M Y - h:m a') }}</p>
+                        <p>{{ $log->created_at->format('D d M Y - h:i a') }}</p>
                     </div>
                 
             </div>
