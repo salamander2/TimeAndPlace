@@ -246,7 +246,7 @@
                 text: "You are signed into {{$kiosk->name }} ({{$kiosk->room}})",
                 icon: "success",
 		buttons: [""],
-                timer:2000,
+                timer:4000,
             }).then( function() { $('#inputID').focus() }
 	    );
         } //end
@@ -258,7 +258,7 @@
                 icon: "success",              
                 animation:"false",
 		buttons: [""],
- 		timer:2000,            
+ 		timer:4000,            
 	    }).then( function() { $('#inputID').focus() }
 	    );
         }
