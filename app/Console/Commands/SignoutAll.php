@@ -52,7 +52,9 @@ class SignoutAll extends Command
 				continue;
 			}
 			if ($kiosk->signInOnly == 1) {
-				$this->info('Skipping signin only kiosk #'.$kioskID);
+				//Just remove the record. Don't add anything to the log file.
+				$kiosk->signedIn()->detach($studentID);
+				//$this->info('Skipping signin only kiosk #'.$kioskID);
 				continue;
 			}
 

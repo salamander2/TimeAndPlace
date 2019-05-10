@@ -17,7 +17,7 @@ class CreateKiosksTable extends Migration
 			  $table->increments('id');				// primary key
 			  $table->string('name');				// kiosk name
 			  $table->string('room');				// location
-			  $table->string('secretURL');			// for autologging in a kiosk
+			  $table->string('secretURL')->unique();			// for autologging in a kiosk
 			  $table->boolean('showPhoto')->default(0);			// show photo of student when logging in/out
 			  $table->boolean('showSchedule')->default(0); 		// show student timetable
 			  $table->boolean('requireConf')->default(0);		// require confirmation for login (i.e. name and photo remains until Y is pressed)
