@@ -24,7 +24,7 @@ class StudentController extends Controller
         $students = Student::all();
         // dd($students->first());
         foreach ($students as $student) {
-            print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . "<br>");
+            print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . " ... " . $student->loginID ."<br>");
             
         }  
     }

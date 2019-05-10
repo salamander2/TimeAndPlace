@@ -64,8 +64,8 @@ class TerminalController extends Controller
             }  
            return view('terminal', compact('kiosk'));
         } else {
-		dd("launch via token error");
-	//       return redirect('/login');
+		    dd("launch via token error");
+	//      return redirect('/login');
         }
 
         
@@ -161,7 +161,11 @@ class TerminalController extends Controller
         */
 
         if ($present) { 
-            
+            //if the kiosk is signinOnly
+            if ($kiosk->signInOnly) {
+                return response()->json(['status' => 'already present', 'student' => $student->toArray()]);
+            }
+
             //Deleted the SignedIn record
             $kiosk->signedIn()->detach($studentID);
 
@@ -174,18 +178,24 @@ class TerminalController extends Controller
             $kiosk->students()->attach($studentID, ['status_code' => 'SIGNOUT']);
             
             //Return info for AJAX to display on the kiosk
-            return response()->json(['status' => 'detached', 'student' => $student->toArray()]);
+            return response()->json(['status' => 'signed out', 'student' => $student->toArray()]);
+
         } else {           
-           
+            $statcode = 'SIGNIN';
+            $statresp = 'signed in';
+            if ($kiosk->signInOnly) {
+                $statcode = 'PRESENT';
+                $statresp = 'present';
+            }
             //create a SIGNIN log file entry         
-            $kiosk->students()->attach($studentID, ['status_code' => 'SIGNIN']);            
+            $kiosk->students()->attach($studentID, ['status_code' => $statcode]);
             //create a signedIn entry
-            $kiosk->signedIn()->attach($studentID, ['status_code' => 'SIGNIN']);
+            $kiosk->signedIn()->attach($studentID, ['status_code' => $statcode]);
            
-            return response()->json(['status' => 'attached', 'student' => $student->toArray()]);
+            return response()->json(['status' => $statresp, 'student' => $student->toArray()]);
         }
 
-        return redirect() -> route('launchTerminal',$kiosk->id);
+        return redirect() -> route('launchTerminal',$kiosk->id);    //why is this here?
     }
 
     //called from terminal, teacher bypass

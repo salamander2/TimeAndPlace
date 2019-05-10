@@ -69,7 +69,7 @@
                                 showOverlay();
                             }                            
                             else{
-                                errormsg("Invalid teacher password typed");
+                                SWerrormsg("Invalid teacher password typed");
                             }
                         },
                         error: function (err) {
@@ -211,18 +211,22 @@
 //                    alert(xmlhttp.responseText);  //DEBUG
 
                     $response = JSON.parse(xmlhttp.responseText);
-                    if ($response.status === 'attached') {
+                    if ($response.status === 'signed in') {
                         if (confirm) {
-                            confirmSignin($response.student);
+                            SWconfirmSignin($response.student);
                         } else { 
-                            signin($response.student);
+                            SWsignin($response.student);
                         }
-                    } else if($response.status === "detached"){
-                        signout($response.student);
+                    } else if($response.status === "signed out"){
+                        SWsignout($response.student);
+                    } else if($response.status === "present"){
+                        SWpresent($response.student);
+                    } else if($response.status === "already present"){
+                        SWalreadyPresent($response.student);
                     } else if($response.status === "not found"){
-                        errorID();
+                        SWerrorID();
                     } else{
-                        errormsg();
+                        SWerrormsg();
                     }
                     //  alert($response.status);
                     // alert($response.student.firstname);
@@ -239,30 +243,55 @@
 
     {{-- Script to pop up sweetalerts --}}
     <script>
-        function signin(student) {
+        function SWsignin(student) {
             //resetTerminal();                         
             swal({
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
-                text: "You are signed into {{$kiosk->name }} ({{$kiosk->room}})",
+                text: "You are signed into {!!$kiosk->name !!} ({!!$kiosk->room!!})",
                 icon: "success",
-		buttons: [""],
+		        buttons: [""],
                 timer:4000,
             }).then( function() { $('#inputID').focus() }
 	    );
         } //end
-        function signout(student) {
+
+        function SWsignout(student) {
             //resetTerminal();                         
             swal({
                 title: "Goodbye " + student['firstname'] + " " + student['lastname'],
-                text: "You are signed out of {{$kiosk->name }} ({{$kiosk->room}})",
-                icon: "success",              
-                animation:"false",
-		buttons: [""],
- 		timer:4000,            
-	    }).then( function() { $('#inputID').focus() }
+                text: "You are signed out of {!!$kiosk->name !!} ({!!$kiosk->room!!})",
+                icon: "success",
+                buttons: [""],
+                timer:4000,            
+            }).then( function() { $('#inputID').focus() }
 	    );
         }
-        function errorID() {
+
+        function SWpresent(student) {
+            //resetTerminal();                         
+            swal({
+                title: "Welcome " + student['firstname'] + " " + student['lastname'],
+                text: "You have been marked present for {!!$kiosk->name!!} ({!!$kiosk->room!!}) today",
+                icon: "success",
+                buttons: [""],
+                timer:4000,            
+	        }).then( function() { $('#inputID').focus() }
+	        );
+        }
+
+        function SWalreadyPresent(student) {
+            //resetTerminal();                         
+            swal({
+                title: "Hey " + student['firstname'] + " " + student['lastname'],
+                text: "You have already been marked present for {!!$kiosk->name!!} ({!!$kiosk->room!!}) today!",
+                icon: "warning",                
+                buttons: [""],
+                timer:4000,            
+	        }).then( function() { $('#inputID').focus() }
+	        );
+        }
+
+        function SWerrorID() {
             swal({
                 title: "ERROR!",
                 icon: "error",                
@@ -275,7 +304,8 @@
             }).then(  function() { $('#inputID').focus() }
         	);
         }
-        function errormsg(str) {
+
+        function SWerrormsg(str) {
             if (str.length == 0) str = "The student was not found or there was an unexpected database error."
             swal({
                 title: "ERROR!",
@@ -284,11 +314,12 @@
  		        timer:4000,
             }).then(  function() { $('#inputID').focus() }
         	);
-        } 
+        }
+
 	//TODO: this still signs the student in if the screen is clicked outside the SWAL. Fix by printing the value and seeing what it is.
 	//How is the student being signed in when nothing is popping up on the screen?
 	//The CONFIRM SWeetAlert is only popping up AFTER the toggle has been done!!!
-        function confirmSignin(student) {
+        function SWconfirmSignin(student) {
             swal({
                 title: "Confirm Sign-in",
                 text: "Please confirm that this is the correct student being signed in",
@@ -299,7 +330,7 @@
                 .then((proceed) => {
 			if (proceed) {
 				console.log("signing in");
-				signin(student);
+				SWsignin(student);
 			} 
             });
         }
