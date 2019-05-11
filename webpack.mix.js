@@ -20,6 +20,7 @@ mix.js([
 
 // mix.styles('node_modules/styled-notifications/dist/notifications.css', 'public/css/notifications.css');
 mix.sass('resources/sass/style.scss', 'public/css/notifications.css');
+mix.copy('resources/sass/terminal.css', 'public/css/terminal.css');
 
 
 /* Should I add this too? */
@@ -40,3 +41,4 @@ mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js');
 
 
 //then run "npm run dev"
+//then restart artisan server (if running on localhost)

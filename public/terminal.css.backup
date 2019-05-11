@@ -28,10 +28,10 @@ input[type=text] {
 
 #studentSearch {
     width: 70%;
-    top: 15%;
+
+    top: 8%;
     left: 15%;
-    /* position: absolute;*/
-	position: relative;
+    position: absolute;
     border: solid gray 5px;
     border-radius: 8px;
     -webkit-border-radius: 8px;

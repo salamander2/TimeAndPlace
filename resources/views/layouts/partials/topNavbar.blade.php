@@ -1,10 +1,11 @@
+{{--  TODO : most of the CSS is duplicated in Terminal.css, 
+    which means that it has to be changed in two places ...
+    put it all into one place and then include it when needed. --}}
 <style>
     #studentSearch {
-        width: 70%;
-
-        top: 8%;
+        width: 70%;        
         left: 15%;
-        position: absolute;
+        position: relative;
         border: solid gray 5px;
         border-radius: 8px;
         -webkit-border-radius: 8px;
