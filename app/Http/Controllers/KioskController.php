@@ -102,6 +102,8 @@ class KioskController extends Controller
             'secretURL' => Hash::make(str_random(8)),
         ]);
     
+//        TODO: The hash has to NOT have any of the following characters in it or else it won't work as a URL: . / # : ?
+
         //$kiosk = new Kiosk();
         //$kiosk->save();
         //dd($validatedKiosk->all());

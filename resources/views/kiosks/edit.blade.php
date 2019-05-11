@@ -40,6 +40,8 @@
     @include('child.kioskedit2')
 
     <div class="clearfix">
+            <a class="my-1 btn btn-primary elevation-3" <a href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
+            
         {{-- onsubmit="return false"  <<< this is needed in case jquery doesnt load.
             Otherwise there is no confirmation and the form is submitted immediately.   --}}
         <form class="float-right" id="formDelete" role="form" onsubmit="return false"

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use DateTime;
+//use DateTime;
+use Auth;
 use App\Log;
 use App\Kiosk;
 use App\Student;
@@ -91,15 +92,18 @@ class LogController extends Controller
 	}
 
 	/**
+	 * This gets all of the logs for a particular student. 
+	 * IF the user is not an administrator, he cannot view the logs from kiosks set to private.
 	 * @param  int  $id		//the kiosk ID
 	 * @return \Illuminate\Http\Response
 	 */
 	public function studentLogs($id, $code = 'W')
 	{			
 		$student = Student::find($id);
-		$logs = Log::where('studentID',$id); //this returns a query
-		//sort by date first:
+		$user = Auth::user();
+		//$logs = Log::where('studentID',$id); //this returns a query
 		
+				
 		//make dates
 		$today = Carbon::today()->toDateString();
 		$yesterday = Carbon::yesterday()->toDateString();
@@ -107,30 +111,60 @@ class LogController extends Controller
 		$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
 		$lastmonth = Carbon::now()->startOfMonth()->subMonth();
 
-		$todaylogs =  Log::where('studentID',$id)->where('created_at', '>', $today)->get();
-		$yesterlogs =  Log::where('studentID',$id)->where('created_at', '>', $yesterday)->where('created_at', '<', $today)->get();
-		$weeklogs =  Log::where('studentID',$id)->where('created_at', '>', $week)->get();
-		$monthlogs =  Log::where('studentID',$id)->where('created_at', '>', $month)->get();
-		$prevmonthlogs =  Log::where('studentID',$id)->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->get();
+		//build all queries
+		$todaylogs =  Log::where('studentID',$id)->where('created_at', '>', $today)->orderByDesc('created_at');
+		$yesterlogs =  Log::where('studentID',$id)->where('created_at', '>', $yesterday)->where('created_at', '<', $today)->orderByDesc('created_at');
+		$weeklogs =  Log::where('studentID',$id)->where('created_at', '>', $week)->orderByDesc('created_at');
+		$monthlogs =  Log::where('studentID',$id)->where('created_at', '>', $month)->orderByDesc('created_at');
+		$prevmonthlogs =  Log::where('studentID',$id)->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->orderByDesc('created_at');
+		//"All logs" is not used on this screen
+		//$logs =  Log::where('studentID',$id)->orderByDesc('created_at')->get();
 
-		$logs =  Log::where('studentID',$id)->get();
+		//remove all private kiosk logs from query
+		foreach ( Kiosk::all() as $kiosk) {
+			if ($user ->isAdministrator()) continue;
+			if ($user->isKioskUser($kiosk)) continue;
+			if ($kiosk->publicViewable) continue;
+			$todaylogs = $todaylogs->where('kiosk_id','!=',$kiosk->id);
+			$yesterlogs = $yesterlogs->where('kiosk_id','!=',$kiosk->id);
+			$weeklogs = $weeklogs->where('kiosk_id','!=',$kiosk->id);
+			$monthlogs = $monthlogs->where('kiosk_id','!=',$kiosk->id);
+			$prevmonthlogs = $prevmonthlogs->where('kiosk_id','!=',$kiosk->id);
+		}
+
+		//get all queries
+		$todaylogs = $todaylogs->get();
+		$yesterlogs = $yesterlogs->get();
+		$weeklogs = $weeklogs->get();
+		$monthlogs = $monthlogs->get();
+		$prevmonthlogs = $prevmonthlogs->get();
+
 
 		return view('logs.indexS', compact('todaylogs','yesterlogs','weeklogs','monthlogs','prevmonthlogs','student'));
 	}
 	
-/**
+	/* This method gets all of the logs for one student and sorts them by kiosk, then by date.
+	 * This is so that the view can display logs by kiosk.
+	 * 
 	 * @param  int  $id		//the kiosk ID
 	 * @return \Illuminate\Http\Response
 	 */
 	public function studentLogsByKiosk($id)
 	{			
 		$student = Student::find($id);
-		
+		$user = Auth::user();
 		$logs = Log::where('studentID',$id)->orderBy('kiosk_id')->orderByDesc('created_at')->with('kiosk'); //this returns a query
-		
+				
+		//remove all private kiosk logs 
+		foreach ( Kiosk::all() as $kiosk) {
+			if ($user ->isAdministrator()) continue;
+			if ($user->isKioskUser($kiosk)) continue;
+			if ($kiosk->publicViewable) continue;
+			$logs = $logs->where('kiosk_id','!=',$kiosk->id);
+		}
+
 		$logs = $logs->get();
 		//dd($logs);
-		
 		
 		return view('logs.indexSK', compact('logs','student'));
 	}
