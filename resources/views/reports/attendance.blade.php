@@ -9,9 +9,9 @@
  <div class="card">
     <div class="card-header">    
         <div class="card-title">                
-                <h1>
+                <h2>
                     Monthly attendance for {{ $kiosk->name }}
-                </h1>                
+                </h2>                
         </div>
     </div>
     
@@ -33,6 +33,7 @@
         </tr>
         @endforeach
         </Table>
+		<h6><br> {{ count($array) -1 }} students </h6>
     </div>    
 
 </div>
