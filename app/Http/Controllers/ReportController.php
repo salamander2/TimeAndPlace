@@ -27,10 +27,13 @@ class ReportController extends Controller
             //redirect back to some screen ... home page?
         }
 
-        $array = array();
-        $topRow[] = 'Student';
+        $array = array(); 
+        $topRow[] = 'Student'; //this is used to match the dates
+        $topRow2[] = 'Student'; //this is used for displaying nicely formatted dates
+
         foreach ($meetings as $meeting) {
             $topRow[] = $meeting->date;
+            $topRow2[] = Carbon::parse($meeting->date)->format('D, d M Y');
         }
         $numDates = count($topRow);
         // dd($topRow);
@@ -49,12 +52,13 @@ class ReportController extends Controller
 
         $currentID = "";
         $row = array_fill(0,$numDates, ' ');
-        $array[]=$topRow;
+        $array[]=$topRow2;
 
         foreach($logs as $log) {
             if ($log->studentID != $currentID) {
                 //for everything except for the first time through (where there is no id)
                 if ($currentID != "") {
+                    $row[0]=$log->student->lastname.', '.$log->student->firstname;
                     $array[]=$row;
                     $row = array_fill(0,$numDates, ' ');
                 }
