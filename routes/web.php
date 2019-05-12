@@ -134,7 +134,8 @@ Route::get('/courses/', 'StudentController@showCourse');
 
 
 /*----------------Report Routes-----------------*/
-
+Route::get('/reports/{kiosk}', 'ReportController@attendance');
+//Route::get('/reports', 'ReportController@attendance');
 
 Route::fallback(function () {
     return redirect('home');

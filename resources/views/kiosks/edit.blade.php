@@ -50,6 +50,7 @@
             <button id="deleteBtn" type="submit" class="btn btn-danger elevation-3">Delete this Kiosk</button>
         </form>
     </div>
+    DEBUG REPORTS <a class="my-1 btn btn-primary elevation-3" <a href="{{'/reports/'.$kiosk->id}}"> Reports </a>
 </div>
 @endsection
 

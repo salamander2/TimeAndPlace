@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMeetingTable extends Migration
+class CreateMeetingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateMeetingTable extends Migration
     {
         /* This table will record when the meetings are for any kiosk that is signin-only 
            So that we can generate reports, see who arrived late, etc. */
-        Schema::create('meeting', function (Blueprint $table) {
+        Schema::create('meetings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('kiosk_id')->unsigned();
             $table->time('time');
@@ -31,6 +31,6 @@ class CreateMeetingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meeting');
+        Schema::dropIfExists('meetings');
     }
 }

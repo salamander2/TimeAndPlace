@@ -81,7 +81,7 @@ class LogController extends Controller
 	function getDate(){		
 
 		// $today = DateTime::createFromFormat('!Y-m-d', date('Y-m-d'));
-		$today = Carbon::today()->toDateString();
+		$today = Carbon::today()->toDateString();	// "2019-05-11"
 		$yesterday = Carbon::yesterday()->toDateString();
 		// $month = new Carbon('first day of this month'); //this gives time to current time.
 		$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00

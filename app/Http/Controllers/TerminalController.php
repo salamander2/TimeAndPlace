@@ -8,7 +8,8 @@ use App\Kiosk;
 use App\Student;
 use App\StudentKiosk;
 use App\Status;
-//use Carbon\Carbon;
+use App\Meeting;
+use Carbon\Carbon;
 // use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 //use Nexmo\Client\Exception\Request;
@@ -161,6 +162,7 @@ class TerminalController extends Controller
         */
 
         if ($present) { 
+
             //if the kiosk is signinOnly
             if ($kiosk->signInOnly) {
                 return response()->json(['status' => 'already present', 'student' => $student->toArray()]);
@@ -180,12 +182,14 @@ class TerminalController extends Controller
             //Return info for AJAX to display on the kiosk
             return response()->json(['status' => 'signed out', 'student' => $student->toArray()]);
 
-        } else {           
+        } else {
             $statcode = 'SIGNIN';
             $statresp = 'signed in';
             if ($kiosk->signInOnly) {
                 $statcode = 'PRESENT';
                 $statresp = 'present';
+                //add a meeting record
+                $this->createMeetingRecord($kiosk);
             }
             //create a SIGNIN log file entry         
             $kiosk->students()->attach($studentID, ['status_code' => $statcode]);
@@ -216,5 +220,23 @@ class TerminalController extends Controller
     public function listStudents2(String $q) {
         $students = Student::where('firstname','like', '%'.$q.'%')->orWhere('lastname','like', '%'.$q.'%')->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->get();        
         return view('child.studentListSearch', compact('students'));
+    }
+
+    protected function createMeetingRecord(Kiosk $kiosk)
+    {
+        //TODO: check the session variable (set below) and return if it is set.
+        
+        $today = Carbon::today()->toDateString();   //maybe set the string to have a format: ->format('D d M Y')
+        $found = Meeting::where('kiosk_id',$kiosk->id)->where('date',$today)->count();
+               
+        if ( $found > 0) { 
+            return;
+            //TODO: set a session variable instead of doing the search in the lines above
+        }
+        Meeting::create([
+            'date' => $today,
+            'time' => Carbon::now()->toTimeString(),
+            'kiosk_id' => $kiosk->id
+        ]);
     }
 }
