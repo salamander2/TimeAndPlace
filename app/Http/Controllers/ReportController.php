@@ -48,7 +48,8 @@ class ReportController extends Controller
         //$logs = $monthlogs->orderBy('student.lastname')->get();
         //->sortBy('studentID.lastname');//->sortBy('studentID.firstname');
         //$monthlogs =  Log::where('created_at', '>', $month)->where('status_code','PRESENT')->orderBy('studentID->lastname')->get();//->sortBy('studentID.firstname');
-        $logs = $monthlogs->sortBy('student.firstname')->sortBy('student.lastname');
+        //sort by studentID first in case there are two people with the same name
+        $logs = $monthlogs->sortBy('studentID')->sortBy('student.firstname')->sortBy('student.lastname');
 
         $currentID = "";
         $row = array_fill(0,$numDates, ' ');
