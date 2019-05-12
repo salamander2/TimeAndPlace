@@ -28,10 +28,11 @@ class ReportController extends Controller
         }
 
         $array = array();
-        $topRow =array();
+        $topRow[] = 'Student';
         foreach ($meetings as $meeting) {
             $topRow[] = $meeting->date;
         }
+        $numDates = count($topRow);
         // dd($topRow);
         
         $monthlogs =  Log::where('created_at', '>', $month)->where('status_code','PRESENT')->with('student')->get();
@@ -46,13 +47,42 @@ class ReportController extends Controller
         //$monthlogs =  Log::where('created_at', '>', $month)->where('status_code','PRESENT')->orderBy('studentID->lastname')->get();//->sortBy('studentID.firstname');
         $logs = $monthlogs->sortBy('student.firstname')->sortBy('student.lastname');
 
+        $currentID = "";
+        $row = array_fill(0,$numDates, ' ');
+        $array[]=$topRow;
+
         foreach($logs as $log) {
-            //$student = Student::find($log->studentID);
-            print_r($log->student->lastname . ', ' . $log->student->firstname);
-            print_r($log->created_at->format('D d M Y'));
-            print_r('<br>');
+            if ($log->studentID != $currentID) {
+                //for everything except for the first time through (where there is no id)
+                if ($currentID != "") {
+                    $array[]=$row;
+                    $row = array_fill(0,$numDates, ' ');
+                }
+                //array_push($row,$currentID);
+                //insert studentID into first element in row
+                $currentID = $log->studentID;
+                $row[0]=$currentID;                
+            }
+            //dd($row);
+
+            //now I have to find the correct column for the date.
+            $date = $log->created_at->toDateString();
+
+            $key = array_search($date, $topRow);
+            $row[$key] = 'Y';
+            
+            
+            // print_r($log->student->lastname . ', ' . $log->student->firstname);
+            // print_r($log->created_at->format('D d M Y'));
+            // print_r('<br>');
         }
-        
+        // print_r($topRow);
+        // print_r('<br>');
+        // print_r($row);   
+            
+        //dd($array);
+
+        return view('reports.attendance', compact('kiosk','array'));//->with('array'=>$array);
 
     }
 }
