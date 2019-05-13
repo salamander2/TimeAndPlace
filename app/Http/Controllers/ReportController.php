@@ -91,3 +91,26 @@ class ReportController extends Controller
 
     }
 }
+ 
+/* How this all works
+
+1. The kiosk is set to "signinonly" when it is created.
+2. This means that there is no autologout and no schedule
+3. Students sign in to a Terminal. Then the following happens:
+   3.a. A Meeting record is created with the date, time and kiosk
+   3.b. A "studentsignedin" record is created with studentID, kiosk and status of PRESENT
+   3.c. A log entry is created as normal, but with the status of PRESENT
+4. The next time a student signs in, it check to see if there is already a Meeting record for that day and kiosk.
+   If there is, it does not create a new one.
+5. If the same student tries to sign in again / sign out, it just says that he has already been marked present.
+6. At midnight, all the studentsignedin records with PRESENT are deleted.
+   Thus this system only works on a day-by-day basis. You cannot have two separate signins for the same kiosk on the same day.
+7. To generate the attendance report the following is done:
+   7.a. All meetings for the current month and this kiosk are selected and set to be the first row in an array/table
+   7.b. All logs are selected that have that kiosk, that month, and status of PRESENT (?)
+   7.c. These logs are sorted by name and student id (incase there are two students with the same name)
+   7.d. The studentID is entered at the beginning of a new row. The date field is then matched with the meeting dates in the first row
+        and a 'Y' is entered in the correct location of the array.
+   7.e. We then proceed to all of the other logs for this student, and then to the subsequent students.
+
+*/

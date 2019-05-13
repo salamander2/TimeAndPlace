@@ -132,10 +132,12 @@ Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
 Route::get('/courses/', 'StudentController@showCourse');
 
-
 /*----------------Report Routes-----------------*/
 Route::get('/reports/{kiosk}', 'ReportController@attendance');
 //Route::get('/reports', 'ReportController@attendance');
+
+/*----------------Testing Routes-----------------*/
+Route::get('/testing', 'TestController@main');
 
 Route::fallback(function () {
     return redirect('home');

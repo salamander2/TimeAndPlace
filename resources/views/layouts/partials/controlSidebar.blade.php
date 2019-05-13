@@ -14,16 +14,14 @@
 	<?php $branch = exec('git rev-parse --abbrev-ref HEAD'); echo "<p>(<u>".$branch."</u> branch)</p>"; ?>
       </h5>
     </div>
-    <div class="p-3">
-        <p>1.2 (20190413)<br>* Schedules and autologout now working.<br></p>
-        <p>1.1 (20190407)<br>* Terminal sign in/out using loginID/studentID.<br>* Kiosk deletion fixed. </p>
-        <p>1.0 (20190329) Initial release </p>
+    
+     
+    <div class="card-body">
+	    <a href="/students" class="btn btn-outline-info">List all Students</a>
+		  <a href="/students/339654014" class="btn btn-outline-info">Go to Student show page</a>
+      <a href="/courses" class="btn btn-outline-info">List Courses (future implemenation)</a>
+      <a href="/testing" class="btn btn-outline-info">Testing Laravel</a>
     </div>
-     <ul>  
-	  <li><a href="/students" class="btn btn-outline-info">Go to Student index page</a></li>
-		  <li><a href="/students/339654014" class="btn btn-outline-info">Go to Student show page</a></li>
-      <li><a href="/courses" class="btn btn-outline-info">Debug Course stuff</a></li>
-    </ul>
-    <br><br><Br><br>
+    
   </aside>
   <!-- /.control-sidebar -->

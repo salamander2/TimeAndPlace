@@ -225,18 +225,25 @@ class TerminalController extends Controller
     protected function createMeetingRecord(Kiosk $kiosk)
     {
         //TODO: check the session variable (set below) and return if it is set.
-        
+        // BUT how long will it persist and when should it be deleted?
+        //$sessionVal = session('meetingcreated');
+        //if ($sessionVal == true) return;
+
         $today = Carbon::today()->toDateString();   //maybe set the string to have a format: ->format('D d M Y')
         $found = Meeting::where('kiosk_id',$kiosk->id)->where('date',$today)->count();
                
         if ( $found > 0) { 
-            return;
             //TODO: set a session variable instead of doing the search in the lines above
+            return;            
         }
+
         Meeting::create([
             'date' => $today,
             'time' => Carbon::now()->toTimeString(),
             'kiosk_id' => $kiosk->id
         ]);
+
+        
+        //session(['meetingcreated' => 'true']);
     }
 }

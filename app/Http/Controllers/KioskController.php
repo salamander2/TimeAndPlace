@@ -78,7 +78,7 @@ class KioskController extends Controller
 
     /** STORE
      * Store a newly created kiosk in database.
-     *
+     * NOTE: The hash has to NOT have any of the following characters in it or else it won't work as a URL: . / # : ? %
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -90,6 +90,9 @@ class KioskController extends Controller
             'room' => ['required', 'string', 'max:20']            
         ]);
 
+        $secretURL = Hash::make(str_random(8));
+        //$secretURL = preg_replace("/[\/\#\?\.:%]/", "", $secretURL);
+        $secretURL = preg_replace("/[^\$a-zA-Z0-9]/", "", $secretURL); //only allow Alphanumeric and $
         Kiosk::create([
             'name' => $validatedKiosk['name'],
             'room' => $validatedKiosk['room'],
@@ -98,11 +101,11 @@ class KioskController extends Controller
             // 'requireConf' => $request->has('requireConf') ? 1 : 0,            
             'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
             'signInOnly' => ($request->signInOnly == "yes"),                        
-            'autoSignout' => $request->has('autoSignout') ? 1 : 0,            
-            'secretURL' => Hash::make(str_random(8)),
+            'autoSignout' => $request->has('autoSignout') ? 1 : 0,  
+            'secretURL' => $secretURL,
         ]);
     
-//        TODO: The hash has to NOT have any of the following characters in it or else it won't work as a URL: . / # : ?
+
 
         //$kiosk = new Kiosk();
         //$kiosk->save();
