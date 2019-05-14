@@ -39,6 +39,7 @@
                 Birthdate: <span class="white">{{ $record->dob }}</span>
                 <span class="fright">Age: <span class="white">{{ $age }}</span></span>
             </p>
+            <h4>Fake Time Table</h4>
             <table class="timetable">
             <tr><th>Period</th><th>Course</th><th>Teacher</th><th>Room</th></tr>
             <tr><td>1</td><td>ESLAO1-01</td><td>Corbett, Rebecca</td><td>226</td></tr><tr><td>2</td><td>PPL1OM-07</td><td>Harvey, Brian</td><td>B37</td></tr><tr><td>4</td><td>CGC1PR-03</td><td>Brown, David</td><td>207</td></tr><tr><td>5</td><td>MAT1LL-03</td><td>Orr, Amy</td><td>226</td></tr></table>
@@ -48,7 +49,7 @@
 
     {{-- $record --}}
 
-
+    <h4>Sample Record</h4>
     {"studentID":302808019,"firstname":"Meena","lastname":"Vyas","gender":"F","dob":"2000-04-09","timetable":"ADA4M101 CHY4U101 ENG4C105 HZT4U101"} 
 
  

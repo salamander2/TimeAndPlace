@@ -16,15 +16,15 @@
 
     {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
     <script type="text/javascript">
-	var overlayOn = false;
+        var overlayOn = false;
 
-	function resetFocus(){
-	    if (overlayOn) {
-                $('#inputName').focus();
-	    } else {
-                $('#inputID').focus();
-	    }
-	}
+        function resetFocus(){
+            if (overlayOn) {
+                    $('#inputName').focus();
+            } else {
+                    $('#inputID').focus();
+            }
+        }
 
         function parseInput(str) {
         
@@ -168,7 +168,12 @@
                 loginID = $("#inputID").val()
                 $("#inputID").val('');
                 $('#inputID').focus();
-                toggleOneStudent(loginID,false);
+                //if ($kioskrequireConf) {
+                //    toggleOneStudent(loginID,true);
+                //} else {
+               //     toggleOneStudent(loginID,false);
+                //}
+                confirmStudent(loginID);
             }
             );  
         }
@@ -176,7 +181,8 @@
    
         /* This function gets all of the students that match the string being typed: 
             ie. their first name, last name, or student number 
-            The data is returned as a table in a child view. */
+            The data is returned as a table in a child view. 
+            Clicking on a student or their ID takes you to "toggleOneStudent()" */
         function findStudents(str) {  
             if (str.length == 0) { 
                 document.getElementById("studentList").innerHTML = "";
@@ -193,14 +199,44 @@
             }
             xmlhttp.open("GET", "studentFind/" + str, true);
             xmlhttp.send();
-        }        
+        }       
+    
+        
+        function confirmStudent(str) {
+            if (str.length == 0) return;
 
+            //no data for GET since it's in the URL
+            var ajaxReq = $.ajax('/studentsJSON/'+str, {
+                dataType: 'json',
+                timeout: 500,
+                success: function (data, status, jqXhr) {
+                    //alert('d1 ' + data.photoURL);
+                    //alert('d2 ' + data.age);                    
+                    //alert('status ' + status);
+                    //alert('student' + data.record['firstname'])
+                    
+                   // alert('dada X ' + $response);
+                    //$('p').append(data.firstName + ' ' + data.middleName + ' ' + data.lastName);
+                    SWconfirmSignin(data.record, data.photoURL);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    alert('Error: ' + errorMessage);
+                }
+            });
+        }            
+/*            
+        if (confirm) {
+            SWconfirmSignin($response.student);
+        } else { 
+            SWsignin($response.student);
+        }
+*/
         /* This function gets a student based on their student ID (stored in 'str)
             It runs "toggleStudentID" which then logs them in or out.
 
             TODO: rewrite as a POST method
         */
-        function toggleOneStudent(str,confirm=true) { 
+        function toggleOneStudent(str) { 
             
             if (str.length == 0) return;
             
@@ -212,11 +248,7 @@
 
                     $response = JSON.parse(xmlhttp.responseText);
                     if ($response.status === 'signed in') {
-                        if (confirm) {
-                            SWconfirmSignin($response.student);
-                        } else { 
-                            SWsignin($response.student);
-                        }
+                        SWsignin($response.student);
                     } else if($response.status === "signed out"){
                         SWsignout($response.student);
                     } else if($response.status === "present"){
@@ -315,23 +347,25 @@
             }).then(  function() { $('#inputID').focus() }
         	);
         }
-
-	//TODO: this still signs the student in if the screen is clicked outside the SWAL. Fix by printing the value and seeing what it is.
-	//How is the student being signed in when nothing is popping up on the screen?
-	//The CONFIRM SWeetAlert is only popping up AFTER the toggle has been done!!!
-        function SWconfirmSignin(student) {
+	
+        function SWconfirmSignin(student, photoURL) {            
+            //<img class="student-img" src="{-- $photoURL --}" width="170" height="200">
             swal({
-                title: "Confirm Sign-in",
-                text: "Please confirm that this is the correct student being signed in",
-                icon: "warning",
+                title: "Confirm Sign-in for "+ student['firstname'] + " " + student['lastname'],
+                text: "Please confirm that this is the correct student being signed in" ,
+                //html: "<img src='"+photoURL+"' style='width:170px;height:200px'>",
+                //icon: "{{asset('img/14.png')}}",
+                icon: photoURL,
+                //icon: "warning",
                 buttons: true,
                 dangerMode: true,
                 })
                 .then((proceed) => {
-			if (proceed) {
-				console.log("signing in");
-				SWsignin(student);
-			} 
+                if (proceed) {
+                    //console.log("signing in");
+                    //SWsignin(student);
+                    toggleOneStudent(student['studentID']);
+                } 
             });
         }
     </script>
@@ -384,6 +418,7 @@
         document.getElementById("inputID").focus();
         document.getElementById("inputID").autofocus = "true";
     </script>
+
 </body>
 
 </html>

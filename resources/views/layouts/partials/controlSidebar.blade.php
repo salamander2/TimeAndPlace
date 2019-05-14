@@ -19,7 +19,7 @@
     <div class="card-body">
 	    <a href="/students" class="btn btn-outline-info">List all Students</a>
 		  <a href="/students/339654014" class="btn btn-outline-info">Go to Student show page</a>
-      <a href="/courses" class="btn btn-outline-info">List Courses (future implemenation)</a>
+      <a href="/courses" class="btn btn-outline-info">List Courses</a>
       <a href="/testing" class="btn btn-outline-info">Testing Laravel</a>
     </div>
     

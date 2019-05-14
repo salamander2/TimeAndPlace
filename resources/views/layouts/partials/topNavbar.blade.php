@@ -5,6 +5,8 @@
     #studentSearch {
         width: 70%;        
         left: 15%;
+        /* TODO: topnavbar must have these top: 15%; position: relative;, but Terminal.blade must not */
+        top: 15%;
         position: relative;
         border: solid gray 5px;
         border-radius: 8px;

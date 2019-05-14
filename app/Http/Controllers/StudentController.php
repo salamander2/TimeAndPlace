@@ -11,7 +11,7 @@ class StudentController extends Controller
 {
     public function __construct()
 	{
-		$this->middleware('auth');
+		$this->middleware('auth')->except('showJSON');
     }
     
     /**
@@ -50,7 +50,7 @@ class StudentController extends Controller
         $record = Student::find($id) ??  abort(403,'Student ' .$id. ' not found.');
         
         $photoURL = $record->getPhotoURL($id);
-        $record->getTimeTable();
+        $record->getTimeTable();    //NOT USED: $courses = $record->getTimeTable();
 
 		//$record = $student->find($id);
         //$record = $student->first();
@@ -59,6 +59,22 @@ class StudentController extends Controller
         return view('student', compact('record','age','photoURL'));
     
         //dd($record);
+    }
+
+    public function showJSON($id)
+    {        
+       //Student record
+        $record = Student::find($id);
+        if ($record == null) {
+            $age = -1;
+            $photoURL = "";
+        } else {
+            $photoURL = $record->getPhotoURL($id);
+            $age = $this->getAge($record->dob);
+        }
+        
+        return response()->json(['record' => $record, 'age'=> $age, 'photoURL'=>$photoURL]);    
+
     }
 
     /**

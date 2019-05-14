@@ -25,7 +25,7 @@ class TerminalController extends Controller
     {
         $this->middleware('lockout')->only(['launch']);
         // $this->middleware('lockout')->only(['launch', 'toggleStudent']);
-	//Do not require AUTH middleware for listStudents.
+	    //Do not require AUTH middleware for listStudents.
         $this->middleware('auth')->only(['listStudents2']);
         $this->middleware('guest')->only(['toggleStudentID']);
     }

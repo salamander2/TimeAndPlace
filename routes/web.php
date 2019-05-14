@@ -130,6 +130,7 @@ Route::get('/autosignout/{kioskID}','LogController@autosignoutKiosk');
 /*----------------Student Routes-------------*/
 Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
+Route::get('/studentsJSON/{id}', 'StudentController@showJSON');
 Route::get('/courses/', 'StudentController@showCourse');
 
 /*----------------Report Routes-----------------*/
