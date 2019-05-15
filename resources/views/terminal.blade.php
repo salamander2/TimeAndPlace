@@ -13,7 +13,14 @@
     <link href="{{ asset('css/terminal.css') }}" rel="stylesheet">
 
     <title>Checkin/out Terminal</title>
-
+    <style>
+    .swalImg img{
+        border: solid 6px #333;
+        border-radius:8px;
+        width:170px;
+        height:200px
+    }
+    </style>
     {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
     <script type="text/javascript">
         var overlayOn = false;
@@ -168,12 +175,12 @@
                 loginID = $("#inputID").val()
                 $("#inputID").val('');
                 $('#inputID').focus();
-                //if ($kioskrequireConf) {
-                //    toggleOneStudent(loginID,true);
-                //} else {
-               //     toggleOneStudent(loginID,false);
-                //}
-                confirmStudent(loginID);
+                @if ($kiosk->requireConf) 
+                    confirmStudent(loginID);
+                @else                
+                    toggleOneStudent(loginID);
+                @endif
+                
             }
             );  
         }
@@ -224,16 +231,9 @@
                 }
             });
         }            
-/*            
-        if (confirm) {
-            SWconfirmSignin($response.student);
-        } else { 
-            SWsignin($response.student);
-        }
-*/
+
         /* This function gets a student based on their student ID (stored in 'str)
             It runs "toggleStudentID" which then logs them in or out.
-
             TODO: rewrite as a POST method
         */
         function toggleOneStudent(str) { 
@@ -248,11 +248,11 @@
 
                     $response = JSON.parse(xmlhttp.responseText);
                     if ($response.status === 'signed in') {
-                        SWsignin($response.student);
+                        SWsignin($response.student, $response.photoURL);
                     } else if($response.status === "signed out"){
                         SWsignout($response.student);
                     } else if($response.status === "present"){
-                        SWpresent($response.student);
+                        SWpresent($response.student, $response.photoURL);
                     } else if($response.status === "already present"){
                         SWalreadyPresent($response.student);
                     } else if($response.status === "not found"){
@@ -275,14 +275,24 @@
 
     {{-- Script to pop up sweetalerts --}}
     <script>
-        function SWsignin(student) {
+        function SWsignin(student, photoURL) {
             //resetTerminal();                         
             swal({
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed into {!!$kiosk->name !!} ({!!$kiosk->room!!})",
-                icon: "success",
-		        buttons: [""],
-                timer:4000,
+                @if ($kiosk-> showPhoto)
+                    className: "swalImg",
+                    icon: photoURL,
+                @else
+                    icon: "success",
+                @endif
+                
+                @if ($kiosk->swalOKbtn)
+                    //ok button displayed
+                @else
+                    buttons: [""],
+                @endif
+                timer:3000,
             }).then( function() { $('#inputID').focus() }
 	    );
         } //end
@@ -293,20 +303,33 @@
                 title: "Goodbye " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed out of {!!$kiosk->name !!} ({!!$kiosk->room!!})",
                 icon: "success",
-                buttons: [""],
-                timer:4000,            
+                @if ($kiosk->swalOKbtn)
+                    //ok button displayed
+                @else
+                    buttons: [""],
+                @endif                
+                timer:3000,            
             }).then( function() { $('#inputID').focus() }
 	    );
         }
 
-        function SWpresent(student) {
+        function SWpresent(student, photoURL) {
             //resetTerminal();                         
             swal({
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
                 text: "You have been marked present for {!!$kiosk->name!!} ({!!$kiosk->room!!}) today",
-                icon: "success",
-                buttons: [""],
-                timer:4000,            
+                @if ($kiosk-> showPhoto)
+                    className: "swalImg",
+                    icon: photoURL,
+                @else
+                    icon: "success",
+                @endif
+                @if ($kiosk->swalOKbtn)
+                    //ok button displayed
+                @else
+                    buttons: [""],
+                @endif
+                timer:3000,            
 	        }).then( function() { $('#inputID').focus() }
 	        );
         }
@@ -317,8 +340,12 @@
                 title: "Hey " + student['firstname'] + " " + student['lastname'],
                 text: "You have already been marked present for {!!$kiosk->name!!} ({!!$kiosk->room!!}) today!",
                 icon: "warning",                
-                buttons: [""],
-                timer:4000,            
+                @if ($kiosk->swalOKbtn)
+                    //ok button displayed
+                @else
+                    buttons: [""],
+                @endif
+                timer:3000,            
 	        }).then( function() { $('#inputID').focus() }
 	        );
         }
@@ -338,7 +365,7 @@
         }
 
         function SWerrormsg(str) {
-            if (str.length == 0) str = "The student was not found or there was an unexpected database error."
+            if (str.length == 0) str = "The student was not found or there was an unexpected database error!"
             swal({
                 title: "ERROR!",
                 icon: "error",
@@ -355,8 +382,12 @@
                 text: "Please confirm that this is the correct student being signed in" ,
                 //html: "<img src='"+photoURL+"' style='width:170px;height:200px'>",
                 //icon: "{{asset('img/14.png')}}",
-                icon: photoURL,
-                //icon: "warning",
+                className: "swalImg",
+                @if ($kiosk-> showPhoto)
+                    icon: photoURL,
+                @else
+                    icon: "warning",
+                @endif
                 buttons: true,
                 dangerMode: true,
                 })

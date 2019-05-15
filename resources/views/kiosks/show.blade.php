@@ -70,6 +70,15 @@
 
 					<div class="row my-1">
 						<div class="col-md-auto">
+							<input type="checkbox" disabled id="swalOKbtn" name="swalOKbtn" {{ $kiosk->swalOKbtn ? 'checked' :''}}>
+						</div>
+						<div class="col-md-2 bg-primary"><label for="swalOKbtn">Display OK button</label></div>
+						<div class="col border ">OK button for sign-in can be clicked instead of waiting for the alert to disappear.</div>
+					</div>
+					<!-- end row -->
+
+					<div class="row my-1">
+						<div class="col-md-auto">
 							<input type="checkbox" disabled id="showPhoto" name="showPhoto" {{ $kiosk->showPhoto ? 'checked' :''}}>
 						</div>
 						<div class="col-md-2 bg-primary"><label for="showPhoto">Show Photo</label></div>
@@ -82,7 +91,7 @@
 							<input type="checkbox" disabled id="showSchedule" name="showSchedule" {{ $kiosk->showSchedule ? 'checked' :''}}>
 						</div>
 						<div class="col-md-2 bg-primary"><label for="showSchedule">Show Schedule</label></div>
-						<div class="col ">Show student schedule upon sign-in</div>
+						<div class="col ">Show student schedule upon sign-in (not implemented yet)</div>
 					</div>
 					<!-- end row -->
 

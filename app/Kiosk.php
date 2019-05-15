@@ -12,7 +12,8 @@ class Kiosk extends Model
         'secretURL', 'showPhoto',
         'showSchedule', 'requireConf',
         'publicViewable', 'signInOnly',
-        'autoSignout', 'defaultFreq'
+        'autoSignout', 'defaultFreq',
+        'swalOKbtn'
     ];
 
     public $timestamps = true;

@@ -47,33 +47,33 @@ class StudentController extends Controller
         
        //Student record
         // $record = $student->find($id) ??  abort(403,'Student ' .$id. ' not found.');
-        $record = Student::find($id) ??  abort(403,'Student ' .$id. ' not found.');
+        $student = Student::find($id) ??  abort(403,'Student ' .$id. ' not found.');
         
-        $photoURL = $record->getPhotoURL($id);
-        $record->getTimeTable();    //NOT USED: $courses = $record->getTimeTable();
+        $photoURL = $student->getPhotoURL($id);
+        $student->getTimeTable();    //NOT USED: $courses = $student->getTimeTable();
 
-		//$record = $student->find($id);
-        //$record = $student->first();
-        $age = $this->getAge($record->dob);
-        //return view('student')->withRecord($record)->withAge($age);
+		//$student = $student->find($id);
+        //$student = $student->first();
+        $age = $this->getAge($student->dob);
+        //return view('student')->withRecord($student)->withAge($age);
         return view('student', compact('record','age','photoURL'));
     
-        //dd($record);
+        //dd($student);
     }
 
     public function showJSON($id)
     {        
        //Student record
-        $record = Student::find($id);
-        if ($record == null) {
+        $student = Student::find($id);
+        if ($student == null) {
             $age = -1;
             $photoURL = "";
         } else {
-            $photoURL = $record->getPhotoURL($id);
-            $age = $this->getAge($record->dob);
+            $photoURL = $student->getPhotoURL($id);
+            $age = $this->getAge($student->dob);
         }
         
-        return response()->json(['record' => $record, 'age'=> $age, 'photoURL'=>$photoURL]);    
+        return response()->json(['record' => $student, 'age'=> $age, 'photoURL'=>$photoURL]);    
 
     }
 

@@ -42,6 +42,7 @@ class Student extends Model
         return $temp;
      }
      
+     //TODO This doesn't actually need the ID as a parameter since a student record automatically has an id (unless this is a static method)
     /** getPhotoURL
      * return the student photo URL based on the id
      *

@@ -68,22 +68,9 @@ class TerminalController extends Controller
 		    dd("launch via token error");
 	//      return redirect('/login');
         }
+    }
 
         
-    }
-
-    
-    //DEBUG
-    public function launchPrev(Kiosk $kiosk)
-    {
-        return view('terminalPrev', compact('kiosk'));
-    }
-    //Debugging only: Launch BluePanel terminal
-    public function launchBP(Kiosk $kiosk)
-    {
-        return view('bp_terminal', compact('kiosk'));
-    }
-    
 
     /* This method assumes that the student record is present -- not null */
     /* NO LONGER USED
@@ -195,8 +182,9 @@ class TerminalController extends Controller
             $kiosk->students()->attach($studentID, ['status_code' => $statcode]);
             //create a signedIn entry
             $kiosk->signedIn()->attach($studentID, ['status_code' => $statcode]);
-           
-            return response()->json(['status' => $statresp, 'student' => $student->toArray()]);
+            //get photoURL in case it's needed
+            $photoURL = $student->getPhotoURL($studentID);
+            return response()->json(['status' => $statresp, 'photoURL'=>$photoURL, 'student' => $student->toArray()]);
         }
 
         return redirect() -> route('launchTerminal',$kiosk->id);    //why is this here?

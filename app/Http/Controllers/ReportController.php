@@ -38,7 +38,7 @@ class ReportController extends Controller
         $numDates = count($topRow);
         // dd($topRow);
         
-        $monthlogs =  Log::where('created_at', '>', $month)->where('status_code','PRESENT')->with('student')->get();
+        $monthlogs =  Log::where('kiosk_id',$kiosk->id)->where('created_at', '>', $month)->where('status_code','PRESENT')->with('student')->get();
         /* You cannot orderBy on a table connected using WITH. 
         You have to use the join() method to sort the entire collection (instead of the eager loading I was trying which just orders the relationship.)
             

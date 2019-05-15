@@ -112,11 +112,11 @@ class LogController extends Controller
 		$lastmonth = Carbon::now()->startOfMonth()->subMonth();
 
 		//build all queries
-		$todaylogs =  Log::where('studentID',$id)->where('created_at', '>', $today)->orderByDesc('created_at');
-		$yesterlogs =  Log::where('studentID',$id)->where('created_at', '>', $yesterday)->where('created_at', '<', $today)->orderByDesc('created_at');
-		$weeklogs =  Log::where('studentID',$id)->where('created_at', '>', $week)->orderByDesc('created_at');
-		$monthlogs =  Log::where('studentID',$id)->where('created_at', '>', $month)->orderByDesc('created_at');
-		$prevmonthlogs =  Log::where('studentID',$id)->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->orderByDesc('created_at');
+		$todaylogs =  Log::where('studentID',$id)->where('created_at', '>', $today)->orderBy('created_at');
+		$yesterlogs =  Log::where('studentID',$id)->where('created_at', '>', $yesterday)->where('created_at', '<', $today)->orderBy('created_at');
+		$weeklogs =  Log::where('studentID',$id)->where('created_at', '>', $week)->orderBy('created_at');
+		$monthlogs =  Log::where('studentID',$id)->where('created_at', '>', $month)->orderBy('created_at');
+		$prevmonthlogs =  Log::where('studentID',$id)->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->orderBy('created_at');
 		//"All logs" is not used on this screen
 		//$logs =  Log::where('studentID',$id)->orderByDesc('created_at')->get();
 
@@ -153,7 +153,7 @@ class LogController extends Controller
 	{			
 		$student = Student::find($id);
 		$user = Auth::user();
-		$logs = Log::where('studentID',$id)->orderBy('kiosk_id')->orderByDesc('created_at')->with('kiosk'); //this returns a query
+		$logs = Log::where('studentID',$id)->orderBy('kiosk_id')->orderBy('created_at')->with('kiosk'); //this returns a query
 				
 		//remove all private kiosk logs 
 		foreach ( Kiosk::all() as $kiosk) {
