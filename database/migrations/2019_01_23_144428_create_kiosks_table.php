@@ -21,6 +21,7 @@ class CreateKiosksTable extends Migration
 			  $table->boolean('showPhoto')->default(0);			// show photo of student when logging in/out
 			  $table->boolean('showSchedule')->default(0); 		// show student timetable
 			  $table->boolean('requireConf')->default(0);		// require confirmation for login (i.e. name and photo remains until Y is pressed)
+			  $table->boolean('swalOKbtn')->default(1);			// show the OK button on the SweetAlert boxes.
 			  $table->boolean('publicViewable')->default(0);	// can this kiosk be viewed by the generic "teacher" login?
 			  $table->boolean('signInOnly')->default(0);		// sign in or sign in AND sign out
 			  $table->boolean('autoSignout')->default(0);		// does this kiosk hav autosignout at certain times?
