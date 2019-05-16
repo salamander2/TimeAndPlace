@@ -51,7 +51,7 @@
         </form>
     </div>
     @if($kiosk->signInOnly)
-    DEBUG REPORTS <a class="my-1 btn btn-secondary elevation-3" <a href="{{'/reports/'.$kiosk->id}}"> Reports </a>
+    <a class="my-1 btn btn-secondary elevation-3" <a href="{{'/reports/'.$kiosk->id}}">Attendance Reports </a>
     @endif
 </div>
 @endsection

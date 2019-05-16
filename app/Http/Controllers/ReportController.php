@@ -30,15 +30,16 @@ class ReportController extends Controller
         $array = array(); 
         $topRow[] = 'Student'; //this is used to match the dates
         $topRow2[] = 'Student'; //this is used for displaying nicely formatted dates
+        $leftCol[] = 'StudentIds'; //this is used to match the ids with the row in Array.
 
         foreach ($meetings as $meeting) {
             $topRow[] = $meeting->date;
             $topRow2[] = Carbon::parse($meeting->date)->format('D, d M Y');
         }
         $numDates = count($topRow);
-        // dd($topRow);
-        
+                
         $monthlogs =  Log::where('kiosk_id',$kiosk->id)->where('created_at', '>', $month)->where('status_code','PRESENT')->with('student')->get();
+        
         /* You cannot orderBy on a table connected using WITH. 
         You have to use the join() method to sort the entire collection (instead of the eager loading I was trying which just orders the relationship.)
             
@@ -51,11 +52,30 @@ class ReportController extends Controller
         //sort by studentID first in case there are two people with the same name
         $logs = $monthlogs->sortBy('studentID')->sortBy('student.firstname')->sortBy('student.lastname');
 
-        $currentID = "";
-        $row = array_fill(0,$numDates, ' ');
+                
         $array[]=$topRow2;
 
         foreach($logs as $log) {
+        
+            $currentID = $log->studentID;            
+            //find the correct row for the student ID
+            $rownum = array_search($currentID, $leftCol);
+
+            if ($rownum == false) {
+                $newrow = array_fill(0,$numDates, ' ');
+                $newrow[0]=$log->student->lastname.', '.$log->student->firstname . '('.$currentID.')';
+                $array[]=$newrow;
+                $leftCol[] = $currentID;
+                $rownum = array_search($currentID, $leftCol); 
+            } 
+            //find the correct column for the date.
+            $date = $log->created_at->toDateString();
+            $key = array_search($date, $topRow);
+            $array[$rownum][$key] = 'Y';
+            
+        }
+
+/*        foreach($logs as $log) {
             if ($log->studentID != $currentID) {
                 //for everything except for the first time through (where there is no id)
                 if ($currentID != "") {
@@ -84,7 +104,7 @@ class ReportController extends Controller
         // print_r($topRow);
         // print_r('<br>');
         // print_r($row);   
-            
+ */           
         //dd($array);
 
         return view('reports.attendance', compact('kiosk','array'));//->with('array'=>$array);
