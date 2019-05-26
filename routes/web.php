@@ -15,6 +15,21 @@
 
 /*
 |--------------------------------------------------------------------------
+| Resourceful controllers
+|--------------------------------------------------------------------------
+Actions Handled By Resource Controller
+Verb        URI                 Action      Route Name
+GET         /photos             index()       photos.index
+GET         /photos/create      create()      photos.create
+POST        /photos             store()       photos.store
+GET         /photos/{photo}     show()        photos.show
+GET         /photos/{photo}/edit edit()       photos.edit
+PUT/PATCH   /photos/{photo}     update()      photos.update
+DELETE      /photos/{photo}     destroy()     photos.destroy
+*/
+
+/*
+|--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -132,6 +147,11 @@ Route::get('/students', 'StudentController@index');
 Route::get('/students/{id}', 'StudentController@show');
 Route::get('/studentsJSON/{id}', 'StudentController@showJSON');
 Route::get('/courses/', 'StudentController@showCourse');
+
+/*----------------Event Routes-----------------*/
+Route::get('/events/create/{kiosk}', 'EventController@create');
+Route::post('/events', 'EventController@store');
+
 
 /*----------------Report Routes-----------------*/
 Route::get('/reports/{kiosk}', 'ReportController@attendance');

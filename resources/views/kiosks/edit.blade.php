@@ -40,7 +40,12 @@
     @include('child.kioskedit2')
 
     <div class="clearfix">
+            @if(!$kiosk->signInOnly)
             <a class="my-1 btn btn-primary elevation-3" <a href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
+            @else
+            <a class="my-1 btn btn-light btn-outline-primary elevation-3" <a href="{{'/reports/'.$kiosk->id}}">Attendance Reports </a>
+            @endif
+            
             
         {{-- onsubmit="return false"  <<< this is needed in case jquery doesnt load.
             Otherwise there is no confirmation and the form is submitted immediately.   --}}
@@ -50,8 +55,16 @@
             <button id="deleteBtn" type="submit" class="btn btn-danger elevation-3">Delete this Kiosk</button>
         </form>
     </div>
+    <hr>
     @if($kiosk->signInOnly)
-    <a class="my-1 btn btn-secondary elevation-3" <a href="{{'/reports/'.$kiosk->id}}">Attendance Reports </a>
+    {{--  <div class="btn btn-outline-secondary elevation-3">  --}}
+    <a class="my-1 btn btn-outline-info elevation-3" <a href="{{'/events/create/'.$kiosk->id}}">Create event</a> (This is only for the dance class performances)
+    </div>
+    @endif
+    <br><Br>
+    {{-- if there are any events (ie. it is also a signinOnly kiosk)   --}}
+    @if($kiosk->events->count())
+    @include('child.kioskedit4')
     @endif
 </div>
 @endsection
