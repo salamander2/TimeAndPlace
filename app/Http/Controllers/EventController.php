@@ -108,6 +108,15 @@ class EventController extends Controller
         //
     }
 
+
+    /* This loads a small page that has various buttons to do other things with the event */
+    public function settings($id) 
+    {
+        $event = Event::find($id);
+
+
+        return view('events.settings', compact('event'));
+    }
     /**
      * Add a list of students to the event
      */
@@ -115,8 +124,9 @@ class EventController extends Controller
     {
         $event = Event::find($id);
 
-        $studentList = EventStudentList::where('event_id',$id)->with('student')->get();
-        //dd($studentList);
+        $slist = EventStudentList::where('event_id',$id)->with('student')->get();
+        $studentList=$slist->sortBy('studentID')->sortBy('student.firstname')->sortBy('student.lastname');
+
         return view('events.addStudents', compact('event','studentList'));
     }
 

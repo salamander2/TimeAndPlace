@@ -151,6 +151,7 @@ Route::get('/courses/', 'StudentController@showCourse');
 /*----------------Event Routes-----------------*/
 Route::get('/events/create/{kiosk}', 'EventController@create');
 Route::post('/events', 'EventController@store');
+Route::get('/events/settings/{id}', 'EventController@settings');
 Route::get('/events/{id}/addStudents', 'EventController@addStudents');
 Route::post('/events/addStudents', 'EventController@addStudentsByCourse');
 
@@ -163,6 +164,6 @@ Route::get('/reports/{kiosk}', 'ReportController@attendance');
 Route::get('/testing', 'TestController@main');
 
 Route::fallback(function () {
-//    return redirect('home');
+    return redirect('home');
 });
 

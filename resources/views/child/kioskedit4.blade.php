@@ -17,11 +17,11 @@ $(function () {
         
         <div class="row my-1" style="border-bottom:solid black 1px;">
             <div class="col-md-3">Name</div>
+            <div class="col">&nbsp;</div>
             <div class="col">Date</div>
             <div class="col">Start Time</div>
             <div class="col">Late Time</div>
             <div class="col">End Time</div>
-            <div class="col">&nbsp;</div>
         </div>
         @foreach($kiosk->events as $event)
             <div class="row py-1">
@@ -30,6 +30,9 @@ $(function () {
                                 {{ $event->name }}
                               </button></a>
                     {{--  <input type="text" class="form-control bg-primary" disabled  value="{{ $event->name }}">  --}}
+                </div>
+                <div class="col">
+                    <a href="{{'/events/settings/'.$event->id}}"><button type="button" class="btn btn-outline-danger">Settings</button></a>
                 </div>
                 <div class="col">
                     <label>{{$event->date}} </label>
@@ -46,10 +49,6 @@ $(function () {
                 <div class="col">
                         {{--  <label>{{$event->endTime}} </label>  --}}
                     <input style="background-color:white;color:black;border:0" type="time" readonly id="endTime" name="endTime" value="{{ $event->endTime }}">
-                </div>
-                <div class="col">
-                    <input type="button" onclick="window.location.href='/'" class="btn  btn-outline-danger"
-                        value="Launch Signin">
                 </div>
             </div>
             <!-- end row -->

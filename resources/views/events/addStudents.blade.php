@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <h1>
-       Adding students to event {{$event->name}}
+       Adding students to event {{$event->name}} 
     </h1>
     
     <div class="card card-primary">
@@ -14,7 +14,7 @@
             <p class="small">Change this to a popup message that then disappears</p>
         </div>
         @endif
-
+	    <h3 style="float:right">Event ID={{$event->id}}</h3>
 
             <p>Enter a course code, no spaces, no hyphen. e.g. ATC10102</p>
             <form role="form" action="/events/addStudents" method="post">                                        
@@ -29,6 +29,7 @@
                         </div>                
                         {{csrf_field()}}
                         <button type="submit" class="btn btn-primary">Submit</button>
+		<p style="float:right">TODO: add in an option to add student by name/student number too</p>
                 </div>
             </form>
         </div>
@@ -42,7 +43,7 @@
         <p>
     @foreach($studentList as $SL)
         
-            {{$SL->student_id}} : {{$SL->student->firstname}} {{$SL->student->lastname}}<br/>        
+            {{$SL->student_id}} : <b>{{$SL->student->lastname}},</b> {{$SL->student->firstname}}<br/>        
         
     @endforeach 
         </p>
