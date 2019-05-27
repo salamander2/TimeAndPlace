@@ -20,9 +20,10 @@
 
     <div class="card xxbg-info">
             <div class="card-body">
-		<p>Add button to copy all students from another event to this one</p>
-		<p>Add button to launch login screen</p>
-		<p>Add button to show report of present / late / absent</p>
+		
+        <p><a href="{{'/events/settings/'.$event->id}}"><button type="button" class="btn btn-info">Copy student list</button></a> from another event to this one</p>
+        <p><a href="{{'/events/terminal/'.$event->id}}"><button type="button" class="btn btn-warning">Start Login Terminal</button></a></p>
+        <p><a href="{{'/events/report/'.$event->id}}"><button type="button" class="btn btn-success">Report: late/absent</button></a></p>
 	</div>
     </div>
 @endsection

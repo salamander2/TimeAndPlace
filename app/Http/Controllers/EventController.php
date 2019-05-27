@@ -162,6 +162,12 @@ class EventController extends Controller
          return back();
     }
 
-
+    /* Start the special terminal for events */
+    public function terminal($id) 
+    {
+        $event = Event::find($id);
+        $kiosk = Kiosk::find($event->kiosk_id);
+        return view('events.terminal', compact('kiosk','event'));
+    }
     
 }
