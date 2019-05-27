@@ -56,7 +56,7 @@ class StudentController extends Controller
         //$student = $student->first();
         $age = $this->getAge($student->dob);
         //return view('student')->withRecord($student)->withAge($age);
-        return view('student', compact('record','age','photoURL'));
+        return view('student', compact('student','age','photoURL'));
     
         //dd($student);
     }

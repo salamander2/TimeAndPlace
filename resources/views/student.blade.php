@@ -21,7 +21,7 @@
 
     <div id="main">
             <div id="main-top">
-                <h1 class="centered">{{$record->lastname}}, {{$record->firstname}} </h1>
+                <h1 class="centered">{{$student->lastname}}, {{$student->firstname}} </h1>
             
             <!-- **************** Begin insert photo ***************** -->
                 <a href="{{$photoURL}}">
@@ -35,9 +35,9 @@
             <div class="box2">       
             <div id="mkbk">
             <p style="border:1px solid gray;padding:2px 4px;">
-                Student Number: <span class="white">{{ $record->studentID }}</span>
-                <span class="fright">Gender: <span class="white">{{ $record->gender}}</span></span><br>
-                Birthdate: <span class="white">{{ $record->dob }}</span>
+                Student Number: <span class="white">{{ $student->studentID }}</span>
+                <span class="fright">Gender: <span class="white">{{ $student->gender}}</span></span><br>
+                Birthdate: <span class="white">{{ $student->dob }}</span>
                 <span class="fright">Age: <span class="white">{{ $age }}</span></span>
             </p>
             <h4>Fake Time Table</h4>
@@ -48,9 +48,9 @@
             </div>
     
 
-    {{-- $record --}}
+    {{-- $student --}}
 
-    <h4>Sample Record</h4>
+    <h4>Sample student</h4>
     {"studentID":302808019,"firstname":"Meena","lastname":"Vyas","gender":"F","dob":"2000-04-09","timetable":"ADA4M101 CHY4U101 ENG4C105 HZT4U101"} 
 
  

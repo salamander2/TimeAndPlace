@@ -58,6 +58,11 @@ class Kiosk extends Model
         return $this->belongsToMany(Schedule::class);
     }
 
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
     public function sched_periods() {
         
         $k_sched = $this->schedules()->get();

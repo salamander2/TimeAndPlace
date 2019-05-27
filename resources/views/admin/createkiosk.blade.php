@@ -114,11 +114,11 @@
                     @if ($errors->any()) {{-- dd($errors) --}} {{ $errors->first('name') }}<br> {{ $errors->first('room')
                     }} @endif
 
-                    <div class="box-footer">
+                    {{--  <div class="card-footer bg-secondary">  --}}
                         {{csrf_field()}}
                         <button type="submit" class="btn btn-primary">Create</button> &nbsp;&nbsp;&nbsp;
                         <a href="/home" class="btn btn-success">Cancel</a>
-                    </div>
+                    {{--  </div>  --}}
                 </form>
                 <!-- form end -->
             </div>
