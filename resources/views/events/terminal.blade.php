@@ -217,8 +217,8 @@
                     $('#inputID').focus()
                 }
             }
-            
-            xmlhttp.open("GET", "{{$kiosk->id}}/toggleStudentID/" + str, true);
+                        
+            xmlhttp.open("GET", "/events/{{$event->id}}/signInStudent/" + str, true);
             xmlhttp.send();
         
         }

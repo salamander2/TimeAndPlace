@@ -156,6 +156,9 @@ Route::get('/events/terminal/{id}', 'EventController@terminal');
 Route::get('/events/report/{id}', 'EventController@report');
 Route::get('/events/{id}/addStudents', 'EventController@addStudents');
 Route::post('/events/addStudents', 'EventController@addStudentsByCourse');
+Route::post('/events/copyStudentList', 'EventController@copyStudentList');
+Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStudent');
+
 
 
 /*----------------Report Routes-----------------*/

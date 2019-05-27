@@ -16,4 +16,10 @@ class Event extends Model
     {
         return $this->belongsTo(Kiosk::class);
     }
+    //TODO get this working. I'm actually writing the record out myself instead of using attach. I don't know why.
+    //See EventController / signInStudent()
+    // public function students()
+    // {
+    //     return $this->belongsToMany(Student::class);
+    // }
 }

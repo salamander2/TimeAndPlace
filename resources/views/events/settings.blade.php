@@ -15,15 +15,26 @@
         </div>
         @endif
 
+
+        <form role="form" action="/events/copyStudentList" method="post">                
+            {{csrf_field()}}
+                <input type="hidden" id="eventID" name="eventID" value="{{$event->id}}">
+                
+                    <p>Copy student list from another event to this one :
+                    <span class="alert btn-outline-success" for="sourceID"><b>From which event?</b></span> 
+                    <input type="text" class="col-1"  id="sourceID" name="sourceID" required autofocus>                    
+                    <button type="submit" class="btn btn-info">Go</button>                
+                
+        </form>
         </div>
     </div>
 
     <div class="card xxbg-info">
-            <div class="card-body">
-		
-        <p><a href="{{'/events/settings/'.$event->id}}"><button type="button" class="btn btn-info">Copy student list</button></a> from another event to this one</p>
-        <p><a href="{{'/events/terminal/'.$event->id}}"><button type="button" class="btn btn-warning">Start Login Terminal</button></a></p>
-        <p><a href="{{'/events/report/'.$event->id}}"><button type="button" class="btn btn-success">Report: late/absent</button></a></p>
-	</div>
+        <div class="card-body">
+            
+            
+            <p><a href="{{'/events/terminal/'.$event->id}}"><button type="button" class="btn btn-warning">Start Login Terminal</button></a></p>
+            <p><a href="{{'/events/report/'.$event->id}}"><button type="button" class="btn btn-success">Report: late/absent</button></a></p>
+        </div>
     </div>
 @endsection

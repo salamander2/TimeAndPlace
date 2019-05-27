@@ -111,7 +111,7 @@ class TerminalController extends Controller
     }
     */
 
-    /* Toggle student in/out using their login ID to idnetify them
+    /* Toggle student in/out using their login ID to identify them
         OR their student number */
     public function toggleStudentID(Kiosk $kiosk, String $loginID)
     {     
