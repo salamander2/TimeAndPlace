@@ -63,7 +63,8 @@ class ReportController extends Controller
 
             if ($rownum == false) {
                 $newrow = array_fill(0,$numDates, ' ');
-                $newrow[0]=$log->student->lastname.', '.$log->student->firstname . '('.$currentID.')';
+                #$newrow[0]=$log->student->lastname.', '.$log->student->firstname . '('.$currentID.')';
+                $newrow[0]=$log->student->lastname.', '.$log->student->firstname;
                 $array[]=$newrow;
                 $leftCol[] = $currentID;
                 $rownum = array_search($currentID, $leftCol); 
