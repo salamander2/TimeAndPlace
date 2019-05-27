@@ -1,4 +1,11 @@
 <!-- child view in kiosk edit to show events and start event terminal -->
+<script>
+// add Bootstrap tool tips everywhere
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
 <div class="card card-dark ">
     <div class="card-header" data-widget="collapse">
         <h3 class="card-title">Kiosk Events</h3>
@@ -7,8 +14,7 @@
         </div>
     </div>
     <div class="card-body">
-        @if($kiosk->events->count())
-
+        
         <div class="row my-1" style="border-bottom:solid black 1px;">
             <div class="col-md-3">Name</div>
             <div class="col">Date</div>
@@ -20,7 +26,10 @@
         @foreach($kiosk->events as $event)
             <div class="row py-1">
                 <div class="col-md-3">
-                    <input type="text" class="form-control bg-primary" disabled  value="{{ $event->name }}">
+                        <a href="/events/{{$event->id}}/addStudents"><button type="button" class="col btn btn-primary" data-toggle="tooltip" data-placement="top" title="Click to add students to this event">
+                                {{ $event->name }}
+                              </button></a>
+                    {{--  <input type="text" class="form-control bg-primary" disabled  value="{{ $event->name }}">  --}}
                 </div>
                 <div class="col">
                     <label>{{$event->date}} </label>
@@ -40,7 +49,7 @@
                 </div>
                 <div class="col">
                     <input type="button" onclick="window.location.href='/'" class="btn  btn-outline-danger"
-                        value="Launch Terminal">
+                        value="Launch Signin">
                 </div>
             </div>
             <!-- end row -->
@@ -55,7 +64,7 @@
                 value="Revoke">
             <br> --}} 
         @endforeach 
-        @endif
+       
 
      
 

@@ -45,10 +45,10 @@
                             <b>End Time:</b> students cannot log in past this time</p>
                         </div> <!-- end row -->
                         <div class="card-footer">
-                                {{csrf_field()}}
-                                <button type="submit" class="btn btn-primary">Create</button> &nbsp;&nbsp;&nbsp;
-                                <a href="/kiosks/{{$kiosk->id}}/edit" class="btn btn-success">Cancel</a>
-                            </div>
+                            {{csrf_field()}}
+                            <button type="submit" class="btn btn-primary">Create</button> &nbsp;&nbsp;&nbsp;
+                            <a href="/kiosks/{{$kiosk->id}}/edit" class="btn btn-success">Cancel</a>
+                        </div>
                         </form>
                         <!-- form end -->
             </div>

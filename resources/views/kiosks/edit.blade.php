@@ -59,12 +59,12 @@
     @if($kiosk->signInOnly)
     {{--  <div class="btn btn-outline-secondary elevation-3">  --}}
     <a class="my-1 btn btn-outline-info elevation-3" <a href="{{'/events/create/'.$kiosk->id}}">Create event</a> (This is only for the dance class performances)
-    </div>
+    {{--  </div>  --}}
     @endif
     <br><Br>
     {{-- if there are any events (ie. it is also a signinOnly kiosk)   --}}
     @if($kiosk->events->count())
-    @include('child.kioskedit4')
+        @include('child.kioskedit4')
     @endif
 </div>
 @endsection

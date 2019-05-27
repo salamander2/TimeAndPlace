@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 use App\Kiosk;
 use App\Event;
+use App\Course;
+use App\Student;
 use Illuminate\Http\Request;
+use App\Student_course;
+use App\EventStudentList;
 
 class EventController extends Controller
 {
@@ -102,4 +106,51 @@ class EventController extends Controller
     {
         //
     }
+
+    /**
+     * Add a list of students to the event
+     */
+    public function addStudents($id) 
+    {
+        $event = Event::find($id);
+
+        $studentList = EventStudentList::where('event_id',$id)->with('student')->get();
+        //dd($studentList);
+        return view('events.addStudents', compact('event','studentList'));
+    }
+
+    /* Add students by course to the event (the id is in the request)
+    */
+    public function addStudentsByCourse(Request $request) 
+    {
+        $eventID = $request->eventID;
+        if ($eventID == null) {
+            return back()->with('error','Error: no event id passed to event controller.');
+        }
+        $courseCode = $request->courseCode;
+        $course = Course::find($courseCode);
+        if ($course == null) {
+            return back()->with('error','Invalid course code. Course not found.');
+        }
+
+
+        $students = Student_course::all()->where('coursecode',$courseCode);
+        //dd($students);
+         foreach ($students as $student) {
+            //print_r($course->coursecode ." ... " . $student->studentID . "<br>");
+            //TODO: how to handle create when there is a unique contstraint?
+            $test = EventStudentList::where('event_id',$eventID)->where('student_id',$student->studentID);
+            if ($test->get()->count()) {
+                continue;
+            }  
+            EventStudentList::updateOrCreate([
+                'event_id'=>$eventID,
+                'student_id'=>$student->studentID,                
+            ]);  
+         }  
+         return back();
+    }
+
+
+    
 }
