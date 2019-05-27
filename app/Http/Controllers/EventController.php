@@ -49,6 +49,7 @@ class EventController extends Controller
             'name' => ['unique:events', 'required', 'string', 'max:30', 'min:3'],
         ]);
         
+	//TODO: verify that starttime  <= late time <= end time
         Event::create([
             'kiosk_id'=>$request->kioskID,
             'name' => $validatedEvent['name'],

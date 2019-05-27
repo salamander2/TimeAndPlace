@@ -10,7 +10,10 @@
             </h1>
         </div>
         <div class="col text-right">
+
+            @if(!$kiosk->signInOnly)
             <a class="my-1 mx-3 btn btn-warning elevation-3" href="/autosignout/{{ $kiosk->id }}"> Signout all now  </a>
+	    @endif
             <a class="my-1 btn btn-success elevation-3" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
         </div>
     </div>
