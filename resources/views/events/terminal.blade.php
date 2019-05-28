@@ -19,6 +19,7 @@
     <link href="{{ asset('css/terminal.css') }}" rel="stylesheet">
 
     <title>Event Login Terminal</title>
+
     <style>
     .swalImg img{
         border: solid 6px #333;
@@ -27,6 +28,7 @@
         height:200px
     }
     </style>
+
     {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
     <script type="text/javascript">
         var overlayOn = false;
@@ -49,6 +51,7 @@
             document.getElementById("inputName").focus();
             document.getElementById("inputName").value = str;
         }
+
         function getPassword() {
             swal({
                 title: "Enter teacher password",
@@ -126,6 +129,17 @@
                 loginID = $("#inputID").val()
                 $("#inputID").val('');
                 $('#inputID').focus();
+                if (loginID.length == 0) return;
+
+                today = new Date();
+                time = today.getHours() + ":" + today.getMinutes() + ":00";
+                if (time > '{{$event->endTime}}') {
+                    //alert("one " + time);
+                    SWerrormsg("It is too late to log in now.");
+                    resetTerminal()
+                    return;
+                } 
+
                 @if ($kiosk->requireConf) 
                     confirmStudent(loginID);
                 @else                
@@ -380,9 +394,12 @@
         </div>
 
         <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" 
-        onclick="getPassword()" alt="HB Beal" height="300vh"><br>
+        onclick="getPassword()" alt="HB Beal" height="200vh"><br>
 
         <h1 class="text-center">{{$kiosk->name}} sign in<br> {{$event->name}}</h1>
+
+        <div id="timeinfo" class="border border-dark rounded" style="display: inline-block;padding:10px;"></div>
+        
         <div class="term">
             <input type="text" style="text-align: left" id="inputID" size=20
                 placeholder="" 
@@ -400,7 +417,19 @@
         document.getElementById("inputID").focus();
         document.getElementById("inputID").autofocus = "true";
     </script>
+    <script>
+            time = "{{$event->startTime}}";
+            time = time.substring(0, 5);
+            str = '<h5 id="timeinfo"><span class="bg-info px-3"> Start signing in: '+time+' </span></h5>';
 
+            time = "{{$event->lateTime}}";
+            time = time.substring(0, 5);
+            str = str+'<h5 id="timeinfo"><span class="bg-warning px-3"> Late time: '+time+' </span></h5>';
+            time = "{{$event->endTime}}";
+            time = time.substring(0, 5);
+            str = str+'<h5 id="timeinfo"><span class="bg-danger px-3"> Absent after: '+time+' </span></h5>';
+            document.getElementById("timeinfo").innerHTML = str;
+        </script>
 </body>
 
 </html>

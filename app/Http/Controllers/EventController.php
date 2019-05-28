@@ -118,6 +118,7 @@ class EventController extends Controller
 
         return view('events.settings', compact('event'));
     }
+
     /**
      * Add a list of students to the event
      */
@@ -259,7 +260,6 @@ class EventController extends Controller
             $photoURL = $student->getPhotoURL($studentID);
             return response()->json(['status' => $statresp, 'photoURL' => $photoURL, 'student' => $student->toArray()]);
         }
-
-      
     }
+
 }

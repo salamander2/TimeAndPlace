@@ -1,5 +1,6 @@
 @extends('layouts.app') 
 @section('content')
+<a href="{{ url()->previous() }}" class="btn btn-outline-secondary small">Back</a>
 <div class="container">
     <h1>
        Options for event: {{$event->name}} 
@@ -33,7 +34,7 @@
         <div class="card-body">
             
             
-            <p><a href="{{'/events/terminal/'.$event->id}}"><button type="button" class="btn btn-warning">Start Login Terminal</button></a></p>
+            <p><a target="_blank" href="{{'/events/terminal/'.$event->id}}"><button type="button" class="btn btn-warning">Start Login Terminal</button></a></p>
             <p><a href="{{'/events/report/'.$event->id}}"><button type="button" class="btn btn-success">Report: late/absent</button></a></p>
         </div>
     </div>

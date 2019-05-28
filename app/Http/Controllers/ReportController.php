@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Meeting;
 use App\Kiosk;
 use App\Log;
+use App\Event;
+use App\Event_Student;
+use App\EventStudentList;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -61,6 +64,7 @@ class ReportController extends Controller
             //find the correct row for the student ID
             $rownum = array_search($currentID, $leftCol);
 
+            //student already in the array, so make a new row for him.
             if ($rownum == false) {
                 $newrow = array_fill(0,$numDates, ' ');
                 #$newrow[0]=$log->student->lastname.', '.$log->student->firstname . '('.$currentID.')';
@@ -111,7 +115,7 @@ class ReportController extends Controller
         return view('reports.attendance', compact('kiosk','array'));//->with('array'=>$array);
 
     }
-}
+
  
 /* How this all works
 
@@ -135,3 +139,64 @@ class ReportController extends Controller
    7.e. We then proceed to all of the other logs for this student, and then to the subsequent students.
 
 */
+
+    public function eventReport($id) {
+        
+        //get the Event
+        $event = Event::find($id);
+
+        //get the list of students for this event
+        $slist = EventStudentList::where('event_id', $id)->with('student')->get();
+        $studentList = $slist->sortBy('studentID')->sortBy('student.firstname')->sortBy('student.lastname');
+
+        $logs = Event_Student::where('event_id', $id)->with('student')->get();
+
+        $array = array();         
+        $leftCol = array(); //this is used to match the ids with the row in Array.
+
+        
+
+        //Make an array of all of the ids of the students who are supposed to be at the event
+        foreach($studentList as $log) {
+            $leftCol[] = $log->student_id;
+            $array[] = array($log->student->lastname.', '.$log->student->firstname , '-',' ');
+        }
+        
+        foreach($logs as $log) {
+            //the log record has to be the same day as the event
+            if ($log->created_at->toDateString() != $event->date) {
+                continue;
+            }
+
+            $signIntime = $log->created_at->toTimeString();
+
+            //decide whether status is present, late or absent
+            $status = 'A'; //default
+            
+            if ($signIntime > $event->startTime) {
+                if ($signIntime > $event->endTime) {
+                    $status='A';
+                } else if ($signIntime > $event->lateTime) {
+                    $status = "L";
+                } else {
+                    $status = "P";
+                }
+            }
+            
+            $currentID = $log->student_id;
+            
+            //find the correct row for the student ID
+            $rownum = array_search($currentID, $leftCol);
+             
+            //add the status to the second row
+            $array[$rownum][1] = $status;
+            $array[$rownum][2] = substr($signIntime,0,5);
+            
+        }
+
+        //dd($array);
+        return view('events.attendance', compact('event','array'));//->with('array'=>$array);
+
+    }
+}
+

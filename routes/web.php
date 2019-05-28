@@ -153,7 +153,7 @@ Route::get('/events/create/{kiosk}', 'EventController@create');
 Route::post('/events', 'EventController@store');
 Route::get('/events/settings/{id}', 'EventController@settings');
 Route::get('/events/terminal/{id}', 'EventController@terminal');
-Route::get('/events/report/{id}', 'EventController@report');
+Route::get('/events/report/{id}', 'ReportController@eventReport');
 Route::get('/events/{id}/addStudents', 'EventController@addStudents');
 Route::post('/events/addStudents', 'EventController@addStudentsByCourse');
 Route::post('/events/copyStudentList', 'EventController@copyStudentList');

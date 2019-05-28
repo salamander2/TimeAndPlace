@@ -17,9 +17,15 @@ class Event_Student extends Model
     {
         return $this->belongsTo(Event::class);
     }
-    public function students()
-    {
-        return $this->belongsTo(Student::class);
+
+    //TODO figure out this pivot stuff again
+    // public function students()
+    // {
+    //     return $this->belongsTo(Student::class);
+    // }
+
+    public function student() {
+        return $this->hasOne(Student::class,'studentID', 'student_id');
     }
 
     public static function isSignedIn(int $studentID, int $eventID) {
