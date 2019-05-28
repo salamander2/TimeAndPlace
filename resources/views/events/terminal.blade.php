@@ -131,6 +131,8 @@
                 $('#inputID').focus();
                 if (loginID.length == 0) return;
 
+/* This is not working because the server time is different from the Chromebook time (I think that's why)
+   It blocks too early  
                 today = new Date();
                 time = today.getHours() + ":" + today.getMinutes() + ":00";
                 if (time > '{{$event->endTime}}') {
@@ -139,7 +141,7 @@
                     resetTerminal()
                     return;
                 } 
-
+***********/
                 @if ($kiosk->requireConf) 
                     confirmStudent(loginID);
                 @else                
@@ -393,7 +395,7 @@
             <div id="studentList" class="text-center"></div>
         </div>
 
-        <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" 
+        <img style="margin-top: 5vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" 
         onclick="getPassword()" alt="HB Beal" height="200vh"><br>
 
         <h1 class="text-center">{{$kiosk->name}} sign in<br> {{$event->name}}</h1>
