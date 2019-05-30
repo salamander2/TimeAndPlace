@@ -141,7 +141,16 @@ class ReportController extends Controller
 */
 
     public function eventReport($id) {
+	$view = $this->createEventReport($id,'events.attendance');
+	return($view);
+    }
         
+    public function eventReport2($id) {
+	$view = $this->createEventReport($id,'events.attendancePrint');
+	return($view);
+    }
+
+    protected function createEventReport($id, $viewname) {
         //get the Event
         $event = Event::find($id);
 
@@ -195,7 +204,7 @@ class ReportController extends Controller
         }
 
         //dd($array);
-        return view('events.attendance', compact('event','array'));//->with('array'=>$array);
+        return view($viewname, compact('event','array'));//->with('array'=>$array);
 
     }
 }

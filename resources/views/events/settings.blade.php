@@ -1,6 +1,6 @@
 @extends('layouts.app') 
 @section('content')
-<a href="{{ url()->previous() }}" class="btn btn-outline-secondary small">Back</a>
+{{--<a href="{{'/kiosks/'.$kiosk->id.'/edit' }}" class="btn btn-outline-secondary small">Back</a>  --}}
 <div class="container">
     <h1>
        Options for event: {{$event->name}} 
@@ -35,7 +35,8 @@
             
             
             <p><a target="_blank" href="{{'/events/terminal/'.$event->id}}"><button type="button" class="btn btn-warning">Start Login Terminal</button></a></p>
-            <p><a href="{{'/events/report/'.$event->id}}"><button type="button" class="btn btn-success">Report: late/absent</button></a></p>
+            <p><a href="{{'/events/report/'.$event->id}}"><button type="button" class="btn btn-success">Report: late/absent</button></a>&nbsp;&nbsp;
+            <a href="{{'/events/report2/'.$event->id}}"><button type="button" class="btn btn-outline-success">Printable Report</button></a></p>
         </div>
     </div>
 @endsection
