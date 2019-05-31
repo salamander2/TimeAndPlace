@@ -10,8 +10,11 @@
         <div class="card-title">                
                 <h2>
                     Attendance for {{ $event->name }}
-                </h2>                
+                
+                <div class="float-right"> <a href="{{'/events/report2/'.$event->id}}"><button type="button" class="btn btn-outline-info">Printable Report</button></a></p></div>
+            </h2>                
         </div>
+        
     </div>
     
     

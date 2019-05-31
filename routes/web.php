@@ -155,7 +155,7 @@ Route::get('/events/settings/{id}', 'EventController@settings');
 Route::get('/events/terminal/{id}', 'EventController@terminal');
 Route::get('/events/report/{id}', 'ReportController@eventReport');
 Route::get('/events/report2/{id}', 'ReportController@eventReport2');
-Route::get('/events/{id}/addStudents', 'EventController@addStudents');
+//Route::get('/events/{id}/addStudents', 'EventController@addStudents');
 Route::post('/events/addStudents', 'EventController@addStudentsByCourse');
 Route::post('/events/copyStudentList', 'EventController@copyStudentList');
 Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStudent');
@@ -170,6 +170,7 @@ Route::get('/reports/{kiosk}', 'ReportController@attendance');
 Route::get('/testing', 'TestController@main');
 
 Route::fallback(function () {
-    return redirect('home');
+    //return redirect('home');
+    abort(404,'Page Not Found.');
 });
 

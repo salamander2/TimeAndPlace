@@ -114,15 +114,16 @@ class EventController extends Controller
     public function settings($id)
     {
         $event = Event::find($id);
+        $slist = EventStudentList::where('event_id', $id)->with('student')->get();
+        $studentList = $slist->sortBy('studentID')->sortBy('student.firstname')->sortBy('student.lastname');
 
-
-        return view('events.settings', compact('event'));
+        return view('events.settings', compact('event','studentList'));
     }
 
     /**
      * Add a list of students to the event
      */
-    public function addStudents($id)
+   public function addStudents($id)
     {
         $event = Event::find($id);
 
@@ -133,6 +134,7 @@ class EventController extends Controller
     }
 
     /* Add students by course to the event (the id is in the request)
+       Returns to the view that called it.
     */
     public function addStudentsByCourse(Request $request)
     {
@@ -179,6 +181,10 @@ class EventController extends Controller
             return back()->with('error', 'Error: no source event id passed to event controller.');
         }
 
+        if ($sourceID == $destID) {
+            return back()->with('error', 'Error: You can\'t copy from the current event.');
+        }
+
         $students = EventStudentList::where('event_id', $sourceID)->get();
         if (!$students->count()) {
             return back()->with('error', 'No students found. Ensure that event ID is correct.');
@@ -205,7 +211,8 @@ class EventController extends Controller
         }
         //dd('here2'.$eventID." ".$sourceID);
 
-        return redirect('/events/' . $destID . '/addStudents');
+        return back();
+        // return redirect('/events/' . $destID . '/addStudents');
     }
 
     /* Start the special terminal for events */

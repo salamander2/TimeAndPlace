@@ -16,7 +16,7 @@ $(function () {
     <div class="card-body">
         
         <div class="row my-1" style="border-bottom:solid black 1px;">
-            <div class="col-md-3">Name</div>
+            <div class="col-md-3">#&nbsp;&nbsp;Name</div>
             <div class="col">&nbsp;</div>
             <div class="col">Date</div>
             <div class="col">Start Time</div>
@@ -26,13 +26,12 @@ $(function () {
         @foreach($kiosk->events as $event)
             <div class="row py-1">
                 <div class="col-md-3">
-                        <a href="/events/{{$event->id}}/addStudents"><button type="button" class="col btn btn-primary" data-toggle="tooltip" data-placement="top" title="Click to add students to this event">
-                                {{ $event->name }}
-                              </button></a>
+                        {{--  {{$event->id}} <a href="/events/{{$event->id}}/addStudents"><button type="button" class=" btn btn-primary" data-toggle="tooltip" data-placement="top" title="Click to add students to this event">  --}}
+                        {{$event->id}}&nbsp;&nbsp;<span class=" btn btn-primary">{{ $event->name }}</span>
                     {{--  <input type="text" class="form-control bg-primary" disabled  value="{{ $event->name }}">  --}}
                 </div>
                 <div class="col">
-                    <a href="{{'/events/settings/'.$event->id}}"><button type="button" class="btn btn-outline-danger">Settings</button></a>
+                    <a href="{{'/events/settings/'.$event->id}}"><button type="button" class="btn btn-outline-danger">Options</button></a>
                 </div>
                 <div class="col">
                     <label>{{$event->date}} </label>
