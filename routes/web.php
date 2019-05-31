@@ -57,6 +57,7 @@ Auth::routes(['register' => false]);
 //Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 /*-------------Default routes  -----------------*/
+//Route::get('/', function(){ return view('login'); });
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/{kiosk}', 'HomeController@showKiosk');
 Route::get('/help', 'HomeController@help');
@@ -170,7 +171,7 @@ Route::get('/reports/{kiosk}', 'ReportController@attendance');
 Route::get('/testing', 'TestController@main');
 
 Route::fallback(function () {
-    //return redirect('home');
-    abort(404,'Page Not Found.');
+    return redirect('home');
+    //abort(404,'Page Not Found.');
 });
 
