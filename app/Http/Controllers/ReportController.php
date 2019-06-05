@@ -19,12 +19,20 @@ class ReportController extends Controller
     }
 
     
-    public function attendance(Kiosk $kiosk) {
-        //for now, this is just the current month
-        $month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
-       
-        $meetings = Meeting::where('created_at', '>', $month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+    public function attendance(Kiosk $kiosk, $type='C') {
 
+	$month = Carbon::now()->startOfMonth()->subMonth(2);
+	if ($type == 'C') {
+		$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+	}
+/*	if ($type == 'C') {
+		$meetings = Meeting::where('created_at', '>', $month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+	} else {
+		$meetings = Meeting::where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+	}
+*/
+
+	$meetings = Meeting::where('created_at', '>', $month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
         if ($meetings->count() == 0) {
             //send an error message
             //redirect back to some screen ... home page?

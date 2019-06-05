@@ -5,6 +5,6 @@
       free for use at H.B. Beal S.S.
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2019 M. Harwood &amp; E. Gallant.</strong> 
+    <strong>Copyright &copy; 2019 M. Harwood </strong> 
 
   </footer>

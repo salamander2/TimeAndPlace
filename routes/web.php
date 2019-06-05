@@ -164,7 +164,8 @@ Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStu
 
 
 /*----------------Report Routes-----------------*/
-Route::get('/reports/{kiosk}', 'ReportController@attendance');
+Route::get('/reports/{kiosk}', 'ReportController@attendance')->defaults('type', 'A'); //parameter 'A' = all, 'C' = current month
+//Route::get('/reports/{kiosk}', 'ReportController@attendance');
 //Route::get('/reports', 'ReportController@attendance');
 
 /*----------------Testing Routes-----------------*/
