@@ -11,6 +11,11 @@ use App\EventStudentList;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+/*********************************************************************
+ *  This controller is specifically designed for ATTENDANCE reports. 
+ *  To see LOG reports, please see the LOG controller 
+ *********************************************************************/
+
 class ReportController extends Controller
 {
     public function __construct()

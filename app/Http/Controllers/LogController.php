@@ -212,4 +212,93 @@ class LogController extends Controller
 		}
 
 	}
+
+	/* This provides summary reports for this week, this month, previous months, and the whole semester */
+	public function summaryReport($id)
+	{	
+		$kiosk = Kiosk::all()->find($id);
+/*
+		switch($code) {
+			
+			case 'W':
+				$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00
+				$logs = $logs->where('created_at', '>', $week)->get();
+				break;
+			case 'M':
+				$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+				$logs = $logs->where('created_at', '>', $month)->get();
+				break;
+			case 'P':
+				$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+				$lastmonth = Carbon::now()->startOfMonth()->subMonth();
+				$logs = $logs->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->get();
+				break;
+			default:
+				//default or anything else is ALL (which was already selected)
+				$logs = $logs->get();
+		}
+*/
+		
+		//Set up data array
+		$array = array(); 
+		$array[] = array('', 'Unique','All');
+
+		/*
+		//Get counts for this WEEK
+		$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00		
+		$logbase = Log::where('kiosk_id',$id)->with('student');
+		$logs = $logbase->where('created_at', '>', $week)->where('status_Code','SIGNIN');
+		$countAll = $logs->count();		
+		$logs = $logs ->distinct()->get(['studentID']);
+		$countUnique = $logs->count();
+		// dd($countUnique);
+		// dd($logs);
+		$array[] = array('This week', $countUnique, $countAll);
+		*/
+
+		//counts for THIS MONTH
+		$month = Carbon::now()->startOfMonth();
+		$monthname = $month->format('F');
+
+		$logbase = Log::where('kiosk_id',$id)->with('student');
+		$logs = $logbase->where('created_at', '>', $month)->where('status_Code','SIGNIN');
+		$countAll = $logs->count();		
+		$logs = $logs ->distinct()->get(['studentID']);
+		$countUnique = $logs->count();
+		$array[] = array($monthname, $countUnique, $countAll);
+
+		//go through all previous months
+		while (true) {			//TODO: possibly make this a for loop in case there is a mistake in date / record logic that ends up with an endless loop
+			$lastmonth = $month->copy()->subMonth();
+			$monthname = $lastmonth->format('F');
+
+			//dd($month . " ". $lastmonth);
+			$logbase = Log::where('kiosk_id',$id)->with('student');
+			$logs = $logbase->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->where('status_Code','SIGNIN');			
+			//dd($logs->count());
+			$countAll = $logs->count();
+			$logs = $logs ->distinct()->get(['studentID']);
+			$countUnique = $logs->count();
+			
+			if ($countAll == 0) break; 
+			//dd($countAll);
+			$array[] = array($monthname, $countUnique, $countAll);
+			$month = $lastmonth->copy();
+			
+		} 
+
+		//counts for ALL		
+		$logbase = Log::where('kiosk_id',$id)->with('student');
+		$logs = $logbase->where('status_Code','SIGNIN');
+		$countAll = $logs->count();		
+		$logs = $logs ->distinct()->get(['studentID']);
+		$countUnique = $logs->count();
+		
+		$array[] = array("All", $countUnique, $countAll);
+
+		//dd($array);
+
+		return view('reports.logSummary', compact('array','kiosk'));
+	}
+
 }
