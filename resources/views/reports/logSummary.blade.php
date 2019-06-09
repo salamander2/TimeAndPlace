@@ -36,7 +36,7 @@
         @endforeach
         </Table>
         <p></p>
-		<p>These statistics count the number of "Sign-ins" for each time period</p>
+		<p>These statistics count the number of "Sign-ins" for each time period. </p>
         <p><b>Unique</b> means that each studentID is only counted once. <br>
             This gives a count of how many different students used this department/kiosk in one particular month.<br>
         <b>All</b> would include someone who signed in twice in the same day (counts as 2), as well as multiple days in the month.<br>

@@ -217,33 +217,12 @@ class LogController extends Controller
 	public function summaryReport($id)
 	{	
 		$kiosk = Kiosk::all()->find($id);
-/*
-		switch($code) {
-			
-			case 'W':
-				$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00
-				$logs = $logs->where('created_at', '>', $week)->get();
-				break;
-			case 'M':
-				$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
-				$logs = $logs->where('created_at', '>', $month)->get();
-				break;
-			case 'P':
-				$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
-				$lastmonth = Carbon::now()->startOfMonth()->subMonth();
-				$logs = $logs->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->get();
-				break;
-			default:
-				//default or anything else is ALL (which was already selected)
-				$logs = $logs->get();
-		}
-*/
-		
+
 		//Set up data array
 		$array = array(); 
-		$array[] = array('', 'Unique','All');
+		$array[] = array('', 'Unique','Total');
 
-		/*
+		/* -- this works perfectly, it is just commented out because it is not needed ...
 		//Get counts for this WEEK
 		$week = Carbon::now()->startOfWeek()->subDay();	//sets time to 0:00:00		
 		$logbase = Log::where('kiosk_id',$id)->with('student');
@@ -260,8 +239,8 @@ class LogController extends Controller
 		$month = Carbon::now()->startOfMonth();
 		$monthname = $month->format('F');
 
-		$logbase = Log::where('kiosk_id',$id)->with('student');
-		$logs = $logbase->where('created_at', '>', $month)->where('status_Code','SIGNIN');
+		$logbase = Log::where('kiosk_id',$id)->with('student')->where('status_Code','SIGNIN');
+		$logs = $logbase->where('created_at', '>', $month);
 		$countAll = $logs->count();		
 		$logs = $logs ->distinct()->get(['studentID']);
 		$countUnique = $logs->count();
@@ -273,8 +252,8 @@ class LogController extends Controller
 			$monthname = $lastmonth->format('F');
 
 			//dd($month . " ". $lastmonth);
-			$logbase = Log::where('kiosk_id',$id)->with('student');
-			$logs = $logbase->where('created_at', '>', $lastmonth)->where('created_at', '<', $month)->where('status_Code','SIGNIN');			
+			$logbase = Log::where('kiosk_id',$id)->with('student')->where('status_Code','SIGNIN');
+			$logs = $logbase->where('created_at', '>', $lastmonth)->where('created_at', '<', $month);
 			//dd($logs->count());
 			$countAll = $logs->count();
 			$logs = $logs ->distinct()->get(['studentID']);
@@ -298,6 +277,15 @@ class LogController extends Controller
 
 		//dd($array);
 
+		/********** DATA BY PERIOD *************/
+		/* HOW TO SELECT LOGS BY TIME INTERVAL ??? 
+		$month = Carbon::now()->startOfMonth();
+		$monthname = $month->format('F');
+		$logbase = Log::where('kiosk_id',$id)->with('student')->where('status_Code','SIGNIN');
+		$logs = $logbase->where('created_at', '>', $month);
+
+		$p1 = $logs->where('created_at')->format('H:i:s');//e.g. 15:30:00
+		*/
 		return view('reports.logSummary', compact('array','kiosk'));
 	}
 
