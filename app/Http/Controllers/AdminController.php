@@ -127,6 +127,7 @@ class AdminController extends Controller
         return view('admin.users');
     }
 
+    /* moved to AjaxController
     public function resetPWD(String $id) 
     {
         $defaultPWD = env('DEFAULT_PWD','G0^W$#SS54lhx');
@@ -136,6 +137,7 @@ class AdminController extends Controller
         $user->save();
         return response()->json(['status' => 'success']);
     }
+    */
 
 
 	// >>> this function is just for testing. RegisterController.php is actually used <<<<

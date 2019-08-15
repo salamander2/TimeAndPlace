@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -23,5 +24,13 @@ class TestController extends Controller
         dd($secretURL);
         dd("in test module");
         //or go to a view
+    }
+
+    public function testUser(User $user)
+    {
+        $user->delete();
+        die($user);
+
+        return response()->json('Deleted',200);
     }
 }

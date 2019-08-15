@@ -93,3 +93,14 @@ npm run dev
 npm install
 npm audit
 npm install --save-dev laravel-mix@4.0.15  
+
+----------------- upgrading AdminLTE (was 3.0.0-alpha.2) ------------------
+
+npm install admin-lte@3.0.0-beta.2 --save
+npm audit
+npm audit fix
+npm audit
+npm run dev
+
+------------------------------------------------------------
+php artisan make:Controller AjaxController

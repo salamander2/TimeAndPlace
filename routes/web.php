@@ -40,12 +40,20 @@ DELETE      /photos/{photo}     destroy()     photos.destroy
 |  References: https://laracasts.com/discuss/channels/laravel/routehas
 */
 
-/**** How to return a view right away: DO NOT DO THIS! You need middleware to authenticate everything.
+/**** How to return a view right away: 
+	DO NOT DO THIS! You need middleware to authenticate everything.
+	But you can add Middleware here. Can it be added to functions?
+
+//get a URL, return a view
 Route::get('/', function () {
    return view('welcome');
 });
+
+//get URL, return data from a controller function
 Route::get('/home1', 'HomeController@home1');
-Route::view('/home_orig', 'home_orig');
+
+//return a view directly (no function needed)
+Route::view('/home2', '/other/home2');
 */
 
 
@@ -70,8 +78,8 @@ Route::get('hideDefaultPWD', 'AdminController@hideDefaultPWD')->name('hideDefaul
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
 Route::post('addUser', 'AdminController@createUser')->name('addUser');
-Route::post('delUser/{id}', 'AdminController@deleteUser')->name('delUser');
-Route::post('resetPWD/{id}', 'AdminController@resetPWD');
+//Route::post('delUser/{id}', 'AdminController@deleteUser')->name('delUser');
+//Route::post('resetPWD/{id}', 'AdminController@resetPWD');
 
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');
@@ -161,7 +169,11 @@ Route::post('/events/addStudents', 'EventController@addStudentsByCourse');
 Route::post('/events/copyStudentList', 'EventController@copyStudentList');
 Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStudent');
 
-
+/*---------------- AJAX routes ------------------*/
+//Only put POST routes here. // adding multiple middlewares: middleware('first', 'second');
+//Middleware can also be added in AjaxController using the ->only() and ->except() methods
+Route::post('AJAXresetPWD/{id}', 'AjaxController@resetPWD')->middleware('admin');
+Route::post('AJAXdelUser/{id}', 'AjaxController@deleteUser')->middleware('admin');
 
 /*----------------Report Routes-----------------*/
 //This is for attendace report
@@ -172,6 +184,7 @@ Route::get('/reports/summary/{kiosk}', 'LogController@summaryReport');
 
 /*----------------Testing Routes-----------------*/
 Route::get('/testing', 'TestController@main');
+Route::get('/testing/{user}', 'TestController@testUser');
 
 Route::fallback(function () {
     return redirect('home');

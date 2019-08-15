@@ -14,10 +14,11 @@
 			},
 			type: "POST",
 			async: true,
-			url: 'resetPWD/' + userID,
+			url: 'AJAXresetPWD/' + userID,
 			dataType: "json",
 			success: function (msg) {
 				if(msg.status === "success"){
+					$("#pwd"+ userID).html("*");
 					window.createNotification({
 						theme: 'success',
 						positionClass: 'nfc-bottom-right',
@@ -29,18 +30,43 @@
 					});
 				}	
 			},
-			error: function (err) {
-				alert('no success');
-				console.log(err);
-				errormsg();
+			error: function (msg) {
+				if (msg.status == 403){
+					window.createNotification({
+						theme: 'error',
+						positionClass: 'nfc-bottom-right',
+						displayCloseButton: true,
+						showDuration: 4000
+					})({
+						title:'Forbidden',
+						message: 'You are not permitted to reset passwords'
+					});
+
+				} else {
+					alert('Reset password failed!');
+					console.log(msg);
+					//errormsg();
+				}
 			}
 		});
 	};
 	
 
 	function deleteUser(userID){
-		alert('Delete ' + userID);
-	}
+		//alert('Delete ' + userID);
+		
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			type: "POST",
+			async: true,
+			url: 'AJAXdelUser/' + userID,
+			dataType: "json",
+			success: function (msg) {
+			}
+		});
+	};
 
 </script>
 {{-- @endpush --}}
@@ -122,7 +148,7 @@
 							<td>&nbsp;&nbsp;<button type="button" name="resetPWD" class="btn btn-secondary"
 								onclick="if(confirm('Please confirm password reset ')) resetPWD({{ $user->id }});">Reset Password</button>
 							</td>
-							<td style="color:black;text-align:center">@if ($user->defaultPWD == 1) * @endif
+							<td style="color:black;text-align:center" id="pwd{{ $user->id }}">@if ($user->defaultPWD == 1) * @endif
 							</td>
 							<td><button type="button" name="delete" class="btn btn-outline-danger"
 								onclick="if(confirm('Are you sure?')) deleteUser({{ $user->id }});">Delete</button>
