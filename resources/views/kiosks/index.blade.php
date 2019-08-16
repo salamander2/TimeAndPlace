@@ -7,7 +7,7 @@
 	</ol> 
 --}} 
 
-<!-- display message when a kiosk has been deleted -->
+<!-- display message when this page (re)loads, eg. when a kiosk is deleted -->
 @if (session('error'))
 	<script>
 		window.createNotification({

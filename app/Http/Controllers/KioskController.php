@@ -124,7 +124,7 @@ class KioskController extends Controller
         $name=$kiosk->name;
         //dd("deleting kiosk " . $kiosk->id);
         $kiosk->delete();
-        return redirect('/kiosks')->with("error","Kiosk \"$name\" has been deleted");;
+        return redirect('/kiosks')->with("error","Kiosk \"$name\" has been deleted");
     }
 
 

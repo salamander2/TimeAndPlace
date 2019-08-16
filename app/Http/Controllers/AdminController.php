@@ -103,15 +103,16 @@ class AdminController extends Controller
        return redirect('/userMaint');
    }
 
-    public function showDefaultPWD()
-    {
-        //this is a session variable. I'm calling it 'error'. It is not the same as the $errors array that Validate returns
-        return redirect()->back()->with("error", env('DEFAULT_PWD', '--none--'));
-    }
-    public function hideDefaultPWD()
-    {
-        return redirect()->back();
-    }
+    // public function showDefaultPWD()
+    // {
+    //     //this is a session variable. I'm calling it 'error'. It is not the same as the $errors array that Validate returns
+    //     //renamed to be 'message' since 'error' is being used for user deletion
+    //     return redirect()->back()->with("message", env('DEFAULT_PWD', '--none--'));
+    // }
+    // public function hideDefaultPWD()
+    // {
+    //     return redirect()->back();
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -122,10 +123,12 @@ class AdminController extends Controller
      */
     public function deleteUser(User $user)
     {
+        $name = $user->fullname;
         $user->delete();
-
-        return view('admin.users');
+        return redirect('/userMaint')->with("error","User \"$name\" has been deleted");
+        //return response()->json('Deleted',200);
     }
+
 
     /* moved to AjaxController
     public function resetPWD(String $id) 

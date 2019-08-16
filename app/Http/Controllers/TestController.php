@@ -28,7 +28,7 @@ class TestController extends Controller
 
     public function testUser(User $user)
     {
-        $user->delete();
+        //$user->delete();
         die($user);
 
         return response()->json('Deleted',200);

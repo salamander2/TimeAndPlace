@@ -28,10 +28,11 @@ class AjaxController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function deleteUser(User $user)
+    public function showDefaultPWD()
     {
-        $user->delete();
-        return redirect('/userMaint')->with("error","User \"$user->name\" has been deleted");
-        return response()->json('Deleted',200);
+        $defaultPWD = env('DEFAULT_PWD', '--none--');
+        return response()->json($defaultPWD, 200);
     }
+
+    
 }

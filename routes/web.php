@@ -38,6 +38,10 @@ DELETE      /photos/{photo}     destroy()     photos.destroy
 | contains the "web" middleware group. 
 |
 |  References: https://laracasts.com/discuss/channels/laravel/routehas
+
+   Named routes: used so that you can write this
+        <a class="btn btn-info" href="{{ route('hideDefaultPWD') }}"><b>Hide default password</b></a>
+
 */
 
 /**** How to return a view right away: 
@@ -73,12 +77,11 @@ Route::get('/help', 'HomeController@help');
 
 /*----------------Admin Routes------------------*/
 Route::get('/userMaint', 'AdminController@userIndex');
-Route::get('showDefaultPWD', 'AdminController@showDefaultPWD')->name('showDefaultPWD');
-Route::get('hideDefaultPWD', 'AdminController@hideDefaultPWD')->name('hideDefaultPWD');
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
 Route::post('addUser', 'AdminController@createUser')->name('addUser');
-//Route::post('delUser/{id}', 'AdminController@deleteUser')->name('delUser');
+//Route::post('AJAXdelUser/{user}', 'AjaxController@deleteUser')->middleware('admin');
+Route::post('delUser/{user}', 'AdminController@deleteUser');
 //Route::post('resetPWD/{id}', 'AdminController@resetPWD');
 
 /*-----------------User Routes------------------*/
@@ -173,7 +176,7 @@ Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStu
 //Only put POST routes here. // adding multiple middlewares: middleware('first', 'second');
 //Middleware can also be added in AjaxController using the ->only() and ->except() methods
 Route::post('AJAXresetPWD/{id}', 'AjaxController@resetPWD')->middleware('admin');
-Route::post('AJAXdelUser/{id}', 'AjaxController@deleteUser')->middleware('admin');
+Route::post('showDefaultPWD', 'AjaxController@showDefaultPWD')->name('showDefaultPWD');
 
 /*----------------Report Routes-----------------*/
 //This is for attendace report

@@ -3,8 +3,31 @@
 {{-- @push('scripts') --}}
 {{-- this does nothing yet. Need @stack('scripts') in header.blade.php --}}
 <script>
-	//TODO: figure out how to stop someone from injecting into this to delete the wrong user.
-	//Everything needs the auth and admin middleware. Also do not allow deleting of isAdmin accounts.
+	function showPWD(){
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			type: "POST",
+			async: true,
+			url: 'showDefaultPWD',
+			dataType: "json",
+			success: function (data, status) {
+				if(status === 'success'){
+					text='<button class="btn btn-info" onclick="hidePWD()">Hide default password</button>';
+					text = text + '<div class="alert alert-danger" role="alert">';
+					text = text + '<p>Default password: ' + data +' </p></div>';
+					$("#defaultPWD").html(text);
+				}	
+			}
+		});
+	}
+
+	function hidePWD(){
+		text='<button class="btn btn-success" onclick="showPWD()">Show default password</button>';
+		$("#defaultPWD").html(text);
+	}
+
 	function resetPWD(userID){
 		//jQuery.post('/terminals/1/toggleStudent/333444555');
 		
@@ -54,7 +77,19 @@
 
 	function deleteUser(userID){
 		//alert('Delete ' + userID);
-		
+		let form = document.createElement('form');
+		form.action = 'delUser/' + userID;
+		form.method = 'POST';
+
+		xssfix='<input type="hidden" name="_token" value="' + $('meta[name="csrf-token"]').attr('content') + '">';
+		form.innerHTML = xssfix;
+		// the form must be in the document to submit it
+		document.body.append(form);
+		//and this URL will send it to a new view (unlike AJAX which just returns JSON)
+
+		form.submit();	
+
+		/*
 		$.ajax({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -66,12 +101,31 @@
 			success: function (msg) {
 			}
 		});
+		*/
 	};
 
 </script>
 {{-- @endpush --}}
 
 @section('content')
+
+<!-- display message when this page (re)loads, eg. when a kiosk is deleted -->
+@if (session('error'))
+	<script>
+		window.createNotification({
+			theme: 'error',
+			positionClass: 'nfc-top-right',
+			displayCloseButton: true,
+			showDuration: 3500
+		})({		
+			message: '{!! session('error') !!}'
+		});
+	</script>
+	 {{--  <div class="alert alert-danger" role="alert">
+	    {{ session('error') }}
+	</div>  --}}
+@endif
+
 <div class="container">
 	<h1>
 		Users <small>All registered users on the system.</small>
@@ -161,18 +215,19 @@
 					</table>
 				</div>
 			</div>
-			<div class="links">
-				
-				<!-- check the session variable that was created by the controller -->
-				@if (session('error'))
-				<a class="btn btn-info" href="{{ route('hideDefaultPWD') }}"><b>Hide default password</b></a>
-				<div class="alert alert-danger" role="alert">
-					<p>Default password: {{ session('error') }} </p>
-				</div>
-				@else 
-				<a class="btn btn-success" href="{{ route('showDefaultPWD') }}"><b>Show default password</b></a>
-				@endif
+			<div id="defaultPWD">
+				<button class="btn btn-success" onclick="showPWD()">Show default password</button>
 			</div>
+			<br><br>
+					<!-- check the session variable that was created by the controller -->
+				{{-- @if (session('message'))
+					<a class="btn btn-info" href="{{ route('hideDefaultPWD') }}"><b>Hide default password</b></a>
+					<div class="alert alert-danger" role="alert">
+						<p>Default password: {{ session('message') }} </p>
+					</div>
+				@else 
+					<a class="btn btn-success" href="{{ route('showDefaultPWD') }}"><b>Show default password</b></a>
+				@endif --}}
 		</div>
 	</div>
 </div>
