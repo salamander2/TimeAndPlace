@@ -100,8 +100,8 @@ class KioskController extends Controller
             // 'showSchedule' => $request->has('showSchedule') ? 1 : 0,            
             // 'requireConf' => $request->has('requireConf') ? 1 : 0,            
             'publicViewable' => $request->has('publicViewable') ? 1 : 0,            
-            'kioskType' => ($request->kioskType == "yes"),                        
-            'autoSignout' => $request->has('autoSignout') ? 1 : 0,  
+            'kioskType' => $request->kioskType,                        
+            //'autoSignout' => $request->has('autoSignout') ? 1 : 0,  
             'secretURL' => $secretURL,
         ]);
     

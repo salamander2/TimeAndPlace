@@ -1,3 +1,5 @@
+{{-- The blade page for creating kiosks is admin.createKiosk --}}
+
 @extends('layouts.app') 
 <script src="{{ asset('/js/jquery.min.js') }}"></script>
 @section('content')

@@ -23,30 +23,56 @@
                                 <input type="text" class="form-control border border-success" id="room" name="room" value="{{ old('room') }}" required>
                             </div>
                         </div>
-                        <!-- all checkboxes -->                
-                            <div class="row my-1">
-                                <div class="col-md-3 alert alert-primary border-primary" >    
+                        
+                        <div class="callout callout-dark px-2">
+                            <h2>Select type of kiosk:</h2>
+                                <p class="px-1" style="margin-top:-10px;color:navy;">
+                                    <b>This setting cannot be changed later on. 
+                                        (The kiosk must be deleted and recreated otherwise the stored data would be invalidated)</b></p>
+                        <!-- all checkboxes --> 
+                            <div class="row">
+                                <div class="col-md-3 mx-3 my-1 alert bg-primary border-primary" >    
                                     <!-- Group of default radios - option 1 -->                                    
-                                        <input id="defaultGroupExample1" name="kioskType" type="radio" value="no">
-                                        <label for="defaultGroupExample1">&nbsp;Sign In/Out</label>
-                                        <br>
+                                        <input id="defaultGroupExample1" name="kioskType" type="radio" value="0">
+                                        <label for="defaultGroupExample1">&nbsp;Sign In and Sign Out</label>
+                                </div>
+                                <div class="col mr-3 my-1 alert border-primary text-danger">
+                                    <p><b>The sign in and sign-out times are recorded for the student. </b><br>
+                                    Examples: library, resource, student success.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mx-3 my-1 alert bg-primary border-primary" >    
                                     <!-- Group of default radios - option 2 -->                                        
-                                        <input  id="defaultGroupExample2" name="kioskType"  type="radio" value="yes">
-                                        <label  for="defaultGroupExample2">&nbsp;Present Only</label>
+                                        <input  id="defaultGroupExample2" name="kioskType"  type="radio" value="1">
+                                        <label  for="defaultGroupExample2">&nbsp;Meeting attendance</label>
+                                </div>
+                                <div class="col mr-3 my-1 alert border-primary text-danger">
+                                    <p><b>Present: There is no sign-out.</b><br> This is just to tell if a student is present at a meeting/club/event on a given day.<br>
+                                        Only one meeting per day is possible, but date and time are recorded.<br>
+                                        Examples: teams, clubs</p>
+                                </div>
+                                        
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mx-3 my-1 alert bg-primary border-primary" >    
+                                    <!-- Group of default radios - option 2 -->                                        
+                                        <input  id="defaultGroupExample3" name="kioskType"  type="radio" value="2">
+                                        <label  for="defaultGroupExample3">&nbsp;Events: present/late/absent</label>
+                                </div>
+                                <div class="col mr-3 my-1 alert border-primary text-danger">
+                                    <p><b>This is for when there is a certain cut-off time after which the student is late or absent.</b><br>
+                                    Example: dance rehearsals where there is a window of time when you have to show up.<br>
+                                    More than one event per day is possible.</p>
                                 </div>
                
-                                <div class="col alert border-primary text-danger">
-                                    <b>Sign in/out: The sign in and sign-out times are recorded for the student. </b><br>
-                                    <b>Present: There is no sign-out. This is just to tell if a student is present at a meeting/club/event on a given day. 
-                                        (Date and time are recorded)</b>
-                                </div>
-                                <p class="text-danger" style="margin-top:-10px;">This setting cannot be changed later on. The kiosk must be deleted and recreated (otherwise the stored data would be invalidated)</p>
                             </div>
-                            <!-- end row -->
+                        </div>
     
 
+                        <div class="callout callout-dark px-2">
                             <div class="row my-1">
-                                <div class="col-md-3 alert alert-primary border-primary">
+                                <div class="col-md-3 mx-3 alert alert-warning border-dark">
                                     <input type="checkbox" id="publicViewable" name="publicViewable">
                                     <label for="publicViewable">Publically Viewable</label>
                                 </div>                                
@@ -54,8 +80,9 @@
                                 Otherwise, the logs are only viewable by kiosk users listed.</div>
                             </div>                            
                             <!-- end row -->
+                        </div>
 
-                            <div class="row my-1">
+                            {{-- <div class="row my-1">
                                     <div class="col-md-3 alert alert-primary border-primary">
                                         <input type="checkbox" id="autoSignout" name="autoSignout">
                                         <label for="autoSignout">Auto Signout</label>
@@ -63,7 +90,7 @@
                                     <div class="col alert border-primary "> If checked, then times can be entered for system to automatically sign students out.<br>
                                         This has no effect if "Present Only" is selected above.</div>
                                 </div>                            
-                                <!-- end row -->
+                                <!-- end row --> --}}
 
                         
                 </div>
