@@ -51,7 +51,7 @@ class SignoutAll extends Command
 				$this->info('Invalid kiosk id: '.$kioskID);
 				continue;
 			}
-			if ($kiosk->signInOnly == 1) {
+			if ($kiosk->kioskType == 1) {
 				//Just remove the record. Don't add anything to the log file.
 				$kiosk->signedIn()->detach($studentID);
 				//$this->info('Skipping signin only kiosk #'.$kioskID);

@@ -36,9 +36,9 @@
 
 					<div class="row my-1">
 						<div class="col-md-auto">
-							<input type="checkbox" disabled id="signInOnly" name="signInOnly" {{ $kiosk->signInOnly ? 'checked' :''}}>
+							<input type="checkbox" disabled id="kioskType" name="kioskType" {{ $kiosk->kioskType ? 'checked' :''}}>
 						</div>
-						<div class="col-md-2 bg-primary"><label for="signInOnly">Sign in only</label></div>
+						<div class="col-md-2 bg-primary"><label for="kioskType">Sign in only</label></div>
 						<div class="col text-danger">If checked, then student is only marked present. There is no signout.<br>
 							<b>Changing this will probably invalidate the existing logged data for this kiosk.</b></div>
 					</div>

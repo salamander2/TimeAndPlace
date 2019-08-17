@@ -151,7 +151,7 @@ class TerminalController extends Controller
         if ($present) { 
 
             //if the kiosk is signinOnly
-            if ($kiosk->signInOnly) {
+            if ($kiosk->kioskType) {
                 return response()->json(['status' => 'already present', 'student' => $student->toArray()]);
             }
 
@@ -172,7 +172,7 @@ class TerminalController extends Controller
         } else {
             $statcode = 'SIGNIN';
             $statresp = 'signed in';
-            if ($kiosk->signInOnly) {
+            if ($kiosk->kioskType) {
                 $statcode = 'PRESENT';
                 $statresp = 'present';
                 //add a meeting record

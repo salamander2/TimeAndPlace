@@ -11,7 +11,7 @@ class Kiosk extends Model
         'room', 'name', 
         'secretURL', 'showPhoto',
         'showSchedule', 'requireConf',
-        'publicViewable', 'signInOnly',
+        'publicViewable', 'kioskType',
         'autoSignout', 'defaultFreq',
         'swalOKbtn'
     ];

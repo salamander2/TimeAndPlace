@@ -27,11 +27,11 @@
                             <div class="row my-1">
                                 <div class="col-md-3 alert alert-primary border-primary" >    
                                     <!-- Group of default radios - option 1 -->                                    
-                                        <input id="defaultGroupExample1" name="signInOnly" type="radio" value="no">
+                                        <input id="defaultGroupExample1" name="kioskType" type="radio" value="no">
                                         <label for="defaultGroupExample1">&nbsp;Sign In/Out</label>
                                         <br>
                                     <!-- Group of default radios - option 2 -->                                        
-                                        <input  id="defaultGroupExample2" name="signInOnly"  type="radio" value="yes">
+                                        <input  id="defaultGroupExample2" name="kioskType"  type="radio" value="yes">
                                         <label  for="defaultGroupExample2">&nbsp;Present Only</label>
                                 </div>
                

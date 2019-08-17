@@ -11,7 +11,7 @@
         </div>
         <div class="col text-right">
 
-            @if(!$kiosk->signInOnly)
+            @if(!$kiosk->kioskType)
             <a class="my-1 mx-3 btn btn-warning elevation-3" href="/autosignout/{{ $kiosk->id }}"> Signout all now  </a>
 	    @endif
             <a class="my-1 btn btn-success elevation-3" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
@@ -43,7 +43,7 @@
     @include('child.kioskedit2')
 
     <div class="clearfix">
-            @if(!$kiosk->signInOnly)
+            @if(!$kiosk->kioskType)
             <a class="my-1 btn btn-primary elevation-3" <a href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
             @else
             <a class="my-1 btn btn-light btn-outline-primary elevation-3" <a href="{{'/reports/'.$kiosk->id}}">Attendance Reports </a>
@@ -59,7 +59,7 @@
         </form>
     </div>
     <hr>
-    @if($kiosk->signInOnly)
+    @if($kiosk->kioskType)
     {{--  <div class="btn btn-outline-secondary elevation-3">  --}}
     <a class="my-1 btn btn-outline-info elevation-3" <a href="{{'/events/create/'.$kiosk->id}}">Create event</a> (This is only for the dance class performances)
     {{--  </div>  --}}

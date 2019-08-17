@@ -46,7 +46,7 @@ class SignoutStudents extends Command
 			$this->info('Invalid kiosk id: '.$kioskid);
 			return;
 		}
-		if ($kiosk->signInOnly == 1) {
+		if ($kiosk->kioskType == 1) {
 			$this->info('Skipping signin only kiosk #'.$kioskid);
 			return;
 		}
