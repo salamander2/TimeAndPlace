@@ -15,72 +15,86 @@
                 <div class="form-group">
 
                     <div class="input-group mb-3">
-                        <label class="input-group-prepend btn btn-success" for="name">Group / Team Name</label>
-                        <input type="text" class="form-control border border-success" id="name" name="name" value="{{ $kiosk->name }}">
+                        <label class="col-md-3 input-group-prepend btn btn-success" for="name">Group / Team Name</label>
+                        <input type="text" class="col form-control border border-success" id="name" name="name" value="{{ $kiosk->name }}">
                     </div>
                     <div class="input-group mb-3">
-                        <label class="input-group-prepend btn btn-success" for="room">Room Number / Location</label>
-                        <input type="text" class="form-control border border-success" id="room" name="room" value="{{ $kiosk->room}}">
+                        <label class="col-md-3 input-group-prepend btn btn-success" for="room">Room Number / Location</label>
+                        <input type="text" class="col form-control border border-success" id="room" name="room" value="{{ $kiosk->room}}">
                     </div>
 
-                    <div class="callout callout-info">
-                        <!-- all checkboxes -->
+                    <h3>Kiosk Type</h3>
+                    @php
+                       $kskType = $kiosk->kioskType;  
+                    @endphp
+                    <div class="callout callout-danger bg-secondary">
                       
                         <div class="row my-1">
-                            <div class="col-md-2">
-                            
-{{-- <input type="checkbox" id="kioskType" name="kioskType" {{ $kiosk->kioskType ? 'checked' :''}}> --}}
-                                    <!-- Group of default radios - option 1 -->
-                                    <div class="custom-control custom-radio">
-                                      <input class="custom-control-input" id="defaultGroupExample1" name="kioskType" {{ $kiosk->kioskType ? '':'checked'}}  type="radio">
-                                      <label class="custom-control-label text-primary" for="defaultGroupExample1">&nbsp;Sign In/Out</label>
-                                    </div>
-                            
-                                   
-                                    <!-- Group of default radios - option 2 -->
-                                    <div class="custom-control custom-radio">
-                                      <input class="custom-control-input" id="defaultGroupExample2" name="kioskType" {{ $kiosk->kioskType ? 'checked':''}} type="radio">
-                                      <label class="custom-control-label text-primary" for="defaultGroupExample2">&nbsp;Present Only</label>
-                                    </div>
+                            <div class="col-md-3">
+                                    @switch($kskType)
+                                    @case(0)
+                                        <div class="alert alert-warning"><b>Sign in/ Sign out</b></div>
+                                        @break
+                                    @case(1)
+                                        <div class="alert"><h4>Attendance Only</h4></div>
+                                        @break
+                                    @case(2)
+                                        <p>Events with present/late/absent</p>
+                                @endswitch
+                            </div>
+                            @switch($kskType)
+                            @case(0)
+                                <div class="col border alert text-danger">
+                                    Sign in and sign out times are recorded.
                                 </div>
-				    <div class="col border text-danger">Sign in and sign out times are recorded.<br>
-					Student is only marked present. Time is recorded. There is no signout.<br>
-				    </div>
+                                @break
+                            @case(1)
+                                <div class="col alert my-0 text-dark">
+                                    <b>Attendance recorded for meetings, teams, clubs, etc.<br>
+                                    No logs, just reports.</b>
+                                </div>
+                                @break
+                            @case(2)
+                                <div class="col alert text-dark">
+                                    <b>(write something about events)</b>
+                                </div>
+                                @break
+                            @endswitch
                         </div>
                         <!-- end row -->
 
-                        <div class="row my-1">
+                        @if($kskType==0)
+                            <div class="row my-1">
                                 <div class="col-md-auto">
-                                    <input type="checkbox" id="publicViewable" name="publicViewable" {{ $kiosk->publicViewable ? 'checked' :''}}>
+                                    <input type="checkbox" id="autoSignout" name="autoSignout" {{ $kiosk->autoSignout ? 'checked':''}}>
                                 </div>
-                                <div class="col-md-2 bg-primary"><label for="publicViewable">Publically Viewable</label></div>
-                                <div class="col border ">Kiosk logs are viewable by any logged in user</div>
+                                <div class="col-md-2 bg-warning"><label for="autoSignout">Auto Signout</label></div>
+                                <div class="col border"> If checked, then times can be entered for system to automatically sign students out.<br>
+                                    e.g. at the end of a period.</div>
                             </div>
                             <!-- end row -->
-    
+                        @endif
+
+                    </div>
+
+                    <h3>Options</h3>
+                    <div class="callout callout-info">
 
                         <div class="row my-1">
                             <div class="col-md-auto">
-                                <input type="checkbox" id="autoSignout" name="autoSignout" {{ $kiosk->autoSignout ? 'checked':''}}>
+                                <input type="checkbox" id="publicViewable" name="publicViewable" {{ $kiosk->publicViewable ? 'checked' :''}}>
                             </div>
-                            <div class="col-md-2 bg-primary"><label for="autoSignout">Auto Signout</label></div>
-                            <div class="col border"> If checked, then times can be entered for system to automatically sign students out.<br> This
-                                has no effect if "signin only" is checked.</div>
+                            <div class="col-md-2 bg-primary"><label for="publicViewable">Publically Viewable</label></div>
+                            <div class="col border ">Kiosk logs are viewable by any logged in user</div>
                         </div>
-                        <!-- end row -->
-
-
-                    </div>
-
-                    <div class="callout callout-info">
-
+                            <!-- end row -->
                         <div class="row my-1">
                             <div class="col-md-auto">
                                 <input type="checkbox" id="requireConf" name="requireConf" {{ $kiosk->requireConf ? 'checked'
                                 :''}}>
                             </div>
                             <div class="col-md-2 bg-primary"><label for="requireConf">Require Confirmation</label></div>
-                            <div class="col border ">Require a seperate confirmation step upon sign-in.</div>
+                            <div class="col border ">Require a seperate confirmation step upon <b>sign-in.</b></div>
                         </div>
                         <!-- end row -->
 
@@ -90,7 +104,7 @@
                                 :''}}>
                             </div>
                             <div class="col-md-2 bg-primary"><label for="swalOKbtn">Display OK button</label></div>
-                            <div class="col border ">OK button for sign-in can be clicked instead of waiting for the alert to disappear.</div>
+                            <div class="col border ">OK button for <b>sign-in</b> can be clicked instead of waiting for the alert to disappear.</div>
                         </div>
                         <!-- end row -->
 
@@ -99,7 +113,7 @@
                                 <input type="checkbox" id="showPhoto" name="showPhoto" {{ $kiosk->showPhoto ? 'checked' :''}}>
                             </div>
                             <div class="col-md-2 bg-primary"><label for="showPhoto">Show Photo</label></div>
-                            <div class="col border ">Display student photo upon sign-in</div>
+                            <div class="col border ">Display student photo upon <b>sign-in</b></div>
                         </div>
                         <!-- end row -->
 
@@ -109,7 +123,7 @@
                                 :''}}>
                             </div>
                             <div class="col-md-2 bg-primary"><label for="showSchedule">Show Schedule</label></div>
-                            <div class="col border">Show student schedule upon sign-in (not implemented yet)</div>
+                            <div class="col border">Show student schedule upon <b>sign-in</b> (not implemented yet)</div>
                         </div>
                         <!-- end row -->
 

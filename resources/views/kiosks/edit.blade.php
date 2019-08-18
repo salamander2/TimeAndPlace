@@ -1,5 +1,9 @@
 {{-- The blade page for creating kiosks is admin.createKiosk --}}
-
+{{-- kiosk types: I haven't changed the table over to strings yet. It's still tinyint()
+     0 = signin/out
+     1 = attendance only // meetings
+     2 = events: on-time/late/absent
+ --}}
 @extends('layouts.app') 
 <script src="{{ asset('/js/jquery.min.js') }}"></script>
 @section('content')
@@ -13,9 +17,9 @@
         </div>
         <div class="col text-right">
 
-            @if(!$kiosk->kioskType)
-            <a class="my-1 mx-3 btn btn-warning elevation-3" href="/autosignout/{{ $kiosk->id }}"> Signout all now  </a>
-	    @endif
+            @if($kiosk->kioskType == 0)
+                <a class="my-1 mx-3 btn btn-warning elevation-3" href="/autosignout/{{ $kiosk->id }}"> Signout all now  </a>
+            @endif
             <a class="my-1 btn btn-success elevation-3" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
         </div>
     </div>
@@ -34,7 +38,7 @@
 		</script>
 	@endif
 
-    {{-- top section of edit page --}}
+    {{-- top section of edit page: KIOSK SETTINGS ... used for all kiosk types --}}
     @include('child.kioskedit1')
 
     @if($kiosk->autoSignout == true)
@@ -45,9 +49,10 @@
     @include('child.kioskedit2')
 
     <div class="clearfix">
-            @if(!$kiosk->kioskType)
+            @if($kiosk->kioskType==0)
             <a class="my-1 btn btn-primary elevation-3" <a href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
-            @else
+            @endif
+            @if($kiosk->kioskType==1)
             <a class="my-1 btn btn-light btn-outline-primary elevation-3" <a href="{{'/reports/'.$kiosk->id}}">Attendance Reports </a>
             @endif
             
