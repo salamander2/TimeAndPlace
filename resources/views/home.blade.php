@@ -39,6 +39,10 @@
     <div class="container-fluid">
       <div class="row">        
     @foreach($kiosks as $kiosk)
+      {{-- ONLY Display Signin/Signout kiosks on home page --}}
+      @if($kiosk->kioskType != 0) 
+        @continue
+      @endif
       @php
       $count = $kiosk->signedIn->count()
       @endphp

@@ -27,7 +27,7 @@ $(function () {
             <div class="row py-1">
                 <div class="col-md-3">
                         {{--  {{$event->id}} <a href="/events/{{$event->id}}/addStudents"><button type="button" class=" btn btn-primary" data-toggle="tooltip" data-placement="top" title="Click to add students to this event">  --}}
-                        {{$event->id}}&nbsp;&nbsp;<span class="btn bg-primary">{{ $event->name }}</span>
+                        {{$event->id}}&nbsp;&nbsp;<span class="btn bg-info">{{ $event->name }}</span>
                     {{--  <input type="text" class="form-control bg-primary" disabled  value="{{ $event->name }}">  --}}
                 </div>
                 <div class="col">

@@ -20,7 +20,9 @@
             @if($kiosk->kioskType == 0)
                 <a class="my-1 mx-3 btn btn-warning elevation-3" href="/autosignout/{{ $kiosk->id }}"> Signout all now  </a>
             @endif
-            <a class="my-1 btn btn-success elevation-3" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
+            @if($kiosk->kioskType != 2)
+                <a class="my-1 btn btn-success elevation-3" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
+            @endif
         </div>
     </div>
 
@@ -41,19 +43,25 @@
     {{-- top section of edit page: KIOSK SETTINGS ... used for all kiosk types --}}
     @include('child.kioskedit1')
 
-    @if($kiosk->autoSignout == true)
+    {{-- Kiosk schedule sub menu .. only type 0 --}}
+    @if($kiosk->kioskType==0 && $kiosk->autoSignout == true)
         @include('child.kioskedit3')
     @endif
 
-    {{-- bottom section of edit page --}}
+    {{-- kiosk users ... all kiosk types --}}
     @include('child.kioskedit2')
 
     <div class="clearfix">
             @if($kiosk->kioskType==0)
-            <a class="my-1 btn btn-primary elevation-3" <a href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
+                <a class="my-1 btn btn-primary elevation-3" <a href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
             @endif
             @if($kiosk->kioskType==1)
-            <a class="my-1 btn btn-light btn-outline-primary elevation-3" <a href="{{'/reports/'.$kiosk->id}}">Attendance Reports </a>
+                <a class="my-1 btn btn-light btn-outline-primary elevation-3" <a href="{{'/reports/'.$kiosk->id}}">Attendance Reports </a>
+            @endif
+            @if($kiosk->kioskType == 2)
+            {{--  <div class="btn btn-outline-secondary elevation-3">  --}}
+                <a class="my-1 btn btn-outline-primary elevation-3" href="{{'/events/create/'.$kiosk->id}}">Create event</a>
+            {{--  </div>  --}}
             @endif
             
             
@@ -65,16 +73,11 @@
             <button id="deleteBtn" type="submit" class="btn btn-danger elevation-3">Delete this Kiosk</button>
         </form>
     </div>
-    <hr>
-    @if($kiosk->kioskType)
-    {{--  <div class="btn btn-outline-secondary elevation-3">  --}}
-    <a class="my-1 btn btn-outline-info elevation-3" <a href="{{'/events/create/'.$kiosk->id}}">Create event</a> (This is only for the dance class performances)
-    {{--  </div>  --}}
-    @endif
-    <br><Br>
+
+    <br><br>
     {{-- if there are any events (ie. it is also a signinOnly kiosk)   --}}
     @if($kiosk->events->count())
-        @include('child.kioskedit4')
+        @include('child.kioskedit4') {{-- Events for kiosktype=2 --}}
     @endif
 </div>
 @endsection

@@ -26,44 +26,28 @@
                     <h3>Kiosk Type</h3>
                     @php
                        $kskType = $kiosk->kioskType;  
+                       switch ($kskType) {
+                            case 0:
+                                $str1="Sign in/ Sign-out";
+                                $str2="Sign in and signout times are recorded.";
+                                break;
+                            case 1:
+                                $str1="Attendance Only";
+                                $str2="Attendance recorded for meetings, teams, clubs, etc.<br>No logs, just reports.";
+                                break;
+                            case 2:
+                                $str1="Events with present/late/absent";
+                                $str2="(write something about events)";
+                                break;
+                        }
                     @endphp
-                    <div class="callout callout-danger bg-secondary">
-                      
+                    {{-- <div class="callout callout-danger"> --}}
                         <div class="row my-1">
-                            <div class="col-md-3">
-                                    @switch($kskType)
-                                    @case(0)
-                                        <div class="alert alert-warning"><b>Sign in/ Sign out</b></div>
-                                        @break
-                                    @case(1)
-                                        <div class="alert"><h4>Attendance Only</h4></div>
-                                        @break
-                                    @case(2)
-                                        <p>Events with present/late/absent</p>
-                                @endswitch
-                            </div>
-                            @switch($kskType)
-                            @case(0)
-                                <div class="col border alert text-danger">
-                                    Sign in and sign out times are recorded.
-                                </div>
-                                @break
-                            @case(1)
-                                <div class="col alert my-0 text-dark">
-                                    <b>Attendance recorded for meetings, teams, clubs, etc.<br>
-                                    No logs, just reports.</b>
-                                </div>
-                                @break
-                            @case(2)
-                                <div class="col alert text-dark">
-                                    <b>(write something about events)</b>
-                                </div>
-                                @break
-                            @endswitch
-                        </div>
-                        <!-- end row -->
+                            <div class="col-auto ml-3 alert bg-info" for="desc"><h5>{{ $str1 }}</h5></div>
+                            <div class="col alert mr-3 text-dark border border-info" id="desc"> <b>{!! $str2 !!}</b> </div>
+                        </div> <!-- end row -->
 
-                        @if($kskType==0)
+                        @if($kskType==0) {{-- autoSignout only for type 0 --}}
                             <div class="row my-1">
                                 <div class="col-md-auto">
                                     <input type="checkbox" id="autoSignout" name="autoSignout" {{ $kiosk->autoSignout ? 'checked':''}}>
@@ -71,11 +55,10 @@
                                 <div class="col-md-2 bg-warning"><label for="autoSignout">Auto Signout</label></div>
                                 <div class="col border"> If checked, then times can be entered for system to automatically sign students out.<br>
                                     e.g. at the end of a period.</div>
-                            </div>
-                            <!-- end row -->
+                            </div> <!-- end row -->
                         @endif
 
-                    </div>
+                    {{-- </div> --}}
 
                     <h3>Options</h3>
                     <div class="callout callout-info">

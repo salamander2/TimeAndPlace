@@ -58,11 +58,12 @@
     </div>
     <div class="card-body">
                 
-        <div class="col-md-6">
+        <div class="col-md-9">
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Kiosk Sign-Out Times</h3>
-		    <h5><i>When periods are selected, the signout is at the END of the period/lunch.</i></h5>
+            <h5><i>When periods are selected, the signout is at the END of the period/lunch.<br>
+            Assembly Day schedule is on right side.</i></h5>
                 </div>
 
                 <div class="box-body table-responsive no-padding">
@@ -72,6 +73,8 @@
                             <th>Periods</th>
                             <th>Begin</th>
                             <th colspan=2>End</th>
+                            <th>Alt. Start</th>
+                            <th>Alt. End</th>
                             
                         </tr>
                         @foreach($periods->sortBy('start') as $period)
@@ -84,6 +87,8 @@
                                             class="btn btn-xs btn-outline-danger"><i class="fas fa-trash-alt"></i> Remove
                                     </button>
                                 </td>
+                                <td>{{ $period->altstart }}</td>
+                                <td>{{ $period->altend }}</td>
                             </tr>
 
                         @endforeach
@@ -100,15 +105,14 @@
                             </tr>
                         @foreach($times->sortBy('end') as $time)
                             <tr class="alert alert-primary">
-                                                                
-                                <td style="visibility:hidden">{{ $time->end }}</td>
-                                <td style="visibility:hidden">{{ $time->end }}</td>                                
                                 <td>{{ $time->end }}</td>
                                 <td>
                                     <button onclick="removeTimeFromKiosk('{{$time->id}}')"
                                             class="btn btn-xs btn-outline-danger"><i class="fas fa-trash-alt"></i> Remove
                                     </button>
                                 </td>
+                                <td style="visibility:hidden">{{ $time->end }}</td>
+                                <td style="visibility:hidden">{{ $time->end }}</td>
                             </tr>
 
                         @endforeach
