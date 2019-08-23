@@ -26,7 +26,12 @@
             @endif
             
             @foreach ($arr as $index=>$value) 
-            <th>
+	    {{-- testing different formating for first/last column , but top row is still original formatting --}}
+            @if ($loop->first && $loop->parent->index > 0)
+                <th class="bg-info">
+            @else
+               <th>
+            @endif
                 {{ $value }}
             </th>
             @endforeach

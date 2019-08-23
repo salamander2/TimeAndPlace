@@ -179,7 +179,7 @@ Route::post('AJAXresetPWD/{id}', 'AjaxController@resetPWD')->middleware('admin')
 Route::post('showDefaultPWD', 'AjaxController@showDefaultPWD')->name('showDefaultPWD');
 
 /*----------------Report Routes-----------------*/
-//This is for attendace report
+//This is for attendance report
 Route::get('/reports/{kiosk}', 'ReportController@attendance')->defaults('type', 'A'); //parameter 'A' = all, 'C' = current month
 //Route::get('/reports/{kiosk}', 'ReportController@attendance');
 //Route::get('/reports', 'ReportController@attendance');

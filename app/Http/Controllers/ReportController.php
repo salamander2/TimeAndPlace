@@ -26,7 +26,9 @@ class ReportController extends Controller
     
     public function attendance(Kiosk $kiosk, $type='C') {
 
-	$month = Carbon::now()->startOfMonth()->subMonth(2);
+	//when is the report starting from?
+	$month = Carbon::now()->startOfMonth()->subMonth(4);
+
 	if ($type == 'C') {
 		$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
 	}
@@ -93,6 +95,9 @@ class ReportController extends Controller
             
         }
 
+	/* Count 'Y' in each row and add in totals */
+
+
 /*        foreach($logs as $log) {
             if ($log->studentID != $currentID) {
                 //for everything except for the first time through (where there is no id)
@@ -123,7 +128,7 @@ class ReportController extends Controller
         // print_r('<br>');
         // print_r($row);   
  */           
-        //dd($array);
+        //dd($array);sh
 
         return view('reports.attendance', compact('kiosk','array'));//->with('array'=>$array);
 

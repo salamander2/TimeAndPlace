@@ -104,3 +104,9 @@ npm run dev
 
 ------------------------------------------------------------
 php artisan make:Controller AjaxController
+
+
+For 'php artisan migrate'
+in order to change the column names in this migration: 2019_08_15_173545_rename_signinonly_in_kiosks
+
+composer require doctrine/dbal
