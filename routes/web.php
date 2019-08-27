@@ -180,9 +180,12 @@ Route::post('showDefaultPWD', 'AjaxController@showDefaultPWD')->name('showDefaul
 
 /*----------------Report Routes-----------------*/
 //This is for attendance report
-Route::get('/reports/{kiosk}', 'ReportController@attendance')->defaults('type', 'A'); //parameter 'A' = all, 'C' = current month
+Route::get('/reports/{kiosk}', 'ReportController@attendance')->defaults('code', 'A'); //parameter 'A' = all, 'M' = current month
+Route::get('/reports/{kiosk}/{code}', 'ReportController@attendance');
 //Route::get('/reports/{kiosk}', 'ReportController@attendance');
 //Route::get('/reports', 'ReportController@attendance');
+
+//This is the summary report of the normal LOG view -- sign in/out kiosks
 Route::get('/reports/summary/{kiosk}', 'LogController@summaryReport');
 
 /*----------------Testing Routes-----------------*/

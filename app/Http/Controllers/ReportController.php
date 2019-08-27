@@ -24,22 +24,35 @@ class ReportController extends Controller
     }
 
     
-    public function attendance(Kiosk $kiosk, $type='C') {
+    public function attendance(Kiosk $kiosk, $code='M') {
 
-	//when is the report starting from?
-	$month = Carbon::now()->startOfMonth()->subMonth(4);
+        //when is the report starting from?
+        //$month = Carbon::now()->startOfMonth()->subMonth(4);
+        $month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
 
-	if ($type == 'C') {
-		$month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
-	}
-/*	if ($type == 'C') {
-		$meetings = Meeting::where('created_at', '>', $month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
-	} else {
-		$meetings = Meeting::where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
-	}
-*/
+        switch($code) {
+            case 'M':
+                $month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+                $meetings = Meeting::where('created_at', '>=', $month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+                break;
+            case 'P':
+                $month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
+                $lastmonth = Carbon::now()->startOfMonth()->subMonth();
+                $meetings = Meeting::where('created_at', '>=', $month)->where('created_at','<',$month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+                break;
+            case 'A':
+            default:
+                //default or anything else is ALL (which was already selected)
+                //$month = Carbon::now()->startOfMonth()->subMonth(4);	//sets time to 0:00:00
+                $month = Carbon::createFromDate(null, 9, 1);  // Year defaults to current year (1 September)
+                if ($month->isFuture()) {
+                    $month->subYear();
+                }
+                //$meetings = Meeting::where('created_at', '>=', $month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+                $meetings = Meeting::where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+        }
 
-	$meetings = Meeting::where('created_at', '>', $month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+
         if ($meetings->count() == 0) {
             //send an error message
             //redirect back to some screen ... home page?
@@ -95,8 +108,24 @@ class ReportController extends Controller
             
         }
 
-	/* Count 'Y' in each row and add in totals */
+        //only calculate totals for 'ALL' 
+        if ($code != 'A') {
+            return view('reports.attendance', compact('kiosk','array','code'));
+        }
 
+        /* Count 'Y' in each row and add in totals */
+        $n=0;
+        for ($n=0; $n<count($array); $n++){
+            $total=0;
+            if ($n==0) {
+                array_splice($array[$n], 1, 0, 'Totals');
+                continue; //ignore top row
+            }
+            foreach($array[$n] as $val) {
+                if ($val =='Y') $total++;
+            }
+            array_splice($array[$n], 1, 0, $total);
+        }
 
 /*        foreach($logs as $log) {
             if ($log->studentID != $currentID) {
@@ -130,7 +159,7 @@ class ReportController extends Controller
  */           
         //dd($array);sh
 
-        return view('reports.attendance', compact('kiosk','array'));//->with('array'=>$array);
+        return view('reports.attendance', compact('kiosk','array','code'));//->with('array'=>$array);
 
     }
 
