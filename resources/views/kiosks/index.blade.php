@@ -33,7 +33,18 @@
 				<a class="btn btn-info elevation-2" href="/kiosks/{{ $kiosk->id }}/showORedit"> {{ $kiosk-> name }} @ {{ $kiosk-> room }} </a>
 			</div>
 			<div class="col-sm-4">
+				@if($kiosk->kioskType != 2)
 				<a class="my-1 btn btn-success elevation-2" href="/terminals/{{ $kiosk->id }}"> Launch Terminal </a>
+				@endif
+			</div>
+			<div class="col-sm-4">
+				@if($kiosk->kioskType == 0)
+				<a class="my-1 btn btn-outline-primary" href="/logs/byKiosk/{{ $kiosk->id }}"> Show logs </a>
+				@elseif($kiosk->kioskType == 1)
+				<a class="my-1 btn btn-outline-primary" href="/reports/{{ $kiosk->id }}"> Attendance Report </a>
+				@else
+				<p class="my-1 btn">Enter kiosk to view reports</p>
+				@endif
 			</div>
         </div>
     @endforeach 
