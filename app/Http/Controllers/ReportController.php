@@ -12,7 +12,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /*********************************************************************
- *  This controller is specifically designed for ATTENDANCE reports. 
+ *  This controller is specifically designed for ATTENDANCE (meeting) reports. 
+ *  It also generates EVENT reports.
  *  To see LOG reports, please see the LOG controller 
  *********************************************************************/
 
@@ -23,8 +24,19 @@ class ReportController extends Controller
         $this->middleware('auth');     
     }
 
-    
     public function attendance(Kiosk $kiosk, $code='M') {
+        $view = $this->createAttendanceReport($kiosk,'reports.attendance',$code);
+        return($view);  //contains viewname, kiosk, data array, code
+    }
+
+    //only the "ALL" months has a print option
+    public function attendancePrint(Kiosk $kiosk, $code='M') {
+        $view = $this->createAttendanceReport($kiosk,'reports.attendancePrint',$code);
+        return($view);  //contains viewname, kiosk, data array, code
+    }
+            
+    /**** GENERATE MEETING ATTENDANCE REPORTS  *******/ 
+    protected function createAttendanceReport(Kiosk $kiosk, String $viewname, $code='M') {
 
         //when is the report starting from?
         //$month = Carbon::now()->startOfMonth()->subMonth(4);
@@ -44,7 +56,7 @@ class ReportController extends Controller
             default:
                 //default or anything else is ALL (which was already selected)
                 //$month = Carbon::now()->startOfMonth()->subMonth(4);	//sets time to 0:00:00
-                $month = Carbon::createFromDate(null, 9, 1);  // Year defaults to current year (1 September)
+                $month = Carbon::createFromDate(null, 9, 3);  // Year defaults to current year (1 September)
                 if ($month->isFuture()) {
                     $month->subYear();
                 }
@@ -70,7 +82,7 @@ class ReportController extends Controller
         $numDates = count($topRow);
                 
         $monthlogs =  Log::where('kiosk_id',$kiosk->id)->where('created_at', '>', $month)->where('status_code','PRESENT')->with('student')->get();
-        
+       
         /* You cannot orderBy on a table connected using WITH. 
         You have to use the join() method to sort the entire collection (instead of the eager loading I was trying which just orders the relationship.)
             
@@ -83,7 +95,6 @@ class ReportController extends Controller
         //sort by studentID first in case there are two people with the same name
         $logs = $monthlogs->sortBy('studentID')->sortBy('student.firstname')->sortBy('student.lastname');
 
-                
         $array[]=$topRow2;
 
         foreach($logs as $log) {
@@ -159,10 +170,11 @@ class ReportController extends Controller
  */           
         //dd($array);sh
 
-        return view('reports.attendance', compact('kiosk','array','code'));//->with('array'=>$array);
+        return view($viewname, compact('kiosk','array','code'));//->with('array'=>$array);
 
     }
 
+/******************************************************************************************************************/
  
 /* How this all works
 
@@ -187,11 +199,9 @@ class ReportController extends Controller
 
 */
 
-    /* These two functions call the report creator. This cannot directly load a Blade view, so it has to return
-       the view which is then called by this function */
     public function eventReport($id) {
 	$view = $this->createEventReport($id,'events.attendance');
-	return($view);
+	return($view);  //contains viewname and data array
     }
         
     public function eventReportPrint($id) {

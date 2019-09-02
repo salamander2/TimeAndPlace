@@ -7,7 +7,6 @@
 
 <div class="container">
  {{-- <div class="card"> REMOVE so that there is no border --}}
-    <div class="card-header">    
     <div class="card-header">
         <div class="row">
             <div class="col-md-2"><form action="{{'/reports/'.$kiosk->id}}/M" method="get">
@@ -16,12 +15,14 @@
                 <button id="btnY" class="btn btn-outline-primary">Last Month</button> </form></div>
             <div class="col-md-2"><form action="{{'/reports/'.$kiosk->id}}/A" method="get">
                 <button id="btnA" class="btn btn-secondary">All</button> </form></div>
+                
         </div>
     </div>
-        <div class="card-title">                
+        <div class="card-title my-3">                
                 <h2>
                 @if ($code == 'A')
                     All attendance for {{ $kiosk->name }}
+            <div class="float-right"> <a href="{{'/reportsPrint/'.$kiosk->id}}"><button type="button" class="btn btn-outline-secondary">Printable Report</button></a></p></div>
                 @else
                     Monthly attendance for {{ $kiosk->name }}
                 @endif

@@ -181,6 +181,7 @@ Route::post('showDefaultPWD', 'AjaxController@showDefaultPWD')->name('showDefaul
 /*----------------Report Routes-----------------*/
 //This is for attendance report
 Route::get('/reports/{kiosk}', 'ReportController@attendance')->defaults('code', 'A'); //parameter 'A' = all, 'M' = current month
+Route::get('/reportsPrint/{kiosk}', 'ReportController@attendancePrint')->defaults('code', 'A'); //parameter 'A' = all, 'M' = current month
 Route::get('/reports/{kiosk}/{code}', 'ReportController@attendance');
 //Route::get('/reports/{kiosk}', 'ReportController@attendance');
 //Route::get('/reports', 'ReportController@attendance');
