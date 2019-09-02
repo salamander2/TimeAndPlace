@@ -187,12 +187,14 @@ class ReportController extends Controller
 
 */
 
+    /* These two functions call the report creator. This cannot directly load a Blade view, so it has to return
+       the view which is then called by this function */
     public function eventReport($id) {
 	$view = $this->createEventReport($id,'events.attendance');
 	return($view);
     }
         
-    public function eventReport2($id) {
+    public function eventReportPrint($id) {
 	$view = $this->createEventReport($id,'events.attendancePrint');
 	return($view);
     }

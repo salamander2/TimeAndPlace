@@ -11,7 +11,7 @@
                 <h2>
                     Attendance for {{ $event->name }}
                 
-                <div class="float-right"> <a href="{{'/events/report2/'.$event->id}}"><button type="button" class="btn btn-outline-info">Printable Report</button></a></p></div>
+                <div class="float-right"> <a href="{{'/events/reportPrint/'.$event->id}}"><button type="button" class="btn btn-outline-info">Printable Report</button></a></p></div>
             </h2>                
         </div>
         
