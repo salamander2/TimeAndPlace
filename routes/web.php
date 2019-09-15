@@ -177,8 +177,9 @@ Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStu
 //Middleware can also be added in AjaxController using the ->only() and ->except() methods
 Route::post('AJAXresetPWD/{id}', 'AjaxController@resetPWD')->middleware('admin');
 Route::post('showDefaultPWD', 'AjaxController@showDefaultPWD')->name('showDefaultPWD');
+Route::post('verifyHomeRoom', 'AjaxController@verifyHomeRoom');
 
-/*----------------Report Routes-----------------*/
+/*---------------- Report Routes-----------------*/
 //This is for attendance report
 Route::get('/reports/{kiosk}', 'ReportController@attendance')->defaults('code', 'A'); //parameter 'A' = all, 'M' = current month
 Route::get('/reports/{kiosk}/{code}', 'ReportController@attendance');
@@ -188,7 +189,11 @@ Route::get('/reports/{kiosk}/{code}', 'ReportController@attendance');
 //This is the summary report of the normal LOG view -- sign in/out kiosks
 Route::get('/reports/summary/{kiosk}', 'LogController@summaryReport');
 
-/*----------------Testing Routes-----------------*/
+/*---------------- Locker Routes-----------------*/
+Route::get('/lockers', 'LockerController@main');
+Route::get('/lockers/homeroom', 'LockerController@homeroom');
+
+/*---------------- Testing Routes-----------------*/
 Route::get('/testing', 'TestController@main');
 Route::get('/testing/{user}', 'TestController@testUser');
 

@@ -34,5 +34,29 @@ class AjaxController extends Controller
         return response()->json($defaultPWD, 200);
     }
 
+    /* This function is used by terminal.blade.php
+		It checks to see if the user has entered the default teacher password correctly
+		It returns a JSON response of success or fail.
+	*/
+	public function verifyHomeRoom(Request $request) {
+        $code = $request->input('code');
+        $code = strtoupper($code);
+        $code = trim($code);
+        $code = str_replace("-","",$code);
+		//print_r($code);
+        
+        //Now search for the couse code and see if it exists and if it is in period 1
+        //coursecode 	teacher period 	room
+
+		//$correct = \App\User::where('username','teacher')->first()->password;
+		//print_r($correct);
+		
+		//if (Hash::check($password, $correct)) {
+		//	return response()->json(['status' => 'success']);
+		//} else {
+			return response()->json(['status' => 'failure']);
+		//}
+		
+	}
     
 }
