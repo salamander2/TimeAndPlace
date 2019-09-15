@@ -16,10 +16,11 @@ class CreateLockersTable extends Migration
         Schema::create('lockers', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-			$table->integer('status'); // 0 = available, -1 = damaged, -2 = non existent, 1=in use
-			$table->integer('student1')->unsigned; //should these be unique?
-			$table->integer('student2')->unsigned;
-			$table->integer('student3')->unsigned;
+			$table->integer('status')->default(0); // 0 = available, -1 = damaged, -2 = non existent, 1=in use
+			$table->string('combination',20)->nullable();
+			$table->integer('student1')->unsigned()->default(0); //should these be unique?
+			$table->integer('student2')->unsigned()->default(0);
+			$table->integer('student3')->unsigned()->default(0);
         });
     }
 

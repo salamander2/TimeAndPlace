@@ -15,7 +15,7 @@ class CreateLockerStatusTable extends Migration
     {
         Schema::create('locker_status', function (Blueprint $table) {
             $table->integer('id')->unique(); //signed
-			$table->string('status');
+			$table->string('status')->default(0);
             $table->timestamps();
             $table->primary('id'); 
         });
