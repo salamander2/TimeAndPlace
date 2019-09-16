@@ -110,3 +110,13 @@ For 'php artisan migrate'
 in order to change the column names in this migration: 2019_08_15_173545_rename_signinonly_in_kiosks
 
 composer require doctrine/dbal
+
+-------------------- now adding in locker stuff
+php artisan make:migration create_locker_status_table
+php artisan make:migration create_lockers_table
+php artisan make:seeder StatusTableSeeder
+php artisan make:seeder LockerTableSeeder
+php artisan migrate
+php artisan db:seed	//this runs both seeders. It needs fixing so that it doesn't do multiple locker seeds.
+php artisan make:controller LockerController
+

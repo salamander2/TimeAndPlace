@@ -168,7 +168,7 @@ class ReportController extends Controller
         // print_r('<br>');
         // print_r($row);   
  */           
-        //dd($array);sh
+        //dd($array);
 
         return view($viewname, compact('kiosk','array','code'));//->with('array'=>$array);
 
