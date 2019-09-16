@@ -11,7 +11,9 @@ class Student_course extends Model
 
 
     public function student() {
-        return $this->belongsToMany(Student::class,'studentID', 'studentID');
+//        return $this->belongsToMany(Student::class,'studentID', 'studentID');
+        //return $this->hasMany(Student::class,'studentID', 'studentID');
+        return $this->hasOne(Student::class,'studentID', 'studentID');
     }
     
 }
