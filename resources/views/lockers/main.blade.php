@@ -21,7 +21,7 @@
                 }).then((coursecode) => {
                    // swal(`The returned value is: ${password}`);
                    // pwd = {{ Hash::make('password') }}
-
+                    coursecode = coursecode.trim();
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -36,11 +36,18 @@
                         // contentType: "application/json",     //this totally messes up data transfer
                         success: function (msg) {
                             if(msg.status === "success"){
-                                showOverlay();
+                                window.location = "/lockers/homeroom/" + coursecode
                             }                            
-                            else{
-                                SWerrormsg("This is not a valid course code (or not a homeroom?) ");
+                            else if(msg.status === "failure"){
+                                SWerrormsg("This is not a valid course code");
                             }
+                            else if(msg.status === "wrongperiod"){
+                                SWerrormsg("This course is not in period 1");
+                            }
+                            else {
+                                SWerrormsg();
+                            }
+
                         },
                         error: function (err) {
                             alert('The ajax query did not run ' + err);
@@ -52,7 +59,7 @@
             );
 		}
 		function SWerrormsg(str) {
-            if (str.length == 0) str = "The student was not found or there was an unexpected database error!"
+            if (str.length == 0) str = "There was an unexpected database error!"
             swal({
                 title: "ERROR!",
                 icon: "error",

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Kiosk;
+use App\Course;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -34,9 +35,7 @@ class AjaxController extends Controller
         return response()->json($defaultPWD, 200);
     }
 
-    /* This function is used by terminal.blade.php
-		It checks to see if the user has entered the default teacher password correctly
-		It returns a JSON response of success or fail.
+    /* This function is called from lockers.main.blade.php
 	*/
 	public function verifyHomeRoom(Request $request) {
         $code = $request->input('code');
@@ -47,15 +46,16 @@ class AjaxController extends Controller
         
         //Now search for the couse code and see if it exists and if it is in period 1
         //coursecode 	teacher period 	room
-
-		//$correct = \App\User::where('username','teacher')->first()->password;
-		//print_r($correct);
-		
-		//if (Hash::check($password, $correct)) {
-		//	return response()->json(['status' => 'success']);
-		//} else {
+        $course = Course::find($code);
+        if ($course == null) {
 			return response()->json(['status' => 'failure']);
-		//}
+        }
+
+        if ($course->period == 1) {
+			return response()->json(['status' => 'success']);
+		} else {
+			return response()->json(['status' => 'wrongperiod']);
+		}
 		
 	}
     
