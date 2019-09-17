@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Student;
+use App\Locker;
 use App\Student_course;
 
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class LockerController extends Controller
     {
         //this just gets a list of student_course records. I'd ideall like a pivot to get the student records.
 //        $sc_list = Student_course::where('coursecode', $coursecode)->get();
-        $students = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student');
+        $studentList = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student')->sortBy('lastname');
         //$students = Student_course::where('coursecode', $course)->withPivot('student')->get();
 //        $students = Student::where('studentID', $sc_list->studentID);
 //        $students = Student::where('studentID', '339356800')->get();
@@ -43,14 +44,20 @@ class LockerController extends Controller
             $students->push($oneRecord);
         }
     */
-dd($students);
-        dd($students.'XXX'); //hey! This flattens the collection to a long list of its contents.
+//dd($students);
+  //      dd($students.'XXX'); //hey! This flattens the collection to a long list of its contents.
         //This still gives a collection of collections!
-
-        return view('lockers.homeroom', compact($coursecode,$students));
+//dd($coursecode);
+        return view('lockers.homeroom', compact('coursecode','studentList'));
     }
 
     public function edit() {
-        return view('lockers.edit');
+       return view('lockers.edit');
     }
+
+    public function editLocker(Locker $locker) {
+        //dd($locker);
+       return view('lockers.edit', compact('locker'));
+    }
+
 }

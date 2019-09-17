@@ -36,16 +36,18 @@
     </div>
 
     <div class="card card-info">
-            <div class="card-body">
-    @if($studentList->count())
-        <p>Students attached to this event</p>
-    
-        <p>
-        @foreach($studentList as $SL)            
-                {{$SL->student_id}} : {{$SL->student->firstname}} {{$SL->student->lastname}}<br/>        
-        @endforeach 
-        </p>
-    @endif
+        <div class="card-body">
+            @if($studentList->count())
+                <p>Students attached to this event</p>
+            
+                <p>
+                @foreach($studentList as $SL)            
+                        {{$SL->student_id}} : {{$SL->student->firstname}} {{$SL->student->lastname}}<br/>        
+                @endforeach 
+                </p>
+            @endif
+        </div>
+    </div>
 
 </div>
 @endsection
