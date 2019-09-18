@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Course;
+use App\Locker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +29,11 @@ class Student extends Model
                                 
 
     }
+
+    // public function lockers()
+    // {
+    //     return $this->belongsTo(Locker::class);
+    // }
 
     /** formatCourse
      * Add - into the correct place in the course code

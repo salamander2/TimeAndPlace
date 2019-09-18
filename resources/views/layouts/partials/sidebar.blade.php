@@ -93,7 +93,7 @@
             </li> <!-- end tree menu -->
   
           
-          <li class="nav-item "><a href="/lockers" class="nav-link alert border-primary text-info"><i class="nav-icon fa fa-question-circle fa-2x"></i><p>Lockers</p></a></li>
+          <li class="nav-item "><a href="/lockers" class="nav-link alert alert-light border-primary text-info"><i class="nav-icon fa fa-microchip fa-2x"></i><p>Lockers</p></a></li>
           <li class="nav-item "><a href="/help" class="nav-link alert border-white"><i class="nav-icon fa fa-question-circle fa-2x"></i><p>Help</p></a></li>
 
         </ul>

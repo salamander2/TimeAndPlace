@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
       //  $this->call(StatusTableSeeder::class);
       //  $this->call(ScheduleTableSeeder::class);
-        $this->call(LockerStatusTableSeeder::class);
+      //  $this->call(LockerStatusTableSeeder::class);
         $this->call(LockerTableSeeder::class);
     }
 }

@@ -194,8 +194,9 @@ Route::get('/reports/summary/{kiosk}', 'LogController@summaryReport');
 Route::get('/lockers', 'LockerController@main');
 Route::get('/lockers/homeroom/{code}', 'LockerController@homeroom');
 Route::get('/lockers/edit', 'LockerController@edit');
-Route::get('/lockers/edit/{locker}', 'LockerController@editLocker');
+//Route::get('/lockers/edit/{locker}', 'LockerController@editLocker');
 Route::post('/lockers/edit/{locker}', 'LockerController@editLocker');
+Route::post('/lockers/student/{id}', 'LockerController@updateLocker');
 
 /*---------------- Testing Routes-----------------*/
 Route::get('/testing', 'TestController@main');

@@ -7,6 +7,14 @@
 	</ol> 
 --}} 
 
+{{-- 
+This is the page that edits a locker. If no locker is selected the path is /lockers/edit  and it just shows the top part of the screen.
+
+Once a locker number is selected, then it will show status, etc. and allow you to change things.
+
+--}}
+
+
 <script>                                                                                                                                                                                                 
 function validateData() {                                                                                                                                                                                
     var x, text;                                                                                                                                                                                         

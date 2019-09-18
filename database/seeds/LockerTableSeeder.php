@@ -11,7 +11,7 @@ class LockerTableSeeder extends Seeder
      */
     public function run()
     {
-    	for ($i=0; $i < 2000; $i++) { 
+    	for ($i=0; $i < 3500; $i++) { 
 
 	    	DB::table('lockers')->insert([
 				'status'=> 0,
