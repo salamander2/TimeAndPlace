@@ -6,8 +6,6 @@
 	    <li class="active"> Kiosks List</li>
 	</ol>
 --}}
-
-<!-- note! I'm not using AJAX to rewrite the row when it is submitted. Reloading the page works just fine. --->
 <script>
 function validateForm(studentID) {
     var x;
@@ -44,7 +42,7 @@ function validateForm(studentID) {
     <div class="card card-info">
         <div class="card-body">
         <h3>{{ $coursecode }}</h3>
-             {{-- @if($array->count()) --}}
+             @if($studentList->count())
 
                 <div class="row my-1" style="border-bottom:solid black 1px;">
                 <div class="col-md-4"><b>Student</b></div>
@@ -52,11 +50,10 @@ function validateForm(studentID) {
                 <div class="col "><b>Combination #</b></div>
                 </div>
 
-                @foreach($array as $row)
-                    {{-- $row[0] = studentID, $row[1] = lname,fname, $row[2] = locker_id, $row[3] = combination;   --}}
-                    {{-- start one row of data --}}
+                @foreach($studentList as $SL)
+                {{-- start one row of data --}}
                     {{-- <form role="form" action="/lockers/{{$SL->studentID}}" method="post"> --}}
-                    <form role="form" action="/lockers/student/{{$row[0]}}" method="post" onsubmit="return validateForm({{$row[0]}})">
+                    <form role="form" action="/lockers/student/{{$SL->studentID}}" method="post" onsubmit="return validateForm({{$SL->studentID}})">
                     @csrf
                 @if ($loop->iteration %2 == 0)
                     <div class="row py-1" style="background-color:#DDD;">
@@ -64,37 +61,25 @@ function validateForm(studentID) {
                     <div class="row py-1">
                 @endif
                     <div class="col-md-4">
-                    <span style="color:#600;">{{$loop->iteration }}.</span>&nbsp;&nbsp;{{$row[0]}} : {{$row[1]}}
+                    <span style="color:#600;">{{$loop->iteration }}.</span>&nbsp;&nbsp;{{$SL->studentID}} : {{$SL->lastname}}, {{$SL->firstname}}
                     </div>
-                    @if($row[2] == "")
                     {{-- NOTE that we only have to append the studentID to the 'id' not the name. The 'id' is checked for validation. 
                          If valid, the name goes to the form. --}}
-                    <div class="col-md-1"> 
-                        <input type="text" maxlength="5" size=5 class="" id="lockerNum{{$row[0]}}" name="lockerNum"> 
-                    </div>
-                    <div class="col"> <input type="text" class="" id="combination{{$row[0]}}" name="combination"> </div>
+                    <div class="col-md-1"> <input type="text" maxlength="5" size=5 class="" id="lockerNum{{$SL->studentID}}" name="lockerNum"> </div>
+                    <div class="col"> <input type="text" class="" id="combination{{$SL->studentID}}" name="combination"> </div>
                     <div class="col">
-                    <input type="hidden"  name="studentID" id="studentID" value = "{{$row[0]}}">
+                    <input type="hidden"  name="studentID" id="studentID" value = "{{$SL->studentID}}">
                         <div class="input-group-append">
                             <button class="btn btn-success" type="submit">Submit</button>
                         </div>
                     </div>
-                    @else
-                    <div class="col-md-1"> 
-                        <input style="color:black;" disabled type="text" maxlength="5" size=5 class="" id="lockerNum{{$row[0]}}" name="lockerNum" value="{{$row[2]}}"> 
-                    </div>
-                    <div class="col"> <input disabled type="text" class="" id="combination{{$row[0]}}" name="combination" value="{{$row[3]}}"> </div>
-                    <div class="col">
-                                <div class="input-group-append" style="visibility:hidden;">
-                                    <button class="btn" type="button">Submit</button>
-                                </div>
-                            </div>
-                    @endif
                 </div>
                     </form>
                 @endforeach
 
-            {{-- @endif --}}
+
+
+            @endif
         </div>
     </div>
 </div>

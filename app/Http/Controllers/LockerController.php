@@ -57,7 +57,32 @@ class LockerController extends Controller
     public function homeroom($coursecode)
     {
         $studentList = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student')->sortBy('lastname');
-        return view('lockers.homeroom', compact('coursecode','studentList'));
+
+        //organize this into an array of data. Can't get a homemade collection to work!
+        $array = array();
+        // $students = collect();
+        foreach ($studentList as $student) {
+            // $students.put('studentID', $student->studentID);
+//            $students=$students.concat(['name' => $student->lastname. ", ". $student->firstname]);
+            $row = array();
+            $row[] = $student->studentID;
+            $row[] = $student->lastname. ", ". $student->firstname;
+
+            $locker = LockerStudent::where('studentID',$student->studentID)->first();
+            if ($locker != null) {
+//                $students=$students.concat(['locker_id' => $locker->locker_id]);
+//                $students=$students.concat(['combination' => '******']);
+                $row[] = $locker->locker_id;
+                $row[] = "******"; //for combination
+            } else {
+                $row[] = "";
+                $row[] = "";
+            }
+            $array[] = $row;
+        }
+
+        //return view('lockers.homeroom', compact('coursecode','studentList'));
+        return view('lockers.homeroom', compact('coursecode','array'));
     }
 
     public function edit() {
@@ -99,7 +124,8 @@ class LockerController extends Controller
 //            $locker->students()->save($locker);
             //$student->lockers()->associate($locker)->save();
         //}
-            dd("saved");
+            //dd("saved");
+            return redirect()->back();
 //       return view('lockers.edit', compact('locker'));
     }
 }
