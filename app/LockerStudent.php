@@ -14,4 +14,8 @@ class LockerStudent extends Model
     protected $fillable = [
         'studentID', 'locker_id'
     ];
+
+    public function student() {
+                return $this->hasOne(Student::class,'studentID', 'studentID');
+            }
 }

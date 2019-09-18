@@ -54,7 +54,13 @@ function validateData() {
     <div id="lockerInfo"></div>
     @isset($locker)
     <h2>Locker # {{$locker->id }}</h2>
-    Status:     {{$locker->status}}
+    Status:     {{$status}}  <br><i>(add in options to change the status)</i>
+    <hr>
+    <h4>Used by:</h4>
+    @foreach ($studentList as $student) 
+        <p>{{$student->studentID}} :  {{$student->lastname}}, {{$student->firstname}}</p>
+    @endforeach
+    <i>(add in options to add and remove students)</i>
     @endisset
 
 

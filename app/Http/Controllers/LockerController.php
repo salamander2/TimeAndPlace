@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Student;
 use App\Locker;
+use App\LockerStatus;
 use App\LockerStudent;
 use App\Student_course;
 
@@ -89,9 +90,12 @@ class LockerController extends Controller
        return view('lockers.edit');
     }
 
+    /* get all of the information for one locker */
     public function editLocker(Locker $locker) {
-        //dd($locker);
-       return view('lockers.edit', compact('locker'));
+        $status = LockerStatus::find($locker->status)->status;
+        //get all locker_Student records
+        $studentList = LockerStudent::where('locker_id',$locker->id)->with('student')->get()->pluck('student')->sortBy('lastname');
+       return view('lockers.edit', compact('locker','status','studentList'));
     }
 
     /* This has studentID, combination, and lockerNum variables in the Request object 
@@ -104,19 +108,30 @@ class LockerController extends Controller
 //        $student = Student::find($studentID);
         $locker = Locker::find($locker_id);
 
+        //check status
+        switch ($locker->status) {
+            case -2:
+            dd("This locker is nonexistent");
+            break;
+            case -1:
+            dd("This locker is damaged (unavailable)");
+            break;
+        }
+
         $record = LockerStudent::where('studentID',$studentID)->where('locker_id',$locker_id)->first();
-        if ($record == null) {
-            //create and save a new LockerStudent record. 
-            $lockerStudent = new LockerStudent;
-            $lockerStudent->studentID = $studentID;
-            $lockerStudent->locker_id = $request->lockerNum;
-            $lockerStudent->save();
-            //update locker status
-            $locker->status = 1;
-            $locker->save();
-        } else  {
+        if ($record != null) {
             dd ("This student has already been assigned to this locker!");
         }
+        //TODO: pop up message about sharing the locker if other students are using it.
+
+        //create and save a new LockerStudent record. 
+        $lockerStudent = new LockerStudent;
+        $lockerStudent->studentID = $studentID;
+        $lockerStudent->locker_id = $request->lockerNum;
+        $lockerStudent->save();
+        //update locker status
+        $locker->status = 1;
+        $locker->save();
 
        // if (!$locker->students->contains($studentID)) {
 //            $locker->students()->attach($studentID); //no. Attach is used for many-to-many relationships
