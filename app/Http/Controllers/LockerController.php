@@ -74,7 +74,7 @@ class LockerController extends Controller
 //                $students=$students.concat(['locker_id' => $locker->locker_id]);
 //                $students=$students.concat(['combination' => '******']);
                 $row[] = $locker->locker_id;
-                $row[] = "******"; //for combination
+                $row[] = "********"; //for combination
             } else {
                 $row[] = "";
                 $row[] = "";
@@ -93,11 +93,25 @@ class LockerController extends Controller
     /* get all of the information for one locker */
     public function editLocker(Locker $locker) {
         $status = LockerStatus::find($locker->status)->status;
+        //dd($locker);
         //get all locker_Student records
         $studentList = LockerStudent::where('locker_id',$locker->id)->with('student')->get()->pluck('student')->sortBy('lastname');
        return view('lockers.edit', compact('locker','status','studentList'));
     }
 
+    public function setStatus(Request $request, Locker $locker) {
+        //$status = $request->lstatus;
+        $locker->status = $request->lstatus;
+        $locker->combination = "";
+        $locker->save();
+        
+
+        $records = LockerStudent::where('locker_id',$locker->id)->delete();
+        //$records->delete();
+        //dd($records);
+
+        return redirect()->back();
+    }
     /* This has studentID, combination, and lockerNum variables in the Request object 
        It uses the LockerStudent table since we are not messing with the Student table in the other database in order to add
        locker information to it.
@@ -105,16 +119,17 @@ class LockerController extends Controller
     public function updateLocker (Request $request) {
         $studentID = $request->studentID;
         $locker_id = $request->lockerNum;
+        
 //        $student = Student::find($studentID);
         $locker = Locker::find($locker_id);
 
         //check status
         switch ($locker->status) {
             case -2:
-            dd("This locker is nonexistent");
+            dd("This locker is nonexistent. (Please press <back>)");
             break;
             case -1:
-            dd("This locker is damaged (unavailable)");
+            dd("This locker is damaged (and unavailable). (Please press <back>)");
             break;
         }
 
@@ -129,6 +144,8 @@ class LockerController extends Controller
         $lockerStudent->studentID = $studentID;
         $lockerStudent->locker_id = $request->lockerNum;
         $lockerStudent->save();
+        //add combinatin
+        $locker->combination = $request->combination;
         //update locker status
         $locker->status = 1;
         $locker->save();

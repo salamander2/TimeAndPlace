@@ -54,13 +54,34 @@ function validateData() {
     <div id="lockerInfo"></div>
     @isset($locker)
     <h2>Locker # {{$locker->id }}</h2>
-    Status:     {{$status}}  <br><i>(add in options to change the status)</i>
+    <h5>Status: <kbd>{{$status}}</kbd> </h5>
+    <form action="/lockers/setStatus/{{$locker->id}}" method="post">
+    @csrf
+     <div class="row bg-warning ml-2 float-left rounded">
+        <div class="col-md-auto py-2 bg-light">
+        <input id="rb1" disabled name="lstatus" type="radio" value="1" > Assigned
+        </div>
+        <div class="col-md-auto py-2">
+        <input id="rb1" style="border:solid 1px gray;" name="lstatus" type="radio" value="0" onchange="this.form.submit()"> Available
+        </div>
+        <div class="col-md-auto py-2">
+        <input id="rb2" name="lstatus"  type="radio" value="-2" onchange="this.form.submit()"> Nonexistent
+        </div>
+        <div class="col-md-auto py-2">
+        <input id="rb3" name="lstatus"  type="radio" value="-1" onchange="this.form.submit()"> Damaged
+        </div>
+        <div class="col-md-auto py-1 rounded border border-warning bg-light">Selecting any of these will remove any students from the locker</div>
+    </div>
+    </form>
+                                        
+    <br clear="both">
     <hr>
+    <h4>Combination = {{$locker->combination}}</h4>
     <h4>Used by:</h4>
     @foreach ($studentList as $student) 
-        <p>{{$student->studentID}} :  {{$student->lastname}}, {{$student->firstname}}</p>
+        <h5>{{$student->studentID}} :  {{$student->lastname}}, {{$student->firstname}}</h5>
     @endforeach
-    <i>(add in options to add and remove students)</i>
+    <i>(TODO add in options to add and remove students and to change the combination)</i>
     @endisset
 
 

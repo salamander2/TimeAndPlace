@@ -21,7 +21,7 @@
                 }).then((coursecode) => {
                    // swal(`The returned value is: ${password}`);
                    // pwd = {{ Hash::make('password') }}
-                    coursecode = coursecode.trim();
+                    coursecode = coursecode.toUpperCase().trim();
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -87,8 +87,7 @@
 		</div>
 		@else
 		<div class="row my-2">
-			<div class="col-md-3"><a class="my-1 btn btn-warning btn-block elevation-1" href="/lockers/edit"> Edit locker information </a></div>
-			{{-- <div class="col-md-3"><span class="my-1 btn btn-dark btn-block disabled elevation-1" href=""> Edit locker information </span></div> --}}
+			<div class="col-md-3"><span class="my-1 btn btn-dark btn-block disabled elevation-1" href=""> Edit locker information </span></div>
 			<div class="col-md my-1"> <h5>- for secretaries</h5></div>
 		</div>
 		 @endif
