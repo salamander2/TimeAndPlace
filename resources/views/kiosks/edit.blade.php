@@ -56,7 +56,7 @@
                 <a class="my-1 btn btn-primary elevation-3" <a href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
             @endif
             @if($kiosk->kioskType==1)
-                <a class="my-1 btn btn-light btn-outline-primary elevation-3" <a href="{{'/reports/'.$kiosk->id}}">Attendance Reports </a>
+                <a class="my-1 btn btn-light btn-outline-primary elevation-3" <a href="{{'/reports/attend/'.$kiosk->id}}">Attendance Reports </a>
             @endif
             @if($kiosk->kioskType == 2)
             {{--  <div class="btn btn-outline-secondary elevation-3">  --}}

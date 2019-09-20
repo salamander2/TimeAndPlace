@@ -9,11 +9,11 @@
  {{-- <div class="card"> REMOVE so that there is no border --}}
     <div class="card-header">
         <div class="row">
-            <div class="col-md-2"><form action="{{'/reports/'.$kiosk->id}}/M" method="get">
+            <div class="col-md-2"><form action="{{'/reports/attend/'.$kiosk->id}}/M" method="get">
                 <button id="btnT" type="submit" class="btn btn-outline-success">This Month</button> </form></div>
-            <div class="col-md-2"><form action="{{'/reports/'.$kiosk->id}}/P" method="get">
+            <div class="col-md-2"><form action="{{'/reports/attend/'.$kiosk->id}}/P" method="get">
                 <button id="btnY" class="btn btn-outline-primary">Last Month</button> </form></div>
-            <div class="col-md-2"><form action="{{'/reports/'.$kiosk->id}}/A" method="get">
+            <div class="col-md-2"><form action="{{'/reports/attend/'.$kiosk->id}}/A" method="get">
                 <button id="btnA" class="btn btn-secondary">All</button> </form></div>
                 
         </div>
@@ -22,7 +22,7 @@
                 <h2>
                 @if ($code == 'A')
                     All attendance for {{ $kiosk->name }}
-            <div class="float-right"> <a href="{{'/reportsPrint/'.$kiosk->id}}"><button type="button" class="btn btn-outline-secondary">Printable Report</button></a></p></div>
+            <div class="float-right"> <a href="{{'/reportsPrint/attend/'.$kiosk->id}}"><button type="button" class="btn btn-outline-secondary">Printable Report</button></a></p></div>
                 @else
                     Monthly attendance for {{ $kiosk->name }}
                 @endif

@@ -26,7 +26,7 @@
                 </div><div class="col">
                     <a href="{{'/events/report/'.$event->id}}"><button type="button" class="elevation-3 btn btn-success">Late / Absent Report</button></a>
                 </div><div class="col">
-                    <a href="{{'/events/report2/'.$event->id}}"><button type="button" class="elevation-3 btn btn-outline-success">Printable Report</button></a></p>
+                    <a href="{{'/events/reportPrint/'.$event->id}}"><button type="button" class="elevation-3 btn btn-outline-success">Printable Report</button></a></p>
                 </div>
             </div>
         </div>

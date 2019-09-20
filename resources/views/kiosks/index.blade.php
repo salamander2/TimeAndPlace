@@ -41,7 +41,7 @@
 				@if($kiosk->kioskType == 0)
 				<a class="my-1 btn btn-outline-primary" href="/logs/byKiosk/{{ $kiosk->id }}"> Show logs </a>
 				@elseif($kiosk->kioskType == 1)
-				<a class="my-1 btn btn-outline-primary" href="/reports/{{ $kiosk->id }}"> Attendance Report </a>
+				<a class="my-1 btn btn-outline-primary" href="/reports/attend/{{ $kiosk->id }}"> Attendance Report </a>
 				@else
 				<p class="my-1 btn">Enter kiosk to view reports</p>
 				@endif
