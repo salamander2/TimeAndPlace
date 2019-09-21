@@ -140,7 +140,7 @@ Route::get('/terminalAuth/{kiosk}/toggleStudentID/{loginID}', 'TerminalControlle
 //Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
 
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
-Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2');
+Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2'); //from topnavbar.blade
 Route::get('/terminalAuth/studentFind/{q}', 'TerminalController@listStudents');
 //Route::get('/terminalAuth/studentFind2/{q}', 'TerminalController@listStudents2');
 

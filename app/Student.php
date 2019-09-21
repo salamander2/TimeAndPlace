@@ -81,8 +81,8 @@ class Student extends Model
         // $courses = DB::select('SELECT mysql2.courses.coursecode FROM mysql2.courses INNER JOIN mysql2.student_course ON mysql2.courses.coursecode = mysql2.student_course.coursecode WHERE studentID = ? ORDER BY period',[$this->studentID]);
        $courses = $db2->select('SELECT courses.coursecode, teacher, period, room FROM courses INNER JOIN student_course ON courses.coursecode = student_course.coursecode WHERE studentID = ? ORDER BY period',[$this->studentID]);
 
-        
-      //  dd($courses);
+        //dd($courses);
+        return $courses;
 
         // $sql = "SELECT courses.coursecode, teacher, period, room FROM courses INNER JOIN student_course ON courses.coursecode = student_course.coursecode WHERE studentID = ? ORDER BY period";
         // if ($stmt = $schoolDB->prepare($sql)) {
