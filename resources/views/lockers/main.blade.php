@@ -100,7 +100,7 @@
 
 		@if (auth()->check() && auth()->user()->username == 'secretary')
 		<div class="row my-2">
-			<div class="col-md-3"><a class="my-1 btn btn-info btn-block elevation-1" href="/terminals/"> Locker Reports </a></div>
+			<div class="col-md-3"><a class="my-1 btn btn-info btn-block elevation-1" href="/lockers/listing"> Locker Reports </a></div>
 		</div>
 		@else
 		<div class="row my-2">

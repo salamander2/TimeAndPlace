@@ -160,4 +160,8 @@ class LockerController extends Controller
             return redirect()->back();
 //       return view('lockers.edit', compact('locker'));
     }
+
+    public function listing() {
+        return view ('lockers.listing');
+    }
 }
