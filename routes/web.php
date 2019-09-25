@@ -194,6 +194,7 @@ Route::get('/reports/summary/{kiosk}', 'LogController@summaryReport');
 /*---------------- Locker Routes-----------------*/
 Route::get('/lockers', 'LockerController@main');
 Route::get('/lockers/homeroom/{code}', 'LockerController@homeroom');
+Route::get('/lockers/reports/homeroom/{code}', 'LockerController@homeroomRpt');
 Route::get('/lockers/edit', 'LockerController@edit');
 Route::get('/lockers/edit/{locker}', 'LockerController@editLocker'); //used by return redirect()->back(); in setStatus
 Route::post('/lockers/edit/{locker}', 'LockerController@editLocker');

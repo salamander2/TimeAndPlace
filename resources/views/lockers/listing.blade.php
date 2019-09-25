@@ -131,7 +131,11 @@ function validateData() {
 
 	<div class="card">
 	<div class="card-body">
-... reports ...
+	<h3 class="card-title"> Reports </h3>
+	<p> </p>
+	<p>Print locker info by home room. ... <i>incomplete...</i> but you can type this url to get it: lockers/reports/homeroom/ICS3U102</p>
+	<p>Print locker info for specific home room</p>
+	<p>List all empty lockers in a specific range</p>
 	</div>
 	</div>
 </div>
