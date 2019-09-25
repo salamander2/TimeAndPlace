@@ -200,6 +200,7 @@ Route::post('/lockers/edit/{locker}', 'LockerController@editLocker');
 Route::post('/lockers/student/{id}', 'LockerController@updateLocker');
 Route::post('/lockers/setStatus/{locker}', 'LockerController@setStatus');
 Route::get('/lockers/listing', 'LockerController@listing');
+Route::post('/lockers/massAssign', 'LockerController@massAssign');
 
 
 /*---------------- Testing Routes-----------------*/

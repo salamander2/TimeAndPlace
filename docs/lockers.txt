@@ -1,0 +1,46 @@
+Programmer Documentation
+------------------------
+
+Locker module
+-------------
+
+Tables:
+
+Locker
+Student
+Locker_Student
+Locker_status
+
+Files used:
+
+
+LockerController
+
+There are a number of different statuses for lockers. They default to 0=available. (The text for the various statuses is in locker_status table).
+The locker table structure has a key which is the locker number. There is also a combination and a status field.
+The locker_student table links students to lockers in a many-to-many relationship.  I have not yet implemented this correctly using Eloquent, insted I am doing manual queries to accomplish the same ends.
+
+On the lockers/main.blade.php page, only Secretary (and VP) users can access the buttons - except for the first which allows entry of data by homeroom teacher.
+
+lockers/homeroom.blade.php
+    This page is launched by first typing in a course code that is a period 1 course. (this is checked at the main.blade.php stage).
+    The students in that course are then displayed with student ID and name. Teachers type in a locker number and combination and then hit the submit button.
+    This checks to see that the locker is indeed available
+        *** or in use by another student. If it is the latter, it should pop up a message saying that the locker is used by XXXXX. Is this correct?  It will also check to make sure that the combination is the same as the existing combination on that locker. If it is not, then it should flag it for a secretary to look into later (both names will be needed).
+
+homeroom.blade.php calls lockercontroller/updateLocker()
+    This first makes sure that the locker is not damaged and not nonexistent.
+    It checks to make sure that the student is not being reassigned to the same locker somehow. (This could only happen by messing with the HTML headers in the request).
+    **TODO we need to check to see if the locker is being shared. This would then send back a JSON message to proceed or not via a SweetAlert. This means that the whole homeroom program needs to be rewritten to handle AJAX/JSON for other error messages too.
+    It then creates and saves a new locker_student record.
+
+lockers/edit.blade.php
+    This page allows a secretary to type in a locker number and then pulls up the information for it.
+    It displays the status and who is currently using the locker -- all students if there are more than one.
+    There is an option to change the status (and so delete the students attached)
+    It displays the combination too.
+    **TODO: add in an option to add a student, remove a student, and also change the combination.
+
+lockers/listing.blade.php
+    This allows mass status changes to locker ranges. 
+    **TODO It should also have some reports to show empty lockers within certain ranges (floors, etc).

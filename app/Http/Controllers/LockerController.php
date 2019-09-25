@@ -99,6 +99,9 @@ class LockerController extends Controller
        return view('lockers.edit', compact('locker','status','studentList'));
     }
 
+    /* This function sets the status on a particular locker to either
+    *  available, damaged, or nonexistent. When it does so, it deletes any students attached to the locker.
+    */
     public function setStatus(Request $request, Locker $locker) {
         //$status = $request->lstatus;
         $locker->status = $request->lstatus;
@@ -112,9 +115,10 @@ class LockerController extends Controller
 
         return redirect()->back();
     }
-    /* This has studentID, combination, and lockerNum variables in the Request object 
-       It uses the LockerStudent table since we are not messing with the Student table in the other database in order to add
-       locker information to it.
+    /* Called from homeroom.blade.php
+    *  This has studentID, combination, and lockerNum variables in the Request object 
+    *  It uses the LockerStudent table since we are not messing with the Student table in the other database in order to add
+    *  locker information to it.
     */
     public function updateLocker (Request $request) {
         $studentID = $request->studentID;
@@ -126,17 +130,18 @@ class LockerController extends Controller
         //check status
         switch ($locker->status) {
             case -2:
-            dd("This locker is nonexistent. (Please press <back>)");
+                return redirect()->back()->with("error","This locker is nonexistent!");
             break;
             case -1:
-            dd("This locker is damaged (and unavailable). (Please press <back>)");
+                return redirect()->back()->with("error","This locker is damaged (and unavailable).");
             break;
         }
 
         $record = LockerStudent::where('studentID',$studentID)->where('locker_id',$locker_id)->first();
         if ($record != null) {
-            dd ("This student has already been assigned to this locker!");
+            return redirect()->back()->with("error","This student has already been assigned to this locker!");
         }
+
         //TODO: pop up message about sharing the locker if other students are using it.
 
         //create and save a new LockerStudent record. 
@@ -157,11 +162,25 @@ class LockerController extends Controller
             //$student->lockers()->associate($locker)->save();
         //}
             //dd("saved");
-            return redirect()->back();
+        return redirect()->back();
 //       return view('lockers.edit', compact('locker'));
     }
 
     public function listing() {
         return view ('lockers.listing');
+    }
+
+    public function massAssign(Request $request) {
+        $startnum = $request->startnum;
+        $endnum = $request->endnum;
+        $status = $request->lstatus; 
+        for ($x = $startnum; $x <= $endnum; $x++) {
+            $locker = Locker::find($x);
+            $locker->status = $status;
+            $locker->save();
+            LockerStudent::where('locker_id',$x)->delete();
+        }
+        return redirect()->back()->with("success","Locker statuses have been changed.");
+
     }
 }

@@ -8,11 +8,12 @@
 --}}
 <script>
 function validateData() {
-    var x, text;
+    var n1,n2,text;
 
-    x = document.getElementById("startnum").value;
+    n1 = document.getElementById("startnum").value;
+	
     // If x is Not a Number or less than one or greater than 10
-    if (isNaN(x) || x < 1 || x > 3500) {
+    if (isNaN(n1) || n1 < 1 || n1 > 3500) {
         text = "Locker number must be between 1 and 3500";
         text = "<div class=\"error\">" + text + "</div>";
         document.getElementById("error_message").outerHTML = "<div id=\"error_message\" class=\"alert alert-warning w-50\"></div>";
@@ -21,9 +22,9 @@ function validateData() {
         return false;
     }
 
-    x = document.getElementById("endnum").value;
+    n2 = document.getElementById("endnum").value;
     // If x is Not a Number or less than one or greater than 10
-    if (isNaN(x) || x < 1 || x > 3500) {
+    if (isNaN(n2) || n2 < 1 || n2 > 3500) {
         text = "Locker number must be between 1 and 3500";
         text = "<div class=\"error\">" + text + "</div>";
         document.getElementById("error_message").outerHTML = "<div id=\"error_message\" class=\"alert alert-warning w-50\"></div>";
@@ -31,9 +32,37 @@ function validateData() {
         document.getElementById("endnum").value = "";
         return false;
     }
+
+	//here + must be used to convert strings to ints.
+	if (+n1 >= +n2) {
+        text = "Starting number must be lower than ending number";
+        text = "<div class=\"error\">" + text + "</div>";
+        document.getElementById("error_message").outerHTML = "<div id=\"error_message\" class=\"alert alert-warning w-50\"></div>";
+        document.getElementById("error_message").innerHTML = text;
+		return false;
+	}
+
+	return true;
 }
 
 </script>
+
+<!-- display message when this page (re)loads, eg. when a kiosk is deleted -->
+@if (session('success'))
+	<script>
+		window.createNotification({
+			theme: 'success',
+			positionClass: 'nfc-bottom-right',
+			displayCloseButton: true,
+			showDuration: 4500
+		})({		
+			message: '{!! session('success') !!}'
+		});
+	</script>
+	 {{--  <div class="alert alert-danger" role="alert">
+	    {{ session('error') }}
+	</div>  --}}
+@endif
 
 <div class="container">
 	<h1>Locker List Maintenance</h1>
@@ -43,7 +72,7 @@ function validateData() {
  		 <div id="error_message"></div>
 
 		<h4>Assign status to a range of lockers</h4>
-		<form role="form" action="/lockers/" method="post" onsubmit="return validateData()" >
+		<form role="form" action="/lockers/massAssign" method="post" onsubmit="return validateData()" >
 		@csrf
 		<div class="row my-2 text-primary">
 			<div class="col-md-3">
@@ -55,10 +84,10 @@ function validateData() {
 		</div>
 		<div class="row my-2">
 			<div class="col-md-3">
-				<input type="text" maxlength="5" size=5 class="" id="startnum">
+				<input type="text" maxlength="5" size=5 class="" id="startnum" name="startnum">
 			</div>
 			<div class="col-md-3">
-				<input type="text" maxlength="5" size=5 class="" id="endnum">
+				<input type="text" maxlength="5" size=5 class="" id="endnum" name="endnum">
 			</div>
 		</div>
 
@@ -67,7 +96,7 @@ function validateData() {
 				<span class="text-primary">Select status: </span>
 			</div>
 			<div class="col-md-auto border border-warning rounded py-2">
-				<input id="rb1" required  NAME="LSTatus" type="radio" value="0"> Available
+				<input id="rb1" required NAME="lstatus" type="radio" value="0"> Available
 			</div>
 			<div class="col-md-auto border border-warning rounded py-2">
 				<input id="rb2" name="lstatus"  type="radio" value="-2"> Nonexistent
