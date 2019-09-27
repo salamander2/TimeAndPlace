@@ -61,8 +61,8 @@ class StudentController extends Controller
             $row[] = $locker->id;
             $row[] = $locker->combination;
             $sharedby = LockerStudent::where('locker_id',$locker->id)->with('student')->get()->pluck('student')->sortBy('lastname');
+            $z = array();
             foreach($sharedby as $st) {
-                $z = array();
                 if ($st->studentID == $id) continue;
                 $z[] = $st->lastname.", ".$st->firstname;
             }
