@@ -95,9 +95,24 @@
         </table>
         <p class="fontONE smaller fleft gray" title="Teacher and student course codes for COOP are completely different!"><i>COOP courses won't show up here</i></p>
         </div>
-        <h4>Locker</h4>
+        <div class="rounded bg-info p-2">
+        <h4>Locker Info</h4>
         <div class="col-md-auto">
-            put locker info here, along with combination and who is sharing the locker
+            @foreach($lockerArray as $oneLocker)
+                <b>Locker number:</b> {{$oneLocker['0']}}<br>
+                @if (auth()->check() && auth()->user()->username == 'secretary')
+                Combination: {{$oneLocker['1']}}<br>
+                @endif
+
+                @if(count($oneLocker['2']))
+                    This locker is shared with:
+                    @foreach ($oneLocker['2'] as $x)
+                    {{$x}};  
+                    @endforeach
+                @endif
+                <br>
+            @endforeach
+        </div>
         </div>
     </div>
     </div>

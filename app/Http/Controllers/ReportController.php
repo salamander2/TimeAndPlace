@@ -60,6 +60,7 @@ class ReportController extends Controller
                 if ($month->isFuture()) {
                     $month->subYear();
                 }
+$month->subYear();
                 //$meetings = Meeting::where('created_at', '>=', $month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
                 $meetings = Meeting::where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
         }

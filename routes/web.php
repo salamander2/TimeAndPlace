@@ -186,6 +186,7 @@ Route::get('/reports/{kiosk}', 'ReportController@attendance')->defaults('code', 
 Route::get('/reports/attend/{kiosk}', 'ReportController@attendance');
 Route::get('/reports/attend/{kiosk}/{code}', 'ReportController@attendance');
 Route::get('/reportsPrint/attend/{kiosk}', 'ReportController@attendancePrint');
+Route::get('/reportsPrint/attend/{kiosk}/{code}', 'ReportController@attendancePrint');
 Route::get('/reportsPrint/{kiosk}', 'ReportController@attendancePrint')->defaults('code', 'A'); //parameter 'A' = all, 'M' = current month
 
 //This is the summary report of the normal LOG view -- sign in/out kiosks
@@ -208,6 +209,7 @@ Route::post('/lockers/massAssign', 'LockerController@massAssign');
 Route::get('/testing', 'TestController@main');
 Route::get('/testing/{user}', 'TestController@testUser');
 
+/* ---------------- Fallback Route --------------*/
 Route::fallback(function () {
     return redirect('home');
     //abort(404,'Page Not Found.');

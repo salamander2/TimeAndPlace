@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Student;
+use App\Locker;
+use App\LockerStudent;
 use App\Course;
 
 class StudentController extends Controller
@@ -41,7 +43,6 @@ class StudentController extends Controller
         //$courses = $db2->table('students')->find(1);
         //print_r($courses . '\n');
 
-     
 
         // $student = new Student();
         
@@ -52,11 +53,29 @@ class StudentController extends Controller
         $photoURL = $student->getPhotoURL($id);
         $courses = $student->getTimeTable();    //NOT USED: $courses = $student->getTimeTable();
 
-		//$student = $student->find($id);
+        $lockerArray = array();
+        $lockerNums = LockerStudent::where('studentID', $id)->get();
+        foreach ($lockerNums as $x) {
+            $row = array();
+            $locker = Locker::find($x->locker_id);
+            $row[] = $locker->id;
+            $row[] = $locker->combination;
+            $sharedby = LockerStudent::where('locker_id',$locker->id)->with('student')->get()->pluck('student')->sortBy('lastname');
+            foreach($sharedby as $st) {
+                $z = array();
+                if ($st->studentID == $id) continue;
+                $z[] = $st->lastname.", ".$st->firstname;
+            }
+            $row[] = $z;
+            $lockerArray[] = $row;
+        }
+        // dd($lockerArray);
+
+	//$student = $student->find($id);
         //$student = $student->first();
         $age = $this->getAge($student->dob);
         //return view('student')->withRecord($student)->withAge($age);
-        return view('student', compact('student','age','photoURL','courses'));
+        return view('student', compact('student','age','photoURL','courses','lockerArray'));
     
         //dd($student);
     }

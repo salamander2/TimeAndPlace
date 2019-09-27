@@ -10,8 +10,10 @@
 
       @foreach ($students as $student)
       <tr>
-         <td><a href="/logs/byStudent/{{$student->studentID}}">{{$student->lastname }}, {{$student->firstname}}</a></td>         
-         <td><a href="/logs/byStudent/{{$student->studentID}}">{{$student->studentID}}</a></td>
+         {{-- <td><a href="/logs/byStudent/{{$student->studentID}}">{{$student->lastname }}, {{$student->firstname}}</a></td>          --}}
+         {{-- <td><a href="/logs/byStudent/{{$student->studentID}}">{{$student->studentID}}</a></td> --}}
+         <td><a href="/students/{{$student->studentID}}">{{$student->lastname }}, {{$student->firstname}}</a></td>         
+         <td><a href="/students/{{$student->studentID}}">{{$student->studentID}}</a></td>
       </tr>
       @endforeach
 
