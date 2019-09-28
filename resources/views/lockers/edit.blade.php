@@ -76,10 +76,13 @@ function validateData() {
                                         
     <br clear="both">
     <hr>
-    <h4>Combination = {{$locker->combination}}</h4>
+    <h4>Combination : <kbd>{{$locker->combination}}</kbd> 
+    <input type="text" id="newcombo" name="newcombo" placeholder="Enter new combination">
+    <button class="btn btn-success" type="submit">Submit</button>
+    </h4>
     <h4>Used by:</h4>
     @foreach ($studentList as $student) 
-        <h5>{{$student->studentID}} :  {{$student->lastname}}, {{$student->firstname}}</h5>
+        <h5>{{$student->studentID}} :  {{$student->lastname}}, {{$student->firstname}} <button class="btn btn-outline-danger" type="submit">Remove</button></h5>
     @endforeach
     <i>(TODO add in options to add and remove students and to change the combination)</i>
     @endisset

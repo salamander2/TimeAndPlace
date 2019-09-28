@@ -25,6 +25,9 @@
                 <div class="col-auto alert alert-secondary elevation-3">
                     <a class="text-dark" href="/logs/byStudent/{{ $student->studentID }}">Sort by Date</a>
                 </div>
+                <div class="ml-2 col-auto alert alert-warning elevation-3">
+                    <a class="text-dark" href="/students/{{ $student->studentID }}">Student Info</a>
+                </div>
             </div>
     <hr>        
 

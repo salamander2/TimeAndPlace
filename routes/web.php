@@ -155,10 +155,10 @@ Route::get('/autosignout','LogController@autosignout');
 Route::get('/autosignout/{kioskID}','LogController@autosignoutKiosk');
 
 /*----------------Student Routes-------------*/
-Route::get('/students', 'StudentController@index');
+Route::get('/allstudents', 'StudentController@index');
+Route::get('/allcourses', 'StudentController@showCourses');
 Route::get('/students/{id}', 'StudentController@show');
 Route::get('/studentsJSON/{id}', 'StudentController@showJSON');
-Route::get('/courses/', 'StudentController@showCourse');
 
 /*----------------Event Routes-----------------*/
 Route::get('/events/create/{kiosk}', 'EventController@create');

@@ -17,10 +17,9 @@
     
      
     <div class="card-body">
-	    <a href="/students" class="btn btn-outline-info">List all Students</a>
-		  <a href="/students/339654014" class="btn btn-outline-info">Go to Student show page</a>
-      <a href="/courses" class="btn btn-outline-info">List Courses</a>
-      <a href="/testing/13" class="btn btn-outline-info">Testing Laravel</a>
+	    <a href="/allstudents" class="my-2 btn btn-outline-info" target="_blank">List all Students</a>
+      <a href="/allcourses" class="my-2 btn btn-outline-info" target="_blank">List Courses</a>
+      <a href="/testing/13" class="my-2 btn btn-outline-info">Testing Laravel</a>
     </div>
     
   </aside>

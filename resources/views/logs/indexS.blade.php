@@ -22,8 +22,11 @@
                         {{ $student->studentID }}
                     </h1>
                 </div>
-                <div class="col-auto alert alert-secondary elevation-3">
+                <div class="mr-2 col-auto alert alert-secondary elevation-3">
                     <a class="text-dark" href="/logs/byStudentbyKiosk/{{ $student->studentID }}">Sort by Kiosk</a>
+                </div>
+                <div class="ml-2 col-auto alert alert-warning elevation-3">
+                    <a class="text-dark" href="/students/{{ $student->studentID }}">Student Info</a>
                 </div>
             </div>
         

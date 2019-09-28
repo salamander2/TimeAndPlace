@@ -17,18 +17,19 @@ class StudentController extends Controller
     }
     
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Lists all the students with their ids and login ids.
+     * As plain text.
      */
     public function index()
     {
-        $students = Student::all();
-        // dd($students->first());
+        $students = Student::all()->sortBy('lastname');
+        print("<table>");
         foreach ($students as $student) {
-            print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . " ... " . $student->loginID ."<br>");
+            //print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . " ... " . $student->loginID ."<br>");
+            printf("<tr><td>%s . . . %s, %s</td><td>%s</td></tr>", $student->studentID, $student->lastname, $student->firstname, $student->loginID);
             
         }  
+        print("</table>");
     }
 
    /**
@@ -96,13 +97,27 @@ class StudentController extends Controller
 
     }
 
+    public function showCourses() {
+        $courses = Course::all();
+
+        print("<table>");
+        print("<tr><th>Course</th><th>Teacher</th><th>Period</th></tr>");
+        foreach ($courses as $course) {
+            $coursename = $this->formatCourse($course->coursecode);
+            printf("<tr><td>%s</td><td>%s</td><td>&nbsp;%s</td></tr>", $coursename, $course->teacher, $course->period);
+            
+        }  
+        print("</table>");
+            // print_r($course->coursecode ." ... " . $course->teacher . "<br>");
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showCourse()
+/*    public function showCourse()
     {
         
         // $db2 = \DB::connection('mysql2');
@@ -134,9 +149,9 @@ class StudentController extends Controller
         //$age= sprintf("%u.%u",substr($diff, 0, 2),substr($diff,2,2));
         return $age;
     }
-    
+*/    
     //changes course name to look like this ESLAO1-01 (adds in hyphen)
-    private function formatCourse($course) {
+    protected function formatCourse($course) {
         if (strlen($course) != 8) return $course;
 
         $temp = substr($course,0,6) . "-" . substr($course,6);

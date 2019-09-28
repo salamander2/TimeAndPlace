@@ -83,25 +83,29 @@
             </table>
         </div>
       </div>
-        <p>&nbsp;</p>
-        <h4>Time Table</h4>
-        <div class="col-md-auto">
-        <table class="timetable">
 
-        <tr><th>Period</th><th>Course</th><th>Teacher</th><th>Room</th></tr>
-        @foreach ($courses as $c)
-            <tr><td>{{$c->period}}</td><td>{{$c->coursecode}}</td><td>{{$c->teacher}}</td><td>{{$c->room}}</td></tr>
-        @endforeach
-        </table>
-        <p class="fontONE smaller fleft gray" title="Teacher and student course codes for COOP are completely different!"><i>COOP courses won't show up here</i></p>
+       <div class="rounded alert border-primary my-3 p-2">
+            <h4 class="text-primary">Time Table</h4>
+            <div class="col-auto">
+                <table class="timetable">
+                <tr><th>Period</th><th>Course</th><th>Teacher</th><th>Room</th></tr>
+                @foreach ($courses as $c)
+                    <tr><td>{{$c->period}}</td><td>{{$c->coursecode}}</td><td>{{$c->teacher}}</td><td>{{$c->room}}</td></tr>
+                @endforeach
+                </table>
+                <p class="fontONE smaller fleft gray" title="Teacher and student course codes for COOP are completely different!"><i>COOP courses won't show up here</i></p>
+            </div>
         </div>
-        <div class="rounded bg-info p-2">
-        <h4>Locker Info</h4>
+
+        <div class="rounded card border-success p-2">
+        <h4 class="text-success">Locker Info</h4>
         <div class="col-md-auto">
             @foreach($lockerArray as $oneLocker)
-                <b>Locker number:</b> {{$oneLocker['0']}}<br>
-                @if (auth()->check() && auth()->user()->username == 'secretary')
-                Combination: {{$oneLocker['1']}}<br>
+                @if (auth()->check() && auth()->user()->username == 'secretary' || auth()->user()->isAdministrator())
+                    <b>Locker number:</b> <a href="/lockers/edit/{{$oneLocker['0']}}">{{$oneLocker['0']}}</a><br>
+                    <kbd><b>Combination:</b> {{$oneLocker['1']}}</kbd><br>
+                @else
+                    <b>Locker number:</b> {{$oneLocker['0']}}<br>
                 @endif
 
                 @if(count($oneLocker['2']))
