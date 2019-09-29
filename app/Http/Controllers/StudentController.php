@@ -23,6 +23,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all()->sortBy('lastname');
+        print("<!DOCTYPE HTML><HTML><BODY>")
         print("<table>");
         foreach ($students as $student) {
             //print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . " ... " . $student->loginID ."<br>");
@@ -97,19 +98,7 @@ class StudentController extends Controller
 
     }
 
-    public function showCourses() {
-        $courses = Course::all();
-
-        print("<table>");
-        print("<tr><th>Course</th><th>Teacher</th><th>Period</th></tr>");
-        foreach ($courses as $course) {
-            $coursename = $this->formatCourse($course->coursecode);
-            printf("<tr><td>%s</td><td>%s</td><td>&nbsp;%s</td></tr>", $coursename, $course->teacher, $course->period);
-            
-        }  
-        print("</table>");
-            // print_r($course->coursecode ." ... " . $course->teacher . "<br>");
-    }
+    
 
     /**
      * Display the specified resource.

@@ -156,9 +156,12 @@ Route::get('/autosignout/{kioskID}','LogController@autosignoutKiosk');
 
 /*----------------Student Routes-------------*/
 Route::get('/allstudents', 'StudentController@index');
-Route::get('/allcourses', 'StudentController@showCourses');
 Route::get('/students/{id}', 'StudentController@show');
 Route::get('/studentsJSON/{id}', 'StudentController@showJSON');
+Route::get('/allcourses', 'ClassListController@showCourses');
+Route::get('/classlists', 'ClassListController@classlist');
+Route::post('/classlists/show', 'ClassListController@show');
+Route::post('/classlists/showContacts', 'ClassListController@showContacts');
 
 /*----------------Event Routes-----------------*/
 Route::get('/events/create/{kiosk}', 'EventController@create');

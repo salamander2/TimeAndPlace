@@ -47,12 +47,12 @@ function validateData() {
     @csrf
     Enter locker number: <input type="text" maxlength="5" size=5 class="" id="lockerNum" name="lockerNum">
         
-    <button class="btn btn-success" type="submit">Submit</button>
+    <button class="btn btn-success p-1" type="submit">Search</button>
     </form>
     <div class="row my-1" style="border-bottom:solid black 1px;"> </div>
 
-    <div id="lockerInfo"></div>
-    @isset($locker)
+    <div id="lockerInfo"></div> {{-- I forget why this is here --}}
+@isset($locker)  {{-- this is for when the page is called with NO LOCKER -- then the variable $locker will be null --}}
     <h2>Locker # {{$locker->id }}</h2>
     <h5>Status: <kbd>{{$status}}</kbd> </h5>
     <form action="/lockers/setStatus/{{$locker->id}}" method="post">
@@ -70,24 +70,56 @@ function validateData() {
         <div class="col-md-auto py-2">
         <input id="rb3" name="lstatus"  type="radio" value="-1" onchange="this.form.submit()"> Damaged
         </div>
-        <div class="col-md-auto py-1 rounded border border-warning bg-light">Selecting any of these will remove any students from the locker</div>
-    </div>
+        <div class="col-md-auto py-1 rounded border border-warning bg-light">Selecting any of these will remove 
+        any students from the locker</div>
+    </div> <!--end of row -->
     </form>
                                         
     <br clear="both">
+    @if($locker->status == 1) {{-- Only allow combination to be changed if locker is being used --}}
     <hr>
-    <h4>Combination : <kbd>{{$locker->combination}}</kbd> 
-    <input type="text" id="newcombo" name="newcombo" placeholder="Enter new combination">
-    <button class="btn btn-success" type="submit">Submit</button>
-    </h4>
-    <h4>Used by:</h4>
-    @foreach ($studentList as $student) 
-        <h5>{{$student->studentID}} :  {{$student->lastname}}, {{$student->firstname}} <button class="btn btn-outline-danger" type="submit">Remove</button></h5>
-    @endforeach
-    <i>(TODO add in options to add and remove students and to change the combination)</i>
-    @endisset
+    <div class="row">
+        <div class="col-md-auto py-2 bg-light">
+            <h4>Combination :
+            @if($locker->combination != null)
+             <kbd>{{$locker->combination}}</kbd> 
+             @endisset
+            </h4>
+        </div>
+        <div class="col-md-auto py-2 bg-light">
+            <form action="/lockers/newCombo/{{$locker->id}}" method="post">
+            @csrf
+            <input type="text" id="newcombo" name="newcombo" placeholder="Enter new combination">
+            <button class="btn btn-success p-1" type="submit">Submit</button>
+            </form>
+        </div>
+    </div> <!-- end of row -->
+    @endif
+    <hr>
+    @if($locker->status == 1) {{-- Only allow combination to be changed if locker is being used --}}
+        <h4>Used by:</h4>
+        @foreach ($studentList as $student) 
+            <form action="/lockers/delStudent/{{$locker->id}}" method="post">
+            @csrf
+            <h5>{{$student->studentID}} :  {{$student->lastname}}, {{$student->firstname}} 
+            <button class="btn btn-outline-danger" type="submit">Remove</button></h5>
+            <input type="hidden" name="delStudentID" id="delStudentID" value="{{$student->studentID}}">
+            </form>
+        @endforeach
+    @endif
 
-
-    </div>
+    @if($locker->status >= 0) {{-- Only allow students to be added if locker is available or assigned--}}
+        <form action="/lockers/addStudent/{{$locker->id}}" method="post">
+        @csrf
+        <input type="text" id="addStudentID" name="addStudentID" placeholder="Student ID">
+        @if($locker->status == 0) {{-- add in field for combination --}}
+            <br><input class="mt-2" type="text" id="newcombo" name="newcombo" placeholder="Enter new combination">
+        @endif
+        <button class="btn btn-success p-1" type="submit">Add student to locker</button>
+        </form>
+    @endif
+@endisset
+    </div> <!-- end of card body -->
+    </div> <!-- end of card -->
 </div>    
 @endsection
