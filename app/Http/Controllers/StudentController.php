@@ -23,7 +23,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all()->sortBy('lastname');
-        print("<!DOCTYPE HTML><HTML><BODY>")
+        print("<!DOCTYPE HTML><HTML><BODY>");
         print("<table>");
         foreach ($students as $student) {
             //print_r($student->studentID ." ... " . $student->lastname .', '.$student->firstname . " ... " . $student->loginID ."<br>");
@@ -75,7 +75,7 @@ class StudentController extends Controller
 
 	//$student = $student->find($id);
         //$student = $student->first();
-        $age = $this->getAge($student->dob);
+	$age = $this->getAge($student->dob);
         //return view('student')->withRecord($student)->withAge($age);
         return view('student', compact('student','age','photoURL','courses','lockerArray'));
     
@@ -128,7 +128,7 @@ class StudentController extends Controller
         // }
         // dd('x');
     }
-
+*/
     //This method works
     private function getAge($then) {
         $then = date('Ymd', strtotime($then));
@@ -138,7 +138,7 @@ class StudentController extends Controller
         //$age= sprintf("%u.%u",substr($diff, 0, 2),substr($diff,2,2));
         return $age;
     }
-*/    
+    
     //changes course name to look like this ESLAO1-01 (adds in hyphen)
     protected function formatCourse($course) {
         if (strlen($course) != 8) return $course;
