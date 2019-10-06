@@ -75,8 +75,8 @@
     </div>
 
     <br><br>
-    {{-- if there are any events (ie. it is also a signinOnly kiosk)   --}}
-    @if($kiosk->events->count())
+    {{-- if it is a signinOnly kiosk and there are any events   --}}
+    @if($kiosk->kioskType == 2 && $kiosk->events->count())
         @include('child.kioskedit4') {{-- Events for kiosktype=2 --}}
     @endif
 </div>

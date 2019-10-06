@@ -19,7 +19,7 @@
     <div class="card-body">
 	    <a href="/allstudents" class="my-2 btn btn-outline-info" target="_blank">List all Students</a>
       <a href="/allcourses" class="my-2 btn btn-outline-info" target="_blank">List Courses</a>
-      <a href="/testing/13" class="my-2 btn btn-outline-info">Testing Laravel</a>
+      {{-- <a href="/testing/13" class="my-2 btn btn-outline-info">Testing Laravel</a> --}}
     </div>
     
   </aside>
