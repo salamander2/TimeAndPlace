@@ -7,6 +7,60 @@
 	</ol>
 --}}
 <script>
+	function getCourseCode() {
+
+		swal({
+			title: "Enter courseCode",
+			text: "(course code with section)",
+			//icon: "info",  
+			content: {                                
+				element: "input",
+				attributes: {
+				}
+			},                
+			}).then((coursecode) => {
+				coursecode = coursecode.toUpperCase().trim();
+				$.ajax({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					type: "POST",
+					async: true,
+					url: '/verifyHomeRoom',  //url: '/verifyCourse',
+					data: {                            
+						code : coursecode 
+					},
+					dataType: "json",
+					// contentType: "application/json",     //this totally messes up data transfer
+					success: function (msg) {
+						if(msg.status === "failure"){
+							SWerrormsg("This is not a valid course code");
+						}
+						else {
+							window.location = "/lockers/reports/course/" + coursecode
+						}
+					},
+					error: function (err) {
+						alert('The ajax query did not run ' + err);
+						console.log(err);
+						//errormsg();
+					}
+				});
+			}
+		);
+	}
+	function SWerrormsg(str) {
+		if (str.length == 0) str = "There was an unexpected database error!"
+		swal({
+			title: "ERROR!",
+			icon: "error",
+			text: str,               
+			timer:4000,
+		}).then(  function() { $('#inputID').focus() }
+		);
+	}
+
+        
 function validateData() {
     var n1,n2,text;
 
@@ -67,11 +121,14 @@ function validateData() {
 <div class="container">
 	<h1>Locker List Maintenance</h1>
 	<div class="card">
+
+	<div class="card-header bg-secondary">
+		<div class="card-title">Assign status to a range of lockers</div>
+	</div>
 	<div class="card-body">
 
  		 <div id="error_message"></div>
 
-		<h4>Assign status to a range of lockers</h4>
 		<form role="form" action="/lockers/massAssign" method="post" onsubmit="return validateData()" >
 		@csrf
 		<div class="row my-2 text-primary">
@@ -118,8 +175,8 @@ function validateData() {
 	</div>
 
 	<div class="card collapsed-card">
-    <div class="card-header" data-widget="collapse">
-        <h3 class="card-title">Locker Ranges</h3>
+    <div class="card-header bg-secondary" data-widget="collapse">
+        <div class="card-title">Locker Ranges</div>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
         </div>
@@ -130,12 +187,13 @@ function validateData() {
 	</div>
 
 	<div class="card">
+	<div class="card-header bg-secondary">
+		<div class="card-title"> Reports </div>
+	</div>
 	<div class="card-body">
-	<h3 class="card-title"> Reports </h3>
 	<p> </p>
-	<p>Print locker info by home room. ... <i>incomplete...</i> but you can type this url to get it: lockers/reports/homeroom/ICS3U102</p>
-	<p>Print locker info for specific home room</p>
-	<p>List all empty lockers in a specific range</p>
+	<div>&bull; Print locker information by <span class="my-1 btn btn-outline-success elevation-1" onclick="getCourseCode()" href=""> course code </span></div>
+	<p>&bull; TODO: List all empty lockers in a specific range</p>
 	</div>
 	</div>
 </div>

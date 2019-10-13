@@ -15,12 +15,9 @@
                 content: {                                
                     element: "input",
                     attributes: {
-                    //placeholder: "password ...",
                     }
                 },                
                 }).then((coursecode) => {
-                   // swal(`The returned value is: ${password}`);
-                   // pwd = {{ Hash::make('password') }}
                     coursecode = coursecode.toUpperCase().trim();
                     $.ajax({
                         headers: {
@@ -76,11 +73,11 @@
     <h1>Locker List Maintenance</h1>
 	<div class="card px-2">
 		<div class="row my-2">
-			<div class="col-md-3"><span class="my-1 btn btn-success btn-block elevation-1" onclick="getHomeRoom()" href="/lockers/homeroom"> Enter locker info </span></div>
+			<div class="col-md-3"><span class="my-1 btn btn-success btn-block elevation-1" onclick="getHomeRoom()" href=""> Enter locker info </span></div>
 			<div class="col-md my-1"> <h5>- for homeroom teachers</h5></div>
 		</div>
         <p>Once information is entered for a locker, the teacher cannot edit it. The secretaries have to edit and change it.</p>
-		@if (auth()->check() && auth()->user()->username == 'secretary')
+		@if (auth()->user()->isAdministrator() || auth()->user()->username == 'secretary')
 		<div class="row my-2">
 			<div class="col-md-3"><a class="my-1 btn btn-warning btn-block elevation-1" href="/lockers/edit"> Edit locker information </a></div>
 			<div class="col-md my-1"> <h5>- for secretaries</h5></div>
@@ -98,7 +95,7 @@
         <i>The student number can be looked up by typing in the student's name</i></p>
 
 
-		@if (auth()->check() && auth()->user()->username == 'secretary')
+		@if (auth()->user()->isAdministrator() || auth()->user()->username == 'secretary')
 		<div class="row my-2">
 			<div class="col-md-3"><a class="my-1 btn btn-info btn-block elevation-1" href="/lockers/listing"> Locker Reports </a></div>
 		</div>

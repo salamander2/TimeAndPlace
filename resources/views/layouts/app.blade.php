@@ -20,7 +20,7 @@
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
                 <!-- Left side column. contains the logo and sidebar -->
-                @if (Auth::user()->role == "isAdmin")
+                @if (Auth::user()->role == "isAdmin")  <--- this no longer works, use auth()->user()->isAdministrator()
                     @include('layouts.sidebar_admin_menu')
                 @elseif (Auth::user()->role == "isNormalUser")
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')

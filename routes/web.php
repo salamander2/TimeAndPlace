@@ -180,7 +180,6 @@ Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStu
 //Middleware can also be added in AjaxController using the ->only() and ->except() methods
 Route::post('AJAXresetPWD/{id}', 'AjaxController@resetPWD')->middleware('admin');
 Route::post('showDefaultPWD', 'AjaxController@showDefaultPWD')->name('showDefaultPWD');
-Route::post('verifyHomeRoom', 'AjaxController@verifyHomeRoom');
 
 /*---------------- Report Routes-----------------*/
 //This is for attendance report
@@ -196,16 +195,19 @@ Route::get('/reportsPrint/{kiosk}', 'ReportController@attendancePrint')->default
 Route::get('/reports/summary/{kiosk}', 'LogController@summaryReport');
 
 /*---------------- Locker Routes-----------------*/
-Route::get('/lockers', 'LockerController@main');
-Route::get('/lockers/homeroom/{code}', 'LockerController@homeroom');
-Route::get('/lockers/reports/homeroom/{code}', 'LockerController@homeroomRpt');
-Route::get('/lockers/edit', 'LockerController@edit');
+Route::get('/lockers', 'LockerController@main'); //from control-sidepanel button
+Route::post('verifyHomeRoom', 'LockerController@verifyHomeRoom'); //ajax
+Route::get('/lockers/homeroom/{code}', 'LockerController@homeroom'); //from main (locker info button)
+Route::get('/lockers/reports/course/{code}', 'LockerController@courseRpt');
+Route::get('/lockers/edit', 'LockerController@edit'); //from main (edit button)
 Route::get('/lockers/edit/{locker}', 'LockerController@editLocker'); //used by return redirect()->back(); in setStatus
-Route::post('/lockers/edit/{locker}', 'LockerController@editLocker');
-Route::post('/lockers/student/{id}', 'LockerController@updateLocker');
-Route::post('/lockers/setStatus/{locker}', 'LockerController@setStatus');
-Route::get('/lockers/listing', 'LockerController@listing');
-Route::post('/lockers/massAssign', 'LockerController@massAssign');
+Route::post('/lockers/edit/{locker}', 'LockerController@editLocker'); //from edit
+Route::post('/lockers/student/{id}', 'LockerController@updateLocker'); //from homeroom
+Route::post('/lockers/addStudent/{lockers}', 'LockerController@addStudent'); //from edit
+Route::post('/lockers/delStudent/{lockers}', 'LockerController@delStudent'); //from edit
+Route::post('/lockers/setStatus/{locker}', 'LockerController@setStatus'); //from edit
+Route::get('/lockers/listing', 'LockerController@listing'); //from main (reports button)
+Route::post('/lockers/massAssign', 'LockerController@massAssign'); //from listing
 
 
 /*---------------- Testing Routes-----------------*/

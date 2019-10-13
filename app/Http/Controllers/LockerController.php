@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Student;
+use App\Course;
 use App\Locker;
 use App\LockerStatus;
 use App\LockerStudent;
@@ -26,13 +27,17 @@ class LockerController extends Controller
         return view('lockers.main');
     }
 
+    public function listing() {
+        return view ('lockers.listing');
+    }
+
     /* This shows all the students for a home room. Teachers can add locker information here.
         Once it's added, it cannot be changed by the teachers */
-    private function homeroom_orig($coursecode)
-    {
+//    private function homeroom_orig($coursecode)
+//    {
         //this just gets a list of student_course records. I'd ideall like a pivot to get the student records.
         //  $sc_list = Student_course::where('coursecode', $coursecode)->get();
-        $studentList = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student')->sortBy('lastname');
+//        $studentList = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student')->sortBy('lastname');
         //$students = Student_course::where('coursecode', $course)->withPivot('student')->get();
         //$students = Student::where('studentID', $sc_list->studentID);
         //$students = Student::where('studentID', '339356800')->get();
@@ -51,10 +56,41 @@ class LockerController extends Controller
         // dd($students.'XXX'); //hey! This flattens the collection to a long list of its contents.
         //This still gives a collection of collections!
         //dd($coursecode);
-        return view('lockers.homeroom', compact('coursecode','studentList'));
-    }
+//        return view('lockers.homeroom', compact('coursecode','studentList'));
+//    }
+
+    /* Purpose: to check (i) if a course code is valid and (ii) if it is a home room.
+    *  This function is called from lockers.main.blade.php  (which requires it to be a home room)
+    *  and from lockers.listing.blade.php (which just needs the course code verified)
+     */
+	public function verifyHomeRoom(Request $request) {
+        $code = $request->input('code');
+        $code = strtoupper($code);
+        $code = trim($code);
+        $code = str_replace("-","",$code);
+		//print_r($code);
+        
+        //Now search for the couse code and see if it exists and if it is in period 1
+        //coursecode 	teacher period 	room
+        $course = Course::find($code);
+        if ($course == null) {
+			return response()->json(['status' => 'failure']);
+        }
+
+        //A page that doesn't require the course to be a home room, can just ignore the 'wrongperiod' 
+        //and check only to make sure that the status != failure
+        if ($course->period == 1) {
+			return response()->json(['status' => 'success']);
+		} else {
+			return response()->json(['status' => 'wrongperiod']);
+		}
+		
+	}
 
 
+    /* Purpose: to list all students in a home room (given by coursecode)
+    * So that the user can enter locker information for that homeroom. 
+    * (Technically, this should work for any course, not just a home room) */
     public function homeroom($coursecode)
     {
         $studentList = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student')->sortBy('lastname');
@@ -86,7 +122,10 @@ class LockerController extends Controller
         return view('lockers.homeroom', compact('coursecode','array'));
     }
 
-    public function homeroomRpt($coursecode)
+    /* Purpose: to print out a view-only listing of all of the students with their locker information for any course
+    Normally, this would be for a homeroom since lockers are assigned by homeroom.
+    It is based on function homeroom($coursecode) */
+    public function courseRpt($coursecode)
     {
         $studentList = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student')->sortBy('lastname');
 
@@ -114,14 +153,15 @@ class LockerController extends Controller
         }
 
         //return view('lockers.homeroom', compact('coursecode','studentList'));
-        return view('lockers.homeroomRpt', compact('coursecode','array'));
+        return view('lockers.courseRpt', compact('coursecode','array'));
     }
 
+    /* Purpose: call view lockers.edit when there is no specific locker specified. The user will type in a locker number */
     public function edit() {
        return view('lockers.edit');
     }
 
-    /* get all of the information for one locker */
+    /* Purpose: get all of the information for one locker and return it to a Blade view (lockers.edit)*/
     public function editLocker(Locker $locker) {
         $status = LockerStatus::find($locker->status)->status;
         //dd($locker);
@@ -146,7 +186,10 @@ class LockerController extends Controller
 
         return redirect()->back();
     }
+
+
     /* Called from homeroom.blade.php
+    *  Purpose: to add a locker and combination for a particular student in the home room listing
     *  This has studentID, combination, and lockerNum variables in the Request object 
     *  It uses the LockerStudent table since we are not messing with the Student table in the other database in order to add
     *  locker information to it.
@@ -197,10 +240,8 @@ class LockerController extends Controller
 //       return view('lockers.edit', compact('locker'));
     }
 
-    public function listing() {
-        return view ('lockers.listing');
-    }
-
+    /* Purpose: to change the status of a range of lockers. The input has already been validated in the blade view (javascript)
+    */
     public function massAssign(Request $request) {
         $startnum = $request->startnum;
         $endnum = $request->endnum;

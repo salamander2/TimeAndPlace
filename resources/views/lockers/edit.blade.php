@@ -70,8 +70,8 @@ function validateData() {
         <div class="col-md-auto py-2">
         <input id="rb3" name="lstatus"  type="radio" value="-1" onchange="this.form.submit()"> Damaged
         </div>
-        <div class="col-md-auto py-1 rounded border border-warning bg-light">Selecting any of these will remove 
-        any students from the locker</div>
+        <div class="col-md-auto py-1 rounded border border-warning bg-light">Clicking on any of these will remove 
+        all students from this locker</div>
     </div> <!--end of row -->
     </form>
                                         

@@ -101,7 +101,7 @@
         <h4 class="text-success">Locker Info</h4>
         <div class="col-md-auto">
             @foreach($lockerArray as $oneLocker)
-                @if (auth()->check() && auth()->user()->username == 'secretary' || auth()->user()->isAdministrator())
+                @if (auth()->user()->username == 'secretary' || auth()->user()->isAdministrator())
                     <b>Locker number:</b> <a href="/lockers/edit/{{$oneLocker['0']}}">{{$oneLocker['0']}}</a><br>
                     <kbd><b>Combination:</b> {{$oneLocker['1']}}</kbd><br>
                 @else
