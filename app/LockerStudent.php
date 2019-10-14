@@ -16,6 +16,6 @@ class LockerStudent extends Model
     ];
 
     public function student() {
-                return $this->hasOne(Student::class,'studentID', 'studentID');
-            }
+        return $this->hasOne(Student::class,'studentID', 'studentID');
+    }
 }

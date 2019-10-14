@@ -15,23 +15,6 @@ function validateData() {
 }
 </script>
 
-<!-- display message when this page (re)loads, eg. when a kiosk is deleted -->
-@if (session('error'))
-	<script>
-		window.createNotification({
-			theme: 'error',
-			positionClass: 'nfc-bottom-right',
-			displayCloseButton: true,
-			showDuration: 4500
-		})({		
-			message: '{!! session('error') !!}'
-		});
-	</script>
-	 {{--  <div class="alert alert-danger" role="alert">
-	    {{ session('error') }}
-	</div>  --}}
-@endif
-
 <div class="container">
     <h1>Class Lists <span style="font-size:50%;">(printable)</span></h1>
     <div class="card card-info">

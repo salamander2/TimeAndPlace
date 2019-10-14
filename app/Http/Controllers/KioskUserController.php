@@ -10,7 +10,14 @@ use Illuminate\Http\Request;
 
 class KioskUserController extends Controller
 {
-   
+  /*
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function toggleKioskAdmin(Kiosk $kiosk, User $user)
     {
         $kioskusers = KioskUser::where([['kiosk_id', $kiosk->id],['user_id', $user->id]])->get();

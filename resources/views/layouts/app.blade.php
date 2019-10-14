@@ -37,6 +37,49 @@
     {{--  </aside>  --}}
     {{--  @endif  --}}
 
+    {{-- where should this go? outside content-wrapper or within? --}}
+    @if (session('success'))
+		<script>
+			window.createNotification({
+				theme: 'success',
+				positionClass: 'nfc-top-right',
+				displayCloseButton: true,
+				showDuration: 3500
+			})({            
+				title:'Success',
+				message: '{{ session('success') }}'
+			});
+		</script>
+	@endif
+	@if (session('warning'))
+		<script>
+			window.createNotification({
+				theme: 'warning',
+				positionClass: 'nfc-top-right',
+				displayCloseButton: true,
+				showDuration: 3500
+			})({            
+				title:'Warning',
+				message: '{{ session('warning') }}'
+			});
+		</script>
+	@endif
+    @if (session('error'))
+		<script>
+			window.createNotification({
+				theme: 'error',
+				positionClass: 'nfc-top-right',
+				displayCloseButton: true,
+				showDuration: 3500
+			})({            
+				title:'Error',
+				message: '{{ session('error') }}'
+			});
+		</script>
+        {{--  <div class="alert alert-danger" role="alert">
+	        {{ session('error') }}
+	    </div>  --}}
+	@endif
 
     <div class="content-wrapper">
         <section class="content-header">

@@ -101,23 +101,6 @@ function validateData() {
 
 </script>
 
-<!-- display message when this page (re)loads, eg. when a kiosk is deleted -->
-@if (session('success'))
-	<script>
-		window.createNotification({
-			theme: 'success',
-			positionClass: 'nfc-bottom-right',
-			displayCloseButton: true,
-			showDuration: 4500
-		})({		
-			message: '{!! session('success') !!}'
-		});
-	</script>
-	 {{--  <div class="alert alert-danger" role="alert">
-	    {{ session('error') }}
-	</div>  --}}
-@endif
-
 <div class="container">
 	<h1>Locker List Maintenance</h1>
 	<div class="card">

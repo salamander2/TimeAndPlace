@@ -99,4 +99,11 @@ class Student extends Model
         // }
 
     }
+
+    //so far this is just called from lockercontroller addStudent()
+    public static function exists($id) {
+        $student = Student::find($id);
+        if ($student == null) return false;
+        return true;
+    }
 }

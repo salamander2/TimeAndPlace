@@ -7,23 +7,6 @@
 	</ol> 
 --}} 
 
-<!-- display message when this page (re)loads, eg. when a kiosk is deleted -->
-@if (session('error'))
-	<script>
-		window.createNotification({
-			theme: 'error',
-			positionClass: 'nfc-top-right',
-			displayCloseButton: true,
-			showDuration: 3500
-		})({		
-			message: '{!! session('error') !!}'
-		});
-	</script>
-	 {{--  <div class="alert alert-danger" role="alert">
-	    {{ session('error') }}
-	</div>  --}}
-@endif
-
 <div class="container">
     <h1>My Kiosks</h1>
   

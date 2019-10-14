@@ -196,15 +196,15 @@ Route::get('/reports/summary/{kiosk}', 'LogController@summaryReport');
 
 /*---------------- Locker Routes-----------------*/
 Route::get('/lockers', 'LockerController@main'); //from control-sidepanel button
-Route::post('verifyHomeRoom', 'LockerController@verifyHomeRoom'); //ajax
+Route::post('verifyHomeRoom', 'LockerController@verifyHomeRoom');
 Route::get('/lockers/homeroom/{code}', 'LockerController@homeroom'); //from main (locker info button)
 Route::get('/lockers/reports/course/{code}', 'LockerController@courseRpt');
 Route::get('/lockers/edit', 'LockerController@edit'); //from main (edit button)
 Route::get('/lockers/edit/{locker}', 'LockerController@editLocker'); //used by return redirect()->back(); in setStatus
 Route::post('/lockers/edit/{locker}', 'LockerController@editLocker'); //from edit
 Route::post('/lockers/student/{id}', 'LockerController@updateLocker'); //from homeroom
-Route::post('/lockers/addStudent/{lockers}', 'LockerController@addStudent'); //from edit
-Route::post('/lockers/delStudent/{lockers}', 'LockerController@delStudent'); //from edit
+Route::post('/lockers/addStudent/{locker}', 'LockerController@addStudent'); //from edit
+Route::post('/lockers/delStudent/{locker}', 'LockerController@delStudent'); //from edit
 Route::post('/lockers/setStatus/{locker}', 'LockerController@setStatus'); //from edit
 Route::get('/lockers/listing', 'LockerController@listing'); //from main (reports button)
 Route::post('/lockers/massAssign', 'LockerController@massAssign'); //from listing

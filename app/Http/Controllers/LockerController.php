@@ -187,7 +187,64 @@ class LockerController extends Controller
         return redirect()->back();
     }
 
+    /* 
+    * Purpose: to add a student (id, combination) to a locker
+    * Called from edit.blade.php . 
+    * This already has checked to make sure that the student ID exists and is numeric
+    * and that if it's a new locker, a combination has been entered.
+    */
+    public function addStudent(Request $request, Locker $locker) {
+        $locker_id = $locker->id;
+        $studentID = $request->addStudentID;
 
+        //Data Verification 
+        //does student exist?
+        if (! Student::exists($studentID)) {
+            return redirect()->back()->with("error","This student does not exist.");
+        }
+        //is the student already attached to that locker?
+        $found = LockerStudent::where('locker_id',$locker_id)->where('studentID',$studentID)->count();
+        if ($found > 0) {
+            return redirect()->back()->with("error","This student is already assigned to this locker.");
+        }
+
+        //create and save a new LockerStudent record. 
+        $lockerStudent = new LockerStudent;
+        $lockerStudent->studentID = $studentID;
+        $lockerStudent->locker_id = $locker_id;
+        $lockerStudent->save();
+        
+        //add combination to locker (only if it is a new locker)
+        if ($locker->status == 0) {
+            $locker->combination = $request->newcombo;
+            //update locker status
+            $locker->status = 1;
+            $locker->save();
+        }
+        return redirect()->back();
+    }
+
+    /* 
+    * Purpose: to delete student from a locker, and if it's the last one, then also delete the combination and reset the status
+    * Called from edit.blade.php . 
+    */
+    public function delStudent(Request $request, Locker $locker) {
+        $locker_id = $locker->id;
+        $studentID = $request->delStudentID;
+
+        //Data Verification 
+        $ls_record = LockerStudent::where('locker_id',$locker_id)->where('studentID',$studentID);
+        $ls_record->delete();
+        
+        //reset locker status and combination (only if it's the last student using it)
+        $found = LockerStudent::where('locker_id',$locker_id)->count();
+        if ($found == 0) {
+            $locker->combination = "";
+            $locker->status = 0;
+            $locker->save();
+        }
+        return redirect()->back();
+    }
     /* Called from homeroom.blade.php
     *  Purpose: to add a locker and combination for a particular student in the home room listing
     *  This has studentID, combination, and lockerNum variables in the Request object 

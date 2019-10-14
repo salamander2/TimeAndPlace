@@ -26,20 +26,6 @@
         </div>
     </div>
 
-	@if (session('error'))
-		<script>
-			window.createNotification({
-				theme: 'warning',
-				positionClass: 'nfc-top-right',
-				displayCloseButton: true,
-				showDuration: 3500
-			})({            
-				title:'Success',
-				message: '{{ session('error') }}'
-			});
-		</script>
-	@endif
-
     {{-- top section of edit page: KIOSK SETTINGS ... used for all kiosk types --}}
     @include('child.kioskedit1')
 

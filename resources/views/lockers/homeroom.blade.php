@@ -36,20 +36,6 @@ function validateForm(studentID) {
 }
 </script>
 
-<!-- display message when this page (re)loads, eg. when a kiosk is deleted -->
-@if (session('error'))
-	<script>
-		window.createNotification({
-			theme: 'error',
-			positionClass: 'nfc-top-right',
-			displayCloseButton: true,
-			showDuration: 4500
-		})({		
-			message: '{!! session('error') !!}'
-		});
-	</script>
-@endif
-
 <div class="container">
     <h1>Homeroom Locker Entry</h1>
 
