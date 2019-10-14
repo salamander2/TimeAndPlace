@@ -178,7 +178,6 @@ class LockerController extends Controller
         $locker->status = $request->lstatus;
         $locker->combination = "";
         $locker->save();
-        
 
         $records = LockerStudent::where('locker_id',$locker->id)->delete();
         //$records->delete();
@@ -232,9 +231,7 @@ class LockerController extends Controller
         $locker_id = $locker->id;
         $studentID = $request->delStudentID;
 
-        //Data Verification 
-        $ls_record = LockerStudent::where('locker_id',$locker_id)->where('studentID',$studentID);
-        $ls_record->delete();
+        LockerStudent::where('locker_id',$locker_id)->where('studentID',$studentID)->delete();
         
         //reset locker status and combination (only if it's the last student using it)
         $found = LockerStudent::where('locker_id',$locker_id)->count();
@@ -245,6 +242,18 @@ class LockerController extends Controller
         }
         return redirect()->back();
     }
+
+    public function newCombo(Request $request, Locker $locker) {
+        if ($locker->status == 1) { //assigned
+            if (strlen($request->newcombo)> 0) {
+                $locker->combination = $request->newcombo;
+                $locker->save();
+            }
+        }
+        return redirect()->back();
+    }
+
+
     /* Called from homeroom.blade.php
     *  Purpose: to add a locker and combination for a particular student in the home room listing
     *  This has studentID, combination, and lockerNum variables in the Request object 

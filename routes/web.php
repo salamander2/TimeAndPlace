@@ -205,6 +205,7 @@ Route::post('/lockers/edit/{locker}', 'LockerController@editLocker'); //from edi
 Route::post('/lockers/student/{id}', 'LockerController@updateLocker'); //from homeroom
 Route::post('/lockers/addStudent/{locker}', 'LockerController@addStudent'); //from edit
 Route::post('/lockers/delStudent/{locker}', 'LockerController@delStudent'); //from edit
+Route::post('/lockers/newCombo/{locker}', 'LockerController@newCombo'); //from edit
 Route::post('/lockers/setStatus/{locker}', 'LockerController@setStatus'); //from edit
 Route::get('/lockers/listing', 'LockerController@listing'); //from main (reports button)
 Route::post('/lockers/massAssign', 'LockerController@massAssign'); //from listing

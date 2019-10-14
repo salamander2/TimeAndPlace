@@ -125,7 +125,7 @@ function validateData5() {
     </div> <!-- end of row -->
     @endif
     <hr>
-    @if($locker->status == 1) {{-- Only allow combination to be changed if locker is being used --}}
+    @if($locker->status == 1) {{-- Only allow deletion if locker is being used --}}
         <h4>Used by:</h4>
         @foreach ($studentList as $student)
             <form name="form4" id="form4" action="/lockers/delStudent/{{$locker->id}}" method="post">
