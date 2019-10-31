@@ -120,3 +120,14 @@ php artisan migrate
 php artisan db:seed	//this runs both seeders. It needs fixing so that it doesn't do multiple locker seeds.
 php artisan make:controller LockerController
 
+
+-------------------------------------------------------
+removing Telescope (it's not working and makes huge log files)
+
+vi /home/library/TimeAndPlace/config/app.php
+-- remove "Telescope" line
+vi composer.json : remove Telescope line(s)
+composer remove laravel/telescope
+npm run dev
+npm update (it wanted this to be run too)
+

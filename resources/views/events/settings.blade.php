@@ -101,7 +101,7 @@
                 @foreach($studentList as $SL)
                     <tr>
                         <td>{{$SL->student_id}} </td>
-                        <td>{{$SL->student->lastname}}, {{$SL->student->firstname}} </td>
+                        <td>{{$SL->student['lastname']}}, {{$SL->student['firstname']}} </td> {{-- not $SL->student->lastname --}}
                         <td><input type="checkbox"></td>
                     </tr>
                 @endforeach 
