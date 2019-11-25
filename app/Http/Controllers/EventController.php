@@ -10,6 +10,7 @@ use App\Student_course;
 use App\EventStudentList;
 use App\Event_Student;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -110,14 +111,19 @@ class EventController extends Controller
     }
 
 
-    /* This loads a small page that has various buttons to do other things with the event */
+    /* This loads a page that has various buttons to do other things with the event
+       In partiucular, it allows the user to create and modify a class list for the event */
     public function settings($id)
     {
         $event = Event::find($id);
         $slist = EventStudentList::where('event_id', $id)->with('student')->get();
         $studentList = $slist->sortBy('studentID')->sortBy('student.firstname')->sortBy('student.lastname');
 
-        return view('events.settings', compact('event','studentList'));
+        $isPast = false;
+        $today = Carbon::today()->toDateString();
+        if ($event->date < $today) $isPast = true;
+        
+        return view('events.settings', compact('event','studentList','isPast'));
     }
 
     /**
@@ -213,6 +219,28 @@ class EventController extends Controller
 
         return back();
         // return redirect('/events/' . $destID . '/addStudents');
+    }
+
+    /* Add student by student number */
+    public function addStudent(Event $event, Student $student)
+    {
+        //make sure that the student is not already on that eventlist
+            $test = EventStudentList::where('event_id', $event->id)->where('student_id', $student->studentID)->get();
+            if ($test->count()) {
+                return;
+            }
+
+        //any other checks necessary?
+
+        //create and save record
+        $record = new EventStudentList();
+        $record->event_id = $event->id;
+        $record->student_id = $student->studentID;
+        $record->save();
+
+        //return to the original view 
+        //TODO: Does this reload it?
+        return back();
     }
 
     /* Start the special terminal for events */

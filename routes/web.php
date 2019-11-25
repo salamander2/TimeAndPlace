@@ -174,6 +174,12 @@ Route::get('/events/reportPrint/{id}', 'ReportController@eventReportPrint'); //p
 Route::post('/events/addStudents', 'EventController@addStudentsByCourse');
 Route::post('/events/copyStudentList', 'EventController@copyStudentList');
 Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStudent');
+//TODO Choose one and get it working
+Route::post('/events/removeStudent/', 'EventController@removeStudent');
+Route::post('/events/removeStudent/{event}/{studentID}', 'EventController@removeStudent');
+//TODO Choose one and get it working
+Route::get('/events/addStudent/{event}/{student}', 'EventController@addStudent');
+Route::post('/events/addStudent/{event}/{student}', 'EventController@addStudent');
 
 /*---------------- AJAX routes ------------------*/
 //Only put POST routes here. // adding multiple middlewares: middleware('first', 'second');
