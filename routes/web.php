@@ -171,11 +171,12 @@ Route::get('/events/terminal/{id}', 'EventController@terminal');
 Route::get('/events/report/{id}', 'ReportController@eventReport');
 Route::get('/events/reportPrint/{id}', 'ReportController@eventReportPrint'); //printable report
 //Route::get('/events/{id}/addStudents', 'EventController@addStudents');
-Route::post('/events/addStudents', 'EventController@addStudentsByCourse');
+Route::post('/events/addStudentsByCourse', 'EventController@addStudentsByCourse');
 Route::post('/events/copyStudentList', 'EventController@copyStudentList');
 Route::get('/events/{event}/signInStudent/{loginID}', 'EventController@signInStudent');
 //TODO Choose one and get it working
 Route::post('/events/removeStudent/', 'EventController@removeStudent');
+Route::get('/events/removeStudent/{event}/{studentID}', 'EventController@removeStudent');
 Route::post('/events/removeStudent/{event}/{studentID}', 'EventController@removeStudent');
 //TODO Choose one and get it working
 Route::get('/events/addStudent/{event}/{student}', 'EventController@addStudent');

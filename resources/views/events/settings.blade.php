@@ -4,7 +4,10 @@
 
 <script>
 function removeStudent(studentID){
-    $.ajax({
+
+    myurl='/events/removeStudent/{{$event->id}}/' + studentID;
+    window.location.href=myurl;
+    /*$.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -12,10 +15,14 @@ function removeStudent(studentID){
         async: true,
         url: '/events/removeStudent/{{$event->id}}/' + studentID,
         dataType: "json",
-        success: function (msg) {
+        success: function (data, status, jqXhr) {
             location.reload();
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+            alert('Error: ' + errorMessage);
         }
     });
+    */
 }
 
 function addStudent(){
@@ -100,14 +107,17 @@ function addStudent(){
         <div class="card-body">
             <h4>Enter a course code to add all students in that course & section to the attendance list for this event.</h4>
                 <p>No spaces, No hyphen. e.g. ATC10102</p>
+            <form role="form" action="/events/addStudentsByCourse" method="post">                
+                {{csrf_field()}}
                 <div class="form-group">                   
-                        <div class="input-group">
-                            {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
-                            <div class="input-group-prepend btn btn-outline-success" for="name">Course code:</div>
+                    <div class="input-group">
+                        {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
+                        <div class="input-group-prepend btn btn-outline-success" for="name">Course code:</div>
                         <input type="text" class="form-control mx-1 col-2 border border-success" id="courseCode" name="courseCode" required autofocus>
                         <button type="submit" class="btn col-1 btn-primary  elevation-3">Submit</button>
-                        </div>          
+                    </div>          
                 </div>
+            </form>
         </div>
 
         <div class="card-body">

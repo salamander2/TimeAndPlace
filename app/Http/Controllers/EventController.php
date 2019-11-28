@@ -243,6 +243,14 @@ class EventController extends Controller
         return back();
     }
 
+    /* Remove student by student number */
+    public function removeStudent(Event $event, int $studentID)
+    {
+        //$record = EventStudentList::where('event_id', $event->id)->where('student_id', $student->studentID)->get();
+        $record = EventStudentList::where('event_id', $event->id)->where('student_id', $studentID)->delete();
+        return back();
+    }
+
     /* Start the special terminal for events */
     public function terminal($id)
     {
