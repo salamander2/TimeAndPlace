@@ -89,7 +89,7 @@ function addStudent(){
         <h5>so it will not be displayed here.</h5>
         </div>
         </div>
-    {{-- @else DEBUG --- REMOVE THIS commenting out !!! --}}
+    @else 
 
     {{-- normal display for future events --}}
         {{-- if there are students already added, then start with the card collapsed --}}
