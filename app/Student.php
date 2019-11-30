@@ -56,8 +56,11 @@ class Student extends Model
      * @return String
      */
      public function getPhotoURL($id) {
-        $imageURL = Storage::disk('public')->url('photos/'.$id.'.jpg');        
-        $image = Storage::disk('public')->exists('photos/'.$id.'.jpg');
+//TODO check all formats and find the most recent photo
+        #$imageURL = Storage::disk('public')->url('photos/'.$id.'.jpg');        
+        #$image = Storage::disk('public')->exists('photos/'.$id.'.jpg');
+        $imageURL = Storage::disk('public')->url('photos/'.$id.'.BMP');        
+        $image = Storage::disk('public')->exists('photos/'.$id.'.BMP');
         if ($image == null) {
             $imageURL = Storage::disk('public')->url('photos/user_blank.png');
         }
@@ -66,6 +69,7 @@ class Student extends Model
         //so now it will be "/storage/user_blank.png"
         $strpos = strpos($imageURL,'/storage');
         $imageURL = substr($imageURL, $strpos);
+//dd($imageURL);
 
         return $imageURL;
      }
