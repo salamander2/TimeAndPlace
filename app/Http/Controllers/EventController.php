@@ -128,8 +128,9 @@ class EventController extends Controller
 
     /**
      * Add a list of students to the event
+	//TODO: FIXME: what is events.addstudent view?
      */
-   public function addStudents($id)
+/*   public function addStudents($id)
     {
         $event = Event::find($id);
 
@@ -138,6 +139,7 @@ class EventController extends Controller
 
         return view('events.addStudents', compact('event', 'studentList'));
     }
+*/
 
     /* Add students by course to the event (the id is in the request)
        Returns to the view that called it.
@@ -149,6 +151,8 @@ class EventController extends Controller
             return back()->with('error', 'Error: no event id passed to event controller.');
         }
         $courseCode = $request->courseCode;
+	$courseCode = str_replace("-","",$courseCode);
+
         $course = Course::find($courseCode);
         if ($course == null) {
             return back()->with('error', 'Invalid course code. Course not found.');
@@ -240,7 +244,8 @@ class EventController extends Controller
 
         //return to the original view 
         //TODO: Does this reload it?
-        return back();
+	$msg = $student->firstname ." ". $student->lastname . " has been added.";
+        return back()->with('success', $msg);
     }
 
     /* Remove student by student number */
@@ -261,6 +266,7 @@ class EventController extends Controller
 
     /* Toggle student in/out using their login ID to identify them
         OR their student number */
+	//TODO: this should check to make sure that you are not trying to sign in the student before the start time of the event
     public function signInStudent(Event $event, String $loginID)
     {
         $student = null;

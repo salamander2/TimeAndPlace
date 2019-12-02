@@ -264,6 +264,7 @@
 	    );
         } //end
 
+//TODO: there should not be a signout option for the events / dance show. It's only a sign in.
         function SWsignout(student) {
             //resetTerminal();                         
             swal({

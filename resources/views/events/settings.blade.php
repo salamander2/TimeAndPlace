@@ -26,6 +26,9 @@ function removeStudent(studentID){
 }
 
 function addStudent(){
+    //TODO: make this a <FORM> POST and reload the page. 
+    //TODO: at least verify that the student number is all numeric before submitting it
+
     //get student id
     studentID = document.getElementById("add1Student").value;
     myurl='/events/addStudent/{{$event->id}}/' + studentID;
@@ -51,6 +54,7 @@ function addStudent(){
 </script>
 
 
+{{--
 @if (session('error'))
 <div class="alert alert-error" role="alert">
     {{ session('error') }}
@@ -58,6 +62,7 @@ function addStudent(){
     <p class="small">Change this to a popup message that then disappears</p>
 </div>
 @endif
+--}}
 
 <div class="container">
     <h1>
@@ -112,6 +117,7 @@ function addStudent(){
                 <div class="form-group">                   
                     <div class="input-group">
                         {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
+			<input type="hidden" id="eventID" name="eventID" value="{{$event->id}}">
                         <div class="input-group-prepend btn btn-outline-success" for="name">Course code:</div>
                         <input type="text" class="form-control mx-1 col-2 border border-success" id="courseCode" name="courseCode" required autofocus>
                         <button type="submit" class="btn col-1 btn-primary  elevation-3">Submit</button>
@@ -155,7 +161,7 @@ function addStudent(){
             @if($studentList->count())
                 <h5>Students attached to this event</h5>
                 
-                <p class="text-danger">Click on check boxes to remove student</p>
+                <p class="text-danger">Click on checkbox to remove student</p>
                 <hr>
                 <table cellspacing=0 cellpadding=5 class="table-hover table-striped">
                 <tr><th>Student Num</th><th>Name</th><th>Remove</th></tr>
@@ -167,6 +173,7 @@ function addStudent(){
                     </tr>
                 @endforeach 
                 </table>
+		<p class="btn btn-secondary"> {{$studentList->count() }} students </p>
             @else
             <h5>No students have been attached to this event yet</h5>
             @endif
