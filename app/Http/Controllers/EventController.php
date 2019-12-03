@@ -244,7 +244,7 @@ class EventController extends Controller
 
         //return to the original view 
         //TODO: Does this reload it?
-	$msg = $student->firstname ." ". $student->lastname . " has been added.";
+        $msg = $student->firstname ." ". $student->lastname . " has been added.";
         return back()->with('success', $msg);
     }
 
@@ -266,7 +266,7 @@ class EventController extends Controller
 
     /* Toggle student in/out using their login ID to identify them
         OR their student number */
-	//TODO: this should check to make sure that you are not trying to sign in the student before the start time of the event
+	//TODO: should this check to make sure that you are not trying to sign in the student before the start time of the event
     public function signInStudent(Event $event, String $loginID)
     {
         $student = null;

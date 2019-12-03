@@ -27,9 +27,10 @@ class KioskController extends Controller
     {
         $this->middleware('auth');
         //if user->isAdministrator  
-        $this->middleware('admin')->only(['create','store','delete']);
+        $this->middleware('admin')->only(['create','store','delete','destroy']);
 
-	/* This has now been moved two two different places: 1. re web.php routes file will decide whether the user can 'edit' or just 'show' the kiosk.
+    /* This has now been moved two two different places: 
+        1. re web.php routes file will decide whether the user can 'edit' or just 'show' the kiosk.
 	   And in this situation, I still need authentication to make sure that someone cannot edit the kiosk just by typing in the URL
 	*/
        // $this->middleware('kioskAdmin')->only(['edit']);
@@ -150,7 +151,7 @@ class KioskController extends Controller
 
         //TODO: have two views. One that is simple -- for "SigninOnly", the other that has all of the scheduling stuff
         $user = Auth::user();
-	if (! $user->isKioskAdmin($kiosk) ) return view('kiosks.show', compact('kiosk'));
+        if (! $user->isKioskAdmin($kiosk) ) return view('kiosks.show', compact('kiosk'));
 	
         //Select all users who are not on THIS kiosk
         //and pass it to the view (for the lower portion of the kiosk)
@@ -166,9 +167,11 @@ class KioskController extends Controller
                 $detachedUsers[] = $user;
             }
         }
-	//must remove 'teacher' from $detachedUsers so that it can never be added as a kiosk user or kiosk admin
-	$detachedUsers = $detachedUsers->where('isDefaultUser',false);	//remove any isDefaultUser
 
+        //must remove 'teacher' from $detachedUsers so that it can never be added as a kiosk user or kiosk admin
+        $detachedUsers = $detachedUsers->where('isDefaultUser',false);	//remove any isDefaultUser
+
+        $detachedUsers = $detachedUsers->sortBy('fullname');
         $periods = $kiosk->sched_periods();
         $times = $kiosk->sched_times();
         $unused = $kiosk->notThisSchedule(1);

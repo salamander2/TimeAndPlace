@@ -33,7 +33,7 @@
                         // contentType: "application/json",     //this totally messes up data transfer
                         success: function (msg) {
                             if(msg.status === "success"){
-                                window.location = "/lockers/homeroom/" + coursecode
+                                window.location = "/lockers/homeroom/" + coursecode;
                             }                            
                             else if(msg.status === "failure"){
                                 SWerrormsg("This is not a valid course code");

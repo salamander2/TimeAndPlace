@@ -51,13 +51,15 @@
             @endif
             
             
-        {{-- onsubmit="return false"  <<< this is needed in case jquery doesnt load.
+         @if (auth()->user()->isAdministrator())
+            {{-- onsubmit="return false"  <<< this is needed in case jquery doesnt load.
             Otherwise there is no confirmation and the form is submitted immediately.   --}}
-        <form class="float-right" id="formDelete" role="form" onsubmit="return false"
-            action="/kiosks/{{ $kiosk->id }}" method="post">
-            {{ method_field('DELETE')}} {{csrf_field()}}
-            <button id="deleteBtn" type="submit" class="btn btn-danger elevation-3">Delete this Kiosk</button>
-        </form>
+            <form class="float-right" id="formDelete" role="form" onsubmit="return false"
+                action="/kiosks/{{ $kiosk->id }}" method="post">
+                {{ method_field('DELETE')}} {{csrf_field()}}
+                <button id="deleteBtn" type="submit" class="btn btn-danger elevation-3"><i class="fas fa-skull-crossbones"></i> Delete this Kiosk <i class="fas fa-skull-crossbones"></i></button>
+            </form>
+        @endif
     </div>
 
     <br><br>

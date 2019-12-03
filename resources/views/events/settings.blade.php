@@ -65,6 +65,8 @@ function addStudent(){
 --}}
 
 <div class="container">
+    <div class="float-right">
+    <div class="btn btn-secondary"><a href="/kiosks/{{$event->kiosk_id}}/edit" class="text-white">Back</a></div></div>
     <h1>
        Options for event: {{$event->name}} 
     </h1>

@@ -5,9 +5,17 @@
 <head>
 <title>Attendance for {{ $event->name }}</title>
 <style>
-xxxtable {
-  font-size: 100%;
+.table-bordered {
+  border-collapse: collapse;
+  font-size: 120%;
   font-family: monospace;
+  padding: 0.5rem;
+  vertical-align: top;
+  border: 1px solid #dee2e6;
+}
+.table-bordered td, .table-bordered th {
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
 }
 </style>
 </head>
@@ -16,7 +24,17 @@ xxxtable {
 <h2>
     Attendance for {{ $event->name }}
 </h2>                
-    
+<table class="table-bordered">
+<tr>
+<td colspan=3><b>Date:</b> {{$event->date}}</td>
+</tr>
+<tr>
+<th>Start Time</th><th>Late Time</th><th>End Time</th>
+</tr>
+<tr>
+<td>{{$event->startTime}}</td><td>{{$event->lateTime}}</td><td>{{$event->endTime}}</td></tr>
+</table>    
+<br><br>
         <table cellspacing='0' cellpadding='3'>
             <tr align="left"><th style="width:17em">Student Name</th><th>Status</th><th>Time Signed in</th></tr>
         @foreach ($array as $arr) 
