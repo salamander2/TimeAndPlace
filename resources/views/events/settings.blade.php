@@ -3,6 +3,7 @@
 {{--<a href="{{'/kiosks/'.$kiosk->id.'/edit' }}" class="btn btn-outline-secondary small">Back</a>  --}}
 
 <script>
+
 function removeStudent(studentID){
 
     myurl='/events/removeStudent/{{$event->id}}/' + studentID;
@@ -27,17 +28,21 @@ function removeStudent(studentID){
 
 function addStudent(){
     //TODO: make this a <FORM> POST and reload the page. 
-    //TODO: at least verify that the student number is all numeric before submitting it
 
     //get student id
     studentID = document.getElementById("add1Student").value;
-    myurl='/events/addStudent/{{$event->id}}/' + studentID;
-    window.location.href=myurl;
+    //basic validation of id
+    if (!studentID || studentID.length === 0 || isNaN(studentID)) {
+        text = "You must enter a numeric student id";
+        text = "<div class=\"error\">" + text + "</div>";
+        document.getElementById("error_message").outerHTML = "<div id=\"error_message\" class=\"alert alert-danger w-50\"></div>";
+        document.getElementById("error_message").innerHTML = text;
+        document.getElementById("add1Student").value = "";
+        return false;
+    }
 
-//FIXME: I can't remember how to submit ajax forms, and my documentation really sucks!
-//so I'm just using a GET method via URL.
-
-/*    $.ajax({
+    var myurl='/events/addStudent';
+    $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -45,12 +50,40 @@ function addStudent(){
         async: true,
         url: myurl,
         dataType: "json",
+        data: {
+            eventID:{{$event->id}},
+            studentID:studentID
+        },
         success: function (msg) {
-            location.reload();
+            if(msg.status === "success"){
+                location.reload();  
+            }                            
+            else if(msg.status === "failure"){
+                SWerrormsg("This student number does not exist");
+            }
+            else if(msg.status === "duplicate"){
+                swal({
+                title: "Duplicate Entry",
+                icon: "warning",
+                text: "This student is already here",               
+ 		        timer:1500,
+                });
+            }
         }
-    });*/
+    });
 
 }
+
+ function SWerrormsg(str) {
+            if (str.length == 0) str = "The student was not found or there was an unexpected database error!"
+            swal({
+                title: "ERROR!",
+                icon: "error",
+                text: str,               
+ 		        timer:4000,
+            }).then(  function() { $('#inputID').focus() }
+        	);
+        }
 </script>
 
 
@@ -71,7 +104,7 @@ function addStudent(){
        Options for event: {{$event->name}} 
     </h1>
     
-    
+   <div id="error_message"></div>
 
     <div class="card xxbg-info">
         <div class="card-body">
@@ -149,15 +182,24 @@ function addStudent(){
                 </div>
             </div>
         <div class="card-body">
+
+        {{-- *************************************** --}}
             <h4>Add a student by student number</h4>
             <div class="form-group">                   
-                    <div class="input-group">
-                        {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
-                        <div class="input-group-prepend btn btn-outline-success" for="name">Student number:</div>
-                            <input type="text" class="form-control mx-1 col-2 border border-success" id="add1Student" name="add1Student" required autofocus>
-                            <button type="submit" class="btn col-1 btn-primary  elevation-3" onclick="addStudent();">Submit</button>
+
+            {{-- <form name="form5" id="form5" action="" onsubmit="return addStudent()" method="post"> --}}
+            {{-- @csrf --}}
+                <div class="input-group">
+                    {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
+                    <div class="input-group-prepend btn btn-outline-success" for="name">Student number:</div>
+                        <input type="text" class="form-control mx-1 col-2 border border-success" id="add1Student" name="add1Student" required autofocus>
+                        <button type="submit" class="btn col-1 btn-primary  elevation-3" onclick="addStudent();">Submit</button>
                     </div>          
+                </div>
+            {{-- </form> --}}
             </div>
+        {{-- *************************************** --}}
+
         </div>
         <div class="card-body">
             @if($studentList->count())

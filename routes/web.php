@@ -138,7 +138,6 @@ Route::get('/terminalAuth/{kiosk}/toggleStudentID/{loginID}', 'TerminalControlle
 // Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 //Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 //Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
-
 Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
 Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2'); //from topnavbar.blade
 Route::get('/terminalAuth/studentFind/{q}', 'TerminalController@listStudents');
@@ -179,8 +178,9 @@ Route::post('/events/removeStudent/', 'EventController@removeStudent');
 Route::get('/events/removeStudent/{event}/{studentID}', 'EventController@removeStudent');
 Route::post('/events/removeStudent/{event}/{studentID}', 'EventController@removeStudent');
 //TODO Choose one and get it working
-Route::get('/events/addStudent/{event}/{student}', 'EventController@addStudent');
-Route::post('/events/addStudent/{event}/{student}', 'EventController@addStudent');
+//Route::get('/events/addStudent/{event}/{student}', 'EventController@addStudent');
+//Route::post('/events/addStudent/{event}/{student}', 'EventController@addStudent');
+Route::post('/events/addStudent', 'EventController@addStudent');
 
 /*---------------- AJAX routes ------------------*/
 //Only put POST routes here. // adding multiple middlewares: middleware('first', 'second');

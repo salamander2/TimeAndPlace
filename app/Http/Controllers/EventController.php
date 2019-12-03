@@ -226,12 +226,20 @@ class EventController extends Controller
     }
 
     /* Add student by student number */
-    public function addStudent(Event $event, Student $student)
+    //public function addStudent(Event $event, Student $student)
+    public function addStudent(Request $request)
     {
+        $event = Event::find($request->eventID);
+        $student = Student::find($request->studentID);
+        
+        if ($student == null) {
+            return response()->json(['status' => 'failure']);
+        }
         //make sure that the student is not already on that eventlist
             $test = EventStudentList::where('event_id', $event->id)->where('student_id', $student->studentID)->get();
             if ($test->count()) {
-                return;
+                //return;
+                return response()->json(['status' => 'duplicate']);
             }
 
         //any other checks necessary?
@@ -245,7 +253,8 @@ class EventController extends Controller
         //return to the original view 
         //TODO: Does this reload it?
         $msg = $student->firstname ." ". $student->lastname . " has been added.";
-        return back()->with('success', $msg);
+        //return back()->with('success', $msg);
+        return response()->json(['status' => 'success']);
     }
 
     /* Remove student by student number */
