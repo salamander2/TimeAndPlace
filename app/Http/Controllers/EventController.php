@@ -265,6 +265,18 @@ class EventController extends Controller
         return back();
     }
 
+    public function clearStudents(Request $request)
+    {
+        $event = Event::find($request->eventID);
+        $list = EventStudentList::where('event_id', $event->id)->get();
+
+        foreach($list as $record) {
+            $record->delete();
+        }
+        return response()->json(['status' => 'success']);
+        
+    }
+
     /* Start the special terminal for events */
     public function terminal($id)
     {

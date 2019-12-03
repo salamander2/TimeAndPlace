@@ -74,16 +74,38 @@ function addStudent(){
 
 }
 
- function SWerrormsg(str) {
-            if (str.length == 0) str = "The student was not found or there was an unexpected database error!"
-            swal({
-                title: "ERROR!",
-                icon: "error",
-                text: str,               
- 		        timer:4000,
-            }).then(  function() { $('#inputID').focus() }
-        	);
+function SWerrormsg(str) {
+    if (str.length == 0) str = "The student was not found or there was an unexpected database error!"
+    swal({
+        title: "ERROR!",
+        icon: "error",
+        text: str,               
+        timer:4000,
+    }).then(  function() { $('#inputID').focus() }
+    );
+}
+
+function clearStudents(){
+    var myurl='/events/clearStudents';
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        async: true,
+        url: myurl,
+        dataType: "json",
+        data: {
+            eventID:{{$event->id}}
+        },
+        success: function (msg) {
+            if(msg.status === "success"){
+                location.reload();  
+            }                            
         }
+    });
+
+}
 </script>
 
 
@@ -154,8 +176,8 @@ function addStudent(){
                         {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
 			<input type="hidden" id="eventID" name="eventID" value="{{$event->id}}">
                         <div class="input-group-prepend btn btn-outline-success" for="name">Course code:</div>
-                        <input type="text" class="form-control mx-1 col-2 border border-success" id="courseCode" name="courseCode" required autofocus>
-                        <button type="submit" class="btn col-1 btn-primary  elevation-3">Submit</button>
+                        <input type="text" class="form-control mx-1 col-md-2 border border-success" id="courseCode" name="courseCode" required autofocus>
+                        <button type="submit" class="btn col-md-2 btn-primary  elevation-3">Submit</button>
                     </div>          
                 </div>
             </form>
@@ -182,24 +204,28 @@ function addStudent(){
                 </div>
             </div>
         <div class="card-body">
+            <div class="row">
+            <div class="col-sm-7">
+                <h4>Add a student by student number</h4>
+                <div class="form-group">                   
 
-        {{-- *************************************** --}}
-            <h4>Add a student by student number</h4>
-            <div class="form-group">                   
-
-            {{-- <form name="form5" id="form5" action="" onsubmit="return addStudent()" method="post"> --}}
-            {{-- @csrf --}}
-                <div class="input-group">
-                    {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
-                    <div class="input-group-prepend btn btn-outline-success" for="name">Student number:</div>
-                        <input type="text" class="form-control mx-1 col-2 border border-success" id="add1Student" name="add1Student" required autofocus>
-                        <button type="submit" class="btn col-1 btn-primary  elevation-3" onclick="addStudent();">Submit</button>
-                    </div>          
+                {{-- <form name="form5" id="form5" action="" onsubmit="return addStudent()" method="post"> --}}
+                {{-- @csrf --}}
+                    <div class="input-group">
+                        {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
+                        <div class="input-group-prepend btn btn-outline-success" for="name">Student number:</div>
+                            <input type="text" class="form-control mx-1 col-3 border border-success" id="add1Student" name="add1Student" required autofocus>
+                            <button type="submit" class="btn col-2 btn-primary  elevation-3" onclick="addStudent();">Submit</button>
+                        </div>          
+                    </div>
+                {{-- </form> --}}
                 </div>
-            {{-- </form> --}}
+            <div class="col-sm-5">
+                <h4>Clear all students from the attendance list</h4>
+                <button type="button" class="float-right btn btn-warning elevation-3" onclick="clearStudents();">Clear</button>
             </div>
-        {{-- *************************************** --}}
-
+            </div>
+            </div> <!-- end of row -->
         </div>
         <div class="card-body">
             @if($studentList->count())

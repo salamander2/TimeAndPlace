@@ -181,6 +181,7 @@ Route::post('/events/removeStudent/{event}/{studentID}', 'EventController@remove
 //Route::get('/events/addStudent/{event}/{student}', 'EventController@addStudent');
 //Route::post('/events/addStudent/{event}/{student}', 'EventController@addStudent');
 Route::post('/events/addStudent', 'EventController@addStudent');
+Route::post('/events/clearStudents', 'EventController@clearStudents');
 
 /*---------------- AJAX routes ------------------*/
 //Only put POST routes here. // adding multiple middlewares: middleware('first', 'second');
