@@ -26,8 +26,23 @@ function removeStudent(studentID){
     */
 }
 
-function addStudent(){
-    //TODO: make this a <FORM> POST and reload the page. 
+function validateID(){
+    //get student id
+    studentID = document.getElementById("add1Student").value;
+    //basic validation of id
+    if (!studentID || studentID.length === 0 || isNaN(studentID)) {
+        text = "You must enter a numeric student id";
+        text = "<div class=\"error\">" + text + "</div>";
+        document.getElementById("error_message").outerHTML = "<div id=\"error_message\" class=\"alert alert-danger w-50\"></div>";
+        document.getElementById("error_message").innerHTML = text;
+        document.getElementById("add1Student").value = "";
+        return false;
+    }
+    return true;
+}
+
+//This is now changed to using <FORM> (so that the reload that happens can have messages passed to it)
+function addStudentAJAX(){
 
     //get student id
     studentID = document.getElementById("add1Student").value;
@@ -102,6 +117,9 @@ function clearStudents(){
             if(msg.status === "success"){
                 location.reload();  
             }                            
+            else if(msg.status === "failure"){
+                SWerrormsg(msg.msg);
+            }
         }
     });
 
@@ -206,19 +224,22 @@ function clearStudents(){
         <div class="card-body">
             <div class="row">
             <div class="col-sm-7">
+
                 <h4>Add a student by student number</h4>
                 <div class="form-group">                   
 
-                {{-- <form name="form5" id="form5" action="" onsubmit="return addStudent()" method="post"> --}}
-                {{-- @csrf --}}
+                <form name="form5" id="form5" action="/events/addStudent" onsubmit="return addStudent()" method="post">
+                @csrf
                     <div class="input-group">
                         {{--  <a href="#" data-toggle="tooltip" title="" data-original-title="Default tooltip">you probably</a>  --}}
                         <div class="input-group-prepend btn btn-outline-success" for="name">Student number:</div>
-                            <input type="text" class="form-control mx-1 col-3 border border-success" id="add1Student" name="add1Student" required autofocus>
-                            <button type="submit" class="btn col-2 btn-primary  elevation-3" onclick="addStudent();">Submit</button>
+                        <input type="hidden" id="eventID" name="eventID" value="{{$event->id}}">
+                        <input type="text" class="form-control mx-1 col-3 border border-success" id="add1Student" name="add1Student" required autofocus>
+                        {{-- <button type="submit" class="btn col-2 btn-primary  elevation-3" onclick="addStudent();">Submit</button> --}}
+                        <button type="submit" class="btn col-2 btn-primary  elevation-3">Submit</button>
                         </div>          
                     </div>
-                {{-- </form> --}}
+                </form>
                 </div>
             <div class="col-sm-5">
                 <h4>Clear all students from the attendance list</h4>

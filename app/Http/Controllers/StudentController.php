@@ -73,9 +73,9 @@ class StudentController extends Controller
         }
         // dd($lockerArray);
 
-	//$student = $student->find($id);
+        //$student = $student->find($id);
         //$student = $student->first();
-	$age = $this->getAge($student->dob);
+        $age = $this->getAge($student->dob);
         //return view('student')->withRecord($student)->withAge($age);
         return view('student', compact('student','age','photoURL','courses','lockerArray'));
     
@@ -129,7 +129,7 @@ class StudentController extends Controller
         // dd('x');
     }
 */
-    //This method works
+    //Function to return the current age of the student based on birthday.
     private function getAge($then) {
         $then = date('Ymd', strtotime($then));
         $diff = date('Ymd') - $then;

@@ -65,39 +65,6 @@ class EventController extends Controller
         return redirect('/kiosks/' . $request->kioskID . '/edit');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -110,18 +77,22 @@ class EventController extends Controller
         //
     }
 
+    private function isPastDate($date) {
+        $today = Carbon::today()->toDateString();
+        if ($date < $today) return true;
+        return false;
+    }
 
     /* This loads a page that has various buttons to do other things with the event
-       In partiucular, it allows the user to create and modify a class list for the event */
+       In particular, it allows the user to create and modify a class list for the event.
+       Note: $isPast only checks to see if the date is in the past */
     public function settings($id)
     {
         $event = Event::find($id);
         $slist = EventStudentList::where('event_id', $id)->with('student')->get();
         $studentList = $slist->sortBy('studentID')->sortBy('student.firstname')->sortBy('student.lastname');
 
-        $isPast = false;
-        $today = Carbon::today()->toDateString();
-        if ($event->date < $today) $isPast = true;
+        $isPast = $this->isPastDate($event->date);
         
         return view('events.settings', compact('event','studentList','isPast'));
     }
@@ -151,7 +122,8 @@ class EventController extends Controller
             return back()->with('error', 'Error: no event id passed to event controller.');
         }
         $courseCode = $request->courseCode;
-	$courseCode = str_replace("-","",$courseCode);
+        //strip hyphens
+        $courseCode = str_replace("-","",$courseCode);
 
         $course = Course::find($courseCode);
         if ($course == null) {
@@ -219,15 +191,39 @@ class EventController extends Controller
             $record->student_id = $student->student_id;
             $record->save();
         }
-        //dd('here2'.$eventID." ".$sourceID);
 
         return back();
         // return redirect('/events/' . $destID . '/addStudents');
     }
 
     /* Add student by student number */
-    //public function addStudent(Event $event, Student $student)
     public function addStudent(Request $request)
+    {
+        $event = Event::find($request->eventID);
+        $student = Student::find($request->add1Student);
+        if ($student == null) {
+                return back()->with('error', 'This student number does not exist');
+        }
+        //make sure that the student is not already on that eventlist
+            $test = EventStudentList::where('event_id', $event->id)->where('student_id', $student->studentID)->get();
+            if ($test->count()) {
+                return back()->with('warning', 'Student is already on list');
+            }
+
+        //create and save record
+        $record = new EventStudentList();
+        $record->event_id = $event->id;
+        $record->student_id = $student->studentID;
+        $record->save();
+
+        //return to the original view 
+        $msg = $student->firstname ." ". $student->lastname . " has been added.";
+        return back()->with('success', $msg);
+    }
+
+    /* Add student by student number */
+    //public function addStudent(Event $event, Student $student)
+/*    public function addStudentJSON(Request $request)
     {
         $event = Event::find($request->eventID);
         $student = Student::find($request->studentID);
@@ -256,7 +252,7 @@ class EventController extends Controller
         //return back()->with('success', $msg);
         return response()->json(['status' => 'success']);
     }
-
+*/
     /* Remove student by student number */
     public function removeStudent(Event $event, int $studentID)
     {
@@ -265,11 +261,16 @@ class EventController extends Controller
         return back();
     }
 
+    //clear all student from attendance list of an event.
+    //TODO FIXME this must only be done BEFORE the event has taken place.
     public function clearStudents(Request $request)
     {
         $event = Event::find($request->eventID);
         $list = EventStudentList::where('event_id', $event->id)->get();
 
+        if ($this->isPastDate($event->date)) {
+            return response()->json(['status' => 'failure', 'msg' => 'Cannot clear events that are in the past']);
+        }
         foreach($list as $record) {
             $record->delete();
         }
