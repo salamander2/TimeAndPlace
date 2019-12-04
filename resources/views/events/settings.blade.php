@@ -1,5 +1,9 @@
 @extends('layouts.app') 
 @section('content')
+<a href="/kiosks/{{$event->kiosk_id}}/edit" class="text-white">
+    <span class="btn-sm btn-outline-secondary"><i class="fa fa-angle-left"></i> Back</span>
+</a>
+
 {{--<a href="{{'/kiosks/'.$kiosk->id.'/edit' }}" class="btn btn-outline-secondary small">Back</a>  --}}
 
 <script>
@@ -140,19 +144,7 @@ function clearStudents(){
 </script>
 
 
-{{--
-@if (session('error'))
-<div class="alert alert-error" role="alert">
-    {{ session('error') }}
-    <br>
-    <p class="small">Change this to a popup message that then disappears</p>
-</div>
-@endif
---}}
-
 <div class="container">
-    <div class="float-right">
-    <div class="btn btn-secondary"><a href="/kiosks/{{$event->kiosk_id}}/edit" class="text-white">Back</a></div></div>
     <h1>
        Options for event: {{$event->name}} 
     </h1>
