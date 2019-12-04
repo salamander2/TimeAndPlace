@@ -253,16 +253,18 @@ class EventController extends Controller
         return response()->json(['status' => 'success']);
     }
 */
-    /* Remove student by student number */
+    /* Remove student by student number.
+       Uses Ajax so that a single line can be delete without reloading the whole page */
     public function removeStudent(Event $event, int $studentID)
     {
+        $student = Student::find($studentID);
         //$record = EventStudentList::where('event_id', $event->id)->where('student_id', $student->studentID)->get();
         $record = EventStudentList::where('event_id', $event->id)->where('student_id', $studentID)->delete();
-        return back();
+        $msg = $student->firstname ." ". $student->lastname;
+        return response()->json(['status' => 'success', 'name' => $msg]);
     }
 
     //clear all student from attendance list of an event.
-    //TODO FIXME this must only be done BEFORE the event has taken place.
     public function clearStudents(Request $request)
     {
         $event = Event::find($request->eventID);

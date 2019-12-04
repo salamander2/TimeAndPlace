@@ -4,11 +4,11 @@
 
 <script>
 
+
+//This needs to be in AJAX, so that the page can be updated dynamically and not reloaded
 function removeStudent(studentID){
 
-    myurl='/events/removeStudent/{{$event->id}}/' + studentID;
-    window.location.href=myurl;
-    /*$.ajax({
+    $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -17,13 +17,26 @@ function removeStudent(studentID){
         url: '/events/removeStudent/{{$event->id}}/' + studentID,
         dataType: "json",
         success: function (data, status, jqXhr) {
-            location.reload();
+            document.getElementById("chk" + studentID).checked = false; // this has to be done or other rows appear checked upon reload
+            document.getElementById("row"+ studentID).innerHTML = "";
+            document.getElementById("row"+ studentID).outerHTML = "<tr class='d-none'></tr>";
+            document.getElementById("delNote" ).innerHTML = "Refresh the page to update the count";
+            
+            //now add a window alert message
+            window.createNotification({
+				theme: 'success',
+				positionClass: 'nfc-top-right',
+				displayCloseButton: true,
+				showDuration: 3500
+			})({            
+				title:'Success',
+				message: data.name + 'has been deleted.'
+			});
         },
         error: function (jqXhr, textStatus, errorMessage) {
             alert('Error: ' + errorMessage);
         }
     });
-    */
 }
 
 function validateID(){
@@ -257,16 +270,17 @@ function clearStudents(){
                 <table cellspacing=0 cellpadding=5 class="table-hover table-striped">
                 <tr><th>Student Num</th><th>Name</th><th>Remove</th></tr>
                 @foreach($studentList as $SL)
-                    <tr>
+                    <tr id="row{{$SL->student_id}}">
                         <td>{{$SL->student_id}} </td>
                         <td>{{$SL->student['lastname']}}, {{$SL->student['firstname']}} </td> {{-- not $SL->student->lastname --}}
-                        <td><input type="checkbox" onclick="removeStudent({{$SL->student_id}})"></td>
+                        <td><input id="chk{{$SL->student_id}}" type="checkbox" onclick="removeStudent({{$SL->student_id}})"></td>
                     </tr>
                 @endforeach 
                 </table>
-		<p class="btn btn-secondary"> {{$studentList->count() }} students </p>
+                <p class="btn btn-secondary"> {{$studentList->count() }} students </p>
+                <div id="delNote" class="small text-primary font-italic"></div>
             @else
-            <h5>No students have been attached to this event yet</h5>
+                <h5>No students have been attached to this event yet</h5>
             @endif
         </div>
     </div>
