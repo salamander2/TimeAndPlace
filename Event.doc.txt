@@ -1,0 +1,39 @@
+
+A kiosk can be created as an EVENT-BASED kiosk. This is is a kiosk which has certain events attached to it. This is different from the "sign in" type. The sign in type automatically creates a "meeting" record whenever a student signs into it on any particular day. (Read more about the signinonly/meeting type kioks here.)
+
+To understand how an event* based kiosk works imagine a dance rehearsal or dance show or concert with 120 students in it.  Teachers need to know who is there and when they arrive. It's important to know if someone has now shown up, especially if they are in a key role in the performance.  By noting the time when students arrive and sign in, the software will also show which students are late, in case the teacher wants to take marks off...
+
+How it works:
+
+1. set up a new kiosk as eventbased, add users to it ...
+2. add an event.  The event has a name/description, a date for when the performance is happening, and a start, late, and end time. The start time is when students are allowed to start signing in. 
+
+This is needed because there might be two events on the same day: a rehearsal and a performance.  We don't want someone to sign in 2 hours early and then go home and not show up. ... No. BEcause the signin terminal is controlled by the teacher, it will only be activated when the teacher wants it to happen - so no one could sign in earlier. And also, each event is separate, so if you sign in for a rehearsal at 10am, that has absolutely no effect on the performance at 7pm. You have to sign in for the performance event too.
+
+The late time is used to determine if a student is late, and end time if they are absent.
+
+3. Add students to the event.  For this to work, there has to be a specific list of students associated with this event. This is different from the other types of kiosks, where if you have a club, you don't say "only these 10 people can be part of it", nor if you have a room like the library, there's not a list of only these students who are allowed to use it.
+
+There are a number of ways to add students to the event.
+The simplest is to just type in a course code. This will add all of the students for that course (and section to that event). You can also copy a list of students from another event. Any time when students are added to an event the software makes sure that the same student is never added twice ****check this.  Students can be added individually (right now this is only possible by student number (or maybe also loginID). Students can also be individually deleted, by clicking on a checkbox next to their name. Finally, if things get really messed up, you can just clear the whole list and start again.
+
+4. Start the login terminal for the event. This allows students to sign in. 
+There are a couple of things to note here:
+* students only sign in once. If they do it again, it has no effect.
+* students have to look at the screen to make sure that the signing works (there's either an error message or a confirmation message). If there's an error message, it means that there's a typo.
+* the software makes no restrictions on who signs in or when. This means that even if you forgot to add a student to your list, that student can still sign in, and you can add him/her later and the attendance report will work properly. It also means that the software allows students to sign in before the start time or after the end time. This is very useful since you can modify the times later on and the reports will be updated to reflect it. For example, let's say that a rehearsal is starting at 6pm and students must be signed in by 5:45pm (this would be the end time). But there's a snow storm and everything is delayed. Well, instead of having to create a whole new event for the new times, students still sign in as they arrive, and then you just change the end time to be 6:05pm or whatever. 
+Note that if a student signs in AFTER the end time, he or she is shown as absent, but the time is displayed. This way the teacher can tell that the student actually was there.  <<FIXME
+
+Students are NEVER allowed to sign in on a different day. If your event is on a Sunday, signing in on a Saturday or a Monday will not work. The sign in will not be recorded.
+
+Students are still able to sign in their friends, if they know their friends' computer login names. Teachers will have to instruct their students NOT to do this and also to explain why not.
+
+5. It's also important to note, that unlike in other kiosks, starting a signing terminal for events **does not log the teacher out**. IT just opens up a new tab. This means that the sign in terminals should not be left unattended because students should not be allowed to switch tabs and start deleting or changing the events. This no logging out is actually an intentional feature to allow the sign ins to work faster and be more flexible: a chrome book that's being used to sign in the students can also be used to check to see the attendance list that is updated as students sign in.
+
+At any point, even after the event is over, the date and times of the event can be changed. The attendance report is automatical;y updated to reflect this, showing the new status of late, absent, etc.
+
+Notice that the report also has a printable version.
+
+
+
+*the term "event" was simply used because I had already used "meeting" for the other type, and I wanted some sort of general term to describe this

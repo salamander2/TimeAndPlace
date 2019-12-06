@@ -13,6 +13,7 @@
                 
                 <div class="float-right"> <a href="{{'/events/reportPrint/'.$event->id}}"><button type="button" class="btn btn-outline-info">Printable Report</button></a></p></div>
             </h2>                
+            <h6 class="text-secondary">When tracking attendance as students sign in, please remember to refresh this page.</h6>
         </div>
         
     </div>
