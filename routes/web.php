@@ -76,6 +76,7 @@ Route::get('/help', 'HomeController@help');
 
 
 /*----------------Admin Routes------------------*/
+Route::get('adminPage', 'AdminController@adminPage');
 Route::get('/userMaint', 'AdminController@userIndex');
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//
@@ -83,6 +84,7 @@ Route::post('addUser', 'AdminController@createUser')->name('addUser');
 //Route::post('AJAXdelUser/{user}', 'AjaxController@deleteUser')->middleware('admin');
 Route::post('delUser/{user}', 'AdminController@deleteUser');
 //Route::post('resetPWD/{id}', 'AdminController@resetPWD');
+Route::post('delGrads', 'AdminController@deleteGrads');
 
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');

@@ -41,9 +41,15 @@ class AdminController extends Controller
     {       
         $this->middleware('auth');
         $this->middleware('admin');
-		
     }
 
+    /**
+     * Display a listing of all users.
+     */
+    public function adminPage()
+    {
+        return view('admin.adminPage');
+    }
     /***************************** USER HANDLING  **************************************/
 
     /**
@@ -129,6 +135,10 @@ class AdminController extends Controller
         //return response()->json('Deleted',200);
     }
 
+    public function deleteGrads()
+    {
+        die("here");
+    }
 
     /* moved to AjaxController
     public function resetPWD(String $id) 
