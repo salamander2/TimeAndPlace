@@ -53,7 +53,8 @@ class StudentController extends Controller
         $student = Student::find($id) ??  abort(403,'Student ' .$id. ' not found.');
         
         $photoURL = $student->getPhotoURL($id);
-        $courses = $student->getTimeTable();    //NOT USED: $courses = $student->getTimeTable();
+        $courses = $student->getTimeTable();   
+        $timetable = $student->timetable;  //this is for displaying raw timetable data
 
         $lockerArray = array();
         $lockerNums = LockerStudent::where('studentID', $id)->get();
@@ -77,7 +78,7 @@ class StudentController extends Controller
         //$student = $student->first();
         $age = $this->getAge($student->dob);
         //return view('student')->withRecord($student)->withAge($age);
-        return view('student', compact('student','age','photoURL','courses','lockerArray'));
+        return view('student', compact('student','age','photoURL','courses','timetable','lockerArray'));
     
         //dd($student);
     }

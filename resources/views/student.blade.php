@@ -93,7 +93,8 @@
                     <tr><td>{{$c->period}}</td><td>{{$c->coursecode}}</td><td>{{$c->teacher}}</td><td>{{$c->room}}</td></tr>
                 @endforeach
                 </table>
-                <p class="fontONE smaller fleft gray" title="Teacher and student course codes for COOP are completely different!"><i>COOP courses won't show up here</i></p>
+                <p class="fontONE smaller fleft gray" title="Teacher and student course codes for COOP are completely different!">
+                <i>COOP courses won't show up here.<br>Raw timetable data:</i> {{$timetable}}</p>
             </div>
         </div>
 
