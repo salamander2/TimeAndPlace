@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Kiosk;
+use App\Student;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -135,9 +136,97 @@ class AdminController extends Controller
         //return response()->json('Deleted',200);
     }
 
-    public function deleteGrads()
+    public function deleteGrads(Request $request)
     {
-        die("here");
+        //The following will save the file to ? storage?
+        //$request->fileupload->store('markbook','mb.txt');
+
+        //dd($request->fileupload); //this gives all of the file parameters
+
+        //This line actually reads the file from the disk, so if you change the contents of the file and refresh this page, it reads the new contents!!
+        $file = $request->fileupload;
+        $data = array_map('str_getcsv', file($file));
+
+        //Check#1: are there a reasonable number of records (for a high school)?
+        //TODO : this should return an error 
+        if (count($data) < 500) {
+            dd("error, data is too short");
+        }
+
+        print("Data length ok"."<br>");
+
+        //check number 2: is the first field of each numeric?
+        $isNumeric = true;
+        foreach ($data as $index => $record)
+        {
+            //ignore the first row.
+            if ($index === 0)
+            {
+                $headers = $record;                
+            } else {
+                if (!is_numeric($record[0])) {
+                    $isNumeric = false;
+                    break;
+                }
+                // dd($record);            
+            }
+        }
+
+        if (!$isNumeric) {
+            dd("ERROR: non-numeric student number");
+        }
+
+        print("Student numbers ok<br>");
+        //check #3: fewer than 25% should be new students (student numbers that don't exist in this database)
+        $count = 0;
+        foreach ($data as $index => $record)
+        {
+            //ignore the first row.
+            if ($index === 0)
+            {}
+            else
+            {
+                $stnum = $record[0];
+                $student = Student::find($record[0]) ?? $count++;
+            }
+        }
+
+        if ($count > count($data)*0.25) {
+            dd("More than 25% new records.");
+        }
+        print("Fewer than 25% new students<br>");
+
+//        dd($count);
+        dd($data);
+
+        /* 
+        Now select all of the student numbers (from Student table)
+        Go through each and see if it has a Markbook entry.
+            if so ... go on to the next
+            if not, determine whether to delete:
+                if (age > 21) delete
+                if student is on waitlist, do not delete
+                if student has comments (sssDB) do not delete
+                if student has logs from public kiosks, don't delete - because they are logging in and out somewhere in the school.
+
+                ** Make a list of the NonDelete missing students
+                ** Make a list of the ToDelete missing students
+
+                Print both of these lists
+                
+                To delete:
+                    from studentDB
+                    delete all records with that id student_course,
+                    from loggerDB
+                    delete all records with that id from event_student
+                            from event_studentlist
+                            from locker_student
+                            from logs (this would be other logs that have been lingering. All logs should be deleted at the end of each year (or actually, archived for a year))
+
+                    over 21 age students: must also delete waitlist comments, next steps,
+        */
+
+
     }
 
     /* moved to AjaxController

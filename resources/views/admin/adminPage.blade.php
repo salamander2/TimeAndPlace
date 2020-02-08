@@ -110,17 +110,17 @@
           </div> <!-- /.col -->
 
           <div class="col-md-3 col-sm-6 col-12">
-          <form method="POST" action="/delGrads">
+          <form method="POST" action="/delGrads" enctype="multipart/form-data">
 						@csrf
             <div class="info-box btn btn-danger text-dark">
-              <span class="info-box-icon"><i class="fas fa-indent"></i></span>
+              <span class="info-box-icon"><i class="fas fa-indent"></i></span><br>
               <div class="info-box-content">
                 <h3 class="info-box-text">Delete all<br>old students</h3>
-                 <button type="submit" class="btn">Go</button>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
+                  <input type="file" name="fileupload" value="fileupload" id="fileupload"  accept="text/plain"><br>
+                  <label for="fileupload"> Select Markbook file to upload</label><br>
+                 <button type="submit" class="btn btn-primary">Go</button>
+              </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
             </form>
             <p>Only do this in September</p>
 
@@ -231,6 +231,20 @@
         <div class="card card-primary">
             <div class="card-body">
                First Item
+               <form action="">
+                  <input type="file" name="fileupload" value="fileupload" id="fileupload"  accept="text/plain">
+                  <label for="fileupload"> Select Markbook file to upload</label>
+                  <input type="submit" value="submit">
+                </form>
+
+{{--
+Accessing via JavaScript:
+<input type="file" id="input" onchange="handleFiles(this.files)">
+OR
+var fileData = $('#input-file').prop('files')[0];
+SEE https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
+https://stackoverflow.com/questions/12281775/get-data-from-file-input-in-jquery
+--}}
             </div>
 
         </div>

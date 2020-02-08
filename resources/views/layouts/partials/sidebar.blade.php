@@ -18,7 +18,7 @@
           
          
           @if (auth()->check() && auth()->user()->isAdministrator()) 
-            <li class="nav-item "><a href="adminPage" class="nav-link alert alert-warning"><i class="nav-icon fas fa-dragon"></i><p>Admin Page</p></a></li>
+            <li class="nav-item "><a href="/adminPage" class="nav-link alert alert-warning"><i class="nav-icon fas fa-dragon"></i><p>Admin Page</p></a></li>
             </li>
             @endif      
           <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info"><i class="nav-icon fab fa-korvue fa-2x"></i>
