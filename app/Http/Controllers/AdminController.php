@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
 use App\User;
 use App\Kiosk;
 use App\Student;
@@ -136,6 +137,15 @@ class AdminController extends Controller
         //return response()->json('Deleted',200);
     }
 
+    /* This function deletes students who are not longer at Beal.
+        It also deletes all associated records (based on student ID).
+        The basic criterion is students who are no longer in the markbook file.
+        After that, the age is examined: any students over 21 are automatically deleted.
+        Students under 21 may or may not be deleted depending on other criteria 
+
+        NOTE: the admin user of this Laravel installation must have UDATE and DELETE access to Student.
+        REVOKE ALL PRIVILEGES ON `schoolDB`.* FROM 'timeandplace'@'localhost'; GRANT SELECT, UPDATE, DELETE, REFERENCES ON `schoolDB`.* TO 'timeandplace'@'localhost';
+    */
     public function deleteGrads(Request $request)
     {
         //The following will save the file to ? storage?
@@ -147,57 +157,41 @@ class AdminController extends Controller
         $file = $request->fileupload;
         $data = array_map('str_getcsv', file($file));
 
-        //Check#1: are there a reasonable number of records (for a high school)?
-        //TODO : this should return an error 
-        if (count($data) < 500) {
-            dd("error, data is too short");
+        $markbookIDs = array(); // make array of only studentIDs from the markbook file
+        foreach ($data as $index => $record)
+        {
+            if ($index === 0) //ignore the first row.
+            {} 
+            else {
+                $markbookIDs[] = $record[0];
+            }
         }
 
-        print("Data length ok"."<br>");
+        /******************************** DO TESTS TO VERIFY MARKBOOK INPUT FILE IS REASONABLE SURE TO BE SUITABLE *******************/
+        //Check#1: are there a reasonable number of records (for a high school)?
+        //TODO : this should return an error to a Blade View
+        $dataOK = $this->del_check1($data);
+        if ($dataOK)
+            print("Data length ok"."<br>");
+        else
+            dd("error, data is too short");
 
         //check number 2: is the first field of each numeric?
-        $isNumeric = true;
-        foreach ($data as $index => $record)
-        {
-            //ignore the first row.
-            if ($index === 0)
-            {
-                $headers = $record;                
-            } else {
-                if (!is_numeric($record[0])) {
-                    $isNumeric = false;
-                    break;
-                }
-                // dd($record);            
-            }
-        }
-
-        if (!$isNumeric) {
+        $dataOK = $this->del_check2($markbookIDs);
+        
+        if ($dataOK)
+            print("Student numbers ok<br>");
+        else
             dd("ERROR: non-numeric student number");
-        }
 
-        print("Student numbers ok<br>");
         //check #3: fewer than 25% should be new students (student numbers that don't exist in this database)
-        $count = 0;
-        foreach ($data as $index => $record)
-        {
-            //ignore the first row.
-            if ($index === 0)
-            {}
-            else
-            {
-                $stnum = $record[0];
-                $student = Student::find($record[0]) ?? $count++;
-            }
-        }
-
-        if ($count > count($data)*0.25) {
+//        $dataOK = $this->del_check3($markbookIDs);
+        if ($dataOK)
+            print("Fewer than 25% new students - ok<br>");
+        else
             dd("More than 25% new records.");
-        }
-        print("Fewer than 25% new students<br>");
 
-//        dd($count);
-        dd($data);
+        /************************* END OF MARKBOOK FILE CHECKS *************************/
 
         /* 
         Now select all of the student numbers (from Student table)
@@ -213,7 +207,7 @@ class AdminController extends Controller
                 ** Make a list of the ToDelete missing students
 
                 Print both of these lists
-                
+
                 To delete:
                     from studentDB
                     delete all records with that id student_course,
@@ -224,11 +218,99 @@ class AdminController extends Controller
                             from logs (this would be other logs that have been lingering. All logs should be deleted at the end of each year (or actually, archived for a year))
 
                     over 21 age students: must also delete waitlist comments, next steps,
+                No Delete: clear out the student time table information.
         */
+        $noDelete = array();
+        $yes21Delete = array();
+        $yesDelete = array();
+        $publicKiosks = Kiosk::where('publicViewable',1)->where('kioskType',0)->get();
+        $allstudents = Student::all();
+        foreach ($allstudents as $student) {
+            $studentNum = $student->studentID;
+
+            /*  NOT NEEEDED: in_array does numeric comparison (apparently)
+            //fix student numbers that begin with 0, 00, 000
+            $stl = strlen($studentNum);
+            if ($stl < 9) {
+                // continue;
+                print($studentNum . "<br>");
+            }
+            */
+
+            // if (array_key_exists($studentNum, $markbookIDs)) {
+            if (! in_array($studentNum, $markbookIDs)) 
+            {
+                //check #1: age
+                if($this->getAge($student->dob) >= 21) {
+                    $yes21Delete[] = $studentNum;
+                    continue;
+                }
+
+                //check #2: logs
+                //$logs = Log::where('studentID',$studentNum)->get();
+                //$logs = Log::where('studentID',$studentNum)->with('kiosk')->where('kiosk.publicViewable',1)->get();
+                $logs = Log::where('studentID',$studentNum)->with('kiosk')->get();  //->where('kiosk.publicViewable',1)->get();
+                if (count($logs) > 0) {
+                    foreach($logs as $log) {
+                        if ($log->kiosk->publicViewable == 1 && $log->kiosk->kioskType == 0) {
+                            print("student has public log records");
+                            dd($log);
+                            $noDelete[] = $studentNum;
+                        }
+                    }
+                    dd($logs);
+                    
+                }
+                if (count($logs) < 1) continue;
+                print_r($student);
+                dd($logs);
+                print($studentNum . " " . $this->getAge($student->dob) ."<br>");
+
+                //clear out the timetable for students (that are not getting deleted)
+                $student->timetable = "";
+                $student->save();
+                dd($student);
+
+            }
+        }
 
 
     }
 
+    function del_check1($data) {
+        if (count($data) < 500) return false;
+        else return true;
+    }
+
+    function del_check2($data) {
+        foreach ($data as $record)
+        {
+            if (!is_numeric($record))  return false;
+        }
+        return true;
+    }
+
+    function del_check3($data) {
+        $count = 0;
+        foreach ($data as $record)
+        {
+            $student = Student::find($record) ?? $count++;
+        }
+
+        if ($count > count($data)*0.25) return false;
+        return true;
+    }
+
+    //Function to return the current age of the student based on birthday.
+    //copied from StudentController.php
+    private function getAge($then) {
+        $then = date('Ymd', strtotime($then));
+        $diff = date('Ymd') - $then;
+        $age = substr($diff,0,-4);
+        //try to get decimal years!
+        //$age= sprintf("%u.%u",substr($diff, 0, 2),substr($diff,2,2));
+        return $age;
+    }
     /* moved to AjaxController
     public function resetPWD(String $id) 
     {
