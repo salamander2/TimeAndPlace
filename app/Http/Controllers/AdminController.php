@@ -224,56 +224,69 @@ class AdminController extends Controller
         $yes21Delete = array();
         $yesDelete = array();
         $publicKiosks = Kiosk::where('publicViewable',1)->where('kioskType',0)->get();
+
         $allstudents = Student::all();
         foreach ($allstudents as $student) {
             $studentNum = $student->studentID;
 
-            /*  NOT NEEEDED: in_array does numeric comparison (apparently)
+            /*  NOT NEEEDED: in_array does numeric comparison (apparently) -- now it's messed up again! */
             //fix student numbers that begin with 0, 00, 000
             $stl = strlen($studentNum);
+            $idToTest = $studentNum;
             if ($stl < 9) {
                 // continue;
-                print($studentNum . "<br>");
+                $idToTest = str_repeat("0", 9-$stl).$idToTest;
+                print(">>>".$idToTest . "<br>");
             }
-            */
 
             // if (array_key_exists($studentNum, $markbookIDs)) {
-            if (! in_array($studentNum, $markbookIDs)) 
+            if (! in_array($idToTest, $markbookIDs)) 
             {
-                //check #1: age
+                //check #1: age - is he/she 21 or older?
                 if($this->getAge($student->dob) >= 21) {
                     $yes21Delete[] = $studentNum;
                     continue;
                 }
 
-                //check #2: logs
-                //$logs = Log::where('studentID',$studentNum)->get();
-                //$logs = Log::where('studentID',$studentNum)->with('kiosk')->where('kiosk.publicViewable',1)->get();
-                $logs = Log::where('studentID',$studentNum)->with('kiosk')->get();  //->where('kiosk.publicViewable',1)->get();
-                if (count($logs) > 0) {
-                    foreach($logs as $log) {
-                        if ($log->kiosk->publicViewable == 1 && $log->kiosk->kioskType == 0) {
-                            print("student has public log records");
-                            dd($log);
-                            $noDelete[] = $studentNum;
-                        }
-                    }
-                    dd($logs);
-                    
+                //check #2: do logs exist?
+                $dontDelete = $this->stu_check2($studentNum);
+                if ($dontDelete) {
+                    print("student ".$studentNum." has public log records");
+                    $noDelete[] = $studentNum;
+                    continue;
                 }
-                if (count($logs) < 1) continue;
-                print_r($student);
-                dd($logs);
+
+                //check #3: waitlist
+                $dontDelete = $this->stu_check3($studentNum);
+                if ($dontDelete) {
+                    print("student ".$studentNum." has waitlist entries");
+                    $noDelete[] = $studentNum;
+                    continue;
+                }
+
+                //check #4: sssDB comments from this year
+                $dontDelete = $this->stu_check4($studentNum);
+                if ($dontDelete) {
+                    print("student ".$studentNum." has sssDB comment entries");
+                    $noDelete[] = $studentNum;
+                    continue;
+                }
+
+                //else: student gets deleted
+                $yesDelete[] = $studentNum;
+
                 print($studentNum . " " . $this->getAge($student->dob) ."<br>");
-
-                //clear out the timetable for students (that are not getting deleted)
-                $student->timetable = "";
-                $student->save();
-                dd($student);
-
             }
+
+            //clear out the timetable for students (that are not getting deleted)
+//            $student->timetable = "";
+//           $student->save();
+ //           dd($student);
+
         }
 
+        print("end for now<br>");
+        print_r($noDelete);
 
     }
 
@@ -300,6 +313,34 @@ class AdminController extends Controller
         if ($count > count($data)*0.25) return false;
         return true;
     }
+
+    //check student for deletion: does he have any logs in public kiosks? 
+    //TODO: only check for logs since September of this year
+    function stu_check2($studentNum){
+        //$logs = Log::where('studentID',$studentNum)->get();
+        //$logs = Log::where('studentID',$studentNum)->with('kiosk')->where('kiosk.publicViewable',1)->get();
+        $logs = Log::where('studentID',$studentNum)->with('kiosk')->get();  //->where('kiosk.publicViewable',1)->get();
+        if (count($logs) > 0) {
+            foreach($logs as $log) {
+                if ($log->kiosk->publicViewable == 1 && $log->kiosk->kioskType == 0) {
+                    print("student ".$studentNum." has public log records");
+                    return true; // true = don't delete
+                }
+            }
+        }
+        return false;
+    }
+
+    //check student for deletion: does he have any waitlist entries
+    function stu_check3($studentNum){
+        (waitlistDB: table waitlist)
+        $logs = Waitlist::where('studentID',$studentNum)->get();
+        if (count($logs) > 0) {
+            return true; // true = don't delete
+        }
+        return false;
+    }
+
 
     //Function to return the current age of the student based on birthday.
     //copied from StudentController.php
