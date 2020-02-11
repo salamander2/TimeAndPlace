@@ -6,6 +6,8 @@ use App\Log;
 use App\User;
 use App\Kiosk;
 use App\Student;
+use App\Comment;
+use App\Waitlist;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -333,14 +335,25 @@ class AdminController extends Controller
 
     //check student for deletion: does he have any waitlist entries
     function stu_check3($studentNum){
-        (waitlistDB: table waitlist)
+        //(waitlistDB: table waitlist)
         $logs = Waitlist::where('studentID',$studentNum)->get();
+
         if (count($logs) > 0) {
             return true; // true = don't delete
         }
         return false;
     }
 
+    //check student for deletion: does he have any sssDB comments
+    function stu_check4($studentNum){
+        $logs = Comment::where('studentID',$studentNum)->get();
+
+        if (count($logs) > 0) {
+            dd($logs);
+            return true; // true = don't delete
+        }
+        return false;
+    }
 
     //Function to return the current age of the student based on birthday.
     //copied from StudentController.php
