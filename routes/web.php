@@ -84,7 +84,7 @@ Route::post('addUser', 'AdminController@createUser')->name('addUser');
 //Route::post('AJAXdelUser/{user}', 'AjaxController@deleteUser')->middleware('admin');
 Route::post('delUser/{user}', 'AdminController@deleteUser');
 //Route::post('resetPWD/{id}', 'AdminController@resetPWD');
-Route::post('delGrads', 'AdminController@deleteGrads');
+Route::post('delGrads', 'DatabaseController@deleteGrads');
 
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');
