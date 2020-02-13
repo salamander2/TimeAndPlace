@@ -9,12 +9,21 @@
 	<p><b><u>Terminal:</u></b> the screen where students log in/out</p>
 	<p>See help screen for more information</p>
     </div>
-    <div class="p-3 bg-info">
-      <h5>VERSION # <span class="badge badge-light "> {{env('VERSION') }}</span><br><br>
-	<?php $branch = exec('git rev-parse --abbrev-ref HEAD'); echo "<p>(<u>".$branch."</u> branch)</p>"; ?>
-      </h5>
+    <div class="p-2 bg-info">
+      <p>VERSION # <span class="badge badge-light "> {{env('VERSION') }}</span><br>
+	    <?php $branch = exec('git rev-parse --abbrev-ref HEAD'); echo "(<u>".$branch."</u> branch)"; ?>
+      </p>
     </div>
     
+    <div class="p-1 text-warning">
+      <h5>Latest updates:</h5>
+      <p>Markbook: <code>  
+      <?php echo file_get_contents(public_path('storage/photos/markbook.date')); ?>
+      </code><br>
+	    Teacher Schedule: <code>
+      <?php echo file_get_contents(public_path('storage/photos/timetable.date')); ?>
+      </code></p>
+    </div>
      
     <div class="card-body">
 	    <a href="/allstudents" class="my-2 btn btn-outline-info" target="_blank">List all Students</a>
