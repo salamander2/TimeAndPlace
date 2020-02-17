@@ -25,6 +25,9 @@ class DatabaseController extends Controller
         $this->middleware('admin');
     }
     
+    public function deleteGradView(){
+        return view('admin.delGrads');
+    }
     
     /* This function deletes students who are not longer at Beal.
     It also deletes all associated records (based on student ID).

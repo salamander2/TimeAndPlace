@@ -110,19 +110,14 @@
           </div> <!-- /.col -->
 
           <div class="col-md-3 col-sm-6 col-12">
-          <form method="POST" action="/delGrads" enctype="multipart/form-data">
-						@csrf
+             <a href="delGrads">
             <div class="info-box btn btn-danger text-dark">
               <span class="info-box-icon"><i class="fas fa-indent"></i></span><br>
               <div class="info-box-content">
-                <h3 class="info-box-text">Delete all<br>old students</h3>
-                  <input type="file" name="fileupload" value="fileupload" id="fileupload"  accept="text/plain"><br>
-                  <label for="fileupload"> Select Markbook file to upload</label><br>
-                 <button type="submit" class="btn btn-primary">Go</button>
+                <h3 class="info-box-text">delete all<br>old students</h3>
               </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
-            </form>
-            <p>Only do this in September</p>
+              </a>
 
           </div><!-- /.col -->
 
@@ -132,7 +127,7 @@
             <div class="info-box bg-secondary">
 
               <div class="info-box-content">
-                <h3 class="info-box-text">Set Assembly<br>Day schedule</h3>
+                <h3 class="info-box-text">set assembly<br>day schedule</h3>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -150,7 +145,7 @@
             <div class="info-box bg-warning">
               <span class="info-box-icon"><i class="fa fa-bezier-curve"></i></span>
               <div class="info-box-content">
-                <h3 class="info-box-text">User<br>Maintenance</h3>
+                <h3 class="info-box-text">user<br>maintenance</h3>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -163,7 +158,7 @@
             <div class="info-box btn btn-outline-info">
               <span class="info-box-icon"><i class="fas fa-school"></i></span>
               <div class="info-box-content">
-                <h3 class="info-box-text">Create a<br>new Kiosk</h3>
+                <h3 class="info-box-text">create a<br>new kiosk</h3>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -176,7 +171,7 @@
             <div class="info-box bg-success">
               <span class="info-box-icon"><i class="fas fa-indent"></i></span>
               <div class="info-box-content">
-                <h3 class="info-box-text">Go to<br>phpMyAdmin</h3>
+                <h3 class="info-box-text">go to<br>phpmyadmin</h3>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -192,7 +187,7 @@
               <span class="info-box-icon"><i class="fas fa-comments"></i></span>
 
               <div class="info-box-content">
-                <h3 class="info-box-text">Auto signout<br>everyone now</h3>
+                <h3 class="info-box-text">auto signout<br>everyone now</h3>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -211,14 +206,14 @@
               <span class="info-box-icon"><i class="fas fa-school"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Likes</span>
+                <span class="info-box-text">likes</span>
                 <span class="info-box-number">41,410</span>
 
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
                 <span class="progress-description">
-                  70% Increase in 30 Days
+                  70% increase in 30 days
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -230,19 +225,19 @@
     <div class="col-lg-12">
         <div class="card card-primary">
             <div class="card-body">
-               First Item
+               first item
                <form action="">
                   <input type="file" name="fileupload" value="fileupload" id="fileupload"  accept="text/plain">
-                  <label for="fileupload"> Select Markbook file to upload</label>
+                  <label for="fileupload"> select markbook file to upload</label>
                   <input type="submit" value="submit">
                 </form>
 
 {{--
-Accessing via JavaScript:
-<input type="file" id="input" onchange="handleFiles(this.files)">
-OR
-var fileData = $('#input-file').prop('files')[0];
-SEE https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
+accessing via javascript:
+<input type="file" id="input" onchange="handlefiles(this.files)">
+or
+var filedata = $('#input-file').prop('files')[0];
+see https://developer.mozilla.org/en-us/docs/web/api/file/using_files_from_web_applications
 https://stackoverflow.com/questions/12281775/get-data-from-file-input-in-jquery
 --}}
             </div>
