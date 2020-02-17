@@ -47,6 +47,7 @@ class DatabaseController extends Controller
         
         //This line actually reads the file from the disk, so if you change the contents of the file and refresh this page, it reads the new contents!!
         $file = $request->fileupload;
+        if (empty($file)) return redirect()->back()->with("error","No markbook file specified. Aborting.");        
         $data = array_map('str_getcsv', file($file));
         
         $markbookIDs = array(); // make array of only studentIDs from the markbook file
@@ -64,24 +65,30 @@ class DatabaseController extends Controller
         //TODO : this should return an error to a Blade View
         $dataOK = $this->del_check1($data);
         if ($dataOK)
-        print("Data length ok"."<br>");
-        else
-        dd("error, data is too short");
-        
+            print("Data length ok"."<br>");
+        else {
+            return redirect()->back()->with("error","The number of records in this file is unusually few. Aborting.");        
+            //dd("error, data is too short");
+        }
+
         //check number 2: is the first field of each numeric?
         $dataOK = $this->del_check2($markbookIDs);
         
         if ($dataOK)
-        print("Student numbers ok<br>");
-        else
-        dd("ERROR: non-numeric student number");
+            print("Student numbers ok<br>");
+        else {
+            //dd("ERROR: non-numeric student number");
+            return redirect()->back()->with("error","Some student numbers are non-numeric. Aborting.");        
+        }
         
         //check #3: fewer than 25% should be new students (student numbers that don't exist in this database)
         //        $dataOK = $this->del_check3($markbookIDs);
         if ($dataOK)
-        print("Fewer than 25% new students - ok<br>");
-        else
-        dd("More than 25% new records.");
+            print("Fewer than 25% new students - ok<br>");
+        else {
+            //dd("More than 25% new records.");
+            return redirect()->back()->with("error","More than 25% of this markbook file contains NEW students not in the database! Aborting.");        
+        }
         
         /************************* END OF MARKBOOK FILE CHECKS *************************/
         
@@ -133,13 +140,15 @@ class DatabaseController extends Controller
                     print(">>>".$idToTest . "<br>");
                 }
                 
+                //check #1: age - is he/she 21 or older?
+                if($this->getAge($student->dob) >= 21) {
+                    $yes21Delete[] = $studentNum;
+                    continue;
+                }
+
+                //The following checks are predicated on the student NOT being in the Markbook file
                 // if (array_key_exists($studentNum, $markbookIDs)) {
                 if (! in_array($idToTest, $markbookIDs)) {
-                    //check #1: age - is he/she 21 or older?
-                    if($this->getAge($student->dob) >= 21) {
-                        $yes21Delete[] = $studentNum;
-                        continue;
-                    }
                     
                     //check #2: do logs exist?
                     $dontDelete = $this->stu_check2($studentNum);
@@ -173,34 +182,41 @@ class DatabaseController extends Controller
                 
             }
             /*>>>> END LOOP THROUGH EACH STUDENT RECORD <<<<<<*/
-if (1 == 2) {
-            /* ############# BEGIN DELETING STUDENTS ############### */
-            //clear out the timetable for students (that are not getting deleted)
-            foreach($noDelete as $studentNum) {
-                $student = Student::where('studentID',$studentNum) ->first();   
-                $student->timetable = "";
-                //$student->save();
-            }
-            print("All timetables for questionable students have been reset<br>");
 
-            //Now delete all over 21:
-            // must also delete waitlist comments, next steps,
-            foreach($yes21Delete as $studentNum) {                
-                Log::where('studentID',$studentNum)->delete(); 
-                Waitlist::where('studentID',$studentNum)->delete(); 
-                Comment::where('studentID',$studentNum)->delete();  //this will also delete NextSteps since they are linked with foreign key
-                Student::where('studentID',$studentNum) ->delete();   
-            }
-            print("All students 21 and over have been deleted<br>");
+            // /* ############# BEGIN DELETING STUDENTS ############### */
+            // //clear out the timetable for students (that are not getting deleted)
+            // foreach($noDelete as $studentNum) {
+            //     $student = Student::where('studentID',$studentNum) ->first();   
+            //     $student->timetable = "";
+            //     //$student->save();
+            // }
+            // print("All timetables for questionable students have been reset<br>");
+
+            // //Now delete all students with no Markbook entry
+            // // must also delete waitlist comments, next steps,
+            // foreach($yesDelete as $studentNum) {                
+            //     Log::where('studentID',$studentNum)->delete(); 
+            //     Waitlist::where('studentID',$studentNum)->delete(); 
+            //     Comment::where('studentID',$studentNum)->delete();  //this will also delete NextSteps since they are linked with foreign key
+            //     Student::where('studentID',$studentNum) ->delete();   
+            // }
+            // print("All students missing from Markbook have been deleted<br>");
+
+            // //Now delete all over 21:
+            // // must also delete waitlist comments, next steps,
+            // foreach($yes21Delete as $studentNum) {                
+            //     Log::where('studentID',$studentNum)->delete(); 
+            //     Waitlist::where('studentID',$studentNum)->delete(); 
+            //     Comment::where('studentID',$studentNum)->delete();  //this will also delete NextSteps since they are linked with foreign key
+            //     Student::where('studentID',$studentNum) ->delete();   
+            // }
+            // print("All students 21 and over have been deleted<br>");
             /* ############# END DELETING STUDENTS ############### */
-}            
-            
             
             print("<br>end for now<br>");
+
             //Finally, print out the three lists in tabs on the results page.
-            dd($noDelete);
-
-
+            return view('admin.delGrads', compact('noDelete', 'yesDelete', 'yes21Delete'));
             
         }
         
