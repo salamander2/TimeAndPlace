@@ -85,7 +85,7 @@ Route::post('addUser', 'AdminController@createUser')->name('addUser');
 Route::post('delUser/{user}', 'AdminController@deleteUser');
 //Route::post('resetPWD/{id}', 'AdminController@resetPWD');
 Route::get('delGrads', 'DatabaseController@deleteGradView');
-//Route::post('delGrads', 'DatabaseController@deleteGradView');
+Route::post('delGrads', 'DatabaseController@deleteGrads');
 
 /*-----------------User Routes------------------*/
 Route::get('/changePassword','UserController@showChangePasswordForm');

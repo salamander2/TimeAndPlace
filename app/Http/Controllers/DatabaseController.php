@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use DateTime;
 use App\Log;
 use App\User;
 use App\Kiosk;
@@ -62,11 +63,10 @@ class DatabaseController extends Controller
         
         /******************************** DO TESTS TO VERIFY MARKBOOK INPUT FILE IS REASONABLE SURE TO BE SUITABLE *******************/
         //Check#1: are there a reasonable number of records (for a high school)?
-        //TODO : this should return an error to a Blade View
         $dataOK = $this->del_check1($data);
-        if ($dataOK)
-            print("Data length ok"."<br>");
-        else {
+        if ($dataOK) {
+            //print("Data length ok"."<br>");
+        } else {
             return redirect()->back()->with("error","The number of records in this file is unusually few. Aborting.");        
             //dd("error, data is too short");
         }
@@ -74,18 +74,18 @@ class DatabaseController extends Controller
         //check number 2: is the first field of each numeric?
         $dataOK = $this->del_check2($markbookIDs);
         
-        if ($dataOK)
-            print("Student numbers ok<br>");
-        else {
+        if ($dataOK){
+            //print("Student numbers ok<br>");
+        } else {
             //dd("ERROR: non-numeric student number");
             return redirect()->back()->with("error","Some student numbers are non-numeric. Aborting.");        
         }
         
         //check #3: fewer than 25% should be new students (student numbers that don't exist in this database)
         //        $dataOK = $this->del_check3($markbookIDs);
-        if ($dataOK)
-            print("Fewer than 25% new students - ok<br>");
-        else {
+        if ($dataOK) {
+            //print("Fewer than 25% new students - ok<br>");
+        } else {
             //dd("More than 25% new records.");
             return redirect()->back()->with("error","More than 25% of this markbook file contains NEW students not in the database! Aborting.");        
         }
@@ -183,40 +183,43 @@ class DatabaseController extends Controller
             }
             /*>>>> END LOOP THROUGH EACH STUDENT RECORD <<<<<<*/
 
-            // /* ############# BEGIN DELETING STUDENTS ############### */
-            // //clear out the timetable for students (that are not getting deleted)
-            // foreach($noDelete as $studentNum) {
-            //     $student = Student::where('studentID',$studentNum) ->first();   
-            //     $student->timetable = "";
-            //     //$student->save();
-            // }
-            // print("All timetables for questionable students have been reset<br>");
+            /* ############# BEGIN DELETING STUDENTS ############### */
+            //clear out the timetable for students (that are not getting deleted)
+            foreach($noDelete as $studentNum) {
+                $student = Student::where('studentID',$studentNum) ->first();   
+                $student->timetable = "";
+                //$student->save();
+            }
+            //print("All timetables for questionable students have been reset<br>");
 
-            // //Now delete all students with no Markbook entry
-            // // must also delete waitlist comments, next steps,
-            // foreach($yesDelete as $studentNum) {                
-            //     Log::where('studentID',$studentNum)->delete(); 
-            //     Waitlist::where('studentID',$studentNum)->delete(); 
-            //     Comment::where('studentID',$studentNum)->delete();  //this will also delete NextSteps since they are linked with foreign key
-            //     Student::where('studentID',$studentNum) ->delete();   
-            // }
-            // print("All students missing from Markbook have been deleted<br>");
+            //Now delete all students with no Markbook entry
+            // must also delete waitlist comments, next steps,
+            foreach($yesDelete as $studentNum) {                
+                Log::where('studentID',$studentNum)->delete(); 
+                Waitlist::where('studentID',$studentNum)->delete(); 
+                Comment::where('studentID',$studentNum)->delete();  //this will also delete NextSteps since they are linked with foreign key
+                Student::where('studentID',$studentNum) ->delete();   
+            }
+            //print("All students missing from Markbook have been deleted<br>");
 
-            // //Now delete all over 21:
-            // // must also delete waitlist comments, next steps,
-            // foreach($yes21Delete as $studentNum) {                
-            //     Log::where('studentID',$studentNum)->delete(); 
-            //     Waitlist::where('studentID',$studentNum)->delete(); 
-            //     Comment::where('studentID',$studentNum)->delete();  //this will also delete NextSteps since they are linked with foreign key
-            //     Student::where('studentID',$studentNum) ->delete();   
-            // }
-            // print("All students 21 and over have been deleted<br>");
+            //Now delete all over 21:
+            // must also delete waitlist comments, next steps,
+            foreach($yes21Delete as $studentNum) {                
+                Log::where('studentID',$studentNum)->delete(); 
+                Waitlist::where('studentID',$studentNum)->delete(); 
+                Comment::where('studentID',$studentNum)->delete();  //this will also delete NextSteps since they are linked with foreign key
+                Student::where('studentID',$studentNum) ->delete();   
+            }
+            //print("All students 21 and over have been deleted<br>");
             /* ############# END DELETING STUDENTS ############### */
             
-            print("<br>end for now<br>");
+            //print("<br>end for now<br>");
 
             //Finally, print out the three lists in tabs on the results page.
-            return view('admin.delGrads', compact('noDelete', 'yesDelete', 'yes21Delete'));
+            $studentsNoDelete = Student::whereIn('studentID', $noDelete)->get();
+            $studentsYesDelete = Student::whereIn('studentID', $yesDelete)->get();
+            $students21Delete = Student::whereIn('studentID', $yes21Delete)->get();
+            return view('admin.delGrads', compact('studentsNoDelete', 'studentsYesDelete', 'students21Delete'));
             
         }
         
@@ -245,13 +248,26 @@ class DatabaseController extends Controller
         }
         
         //check student for deletion: does he have any logs in public kiosks? 
-        //TODO: only check for logs since September of this year
+        //TRUE = don't delete
         function stu_check2($studentNum){
             //$logs = Log::where('studentID',$studentNum)->get();
             //$logs = Log::where('studentID',$studentNum)->with('kiosk')->where('kiosk.publicViewable',1)->get();
+
             $logs = Log::where('studentID',$studentNum)->with('kiosk')->get();  //->where('kiosk.publicViewable',1)->get();
             if (count($logs) > 0) {
                 foreach($logs as $log) {
+                    $logdate = $log->created_at;
+                    $year = date('Y');
+                    $month = date('m');
+                    if ($month < 7) { // Jan-Jun
+                        $year--; //go to previous year's Sept 1 date.
+                    }
+                    $dateObj   = DateTime::createFromFormat('Y-m-d',$year."-09-01");
+                    if ($logdate < $dateObj) {
+                        // print($logdate."<br>");
+                        continue;
+                    }
+                    //dd($dateObj);
                     if ($log->kiosk->publicViewable == 1 && $log->kiosk->kioskType == 0) {
                         return true; // true = don't delete
                     }
