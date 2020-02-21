@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Storage;
 class Student extends Model
 {
     protected $connection = 'mysql2';
-    protected $primaryKey = 'studentId';
+    protected $primaryKey = 'studentID';
     public $timestamps = false;
+    protected $fillable = ['timetable'];
 
     public function kiosk() {
         return $this->belongsToMany(Kiosk::class);

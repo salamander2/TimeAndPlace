@@ -137,7 +137,7 @@ class DatabaseController extends Controller
                 $idToTest = $studentNum;
                 if ($stl < 9) {
                     $idToTest = str_repeat("0", 9-$stl).$idToTest;
-                    print(">>>".$idToTest . "<br>");
+                    //print(">>>".$idToTest . "<br>");
                 }
                 
                 //check #1: age - is he/she 21 or older?
@@ -169,7 +169,7 @@ class DatabaseController extends Controller
                     //check #4: sssDB comments from this year
                     $dontDelete = $this->stu_check4($studentNum);
                     if ($dontDelete) {
-                        print("student ".$studentNum." has sssDB comment entries");
+                        //print("student ".$studentNum." has sssDB comment entries");
                         $noDelete[] = $studentNum;
                         continue;
                     }
@@ -187,8 +187,8 @@ class DatabaseController extends Controller
             //clear out the timetable for students (that are not getting deleted)
             foreach($noDelete as $studentNum) {
                 $student = Student::where('studentID',$studentNum) ->first();   
-                $student->timetable = "";
-                //$student->save();
+                $student->timetable = '';
+                $student->save();
             }
             //print("All timetables for questionable students have been reset<br>");
 
@@ -292,7 +292,7 @@ class DatabaseController extends Controller
             $logs = Comment::where('studentID',$studentNum)->get();
             
             if (count($logs) > 0) {
-                dd($logs);
+                //dd($logs);
                 return true; // true = don't delete
             }
             return false;
