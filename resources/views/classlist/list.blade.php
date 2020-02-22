@@ -39,7 +39,9 @@ function validateData() {
     <span class="text-secondary">e.g. ENG2D1-01  or ENG2D101 (or lower case)</span>    
     <div class="row my-1" style="border-bottom:solid black 1px;"> </div>
 
-        To see a list of all courses this semester, click on the <span class="btn btn-primary"><i class="fa fa-th-large"></i></span> in the top right.
+        To see a list of all courses this semester, click on the <span class="btn btn-primary"><i class="fa fa-th-large"></i></span>
+         in the top right of any of these webpages.<br>
+        There's some other useful information in the right hand sidebar that shows up
    </div> <!-- end of card body -->
     </div> <!-- end of card -->
 </div>    

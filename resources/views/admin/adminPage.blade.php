@@ -5,13 +5,14 @@
         Database Admininstration Page
     </h1>
 
+{{-- FIRST ROW --}}
     <div class="row">
           <div class="col-md-3 col-sm-6 col-12">
             <a href="userMaint" class="nav-link">
             <div class="info-box bg-warning">
               <span class="info-box-icon"><i class="fa fa-bezier-curve"></i></span>
               <div class="info-box-content">
-                <h3 class="info-box-text">User<br>Maintenance</h3>
+                <h4 class="info-box-text">User<br>Maintenance</h4>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -20,11 +21,11 @@
           </div> <!-- /.col -->
 
           <div class="col-md-3 col-sm-6 col-12">
-            <a href="" class="nav-link">
+            <a href="/kiosks/create" class="nav-link">
             <div class="info-box bg-info">
               <span class="info-box-icon"><i class="fas fa-school"></i></span>
               <div class="info-box-content">
-                <h3 class="info-box-text">Create a<br>new Kiosk</h3>
+                <h4 class="info-box-text">Create a<br>new Kiosk</h4>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -33,11 +34,11 @@
           </div>
           <!-- /.col -->
           <div class="col-md-3 col-sm-6 col-12">
-            <a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
+            <a href="{{$phpmyadmin}}" class="nav-link" target="_blank">
             <div class="info-box bg-success">
               <span class="info-box-icon"><i class="fas fa-indent"></i></span>
               <div class="info-box-content">
-                <h3 class="info-box-text">Go to<br>phpMyAdmin</h3>
+                <h4 class="info-box-text">Go to<br>phpMyAdmin</h4>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -48,12 +49,12 @@
 
 
           <div class="col-md-3 col-sm-6 col-12">
-            <a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
+            <a href="/autosignout" onclick="return confirm('Are you sure that you want to do this?')" class="nav-link">
             <div class="info-box bg-danger">
               <span class="info-box-icon"><i class="fas fa-comments"></i></span>
 
               <div class="info-box-content">
-                <h3 class="info-box-text">Auto signout<br>everyone now</h3>
+                <h4 class="info-box-text">Auto signout<br>everyone now</h4>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -64,13 +65,15 @@
         </div>
         <!-- /.row -->
 
+{{-- SECOND ROW --}}
     <div class="row">
           <div class="col-md-3 col-sm-6 col-12">
             <a href="" class="nav-link">
             <div class="info-box btn btn-outline-secondary text-dark">
               <span class="info-box-icon"><i class="fa fa-book"></i></span>
               <div class="info-box-content">
-                <h3 class="info-box-text">Load<br>Markbook</h3>
+                <h4 class="info-box-text">Load<br>Markbook</h4>
+                <p>Not working yet</p>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -79,11 +82,11 @@
           </div> <!-- /.col -->
 
           <div class="col-md-3 col-sm-6 col-12">
-
+            <a class="nav-link"> {{-- needed for correct spacing on page --}}
             <div class="card collapsed-card card-warning">
-              <div class="card-header">
-                  <h3 class="card-title">Load new<br>teacher schedule</h3>
-
+              <div class="card-header border border-warning">
+                  <h4>Load new<br>teacher schedule</h4>
+                <p>Not working yet</p>
                   <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fas fa-plus"></i></button>
                   </div><!-- /.card-tools -->
@@ -91,7 +94,7 @@
 
               <div class="card-body">
                  The format for this file needs to be ... ... ...<br>
-                 `:warning
+                 warning
                 <br>
                 <button class="btn btn-danger">Go</button>
               </div> <!-- /.card-body -->
@@ -107,27 +110,28 @@
             <!-- /.info-box -->
             </a>
           --}}
+          </a>
           </div> <!-- /.col -->
 
           <div class="col-md-3 col-sm-6 col-12">
-             <a href="delGrads">
+             <a class="nav-link" href="delGrads">
             <div class="info-box btn btn-danger text-dark">
               <span class="info-box-icon"><i class="fas fa-indent"></i></span><br>
               <div class="info-box-content">
-                <h3 class="info-box-text">delete all<br>old students</h3>
+                <h4 class="info-box-text">Delete all<br>old students</h4>
               </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
               </a>
-
           </div><!-- /.col -->
 
 
           <div class="col-md-3 col-sm-6 col-12">
-            <a href="http://localhost:4080/phpmyadmin" class="nav-link">
+            <a href="{{$phpmyadmin}}" class="nav-link">
             <div class="info-box bg-secondary">
 
               <div class="info-box-content">
-                <h3 class="info-box-text">set assembly<br>day schedule</h3>
+                <h4 class="info-box-text">Set assembly<br>day schedule</h4>
+                <p>Not working yet</p>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -139,58 +143,6 @@
         <!-- /.row -->
 
 
-    <div class="row">
-          <div class="col-md-3 col-sm-6 col-12">
-            <a href="" class="nav-link">
-            <div class="info-box bg-warning">
-              <span class="info-box-icon"><i class="fa fa-bezier-curve"></i></span>
-              <div class="info-box-content">
-                <h3 class="info-box-text">user<br>maintenance</h3>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-            </a>
-          </div> <!-- /.col -->
-
-          <div class="col-md-3 col-sm-6 col-12">
-            <a href="" class="nav-link">
-            <div class="info-box btn btn-outline-info">
-              <span class="info-box-icon"><i class="fas fa-school"></i></span>
-              <div class="info-box-content">
-                <h3 class="info-box-text">create a<br>new kiosk</h3>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-            </a>
-          </div>
-          <!-- /.col -->
-          <div class="col-md-3 col-sm-6 col-12">
-            <a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
-            <div class="info-box bg-success">
-              <span class="info-box-icon"><i class="fas fa-indent"></i></span>
-              <div class="info-box-content">
-                <h3 class="info-box-text">go to<br>phpmyadmin</h3>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-            </a>
-          </div>
-          <!-- /.col -->
-
-
-          <div class="col-md-3 col-sm-6 col-12">
-            <a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
-            <div class="info-box bg-danger">
-              <span class="info-box-icon"><i class="fas fa-comments"></i></span>
-
-              <div class="info-box-content">
-                <h3 class="info-box-text">auto signout<br>everyone now</h3>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
             <!-- /.info-box -->
             </a>
           </div>
@@ -222,6 +174,8 @@
           </div>
           <!-- /.col -->
 --}}
+
+{{--
     <div class="col-lg-12">
         <div class="card card-primary">
             <div class="card-body">
@@ -231,6 +185,7 @@
                   <label for="fileupload"> select markbook file to upload</label>
                   <input type="submit" value="submit">
                 </form>
+--}}
 
 {{--
 accessing via javascript:
