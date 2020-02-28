@@ -27,15 +27,19 @@ class StudentController extends Controller
 		print("<h2>Students with no photo</h2>");
 		print("<table>");
 		print("<tr><td></td><td><b>Age</b></td></tr>");
+		$n=0;
 		foreach ($students as $student) {
 			$photo = $student->getPhotoURL($student->studentID);
 			if (strstr($photo,'blank')) {
-			   $age = $this->getAge($student->dob);
-			   printf("<tr><td>%s . . . %s, %s</td><td>&nbsp;&nbsp;%s&nbsp;</td><td>&nbsp;&nbsp;&nbsp;%s</td></tr>", $student->studentID, $student->lastname, $student->firstname, $age,$student->timetable);
+			   if(strlen($student->timetable) > 0 ) {
+				   $n++;
+				   $age = $this->getAge($student->dob);
+				   printf("<tr><td>%s . . . %s, %s</td><td>&nbsp;&nbsp;%s&nbsp;</td><td>&nbsp;&nbsp;&nbsp;%s</td></tr>", $student->studentID, $student->lastname, $student->firstname, $age,$student->timetable);
+			   }
 			}           
 		}  
 	print("</table>");
-	print("<br>". count($students) . " students");
+	print("<br>". $n . " students");
 	}
 
     /**
