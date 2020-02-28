@@ -155,6 +155,7 @@ Route::get('/autosignout/{kioskID}','LogController@autosignoutKiosk');
 
 /*----------------Student Routes-------------*/
 Route::get('/allstudents', 'StudentController@index');
+Route::get('/allstudentsNoPhotos', 'StudentController@indexNoPhoto');
 Route::get('/students/{id}', 'StudentController@show');
 Route::get('/studentsJSON/{id}', 'StudentController@showJSON');
 Route::get('/allcourses', 'ClassListController@showCourses');

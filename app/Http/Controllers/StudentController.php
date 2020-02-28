@@ -20,6 +20,28 @@ class StudentController extends Controller
      * Lists all the students with their ids and login ids.
      * As plain text.
      */
+	public function indexNoPhoto()
+	{
+		$students = Student::all()->sortBy('lastname');
+		print("<!DOCTYPE HTML><HTML><BODY>");
+		print("<h2>Students with no photo</h2>");
+		print("<table>");
+		print("<tr><td></td><td><b>Age</b></td></tr>");
+		foreach ($students as $student) {
+			$photo = $student->getPhotoURL($student->studentID);
+			if (strstr($photo,'blank')) {
+			   $age = $this->getAge($student->dob);
+			   printf("<tr><td>%s . . . %s, %s</td><td>&nbsp;&nbsp;%s&nbsp;</td><td>&nbsp;&nbsp;&nbsp;%s</td></tr>", $student->studentID, $student->lastname, $student->firstname, $age,$student->timetable);
+			}           
+		}  
+	print("</table>");
+	print("<br>". count($students) . " students");
+	}
+
+    /**
+     * Lists all the students with their ids and login ids.
+     * As plain text.
+     */
     public function index()
     {
         $students = Student::all()->sortBy('lastname');
