@@ -31,19 +31,19 @@
 <div class="row">
 	<div class="col-12">
 		<!-- Custom Tabs -->
-		<div class="card">
-			<div class="card-header d-flex p-0">
-				<ul class="nav nav-pills p-2">
-					<li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Overview</a></li>
-					<li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">User Roles</a></li>
-					<li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Terminal Screen</a></li>
-					<li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab">Kiosk Settings</a></li>
-					<li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab">Reports</a></li>
+		<div class="card Xcard-primary ">
+			<div class="card-header d-flex p-0 bg-dark">
+				<ul class="nav nav-pills pt-2 pl-2 pr-2">
+					<li class="nav-item"><a class="mx-1 nav-link active" href="#tab_1" data-toggle="tab">Overview</a></li>
+					<li class="nav-item"><a class="mx-1 nav-link" href="#tab_2" data-toggle="tab">User Roles</a></li>
+					<li class="nav-item"><a class="mx-1 nav-link" href="#tab_3" data-toggle="tab">Terminal Screen</a></li>
+					<li class="nav-item"><a class="mx-1 nav-link" href="#tab_4" data-toggle="tab">Kiosk Settings</a></li>
+					<li class="nav-item"><a class="mx-1 nav-link" href="#tab_5" data-toggle="tab">Reports</a></li>
 				</ul>
 			</div><!-- /.card-header -->
 			<div class="card-body">
 				<div class="tab-content">
-
+					{{--TAB 1 --}}
 					<div class="tab-pane active" id="tab_1">
 
 						<div class="card card-warning">

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
 use App\User;
 use App\Kiosk;
+use App\Student;
+use App\Comment;
+use App\Waitlist;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -41,9 +45,16 @@ class AdminController extends Controller
     {       
         $this->middleware('auth');
         $this->middleware('admin');
-		
     }
 
+    /**
+     * Display a listing of all users.
+     */
+    public function adminPage()
+    {
+        $phpmyadmin = env('PHPMYADMIN');
+        return view('admin.adminPage', compact('phpmyadmin'));
+    }
     /***************************** USER HANDLING  **************************************/
 
     /**
@@ -128,7 +139,6 @@ class AdminController extends Controller
         return redirect('/userMaint')->with("error","User \"$name\" has been deleted");
         //return response()->json('Deleted',200);
     }
-
 
     /* moved to AjaxController
     public function resetPWD(String $id) 

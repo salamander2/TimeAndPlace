@@ -11,11 +11,19 @@ use Illuminate\Support\Facades\Storage;
 class Student extends Model
 {
     protected $connection = 'mysql2';
-    protected $primaryKey = 'studentId';
+    protected $primaryKey = 'studentID';
+    public $timestamps = false;
+    protected $fillable = ['timetable'];
+
+    public function kiosk() {
+        return $this->belongsToMany(Kiosk::class);
+    }
 
     public function kiosks()
     {
+        //FIXME: why is this here????
         dd("Student.php : do you mean the logs table or the student_signed_in table?");
+
         // This line works, until I enable foreign keys
         // return $this->belongsToMany(Kiosk::class,'mysql.kiosks')->withPivot('status')->withTimestamps();
         return $this->belongsToMany(Kiosk::class,'mysql.kiosks')->withPivot('status_code')->withTimestamps();

@@ -98,6 +98,7 @@
 		@if (auth()->user()->isAdministrator() || auth()->user()->username == 'secretary')
 		<div class="row my-2">
 			<div class="col-md-3"><a class="my-1 btn btn-info btn-block elevation-1" href="/lockers/listing"> Locker Reports </a></div>
+			<div class="col-md my-1"> <h5>- for secretaries</h5></div>
 		</div>
 		@else
 		<div class="row my-2">
