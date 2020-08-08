@@ -11,7 +11,8 @@ class VerifyCsrfToken extends Middleware
      *
      * @var bool
      */
-    protected $addHttpCookie = true;
+    //This was in Laravel 5.7. It's still in 7.x, but is no longer set.
+    //protected $addHttpCookie = true;
 
     /**
      * The URIs that should be excluded from CSRF verification.

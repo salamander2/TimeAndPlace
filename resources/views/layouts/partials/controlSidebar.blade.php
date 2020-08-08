@@ -18,17 +18,37 @@
     <div class="p-1 text-warning">
       <h5>Latest updates:</h5>
       <p>Markbook: <code>  
-      <?php echo file_get_contents(public_path('storage/photos/markbook.date')); ?>
+
+      <?php 
+	try {
+	$content =  file_get_contents(public_path('storage/photos/markbook.date'));
+	    if ($content === false) {
+		// Handle the error
+	    }
+	} catch (Exception $e) {
+	    // Handle exception
+	}
+	?>
+
       </code><br>
 	    Teacher Schedule: <code>
-      <?php echo file_get_contents(public_path('storage/photos/timetable.date')); ?>
+      <?php 
+	try {
+	$content =  file_get_contents(public_path('storage/photos/timetable.date'));
+	    if ($content === false) {
+		// Handle the error
+	    }
+	} catch (Exception $e) {
+	    // Handle exception
+	}
+	?>
+
       </code></p>
     </div>
      
     <div class="card-body">
-       <a href="/allstudents" class="my-2 btn btn-outline-info" target="_blank">List all Students</a>
-       <a href="/allstudentsNoPhotos" class="my-2 btn btn-outline-info" target="_blank">Students with no photos</a>
-       <a href="/allcourses" class="my-2 btn btn-outline-info" target="_blank">List Courses</a>
+	    <a href="/allstudents" class="my-2 btn btn-outline-info" target="_blank">List all Students</a>
+      <a href="/allcourses" class="my-2 btn btn-outline-info" target="_blank">List Courses</a>
       {{-- <a href="/testing/13" class="my-2 btn btn-outline-info">Testing Laravel</a> --}}
     </div>
     

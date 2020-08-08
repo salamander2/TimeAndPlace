@@ -206,7 +206,7 @@ class TerminalController extends Controller
     //This is the same as the above method, but it needs to return a different child view since clicking on a student here does a different thing.
     //called from student search bar on top nav bar.
     public function listStudents2(String $q) {
-        $students = Student::where('firstname','like', '%'.$q.'%')->orWhere('lastname','like', '%'.$q.'%')->orWhere('studentID','like','%'.$q.'%')->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->get();        
+        $students = Student::where('firstname','like', '%'.$q.'%')->orWhere('lastname','like', '%'.$q.'%')->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->get();        
         return view('child.studentListSearch', compact('students'));
     }
 

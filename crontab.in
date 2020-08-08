@@ -1,2 +1,0 @@
-* * * * * cd /home/library/TimeAndPlace && php artisan schedule:run >> /dev/null 2>&1
-#* * * * * cd /home/library/TimeAndPlace && php artisan schedule:run 
