@@ -37,6 +37,15 @@
     .login-card-body {
 	background-color:#EEE;
     }
+    .brand-image {
+        float: left;
+        line-height: 0.8;
+        max-height: 34px;
+        width: auto;
+        margin-left: 0.8rem;
+        margin-right: 0.5rem;
+        margin-top: -3px;
+    }
     
 </style>
 {{--  
