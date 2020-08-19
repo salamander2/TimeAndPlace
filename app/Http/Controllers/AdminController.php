@@ -123,6 +123,9 @@ class AdminController extends Controller
      */
     public function deleteUser(User $user)
     {
+	if ($user->isAdministrator()) {
+		return redirect('/userMaint')->with("error","Cannot delete administrator");
+	}
         $name = $user->fullname;
         $user->delete();
         return redirect('/userMaint')->with("error","User \"$name\" has been deleted");

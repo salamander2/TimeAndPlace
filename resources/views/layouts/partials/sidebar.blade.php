@@ -33,7 +33,7 @@
                   <li class="nav-item"><a href="/kiosks/create" class="nav-link">
                     <i class="nav-icon fas fa-school text-success"></i>
                     <p>Create a new Kisok</p></a></li>
-                    <li class="nav-item"><a href="http://localhost:4080/phpmyadmin" target="_blank" class="nav-link">
+                    <li class="nav-item"><a href="{{ env('PHPMYADMIN') }}" target="_blank" class="nav-link">
                       <i class="nav-icon fas fa-indent text-primary"></i><p>Go to phpMyadmin</p></a></li>
                 
             <li class="nav-item"><a href="/unknown" class="nav-link alert border-white">Set Assembly Day Schedule</a></li>

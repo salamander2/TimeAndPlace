@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Kiosk;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -91,7 +92,7 @@ class KioskController extends Controller
             'room' => ['required', 'string', 'max:20']            
         ]);
 
-        $secretURL = Hash::make(str_random(8));
+        $secretURL = Hash::make(Str::random(8));
         //$secretURL = preg_replace("/[\/\#\?\.:%]/", "", $secretURL);
         $secretURL = preg_replace("/[^\$a-zA-Z0-9]/", "", $secretURL); //only allow Alphanumeric and $
         Kiosk::create([

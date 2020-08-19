@@ -46,7 +46,12 @@
         margin-right: 0.5rem;
         margin-top: -3px;
     }
-    
+[class*=sidebar-dark-] .sidebar a {
+  color: white;
+}
+    .nav-pills .nav-link{
+       color:#fff;
+    }    
 </style>
 {{--  
 <!-- Bootstrap 3.3.7 -->

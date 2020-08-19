@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TestController extends Controller
 {
@@ -17,7 +18,7 @@ class TestController extends Controller
     public function main(Request $request) {
     
         // The hash has to NOT have any of the following characters in it or else it won't work as a URL: . / # : ?
-        $secretURL = Hash::make(str_random(8));
+        $secretURL = Hash::make(Str::random(8));
         
         //$secretURL = preg_replace("/[\/\#\?\.:%]/", "", $secretURL);
         $secretURL = preg_replace("/[^\$a-zA-Z0-9]/", "", $secretURL);

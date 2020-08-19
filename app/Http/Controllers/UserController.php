@@ -34,7 +34,13 @@ class UserController extends Controller
 	}
 
 	public function changePassword(Request $request){
-		if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
+		$user = Auth::user();
+
+		if ($user-> isDefaultUser) {
+			 return view('user.changePassword')->with("error","Cannot change the password of default user");
+		}
+
+		if (!(Hash::check($request->get('current-password'), $user->password))) {
 			// The password does not match
 			return redirect()->back()->with("error","Your current password does not match with the password you provided. Please try again.");
 		}
@@ -46,8 +52,8 @@ class UserController extends Controller
 				'current-password' => 'required',
 				'new-password' => 'required|string|min:6|confirmed',
 		]);
+		
 		//Change Password
-		$user = Auth::user();
 		$user->password = bcrypt($request->get('new-password'));
 		$user->defaultPWD = 0;
 		$user->save();
