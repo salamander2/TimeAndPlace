@@ -19,7 +19,7 @@ class UserTableSeeder extends Seeder
 		'isAdmin'  => 1,
 		'viewAll'  => 1,
                 'defaultPWD' => 1,
-                'isDefaultUser' => 1
+                'isDefaultUser' => 0
 	]);
     }
 

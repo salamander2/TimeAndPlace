@@ -181,7 +181,7 @@
 						<tr>
 							<td style="color:black;">{{ $user->username }}</td>
 							<td style="color:black;">{{ $user->fullname }}</td>
-
+							<?php if ($user->isAdmin) { echo '<td><button class="btn" style="visibility:hidden">---</button></td>';continue;} ?>
 							<td>&nbsp;&nbsp;<button type="button" name="resetPWD" class="btn btn-secondary"
 								onclick="if(confirm('Please confirm password reset ')) resetPWD({{ $user->id }});">Reset Password</button>
 							</td>

@@ -128,7 +128,7 @@ class AdminController extends Controller
 	}
         $name = $user->fullname;
         $user->delete();
-        return redirect('/userMaint')->with("error","User \"$name\" has been deleted");
+        return redirect('/userMaint')->with("error","User ".$name." has been deleted");
         //return response()->json('Deleted',200);
     }
 
