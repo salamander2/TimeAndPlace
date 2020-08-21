@@ -4,8 +4,8 @@
      1 = attendance only // meetings
      2 = events: on-time/late/absent
  --}}
+
 @extends('layouts.app') 
-<script src="{{ asset('/js/jquery.min.js') }}"></script>
 @section('content')
 
 <div class="container">
@@ -39,10 +39,10 @@
 
     <div class="clearfix">
             @if($kiosk->kioskType==0)
-                <a class="my-1 btn btn-primary elevation-3" <a href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
+                <a class="my-1 btn btn-primary elevation-3" href="{{'/logs/byKiosk/'.$kiosk->id}}"> Show logs </a>
             @endif
             @if($kiosk->kioskType==1)
-                <a class="my-1 btn btn-light btn-outline-primary elevation-3" <a href="{{'/reports/attend/'.$kiosk->id}}">Attendance Reports </a>
+                <a class="my-1 btn btn-light btn-outline-primary elevation-3" href="{{'/reports/attend/'.$kiosk->id}}">Attendance Reports </a>
             @endif
             @if($kiosk->kioskType == 2)
             {{--  <div class="btn btn-outline-secondary elevation-3">  --}}
@@ -70,28 +70,33 @@
 </div>
 @endsection
 
+@push('scripts')
 <script>
         $(document).on('submit', '[id^=formDelete]', function (e) {
             e.preventDefault();
             var data = $(this).serialize();
-            swal({
-                title: "Confirm Deletion of Kiosk {{ $kiosk->name }}",
-                text: "Please confirm that you want to delete this kiosk.",                
-                className: "bg-warning",
-                dangerMode:true,
-                buttons:true,                     
-                closeOnEsc: true,
-                closeOnClickOutside: false
-            }).then((confirmed) => {
-                if (confirmed) {               
+
+	  Swal.fire({
+              title: "Confirm Deletion of Kiosk {{ $kiosk -> name }}",
+              text: "Please confirm that you want to delete this kiosk.",
+              customClass: {popup: "bg-warning"},
+		  icon: 'error',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Yes, delete it!'
+		}).then((confirmed) => {
+                if (confirmed.value) {               
                     formDelete.submit();
                     return true;
                 } else {                
                     return false;
                 }
-            });
+		});
+
             return false;
           });
 </script>
+@endpush
 
-<script src="{{ asset('/js/sweetalert.min.js') }}"></script>
+{{-- <script src="{{ asset('/js/sweetalert.min.js') }}"></script> --}}

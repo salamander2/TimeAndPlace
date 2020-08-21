@@ -158,10 +158,10 @@ function validateData() {
 	</div>
 
 	<div class="card collapsed-card">
-    <div class="card-header bg-secondary" data-widget="collapse">
+    <div class="card-header bg-secondary" data-card-widget="collapse">
         <div class="card-title">Locker Ranges</div>
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
         </div>
     </div>
 	<div class="card-body">

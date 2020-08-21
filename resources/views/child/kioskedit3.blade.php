@@ -50,10 +50,10 @@
 {{--  @endpush  --}}
 
 <div class="card card-dark collapsed-card">
-    <div class="card-header" data-widget="collapse">
+    <div class="card-header" data-card-widget="collapse">
         <h3 class="card-title">Kiosk schedule</h3>
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" xxdata-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
         </div>
     </div>
     <div class="card-body">

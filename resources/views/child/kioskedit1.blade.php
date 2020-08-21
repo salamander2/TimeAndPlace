@@ -1,9 +1,9 @@
 <div class="card card-dark collapsed-card">
-    <div class="card-header" data-widget="collapse">
+    <div class="card-header" data-card-widget="collapse">
         {{-- KIOSK SETTINGS : top part of Kiosk Edit page --}}
         <h3 class="card-title">Kiosk Settings</h3>
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" xxxdata-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-arrows-alt-v"></i></button>
         </div>
     </div><!-- /.card-header -->
     <div class="card-body">

@@ -50,7 +50,7 @@
 							<div class="card-header">
 								<h4>Terminology</h4>
 								<div class="card-tools">
-									<button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+									<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i></button>
 								</div>
 							</div>
 							<div class="card-body">
@@ -68,7 +68,7 @@
 							<div class="card-header">
 								<h4>Purpose</h4>
 								<div class="card-tools">
-									<button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+									<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i></button>
 								</div>
 							</div>
 
