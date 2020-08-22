@@ -218,6 +218,9 @@ Route::post('/lockers/setStatus/{locker}', 'LockerController@setStatus'); //from
 Route::get('/lockers/listing', 'LockerController@listing'); //from main (reports button)
 Route::post('/lockers/massAssign', 'LockerController@massAssign'); //from listing
 
+/*---------------- API Routes-----------------*/
+Route::get('/API/listKiosks', 'APIController@listKiosks');
+Route::get('/API/inKiosk/{kiosk}', 'APIController@inKiosk');
 
 /*---------------- Testing Routes-----------------*/
 Route::get('/testing', 'TestController@main');
