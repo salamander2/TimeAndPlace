@@ -35,6 +35,7 @@ class TerminalController extends Controller
 	That's what the TerminalLockout middleware checks.  */
     public function launch(Request $request, Kiosk $kiosk)
     {
+	//TODO: fix! You cannot refresh the terminal page. It goes to a login screen
         // if (Auth::check()) {
         //     $request->session()->put('lockout', true);
         //     Auth::logout();
@@ -55,7 +56,6 @@ class TerminalController extends Controller
     */
     public function launchViaToken(Request $request, String $token)
     {
-	//dd(url()->full());
         $kiosk = Kiosk::where('secretURL', $token)->first();
         if ($kiosk) {
            $request->session()->put('lockout', true);  
@@ -65,7 +65,7 @@ class TerminalController extends Controller
             }  
            return view('terminal', compact('kiosk'));
         } else {
-		    dd("launch via token error");
+	    dd("launch via token error");
 	//      return redirect('/login');
         }
     }

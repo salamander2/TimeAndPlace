@@ -6,10 +6,10 @@
 
     @stack('styles')
 </head>
-<body class="hold-transition login-page">
+
         
           
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="login-page"> 
     
     <div class="login-box bg-primary border border-dark rounded">
         <div class="login-logo">
@@ -86,11 +86,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</section>
-</div>
-</div>
 
 <!-- Scripts -->
 @stack('scripts')

@@ -10,13 +10,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}"> {{--
-    <link rel="stylesheet" href="{{ asset('/vendor/css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/sweetalert/sweetalert.min.css') }}"> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('/js/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>
     <link href="{{ asset('css/terminal.css') }}" rel="stylesheet">
+    <script src="{{ mix('js/app.js') }}" ></script>
 
     <title>Event Login Terminal</title>
 
@@ -53,16 +50,14 @@
         }
 
         function getPassword() {
-            swal({
+            Swal.fire({
                 title: "Enter teacher password",
                 text: "in order to login students by name or exit the Terminal",
                 icon: "warning",  
-                content: {                                
-                    element: "input",
-                    attributes: {
-                    placeholder: "password ...",
-                    type: "password",
-                    }
+                input: "password",
+		inputAttributes: {
+		    'data-lpignore': true
+		}
                 },                
                 }).then((password) => {
                    // swal(`The returned value is: ${password}`);

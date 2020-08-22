@@ -99,7 +99,7 @@ Route::get(   '/kiosks/{kiosk}/edit', 'KioskController@edit')->name('editKiosk')
 Route::get(   '/kiosks/{kiosk}/showORedit', 
     function($kiosk){        
         $kioskObj=App\Kiosk::find($kiosk);         
-        if ( Auth::user()->isKioskAdmin($kioskObj) ) {
+        if (Auth::check() && Auth::user()->isKioskAdmin($kioskObj) ) {
             //return redirect()->action('KioskController@edit',[$kiosk]);
             return redirect()->route('editKiosk',[$kiosk]);
         } else {            

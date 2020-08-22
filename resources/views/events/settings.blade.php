@@ -94,11 +94,11 @@ function addStudentAJAX(){
                 SWerrormsg("This student number does not exist");
             }
             else if(msg.status === "duplicate"){
-                swal({
+                Swal.fire({
                 title: "Duplicate Entry",
                 icon: "warning",
                 text: "This student is already here",               
- 		        timer:1500,
+ 		timer:1500,
                 });
             }
         }
@@ -108,7 +108,7 @@ function addStudentAJAX(){
 
 function SWerrormsg(str) {
     if (str.length == 0) str = "The student was not found or there was an unexpected database error!"
-    swal({
+    Swal.fire({
         title: "ERROR!",
         icon: "error",
         text: str,               

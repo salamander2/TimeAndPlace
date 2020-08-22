@@ -9,14 +9,11 @@
 <script>
 	function getCourseCode() {
 
-		swal({
+		Swal.fire({
 			title: "Enter courseCode",
 			text: "(course code with section)",
-			//icon: "info",  
-			content: {                                
-				element: "input",
-				attributes: {
-				}
+			icon: "info",  
+			input: "text",
 			},                
 			}).then((coursecode) => {
 				coursecode = coursecode.toUpperCase().trim();
@@ -51,7 +48,7 @@
 	}
 	function SWerrormsg(str) {
 		if (str.length == 0) str = "There was an unexpected database error!"
-		swal({
+		Swal.fire({
 			title: "ERROR!",
 			icon: "error",
 			text: str,               

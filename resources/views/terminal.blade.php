@@ -1,18 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}"> {{--
-    <link rel="stylesheet" href="{{ asset('/vendor/css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/sweetalert/sweetalert.min.css') }}"> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('/js/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>
     <link href="{{ asset('css/terminal.css') }}" rel="stylesheet">
+    <script src="{{ mix('js/app.js') }}" ></script>
 
     <title>Checkin/out Terminal</title>
+
     <style>
     .swalImg img{
         border: solid 6px #333;
@@ -21,6 +19,7 @@
         height:200px
     }
     </style>
+
     {{-- script to detect if student name is being typed in, and resetTerminal upon ESC key press --}}
     <script type="text/javascript">
         var overlayOn = false;
@@ -43,21 +42,19 @@
             document.getElementById("inputName").focus();
             document.getElementById("inputName").value = str;
         }
+
         function getPassword() {
-            swal({
+            Swal.fire({
                 title: "Enter teacher password",
                 text: "in order to login students by name or exit the Terminal",
                 icon: "warning",  
-                content: {                                
-                    element: "input",
-                    attributes: {
-                    placeholder: "password ...",
-                    type: "password",
-                    }
-                },                
+		input: 'password',
+		inputAttributes: {
+		    maxlength: 20,
+		    autocapitalize: 'off',
+		    autocorrect: 'off',
+		    },
                 }).then((password) => {
-                   // swal(`The returned value is: ${password}`);
-                   // pwd = {{ Hash::make('password') }}
 
                     $.ajax({
                         headers: {
@@ -111,53 +108,6 @@
         }
     </script>
 
-
-    {{-- Script to load student info. JQUERY / AJAX was not working but now it is.
-        However, I already rewrote this whole thing. --}}
-    <script type="text/javascript">
-    /*
-        $(document).ready(function () {
-            $('#buttonIO').click(function (e) {
-                //if there are any hyphens, remove them.              
-                alert(inputvalue);
-                $("#inputID").val('');
-                $('#inputID').focus();
-
-                jQuery.post('/terminals/1/toggleStudent/333444555');
-                
-                alert('X');
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "POST",
-                    async: true,
-                    url: '/terminals/{{$kiosk->id}}/toggleStudent/' + inputvalue,
-                    dataType: "json",
-                    contentType: "application/json",
-                    success: function (msg) {
-                        alert('success');
-                        swal(url);
-                        if(msg.status === "attached"){
-                            signin(msg.student);
-                        }
-                        else if(msg.status === "detached"){
-                            signout(msg.student);
-                        }
-                        else{
-                            errormsg();
-                        }
-                    },
-                    error: function (err) {
-                        alert('no success');
-                        console.log(err);
-                        errormsg();
-                    }
-                });
-            });
-        });
-    */
-    </script>
 
     {{-- Script to test if JQuery is working: it will hide the H1 that you click on --}}
     <script>
@@ -277,12 +227,15 @@
     <script>
         function SWsignin(student, photoURL) {
             //resetTerminal();                         
-            swal({
+            Swal.fire({
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed into {!!$kiosk->name !!} ({!!$kiosk->room!!})",
                 @if ($kiosk-> showPhoto)
                     className: "swalImg",
-                    icon: photoURL,
+		    imageUrl: photoURL,
+		    // imageWidth: 400,
+		    // imageHeight: 200,
+		    // imageAlt: 'Student Photo',
                 @else
                     icon: "success",
                 @endif
@@ -290,7 +243,7 @@
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-                    buttons: [""],
+		    showConfirmButton: false,
                 @endif
                 timer:3000,
             }).then( function() { $('#inputID').focus() }
@@ -299,14 +252,14 @@
 
         function SWsignout(student) {
             //resetTerminal();                         
-            swal({
+            Swal.fire({
                 title: "Goodbye " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed out of {!!$kiosk->name !!} ({!!$kiosk->room!!})",
                 icon: "success",
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-                    buttons: [""],
+		    showConfirmButton: false,
                 @endif                
                 timer:3000,            
             }).then( function() { $('#inputID').focus() }
@@ -315,19 +268,22 @@
 
         function SWpresent(student, photoURL) {
             //resetTerminal();                         
-            swal({
+            Swal.fire({
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
                 text: "You have been marked present for {!!$kiosk->name!!} ({!!$kiosk->room!!}) today",
                 @if ($kiosk-> showPhoto)
                     className: "swalImg",
-                    icon: photoURL,
+		    imageUrl: photoURL,
+		    // imageWidth: 400,
+		    // imageHeight: 200,
+		    // imageAlt: 'Student Photo',
                 @else
                     icon: "success",
                 @endif
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-                    buttons: [""],
+		    showConfirmButton: false,
                 @endif
                 timer:3000,            
 	        }).then( function() { $('#inputID').focus() }
@@ -336,14 +292,14 @@
 
         function SWalreadyPresent(student) {
             //resetTerminal();                         
-            swal({
+            Swal.fire({
                 title: "Hey " + student['firstname'] + " " + student['lastname'],
                 text: "You have already been marked present for {!!$kiosk->name!!} ({!!$kiosk->room!!}) today!",
                 icon: "warning",                
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-                    buttons: [""],
+		    showConfirmButton: false,
                 @endif
                 timer:3000,            
 	        }).then( function() { $('#inputID').focus() }
@@ -351,40 +307,39 @@
         }
 
         function SWerrorID() {
-            swal({
-                title: "ERROR!",
+            Swal.fire({
+                title: "ERROR: Invalid login id!",
                 icon: "error",                
-                content: {
-                    element: "p",
-                    attributes: {                        
-                        innerText: "Invalid Login ID"}},
-                text: "The student was not found or there was an unexpected database error.",               
- 		        timer:4000,
-            }).then(  function() { $('#inputID').focus() }
-        	);
+                text: "The student was not found or there was an unexpected database error.", 
+		timer:4000,
+                }).then(  function() { $('#inputID').focus() }
+      	    );
         }
 
         function SWerrormsg(str) {
             if (str.length == 0) str = "The student was not found or there was an unexpected database error!"
-            swal({
+            Swal.fire({
                 title: "ERROR!",
                 icon: "error",
                 text: str,               
- 		        timer:4000,
+ 	        timer:4000,
             }).then(  function() { $('#inputID').focus() }
         	);
         }
 	
         function SWconfirmSignin(student, photoURL) {            
             //<img class="student-img" src="{-- $photoURL --}" width="170" height="200">
-            swal({
+            Swal.fire({
                 title: "Confirm Sign-in for "+ student['firstname'] + " " + student['lastname'],
                 text: "Please confirm that this is the correct student being signed in" ,
                 //html: "<img src='"+photoURL+"' style='width:170px;height:200px'>",
                 //icon: "{{asset('img/14.png')}}",
-                className: "swalImg",
                 @if ($kiosk-> showPhoto)
-                    icon: photoURL,
+                    className: "swalImg",
+		    imageUrl: photoURL,
+		    // imageWidth: 400,
+		    // imageHeight: 200,
+		    // imageAlt: 'Student Photo',
                 @else
                     icon: "warning",
                 @endif

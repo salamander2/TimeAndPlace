@@ -8,14 +8,10 @@
 --}} 
 <script>
 	function getHomeRoom() {
-            swal({
+            Swal.fire({
                 title: "Enter home room",
                 text: "(course code with section)",
-                //icon: "info",  
-                content: {                                
-                    element: "input",
-                    attributes: {
-                    }
+                input: "text",
                 },                
                 }).then((coursecode) => {
                     coursecode = coursecode.toUpperCase().trim();
@@ -57,11 +53,11 @@
 		}
 		function SWerrormsg(str) {
             if (str.length == 0) str = "There was an unexpected database error!"
-            swal({
+            Swal.fire({
                 title: "ERROR!",
                 icon: "error",
                 text: str,               
- 		        timer:4000,
+ 		timer:4000,
             }).then(  function() { $('#inputID').focus() }
         	);
         }
