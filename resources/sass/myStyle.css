@@ -1,0 +1,147 @@
+/* Custom CSS to fix some problems */
+
+.userlabel {
+	/* used for userMaint page to get table like effect using labels */
+	width:20%;  display: inline-block;
+}
+#showKiosk input[type="checkbox"]:disabled:checked  {
+	outline:2px solid blue;
+	outline-offset: -2px;
+	color:black;
+}
+.login-card-body {
+background-color:#EEE;
+}
+.brand-image {
+	float: left;
+	line-height: 0.8;
+	max-height: 34px;
+	width: auto;
+	margin-left: 0.8rem;
+	margin-right: 0.5rem;
+	margin-top: -3px;
+}
+
+[class*=sidebar-dark-] .sidebar a {
+  color: white;
+}
+
+/*
+.nav-pills .nav-link{
+   color:#fff;
+}    
+*/
+
+/* This is to set the AdminLTE colours back to how they were before the upgrade to v3, 
+Fixing adminLTE where the colours go faded in the sidebar-dark.
+
+HOW MUCH OF THIS IS REALLY NECESSARY? 
+
+*** This chould also be changed to use SASS variables ***
+
+*/
+
+
+/********** SET FORGROUND COLOURS TO WHITE *************/
+.bg-primary,
+.label-primary,
+.bg-primary a,
+.label-primary a {
+  color: #fff !important;
+}
+.bg-secondary,
+.bg-secondary a {
+  color: #fff !important;
+}
+.bg-success,
+.alert-success,
+.label-success,
+.bg-success a,
+.alert-success a,
+.label-success a {
+  color: #fff !important;
+}
+.bg-info,
+.alert-info,
+.label-info,
+.bg-info a,
+.alert-info a,
+.label-info a {
+  color: #fff !important;
+}
+.bg-danger,
+.alert-danger,
+.alert-error,
+.label-danger,
+.bg-danger a,
+.alert-danger a,
+.alert-error a,
+.label-danger a {
+  color: #fff !important;
+}
+
+.bg-warning,
+.alert-warning,
+.label-warning,
+.bg-warning a,
+.alert-warning a,
+.label-warning a {
+  color: #212529 !important;
+}
+/* needed for change password button */
+.bg-danger,
+.label-danger,
+.alert-danger,
+.alert-error {
+  background-color: #cf2622 !important;
+}
+/* needed for change password button */
+.bg-danger:hover,
+.label-danger:hover,
+.alert-danger:hover,
+.alert-error:hover {
+  background-color: #800 !important;
+}
+/* this messes up the text-info style on the locker button
+.alert-light,
+.alert-light a,
+*/
+.bg-light,
+.bg-light a {
+  color: #212529 !important;
+}
+
+/* needed for logout button */
+.bg-dark,
+.bg-dark a {
+  color: #fff !important;
+}
+.bg-dark:hover,
+.bg-dark a:hover {
+  background-color: #222 !important;
+}
+
+.bg-warning:hover,
+.alert-warning:hover,
+.label-warning:hover,
+.bg-warning a:hover,
+.alert-warning a:hover,
+.label-warning a:hover {
+  color: #fff !important;
+}
+/* needed for lockers button in sidebar */
+.alert-light:hover,
+.nav-item > a.alert-light.text-info:hover,
+.alert-light a:hover,
+.bg-light:hover,
+.bg-light a:hover {
+  color: #fff !important;
+}
+
+/* for main adminPage, where we use info-box instead of btns */
+.info-box.bg-info:hover {
+ color:#111 !important;
+}
+.info-box.bg-success:hover {
+ color:#111 !important;
+}

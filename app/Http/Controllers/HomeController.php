@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\Kiosk;
 use App\Student;
 
@@ -25,23 +26,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /********** Testing Area here  ***************/
-        //   $studentID = 303210173;
-        //   $present = \App\StudentSignedIn::isSignedIn($studentID, '2');
-        //   dd($present);
-         
-         
-          // $student = Student::find($studentID);
-          //$kiosk = Kiosk::first(); 
-          
-          //check the StudentSignedIn table to see if there is a record with this kiosk and student
-          
-         // $present = $student->kiosks;//->contains($kiosk->id);
-          //dd($present);
-        // $kiosk = Kiosk::find('1');
-        // $kiosk->schedules()->detach('3');
-        // dd("done");
-        /********** End Testing Area ***********/
+	/*$user = Auth::user();
+	if ($user ->isAdministrator()) {
+	        $phpmyadmin = env('PHPMYADMIN');
+        	return view('admin.adminPage', compact('phpmyadmin'));
+	}*/
 
         $kiosks = Kiosk::all()->where('publicViewable','=','1');
 

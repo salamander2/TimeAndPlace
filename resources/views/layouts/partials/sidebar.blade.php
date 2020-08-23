@@ -21,12 +21,12 @@
 		 </li>
 	 @endif
 
-          <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-info"><i class="nav-icon fab fa-korvue fa-2x"></i>
+          <li class="nav-item"><a href="/kiosks" class="nav-link alert alert-primary"><i class="nav-icon fab fa-korvue fa-2x"></i>
             <p>List all Kisoks</p></a></li>
 
             {{-- Logs Tree Menu --}}
             <li class="nav-item has-treeview menu-closed">
-              <a href="#" class="nav-link alert alert-info"> {{-- alert-primary does not exist, so use active --}}
+              <a href="#" class="nav-link alert border-primary">
                 <i class="nav-icon fa fa-tachometer-alt "></i>
                 <p>Logs<i class="right fa fa-angle-left"></i></p>
               </a>
@@ -38,8 +38,8 @@
                   @endif
 
                 <li class="nav-item">
-                  <a href="{{'/logs/byKiosk/'.$kiosk->id}}" class="nav-link active">
-                    <i class="text-dark far fa-sm fa-circle nav-icon"></i>
+                  <a href="{{'/logs/byKiosk/'.$kiosk->id}}" class="nav-link active text-warning bg-dark">
+                    <i class="text-warning far fa-sm fa-circle nav-icon"></i>
                     <p>{{$kiosk->name}}</p>
                   </a>
                 </li>
@@ -49,7 +49,7 @@
 
             {{-- Reports Tree Menu --}}
             <li class="nav-item has-treeview menu-closed">
-              <a href="#" class="nav-link alert border-success"> {{-- alert-primary does not exist, so use active --}}
+              <a href="#" class="nav-link alert border-success">
                 <i class="nav-icon fa fa-folder-open"></i>
                 <p>Reports<i class="right fa fa-angle-left"></i></p>
               </a>
@@ -61,7 +61,7 @@
                   @endif
 
                 <li class="nav-item">
-                  <a href="{{'/reports/summary/'.$kiosk->id}}" class="nav-link active text-primary bg-dark">
+                  <a href="{{'/reports/summary/'.$kiosk->id}}" class="nav-link active text-warning bg-dark">
                     <i class="text-warning far fa-sm fa-circle nav-icon"></i>
                     <p>{{$kiosk->name}}</p>
                   </a>
@@ -71,9 +71,9 @@
             </li> <!-- end tree menu -->
   
           
-          <li class="nav-item "><a href="/lockers" class="nav-link alert alert-light border-primary text-info"><i class="nav-icon fas fa-microchip"></i><p>Lockers</p></a></li>
+          <li class="nav-item "><a href="/lockers" class="nav-link alert alert-info"><i class="nav-icon fas fa-microchip"></i><p>Lockers</p></a></li>
           <li class="nav-item "><a href="/classlists" class="nav-link alert alert-info"><i class="nav-icon fas fa-list-ol fa-2x"></i><p>Class Lists</p></a></li>
-          <li class="nav-item "><a href="/help" class="nav-link alert border-white"><i class="nav-icon fa fa-question-circle fa-2x"></i><p>Help</p></a></li>
+          <li class="nav-item "><a href="/help" class="nav-link alert alert-success "><i class="nav-icon fa fa-question-circle fa-2x"></i><p>Help</p></a></li>
 
         </ul>
       </nav>

@@ -541,28 +541,28 @@ eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourc
 
 /***/ }),
 
-/***/ "./resources/sass/style.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/style.scss ***!
-  \***********************************/
+/***/ "./resources/sass/nf_style.scss":
+/*!**************************************!*\
+  !*** ./resources/sass/nf_style.scss ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9zdHlsZS5zY3NzPzcwMGYiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEiLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9zdHlsZS5zY3NzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gcmVtb3ZlZCBieSBleHRyYWN0LXRleHQtd2VicGFjay1wbHVnaW4iXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/style.scss\n");
+eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9uZl9zdHlsZS5zY3NzPzAxZGUiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEiLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9uZl9zdHlsZS5zY3NzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gcmVtb3ZlZCBieSBleHRyYWN0LXRleHQtd2VicGFjay1wbHVnaW4iXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/nf_style.scss\n");
 
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./node_modules/styled-notifications/dist/notifications.js ./resources/sass/app.scss ./resources/sass/style.scss ***!
-  \***************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./node_modules/styled-notifications/dist/notifications.js ./resources/sass/app.scss ./resources/sass/nf_style.scss ***!
+  \******************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /home/library/TimeAndPlace/resources/js/app.js */"./resources/js/app.js");
 __webpack_require__(/*! /home/library/TimeAndPlace/node_modules/styled-notifications/dist/notifications.js */"./node_modules/styled-notifications/dist/notifications.js");
 __webpack_require__(/*! /home/library/TimeAndPlace/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /home/library/TimeAndPlace/resources/sass/style.scss */"./resources/sass/style.scss");
+module.exports = __webpack_require__(/*! /home/library/TimeAndPlace/resources/sass/nf_style.scss */"./resources/sass/nf_style.scss");
 
 
 /***/ })
