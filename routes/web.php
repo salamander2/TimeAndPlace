@@ -76,6 +76,7 @@ Route::get('/help', 'HomeController@help');
 
 
 /*----------------Admin Routes------------------*/
+Route::get('adminPage', 'AdminController@adminPage');
 Route::get('/userMaint', 'AdminController@userIndex');
 //Route::post('addUser', 'AdminController@addUser')->name('addUser');
 //Route::post('addUser', 'Auth\RegisterController@register')->name('addUser');//

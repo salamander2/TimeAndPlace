@@ -44,6 +44,11 @@ class AdminController extends Controller
 		
     }
 
+   public function adminPage()
+    {
+        $phpmyadmin = env('PHPMYADMIN');
+        return view('admin.adminPage', compact('phpmyadmin'));
+    }
     /***************************** USER HANDLING  **************************************/
 
     /**
