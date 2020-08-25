@@ -64,7 +64,8 @@
                         async: true,
                         url: '/verifyTeacher',
                         data: {                            
-                            pwdin : password    //a data field cannot be named password!
+							//SweetAlert2 requires the .value
+                            pwdin : password.value    //a data field cannot be named password!
                         },
                         dataType: "json",
                         // contentType: "application/json",     //this totally messes up data transfer
@@ -232,10 +233,10 @@
                 text: "You are signed into {!!$kiosk->name !!} ({!!$kiosk->room!!})",
                 @if ($kiosk-> showPhoto)
                     className: "swalImg",
-		    imageUrl: photoURL,
-		    // imageWidth: 400,
-		    // imageHeight: 200,
-		    // imageAlt: 'Student Photo',
+					imageUrl: photoURL,
+					// imageWidth: 400,
+					// imageHeight: 200,
+					// imageAlt: 'Student Photo',
                 @else
                     icon: "success",
                 @endif
@@ -243,7 +244,7 @@
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-		    showConfirmButton: false,
+					showConfirmButton: false,
                 @endif
                 timer:3000,
             }).then( function() { $('#inputID').focus() }
@@ -259,7 +260,7 @@
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-		    showConfirmButton: false,
+					showConfirmButton: false,
                 @endif                
                 timer:3000,            
             }).then( function() { $('#inputID').focus() }
@@ -283,7 +284,7 @@
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-		    showConfirmButton: false,
+					showConfirmButton: false,
                 @endif
                 timer:3000,            
 	        }).then( function() { $('#inputID').focus() }
@@ -299,7 +300,7 @@
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-		    showConfirmButton: false,
+					showConfirmButton: false,
                 @endif
                 timer:3000,            
 	        }).then( function() { $('#inputID').focus() }
@@ -311,7 +312,7 @@
                 title: "ERROR: Invalid login id!",
                 icon: "error",                
                 text: "The student was not found or there was an unexpected database error.", 
-		timer:4000,
+				timer:4000,
                 }).then(  function() { $('#inputID').focus() }
       	    );
         }
@@ -322,7 +323,7 @@
                 title: "ERROR!",
                 icon: "error",
                 text: str,               
- 	        timer:4000,
+				timer:4000,
             }).then(  function() { $('#inputID').focus() }
         	);
         }
@@ -336,15 +337,17 @@
                 //icon: "{{asset('img/14.png')}}",
                 @if ($kiosk-> showPhoto)
                     className: "swalImg",
-		    imageUrl: photoURL,
-		    // imageWidth: 400,
-		    // imageHeight: 200,
-		    // imageAlt: 'Student Photo',
+					imageUrl: photoURL,
+					// imageWidth: 400,
+					// imageHeight: 200,
+					// imageAlt: 'Student Photo',
                 @else
                     icon: "warning",
                 @endif
-                buttons: true,
-                dangerMode: true,
+                //buttons: true, //show a cancel button also
+                //dangerMode: true, //set focus on cancel
+				showCancelButton: true,
+				focusCancel: true,
                 })
                 .then((proceed) => {
                 if (proceed) {

@@ -1,10 +1,8 @@
 @extends('layouts.app') 
 @section('content')
 <a href="/kiosks/{{$event->kiosk_id}}/edit" class="text-white">
-    <span class="btn-sm btn-outline-secondary"><i class="fa fa-angle-left"></i> Back</span>
+    <span class="btn-sm btn-secondary"><i class="fa fa-angle-left"></i> Back</span>
 </a>
-
-{{--<a href="{{'/kiosks/'.$kiosk->id.'/edit' }}" class="btn btn-outline-secondary small">Back</a>  --}}
 
 <script>
 

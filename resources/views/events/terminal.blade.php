@@ -55,9 +55,8 @@
                 text: "in order to login students by name or exit the Terminal",
                 icon: "warning",  
                 input: "password",
-		inputAttributes: {
-		    'data-lpignore': true
-		}
+				inputAttributes: {
+					'data-lpignore': true
                 },                
                 }).then((password) => {
                    // swal(`The returned value is: ${password}`);
@@ -71,7 +70,7 @@
                         async: true,
                         url: '/verifyTeacher',
                         data: {                            
-                            pwdin : password    //a data field cannot be named password!
+                            pwdin : password.value    //a data field cannot be named password!
                         },
                         dataType: "json",
                         // contentType: "application/json",     //this totally messes up data transfer
@@ -262,7 +261,7 @@
 //TODO: there should not be a signout option for the events / dance show. It's only a sign in.
         function SWsignout(student) {
             //resetTerminal();                         
-            swal({
+            Swal.fire({
                 title: "Goodbye " + student['firstname'] + " " + student['lastname'],
                 text: "You are signed out of {!!$kiosk->name !!} ({!!$kiosk->room!!})",
                 icon: "success",
@@ -278,19 +277,19 @@
 
         function SWpresent(student, photoURL) {
             //resetTerminal();                         
-            swal({
+            Swal.fire({
                 title: "Welcome " + student['firstname'] + " " + student['lastname'],
                 text: "You have been marked present for {!!$kiosk->name!!} ({!!$kiosk->room!!}) today",
                 @if ($kiosk-> showPhoto)
                     className: "swalImg",
-                    icon: photoURL,
+                    imageUrl: photoURL,
                 @else
                     icon: "success",
                 @endif
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-                    buttons: [""],
+					showConfirmButton: false,
                 @endif
                 timer:3000,            
 	        }).then( function() { $('#inputID').focus() }
@@ -299,14 +298,14 @@
 
         function SWalreadyPresent(student) {
             //resetTerminal();                         
-            swal({
+            Swal.fire({
                 title: "Hey " + student['firstname'] + " " + student['lastname'],
                 text: "You have already been marked present for {!!$kiosk->name!!} ({!!$kiosk->room!!}) today!",
                 icon: "warning",                
                 @if ($kiosk->swalOKbtn)
                     //ok button displayed
                 @else
-                    buttons: [""],
+					showConfirmButton: false,
                 @endif
                 timer:3000,            
 	        }).then( function() { $('#inputID').focus() }
@@ -314,13 +313,9 @@
         }
 
         function SWerrorID() {
-            swal({
+            Swal.fire({
                 title: "ERROR!",
                 icon: "error",                
-                content: {
-                    element: "p",
-                    attributes: {                        
-                        innerText: "Invalid Login ID"}},
                 text: "The student was not found or there was an unexpected database error.",               
  		        timer:4000,
             }).then(  function() { $('#inputID').focus() }
@@ -329,7 +324,7 @@
 
         function SWerrormsg(str) {
             if (str.length == 0) str = "The student was not found or there was an unexpected database error!"
-            swal({
+            Swal.fire({
                 title: "ERROR!",
                 icon: "error",
                 text: str,               
@@ -340,19 +335,22 @@
 	
         function SWconfirmSignin(student, photoURL) {            
             //<img class="student-img" src="{-- $photoURL --}" width="170" height="200">
-            swal({
+            Swal.fire({
                 title: "Confirm Sign-in for "+ student['firstname'] + " " + student['lastname'],
                 text: "Please confirm that this is the correct student being signed in" ,
                 //html: "<img src='"+photoURL+"' style='width:170px;height:200px'>",
                 //icon: "{{asset('img/14.png')}}",
                 className: "swalImg",
                 @if ($kiosk-> showPhoto)
-                    icon: photoURL,
+                    imageUrl: photoURL,
+					// imageWidth: 400,
+					// imageHeight: 200,
+					// imageAlt: 'Student Photo',
                 @else
                     icon: "warning",
                 @endif
-                buttons: true,
-                dangerMode: true,
+                showCancelButton: true,
+                focusCancel: true,
                 })
                 .then((proceed) => {
                 if (proceed) {

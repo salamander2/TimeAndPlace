@@ -68,10 +68,10 @@ class UserController extends Controller
 	*/
 	public function verifyTeacherPWD(Request $request) {
 		$password = $request->input('pwdin');
-		//print_r($password);
+		//print_r("PASSWORD=".$password);
         
 		$correct = \App\User::where('username','teacher')->first()->password;
-		//print_r($correct);
+		//print_r("CORRECT=".$correct);
 		
 		if (Hash::check($password, $correct)) {
 			return response()->json(['status' => 'success']);

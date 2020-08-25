@@ -139,7 +139,8 @@ Route::get('/terminalAuth/{kiosk}/toggleStudentID/{loginID}', 'TerminalControlle
 // Route::get('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 //Route::post('/terminals/{kiosk}/toggleStudent/{student}', 'TerminalController@toggleStudent');
 //Route::post('/terminals/{kiosk}/toggleStudent', 'TerminalController@toggleStudent_v2');
-Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents');
+Route::get('/terminals/studentFind/{q}', 'TerminalController@listStudents')->name('studentFind');
+Route::get('/events/terminals/studentFind/{q}', 'TerminalController@listStudents');
 Route::get('/terminals/studentFind2/{q}', 'TerminalController@listStudents2'); //from topnavbar.blade
 Route::get('/terminalAuth/studentFind/{q}', 'TerminalController@listStudents');
 //Route::get('/terminalAuth/studentFind2/{q}', 'TerminalController@listStudents2');
@@ -229,7 +230,7 @@ Route::get('/testing/{user}', 'TestController@testUser');
 
 /* ---------------- Fallback Route --------------*/
 Route::fallback(function () {
-    return redirect('home');
-    //abort(404,'Page Not Found.');
+    //return redirect('home');
+    abort(404,'Page Not Found.');
 });
 
