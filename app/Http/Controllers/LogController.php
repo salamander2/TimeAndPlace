@@ -214,6 +214,7 @@ class LogController extends Controller
 	}
 
 	/* This provides summary reports for this week, this month, previous months, and the whole semester */
+	/* NOTE: in only does this for signin/out kiosks */
 	public function summaryReport($id)
 	{	
 		$kiosk = Kiosk::all()->find($id);
@@ -242,6 +243,13 @@ class LogController extends Controller
 		$logbase = Log::where('kiosk_id',$id)->with('student')->where('status_Code','SIGNIN');
 		$logs = $logbase->where('created_at', '>', $month);
 		$countAll = $logs->count();		
+		if ($countAll == 0) {
+			if ($kiosk->kioskType != 0) {
+				return redirect("/home")->with("warning", "Reports only work for sign-in/out type kiosks");
+			} else {
+				return redirect("/home")->with("warning", "No report records for ". $kiosk->name .". ");
+			}
+		}
 		$logs = $logs ->distinct()->get(['studentID']);
 		$countUnique = $logs->count();
 		$array[] = array($monthname, $countUnique, $countAll);

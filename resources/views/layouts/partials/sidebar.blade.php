@@ -60,6 +60,9 @@
                     @continue
                   @endif
 
+                  @if ($kiosk->kioskType != 0) 
+                    @continue
+                  @endif
                 <li class="nav-item">
                   <a href="{{'/reports/summary/'.$kiosk->id}}" class="nav-link active text-warning bg-dark">
                     <i class="text-warning far fa-sm fa-circle nav-icon"></i>
