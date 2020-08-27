@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-        
     @include('layouts.headLinks')
-
     @stack('styles')
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">  
 </head>
-
-        
           
-<body class="login-page"> 
+<body class="login-page" style="height:auto;"> 
     
-    <div class="login-box bg-primary border border-dark rounded">
+    <div class="login-box bg-primary border border-dark rounded" style="width:440px;margin-top:7vh;">
         <div class="login-logo">
-            <img src="/img/AdminLTELogo.png" alt="AdminLTE Logo" 
-            class="brand-image img-circle elevation-3 my-3" style="opacity: .8">
+            <img src="/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3 my-3" style="opacity: .8">
             <span class="brand-text font-weight-bold">{{ config('app.name', 'Laravel') }}</span>
         </div>
+		<div class="text-center">
+			<h4>Student Tracker and <br>Student Information System</h4>
+		</div>
     </div>
     <!-- /.login-logo -->
 
@@ -28,7 +27,7 @@
             </div>  
 
 
-        <div class="card-body login-card-body">
+		<div class="card-body login-card-body">
                         
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -85,7 +84,32 @@
                     </form>
                 </div>
             </div>
-        </div>
+
+			@if ( env('DEMO') )
+				<div class="card border-info">
+				<div class="card-body">
+					<h4>For demonstration database:</h4>
+					<table class="table table-bordered table-sm" style="width:auto">
+					<thead>
+					<tr class="table-primary text-center"><th>Logins</th><th>Role</th><th>Details</th></tr>
+					</thead>
+					<tbody>
+					<tr><td>admin</td><td>Administrator </td><td>(create users and kiosks)</td></tr>
+					<tr><td>teacher</td><td>Generic user</td><td> (view-only)</td></tr>
+					<tr><td>secretary</td><td>Secretary</td><td> (administers lockers)</td></tr>
+					<tr><td>fkafka</td><td>Librarian</td><td> (sign-in, sign-out type kiosk)</td></tr>
+					<tr><td>sfreud</td><td>Student Success and Resource teacher</td><td> (sign-in, sign-out type kiosk)</td></tr>
+					<tr><td>acheckov</td><td>runs Chess club</td><td> (attendance only kiosk)</td></tr>
+					<tr><td>kkain</td><td>dance teacher</td><td> (event type kiosk)</td></tr>
+					<tr class="table-warning"><td colspan=3">All of the passwords are still the default password ("<b>FloralCanoe</b>")</td><tr>
+					<tr class="table-danger"><td colspan=3">The database will be restored every Sunday and Wednesday at 1am.</td><tr>
+					</tbody>
+					</table>
+				</div>
+				</div>
+			@endif
+
+		</div>
 
 <!-- Scripts -->
 @stack('scripts')

@@ -386,7 +386,7 @@
             <div id="studentList" class="text-center"></div>
         </div>
 
-        <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" 
+        <img style="margin-top: 10vh; margin-bottom:3vh;" src="{{asset('img/terminalLogo.png')}}" 
         onclick="getPassword()" alt="HB Beal" height="400vh"><br>
 
         <h1 class="text-center">{{$kiosk->name}}</h1>

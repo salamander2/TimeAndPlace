@@ -389,7 +389,7 @@
             <div id="studentList" class="text-center"></div>
         </div>
 
-        <img style="margin-top: 5vh; margin-bottom:3vh;" src="{{asset('img/14.png')}}" 
+        <img style="margin-top: 5vh; margin-bottom:3vh;" src="{{asset('img/terminalLogo.png')}}" 
         onclick="getPassword()" alt="HB Beal" height="200vh"><br>
 
         <h1 class="text-center">{{$kiosk->name}} sign in<br> {{$event->name}}</h1>

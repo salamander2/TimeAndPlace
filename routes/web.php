@@ -230,7 +230,7 @@ Route::get('/testing/{user}', 'TestController@testUser');
 
 /* ---------------- Fallback Route --------------*/
 Route::fallback(function () {
-    //return redirect('home');
-    abort(404,'Page Not Found.');
+    return redirect('home');
+    //abort(404,'Page Not Found.');
 });
 
