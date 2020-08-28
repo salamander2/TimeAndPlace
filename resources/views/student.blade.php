@@ -87,7 +87,7 @@
        <div class="rounded alert border-primary my-3 p-2">
             <h4 class="text-primary">Time Table</h4>
             <div class="col-auto">
-                <table class="timetable">
+                <table class="table-responsive-md timetable">
                 <tr><th>Period</th><th>Course</th><th>Teacher</th><th>Room</th></tr>
                 @foreach ($courses as $c)
                     <tr><td>{{$c->period}}</td><td>{{$c->coursecode}}</td><td>{{$c->teacher}}</td><td>{{$c->room}}</td></tr>

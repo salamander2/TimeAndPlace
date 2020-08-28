@@ -3,7 +3,7 @@
     put it all into one place and then include it when needed. --}}
 <style>
     #studentSearch {
-        width: 70%;        
+        /*width: 70%;*/
         left: 15%;
         /* TODO: topnavbar must have these top: 15%; position: relative;, but Terminal.blade must not */
         top: 15%;
@@ -30,7 +30,7 @@
         box-shadow: #666 0px 2px 3px;
         behavior: url(Include/PIE.htc);
         overflow: hidden;
-        width: 100%;
+        width: 75%;
     }
     .table-canvas td {
         cursor: pointer;
@@ -164,7 +164,7 @@
 </script>
 
 <!-- Navbar -->
- <nav class="main-header navbar navbar-expand bg-primary navbar-light border-bottom">
+ <nav class="main-header navbar navbar-expand-sm bg-primary navbar-light border-bottom">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -200,7 +200,7 @@
             @endif  --}}
         @else
             <li class="nav-item dropdown elevation-2">
-                <a id="navbarDropdown" class="nav-link bg-info rounded dropdown-toggle" href="#" role="button" data-toggle="dropdown" v-pre>
+                <a id="navbarDropdown" class="nav-link bg-info rounded dropdown-toggle pl-2" href="#" role="button" data-toggle="dropdown" v-pre>
                     {{ Auth::user()->username }} : {{ Auth::user()->fullname }}<span class="caret"></span>
                 </a>
             
@@ -236,7 +236,7 @@
   <!-- /.navbar -->
 
   <!-- html to display student listing -->        
-  <div id="studentSearch" class="card-body shadow-lg modal">            
+  <div id="studentSearch" class="card-body col-md-8 shadow-lg modal">            
           <h5 class="text-light">Press 'ESC' key to exit</h5>          
       
       <!-- the student table is created here at "studentList". There is also formatting for this in the css  -->
