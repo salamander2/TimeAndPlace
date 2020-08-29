@@ -62,7 +62,6 @@ Route::view('/home2', '/other/home2');
 
 
 /*-------------Auth routes  (Authentication Routes...) -----------------*/
-Route::view('/', 'login');
 Auth::routes(['register' => false]);
 //Don't try and replicate these. 
 //Route::post('login', 'Auth\LoginController@login');
@@ -70,6 +69,7 @@ Auth::routes(['register' => false]);
 
 /*-------------Default routes  -----------------*/
 //Route::get('/', function(){ return view('login'); });
+Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/{kiosk}', 'HomeController@showKiosk');
 Route::get('/help', 'HomeController@help');
