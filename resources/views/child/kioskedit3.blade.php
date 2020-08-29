@@ -84,7 +84,7 @@
                                 <td>{{ $period->end }}</td>
                                 <td>
                                     <button onclick="removeTimeFromKiosk('{{ $period->id}}')"
-                                            class="btn btn-xs btn-outline-danger"><i class="fas fa-trash-alt"></i> Remove
+                                            class="btn btn-xs btn-outline-warning"><i class="fas fa-trash-alt"></i> Remove
                                     </button>
                                 </td>
                                 <td>{{ $period->altstart }}</td>

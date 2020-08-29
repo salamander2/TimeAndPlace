@@ -62,7 +62,7 @@ Route::view('/home2', '/other/home2');
 
 
 /*-------------Auth routes  (Authentication Routes...) -----------------*/
-//Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::view('/', 'login');
 Auth::routes(['register' => false]);
 //Don't try and replicate these. 
 //Route::post('login', 'Auth\LoginController@login');
@@ -230,7 +230,7 @@ Route::get('/testing/{user}', 'TestController@testUser');
 
 /* ---------------- Fallback Route --------------*/
 Route::fallback(function () {
-    return redirect('home');
-    //abort(404,'Page Not Found.');
+    //return redirect('home');
+    abort(404,'Page Not Found.');
 });
 

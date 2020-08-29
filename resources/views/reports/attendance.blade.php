@@ -10,23 +10,25 @@
     <div class="card-header">
         <div class="row">
             <div class="col-md-2"><form action="{{'/reports/attend/'.$kiosk->id}}/M" method="get">
-                <button id="btnT" type="submit" class="btn btn-outline-success">This Month</button> </form></div>
+                <button id="btnM" type="submit" class="btn btn-outline-info">This Month</button> </form></div>
             <div class="col-md-2"><form action="{{'/reports/attend/'.$kiosk->id}}/P" method="get">
-                <button id="btnY" class="btn btn-outline-primary">Last Month</button> </form></div>
+                <button id="btnP" class="btn btn-outline-primary">Last Month</button> </form></div>
             <div class="col-md-2"><form action="{{'/reports/attend/'.$kiosk->id}}/A" method="get">
                 <button id="btnA" class="btn btn-secondary">All</button> </form></div>
                 
         </div>
     </div>
-        <div class="card-title my-3">                
-                <h2>
+        <div class="card-title w-100 my-3"> 
                 @if ($code == 'A')
+                <h2>
                     All attendance for {{ $kiosk->name }}
-            <div class="float-right"> <a href="{{'/reportsPrint/attend/'.$kiosk->id}}"><button type="button" class="btn btn-outline-secondary">Printable Report</button></a></p></div>
-                @else
-                    Monthly attendance for {{ $kiosk->name }}
-                @endif
+	            <span class="float-right"> <a href="{{'/reportsPrint/attend/'.$kiosk->id.'/A'}}"><button type="button" class="btn btn-outline-secondary">Printable Report</button></a></span>
                 </h2>                
+                @else
+                <h2>
+                    Monthly attendance for {{ $kiosk->name }}
+                </h2>                
+                @endif
         </div>
     </div>
     
@@ -59,4 +61,34 @@
     {{-- </div>     --}}
 
 </div>
+<script>
+    var code = '{{$code}}';
+    document.getElementById("btnA").classList.remove('btn-secondary');
+    document.getElementById("btnA").classList.add('btn-outline-secondary');
+    switch(code) {
+        case 'T':
+            document.getElementById("btnT").classList.remove('btn-outline-danger');
+            document.getElementById("btnT").classList.add('btn-danger');
+            break;
+        case 'Y':
+            document.getElementById("btnY").classList.remove('btn-outline-warning');
+            document.getElementById("btnY").classList.add('btn-warning');
+            break;
+        case 'W':
+            document.getElementById("btnW").classList.remove('btn-outline-success');
+            document.getElementById("btnW").classList.add('btn-success');
+            break;
+        case 'M':
+            document.getElementById("btnM").classList.remove('btn-outline-info');
+            document.getElementById("btnM").classList.add('btn-info');
+            break;
+        case 'P':
+            document.getElementById("btnP").classList.remove('btn-outline-primary');
+            document.getElementById("btnP").classList.add('btn-primary');
+            break;
+        default:
+            document.getElementById("btnA").classList.remove('btn-outline-secondary');
+            document.getElementById("btnA").classList.add('btn-secondary');
+        } 
+</script>
 @endsection

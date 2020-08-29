@@ -50,7 +50,7 @@ class ReportController extends Controller
             case 'P':
                 $month = Carbon::now()->startOfMonth();	//sets time to 0:00:00
                 $lastmonth = Carbon::now()->startOfMonth()->subMonth();
-                $meetings = Meeting::where('created_at', '>=', $month)->where('created_at','<',$month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
+                $meetings = Meeting::where('created_at', '>=', $lastmonth)->where('created_at','<',$month)->where('kiosk_id',$kiosk->id)->orderBy('date')->get()->unique('date');
                 break;
             case 'A':
             default:
@@ -82,7 +82,10 @@ class ReportController extends Controller
         }
         $numDates = count($topRow);
                 
-        $monthlogs =  Log::where('kiosk_id',$kiosk->id)->where('created_at', '>', $month)->where('status_code','PRESENT')->with('student')->get();
+		if ($code == 'P')
+	        $monthlogs =  Log::where('kiosk_id',$kiosk->id)->where('created_at', '>=', $lastmonth)->where('created_at','<',$month)->where('status_code','PRESENT')->with('student')->get();
+		else 
+    	    $monthlogs =  Log::where('kiosk_id',$kiosk->id)->where('created_at', '>', $month)->where('status_code','PRESENT')->with('student')->get();
        
         /* You cannot orderBy on a table connected using WITH. 
         You have to use the join() method to sort the entire collection (instead of the eager loading I was trying which just orders the relationship.)
