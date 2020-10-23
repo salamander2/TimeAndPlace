@@ -1,0 +1,3 @@
+There are a number of settings for each kiosk.<br>
+A detailed explanation of them will follow later....
+

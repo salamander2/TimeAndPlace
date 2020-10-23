@@ -36,49 +36,34 @@
 
 					<div class="tab-pane active" id="tab_1">
 						@include('child.helpTab1')
-					</div> <!-- /.tab-pane -->
+					</div>
 
 					<div class="tab-pane" id="tab_2">
 						@include('child.helpTab2')
 					</div>
-					<!-- /.tab-pane -->
-						<div class="tab-pane" id="tab_3">
-							<i>This tab needs to be rewritten properly</i><br>
-						The terminal screen is where students actually log in or out ...
-						<ul>
-							<li>include screen shot</li>
-							<li>Students log in by entering their computer login id, eg. smitjohn123.
-								The student id number can also be used. This would be for scanning in student cards</li>
-							<li>The next time that the student enters their login id they are logged out.</li>
-							<li>If the user (teacher) clicks on the Beal Logo, a prompt pops up for the teacher to enter 
-								the bypass password. After this is done, the teacher can then log a student in/out by typing his/her name.
-							</li>
-						</ul>
-						</div><!-- /.tab-pane -->
-						<div class="tab-pane" id="tab_4">
-						There are a number of settings for each kiosk.<br>
-						A detailed explanation of them will follow later....
-						</div><!-- /.tab-pane -->
-						<div class="tab-pane" id="tab_5">
-						<p>Users can view the logs for each kiosk based on time (day, week, month, ...). Click on the "Logs" button in the left navigation
-							panel to do this.</p>
-							<p>Users can view the logs for a particular student based on time (day, week, month) or based on kiosk.<br>
-								Search for the student, and then click the appropriate buttons in the display that comes up.
-							</p>
-							<p>Future reports will include:</p>
-							<ul>
-								<li>total usage of a kiosk (e.g. student success) by month and also by period.</li>
-								<li>a report of attendance for "Present Only" kiosks (e.g. a club) by month.</li>
-							</ul>
-						</div><!-- /.tab-pane -->
-					</div><!-- /.tab-content -->
 
-				</div><!-- /.card-body -->
-			</div>
-			<!-- ./card -->
+					<div class="tab-pane" id="tab_3">
+						@include('child.helpTab3')
+					</div>
+
+					<div class="tab-pane" id="tab_4">
+						@include('child.helpTab4')
+					</div>
+
+					<div class="tab-pane" id="tab_5">
+						@include('child.helpTab5')
+					</div>
+
+					<div class="tab-pane" id="tab_6">
+						@include('child.helpTab6')
+					</div>
+				</div><!-- /.tab-content -->
+
+			</div><!-- /.card-body -->
 		</div>
-		<!-- /.col -->
+		<!-- ./card -->
 	</div>
-	<!-- /.row -->
-	<!-- END CUSTOM TABS -->
+	<!-- /.col -->
+</div>
+<!-- /.row -->
 @endsection
