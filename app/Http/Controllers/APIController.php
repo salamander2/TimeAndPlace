@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Kiosk;
+use App\Student;
 use App\StudentSignedIn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 /*
 This controller is for API requests that get data. 
@@ -29,8 +31,8 @@ class APIController extends Controller
 	return($data);
     }
 
-    //Return the current attendance for this room
-    public function inKiosk(Kiosk $kiosk) {
+    //Return the current number of students in attendance for this room
+    public function kioskAttendance(Kiosk $kiosk) {
 	//this only works for signin type kiosks. In other cases it is meaningless.
 	if ($kiosk->kioskType != 0) {
 	    return(json_encode(-1));
@@ -38,4 +40,48 @@ class APIController extends Controller
 	$num = StudentSignedIn::where('kiosk_id', $kiosk->id)->count();
 	return json_encode($num);
     }
+
+	public function randStudents() {
+		$random = Student::all()->random(30);
+		foreach ($random as $r) {
+			print($r->studentID . "<br>");
+		}
+
+	}
+
+	//sign in students to a particular kiosk. Only works for kiosk type 1
+	public function teamSignIn(Kiosk $kiosk) {
+		if ($kiosk->kioskType != 1) {
+			return(json_encode(-1));
+		}
+		//$time = 14:54
+
+		$wait = rand(30,300); // add this many seconds
+		//from public/storage/
+		$idList = Storage::disk('public')->get('id30.txt');
+//        $studentID = $student->studentID;
+		$list = array_slice(explode(PHP_EOL,$idList),0);
+
+#dd($list);
+		foreach($list as $studentID) {
+		  print($studentID."<br>");
+        }
+dd($wait);
+		$statcode = 'SIGNIN';
+		$statresp = 'signed in';
+		if ($kiosk->kioskType == 1) {
+			$statcode = 'PRESENT';
+			$statresp = 'present';
+			//add a meeting record
+			$this->createMeetingRecord($kiosk);
+		}
+		//create a SIGNIN log file entry         
+		$kiosk->students()->attach($studentID, ['status_code' => $statcode]);
+		//create a signedIn entry
+		$kiosk->signedIn()->attach($studentID, ['status_code' => $statcode]);
+
+		//return response()->json(['status' => $statresp, 'photoURL'=>$photoURL, 'student' => $student->toArray()]);
+
+
+	}
 }
