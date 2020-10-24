@@ -224,7 +224,7 @@ Route::post('/lockers/massAssign', 'LockerController@massAssign'); //from listin
 Route::get('/API/listKiosks', 'APIController@listKiosks');
 Route::get('/API/kioskAttendance/{kiosk}', 'APIController@kioskAttendance');
 Route::get('/API/random', 'APIController@randStudents');
-Route::get('/API/teamSignIn/{kiosk}', 'APIController@teamSignIn');
+Route::get('/API/teamSignIn', 'APIController@teamSignIn');
 /* API routes allow various programs to run to modify data,
  * but it would be better in the long term to make these COMMANDS 
  * if I want students to be getting logged in and out all day as if it's a normal school.

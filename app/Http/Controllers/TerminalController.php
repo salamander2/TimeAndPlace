@@ -158,12 +158,7 @@ class TerminalController extends Controller
             //Deleted the SignedIn record
             $kiosk->signedIn()->detach($studentID);
 
-            //add a 'deleted at' timestamp to the signin record. (This is probably never needed)
-            //$kiosk->students()->where('status_code','=','SIGNIN')->updateExistingPivot($studentID,['deleted_at'=> Carbon::now()]); //delete the original signin
-            
             //Add a new "SIGNOUT" record for the student the LOG file.  
-            // NO NO NO: the DeletedAt column has been deleted. It's no longer needed.
-            // $kiosk->students()->attach($studentID, ['deleted_at'=> Carbon::now(), 'status_code' => 'SIGNOUT']);
             $kiosk->students()->attach($studentID, ['status_code' => 'SIGNOUT']);
             
             //Return info for AJAX to display on the kiosk
