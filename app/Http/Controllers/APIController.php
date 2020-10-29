@@ -61,38 +61,6 @@ class APIController extends Controller
 	//public function teamSignIn(Kiosk $kiosk) {
 	public function teamSignIn() {
 
-		//Setup data
-		$time = "14:54:00";
-		$carbondate = Carbon::createFromDate("2020", "09", "17", "America/Toronto");
-		$carbondate->addWeek();
-		$carbondate->addWeek();
-		$carbondate->addWeek();
-		$carbondate->addWeek();
-		$carbondate->addWeek();
-
-		$carbondate->setTime(14,58,0);
-
-		$statcode = 'PRESENT';
-		$statresp = 'present';
-	    $kiosknumber = 4;
-
-		$kiosk = Kiosk::find($kiosknumber);
-		//dd($kiosk);
-
-		//Only works for kiosk type 1 (Present Only)
-		if ($kiosk->kioskType != 1) {
-			return(json_encode(-1));
-		}
-
-
-
-		//add a meeting record
-		$this->createMeetingRecord($kiosk, $carbondate);
-
-		//from public/storage/
-		//$idList = Storage::disk('public')->get('id30.txt');
-		//$list = array_slice(explode(PHP_EOL,$idList),0);
-
 		$random30=array(
 			300217207 ,
 			300692648 ,
@@ -140,6 +108,13 @@ class APIController extends Controller
 			304339703
 		);
 
+		$origami=array(
+			308339051 ,
+			304399843,
+			303175081,
+			300692648,
+			306554668,
+		);
 
 		$library=array(
 			302101212,
@@ -173,13 +148,50 @@ class APIController extends Controller
 		);
 
 		$list=$chess;
-		#dd($list);
 		
+		$pct = 90;
+	    $kiosknum = 5;
+		$kiosk = Kiosk::find($kiosknum);
+		$carbondate = Carbon::createFromDate("2020", "09", "16", "America/Toronto");
+		$carbondate->setTime(14,52,0);
+
+		for ($x = 0; $x < 7; $x++) {
+			print($carbondate."<br>");
+			$this->doTeamSignIn($pct, $carbondate, $kiosk, $list);
+		   	$minute = rand(50,59);
+			$carbondate->setTime(14,$minute,0);
+		    $wait = rand(30,120); // add this many seconds
+		    $carbondate->addSeconds($wait);
+			$carbondate->addWeek();
+			print($x."<br>");
+		}
+
+		dd("DONE. $carbondate $kiosk->name" );
+	}
+
+	protected function doTeamSignIn(int $pct, Carbon $carbondate, Kiosk $kiosk, array $list) {
+
+		$statcode = 'PRESENT';
+		$statresp = 'present';
+
+		//Only works for kiosk type 1 (Present Only)
+		if ($kiosk->kioskType != 1) {
+			return(json_encode(-1));
+		}
+
+
+		//add a meeting record
+		$this->createMeetingRecord($kiosk, $carbondate);
+
+		//from public/storage/
+		//$idList = Storage::disk('public')->get('id30.txt');
+		//$list = array_slice(explode(PHP_EOL,$idList),0);
+
 
 		foreach($list as $studentID) {
 
-		   //randomly skip about 10% of students
-		   if (rand(0,9) ==0) continue;
+		   //randomly skip $pct % of students
+		   if (rand(0,100) > $pct) continue;
 
 		   print($studentID."<br>");
 
@@ -194,7 +206,6 @@ class APIController extends Controller
 		   $kiosk->signedIn()->attach($studentID, ['status_code' => $statcode,'created_at' => $carbondate,'updated_at' => $carbondate]);
         }
 
-		dd("DONE. $carbondate $kiosk->name" );
 
 /* To modify the timestame, try this: ???????
 $table->datetime('creation_date');
