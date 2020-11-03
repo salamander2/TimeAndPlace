@@ -14,9 +14,8 @@
 			text: "(course code with section)",
 			icon: "info",  
 			input: "text",
-			},                
 			}).then((coursecode) => {
-				coursecode = coursecode.toUpperCase().trim();
+				coursecode = coursecode.value.toUpperCase().trim();
 				$.ajax({
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

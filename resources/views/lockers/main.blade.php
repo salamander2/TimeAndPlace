@@ -7,39 +7,63 @@
 	</ol> 
 --}} 
 <script>
+	function getHomeRoom1() {
+		Swal.fire({
+		  title: 'Enter home room',
+		  input: 'text',
+//		  inputLabel: 'Your IP address',
+		  //inputValue: inputValue,
+		  showCancelButton: true,
+		  inputValidator: (value) => {
+			if (!value) {
+			  return 'You need to write something!'
+			}
+		  }
+		}).then( 
+		function (coursecode) {		//success function
+		  alert(coursecode.toString());
+		  Swal.fire(`Your IP address is ${coursecode}`);
+		}   ,
+		function() { }				// failure function
+		);
+
+
+	}
+
 	function getHomeRoom() {
             Swal.fire({
                 title: "Enter home room",
                 text: "(course code with section)",
                 input: "text",
-                },                
-                }).then((coursecode) => {
-                    coursecode = coursecode.toUpperCase().trim();
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        type: "POST",
-                        async: true,
-                        url: '/verifyHomeRoom',
-                        data: {                            
-                            code : coursecode 
-                        },
-                        dataType: "json",
-                        // contentType: "application/json",     //this totally messes up data transfer
-                        success: function (msg) {
-                            if(msg.status === "success"){
-                                window.location = "/lockers/homeroom/" + coursecode;
-                            }                            
-                            else if(msg.status === "failure"){
-                                SWerrormsg("This is not a valid course code");
-                            }
-                            else if(msg.status === "wrongperiod"){
-                                SWerrormsg("This course is not in period 1");
-                            }
-                            else {
-                                SWerrormsg();
-                            }
+			  	//inputValue: coursecode,
+			}).then((coursecode) => {
+				//console.log('My object: ', coursecode);
+				coursecode = coursecode.value.toUpperCase().trim();
+				$.ajax({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					type: "POST",
+					async: true,
+					url: '/verifyHomeRoom',
+					data: {                            
+						code : coursecode 
+					},
+					dataType: "json",
+					// contentType: "application/json",     //this totally messes up data transfer
+					success: function (msg) {
+						if(msg.status === "success"){
+							window.location = "/lockers/homeroom/" + coursecode;
+						}                            
+						else if(msg.status === "failure"){
+							SWerrormsg("This is not a valid course code");
+						}
+						else if(msg.status === "wrongperiod"){
+							SWerrormsg("This course is not in period 1");
+						}
+						else {
+							SWerrormsg();
+						}
 
                         },
                         error: function (err) {
