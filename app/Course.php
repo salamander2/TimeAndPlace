@@ -10,4 +10,5 @@ class Course extends Model
     protected $table = 'courses'; 
     protected $primaryKey = 'coursecode';
     public $incrementing = false;   //needed for non integer primary keys
+
 }

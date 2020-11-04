@@ -43,9 +43,16 @@ class Student extends Model
      */    
     function formatCourse($course) {
         if (strlen($course) != 8) return $course;
-     
         $temp = substr($course,0,6) . "-" . substr($course,6);
         return $temp;
+     }
+
+    /* public function that fixes the format of the course code to allow searching of Course table */
+    public static function sanitizeCourse($course) {
+        $course = strtoupper($course);
+        $course = trim($course);
+        $course = str_replace("-","",$course);
+        return $course;
      }
      
      //TODO This doesn't actually need the ID as a parameter since a student record automatically has an id (unless this is a static method)

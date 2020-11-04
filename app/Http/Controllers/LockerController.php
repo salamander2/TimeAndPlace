@@ -65,16 +65,16 @@ class LockerController extends Controller
      */
 	public function verifyHomeRoom(Request $request) {
         $code = $request->input('code');
-        $code = strtoupper($code);
-        $code = trim($code);
-        $code = str_replace("-","",$code);
-		//print_r($code);
+//        $code = strtoupper($code);
+ //       $code = trim($code);
+//        $code = str_replace("-","",$code);
+	  $code = \App\Student::sanitizeCourse($code);
         
         //Now search for the couse code and see if it exists and if it is in period 1
         //coursecode 	teacher period 	room
         $course = Course::find($code);
         if ($course == null) {
-			return response()->json(['status' => 'failure']);
+		return response()->json(['status' => 'failure']);
         }
 
         //A page that doesn't require the course to be a home room, can just ignore the 'wrongperiod' 
@@ -93,6 +93,7 @@ class LockerController extends Controller
     * (Technically, this should work for any course, not just a home room) */
     public function homeroom($coursecode)
     {
+	$coursecode = \App\Student::sanitizeCourse($coursecode);
         $studentList = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student')->sortBy('lastname');
 
         //organize this into an array of data. Can't get a homemade collection to work!
@@ -127,6 +128,7 @@ class LockerController extends Controller
     It is based on function homeroom($coursecode) */
     public function courseRpt($coursecode)
     {
+	$coursecode = \App\Student::sanitizeCourse($coursecode);
         $studentList = Student_course::where('coursecode', $coursecode)->with('student')->get()->pluck('student')->sortBy('lastname');
 
         //organize this into an array of data. Can't get a homemade collection to work!
