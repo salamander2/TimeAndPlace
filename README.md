@@ -1,7 +1,7 @@
 # TimeAndPlace
 :apple: **Logger software.** _This software needs a good written description. Until then, see the help file._
 
-**This software was based on the [Bluepanel](https://github.com/Volxz/BluePanel) software written by Ethan Gallant.**
+**While this software was written entirely by me, it was based on the [Bluepanel](https://github.com/Volxz/BluePanel) software written by Ethan Gallant.**
 
 :dart: Ethan Gallant provided the inspiration, design, prototyping, and beta testing for the bulk of this project via his BluePanel app.
 
