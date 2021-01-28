@@ -1,5 +1,11 @@
 # TimeAndPlace
-Logger software
+:apple: **Logger software.** _This software needs a good written description. Until then, see the help file._
+
+**This software was based on the [Bluepanel](https://github.com/Volxz/BluePanel) software written by Ethan Gallant.**
+
+:dart: Ethan Gallant provided the inspiration, design, prototyping, and beta testing for the bulk of this project via his BluePanel app.
+
+:orange: You can see a working demonstration of TimeAndPlace at https://demo.iquark.ca
 
 ---------------------
 
